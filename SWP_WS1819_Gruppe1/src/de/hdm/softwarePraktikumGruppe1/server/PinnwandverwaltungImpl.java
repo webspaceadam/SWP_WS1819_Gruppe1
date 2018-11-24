@@ -183,7 +183,7 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	 * Methode um alle Likes eines Beitrags zu zaehlen
 	 */
 	public int countLikes(Beitrag b) {
-		return null;
+		return 0;
 	}
 	
 	/**
