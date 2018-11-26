@@ -143,6 +143,13 @@ public class BeitragBox extends FlowPanel {
 		}
 	}
 	
+	/**
+	 * Die innere Klasse <code>EditBeitragDialogBox</code> implementiert das Clickhandler 
+	 * Interface und dessen dazugehörige <code>onClick(ClickEvent event)</code> Methode.
+	 * Diese Methode ist dafür zuständig die Editierung eines Beitrags zu ermöglichen.
+	 * @author Adam Gniady
+	 *
+	 */
 	private class EditBeitragDialogBox extends DialogBox implements ClickHandler {
 		BeitragBox parentBB;
 		

@@ -2,6 +2,9 @@ package de.hdm.softwarePraktikumGruppe1.client.gui;
 
 import java.util.Date;
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.ui.*;
 
@@ -18,6 +21,7 @@ public class KommentarBox extends FlowPanel {
 	private Label nickName = new Label("@john");
 	private Label kommentarContent = new Label("Some Kommentar Content about Kommentars");
 	private Label creationDate = new Label();
+	private Button editBtn = new Button("Editiere Kommentar");
 	
 	public KommentarBox() {
 		// Date Stuff
@@ -33,9 +37,15 @@ public class KommentarBox extends FlowPanel {
 		creationDate.addStyleName("is-size-7");
 		userInfoWrapper.addStyleName("grid_box content_margin");
 		creationInfoWrapper.addStyleName("content_margin");
+		
+		// Editierbutton
+		editBtn.addStyleName("button bg-primary");
+		editBtn.addClickHandler(new EditKommentarBoxClickHandler(this));
+		editBtn.getElement().setPropertyString("style", "max-width: 40%;");
 
 		userInfoWrapper.add(accountName);
 		userInfoWrapper.add(nickName);
+		userInfoWrapper.add(editBtn);
 		creationInfoWrapper.add(creationDate);
 		contentWrapper.add(kommentarContent);
 		
@@ -51,4 +61,72 @@ public class KommentarBox extends FlowPanel {
 	public void onLoad() {
 		
 	}
+	
+	private class EditKommentarBoxClickHandler implements ClickHandler {
+		KommentarBox parentKB;
+		
+		public EditKommentarBoxClickHandler(KommentarBox kb) {
+			parentKB = kb;
+		}
+		
+		@Override
+		public void onClick(ClickEvent event) {
+			GWT.log("Works");
+			EditKommentarDialogBox dlg = new EditKommentarDialogBox(parentKB);
+			dlg.center();
+		}
+		
+	}
+	
+	private class EditKommentarDialogBox extends DialogBox implements ClickHandler {
+		KommentarBox parentKB;
+
+		public EditKommentarDialogBox(KommentarBox kb) {
+			parentKB = kb;
+			
+			setText("Editiere deinen Beitrag");
+
+			Button safeButton = new Button("Speichere den Edit", this);
+			
+			String beitragText = parentKB.kommentarContent.getText();
+			TextArea beitragTextArea = new TextArea();
+			beitragTextArea.setText(beitragText);
+			HTML msg = new HTML("Hier kannst du deinen Text editieren",true);
+
+			DockPanel dock = new DockPanel();
+			dock.setSpacing(6);
+			dock.add(beitragTextArea, DockPanel.CENTER);
+			dock.add(safeButton, DockPanel.SOUTH);
+			dock.add(msg, DockPanel.NORTH);
+			
+			safeButton.addClickHandler(new SafeEditedKommentarContentClickHandler(parentKB, beitragTextArea));
+
+			dock.setCellHorizontalAlignment(safeButton, DockPanel.ALIGN_CENTER);
+			dock.setWidth("100%");
+			setWidget(dock);
+		}
+		
+		@Override
+		public void onClick(ClickEvent event) {
+			hide();
+		}
+		
+		private class SafeEditedKommentarContentClickHandler implements ClickHandler {
+			KommentarBox parentKB;
+			TextArea newContent;
+			
+			public SafeEditedKommentarContentClickHandler(KommentarBox kb, TextArea textArea) {
+				parentKB = kb;
+				newContent = textArea;
+			}
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				parentKB.kommentarContent.setText(newContent.getValue());
+			}
+			
+		}
+		
+	}
+	
 }
