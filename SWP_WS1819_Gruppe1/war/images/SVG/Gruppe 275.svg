@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 930.5 225">
+  <defs>
+    <style>
+      .cls-1, .cls-3 {
+        fill: #fff;
+      }
+
+      .cls-2 {
+        fill: #3aafa9;
+      }
+
+      .cls-3 {
+        stroke: #707070;
+        font-size: 200px;
+        font-family: Arial-BoldMT, Arial;
+        font-weight: 700;
+      }
+    </style>
+  </defs>
+  <g id="Gruppe_275" data-name="Gruppe 275" transform="translate(-502.25 -193)">
+    <g id="pinners_with_primary_white" transform="translate(502.25 229.5)">
+      <g id="Ebene_1" data-name="Ebene 1">
+        <circle id="Ellipse_1" data-name="Ellipse 1" class="cls-1" cx="94.25" cy="94.25" r="94.25"/>
+        <path id="Pfad_98" data-name="Pfad 98" class="cls-2" d="M126.972,53.3l9.31,9.31a9.137,9.137,0,0,1,0,12.964L74.731,137.123a9.175,9.175,0,0,1-12.964,0l-9.329-9.329a22.351,22.351,0,0,1,0-31.622L59.208,89.4l-5.617-5.617a6.405,6.405,0,0,0-9.079,0l-7.867,7.848a6.367,6.367,0,0,1-9.06,0L20.528,84.67a9.175,9.175,0,0,1,0-12.964L70.807,21.388a9.175,9.175,0,0,1,12.964,0l7.04,7.04a6.424,6.424,0,0,1,0,9.079l-7.867,7.867a6.405,6.405,0,0,0,0,9.06l5.636,5.636L95.35,53.3A22.351,22.351,0,0,1,126.972,53.3Z" transform="translate(16.48 17.274)"/>
+        <path id="Pfad_99" data-name="Pfad 99" class="cls-1" d="M106.355,117.368l-29.621-9.617a7.5,7.5,0,0,1-2.808-12.6L93.564,76.61a7.521,7.521,0,0,1,12.214,2.981l9.925,28.14a7.5,7.5,0,0,1-9.348,9.637Z" transform="translate(66.084 68.882)"/>
+      </g>
+    </g>
+    <text id="pinners" class="cls-3" transform="translate(708.75 375)"><tspan x="0" y="0">pinners</tspan></text>
+  </g>
+</svg>

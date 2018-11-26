@@ -1,0 +1,551 @@
+:root {
+    --primary: #3aafa9;
+    --secondary: #2b7a78;
+    --light-color: #def2f1;
+    --green-black: #17252a;
+    --grey-white: #feffff;
+}
+
+html *{
+	font-size: 16px !important;
+	fornt-family: verdana, sans-serif;
+	transform-origin:0 0.9;	
+}
+
+html, body, p, h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    padding: 0;
+}
+
+#container {
+	height: auto !important;
+	margin-top: 20px;
+	min-height: 70vh;
+}
+
+/** Add css rules here for your application. */
+
+
+/** Example rules used by the template application (remove for your app) */
+h1 {
+  font-size: 2em;
+  font-weight: bold;
+  color: #777777;
+  margin: 40px 0px 70px;
+  text-align: center;
+}
+
+.sendButton {
+  display: block;
+  font-size: 16pt;
+}
+
+/** Most GWT widgets already have a style name defined */
+.gwt-DialogBox {
+  width: 400px;
+}
+
+.dialogVPanel {
+  margin: 5px;
+}
+
+.serverResponseLabelError {
+  color: red;
+}
+
+/** Set ids using widget.getElement().setId("idOfElement") */
+#closeButton {
+  margin: 15px 6px 6px;
+}
+
+
+/*
+	Headerelements
+*/
+
+/*
+    Navbar Elements
+*/
+.header {
+    min-height: 3.25rem;
+    position: relative;
+    z-index: 30;
+    display: flex;    
+    align-items: stretch;
+}
+
+.header_logo {
+    align-items: stretch;
+    display: flex;
+    flex-shrink: 0;
+    min-height: 3.25rem;
+}
+
+.header_element {
+    display: flex;
+    align-items: center;
+    flex-grow: 0;
+    flex-shrink: 0;
+    line-height: 1.5;
+    padding: 0.5rem 0.75rem;
+    position: relative;
+}
+
+.header_link_list {
+    display: flex;
+    flex-grow: 1;
+    flex-shrink: 0;
+    align-items: stretch;
+}
+
+.header_element img {
+    max-height: 1.75rem;
+}
+
+.header_left {
+    justify-content: flex-start;
+    margin-right: auto;
+    align-items: stretch;
+    display: flex;
+}
+
+.header_right {
+    justify-content: flex-end;
+    align-items: stretch;
+    display: flex;
+}
+
+.control {
+    clear: both;
+    font-size: 1rem;
+    position: relative;
+    text-align: left;
+}
+
+/*
+	Input
+*/
+
+.input {
+    background-color: white;
+    border-color: #dbdbdb;
+    color: #363636;
+    box-shadow: inset 0 1px 2px rgba(10, 10, 10, 0.1);
+    max-width: 100%;
+    width: 100%;
+    align-items: center;
+    border: 1px solid transparent;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+    border-radius: 4px;
+    box-shadow: none;
+    display: inline-flex;
+    font-size: 1rem;
+    height: 1.5rem;
+    justify-content: flex-start;
+    line-height: 1.5;
+    padding-bottom: calc(0.375em - 1px);
+    padding-left: calc(0.625em - 1px);
+    padding-right: calc(0.625em - 1px);
+    padding-top: calc(0.375em - 1px);
+    position: relative;
+    vertical-align: top;
+    border: 1px solid var(--light-color);
+    padding: 0.5rem;
+}
+
+/*
+    Button CSS
+*/
+
+.button {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    font-size: 1rem;
+    height: 2.25em;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    line-height: 1.5;
+    padding-bottom: calc(0.375em - 1px);
+    padding-left: calc(0.625em - 1px);
+    padding-right: calc(0.625em - 1px);
+    padding-top: calc(0.375em - 1px);
+    position: relative;
+    vertical-align: top;
+
+    background-color: white;
+    border-color: #dbdbdb;
+    border-width: 1px;
+    color: #363636;
+    cursor: pointer;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    padding-bottom: calc(0.375em - 1px);
+    padding-left: 0.75em;
+    padding-right: 0.75em;
+    padding-top: calc(0.375em - 1px);
+    text-align: center;
+    white-space: nowrap;
+}
+
+.button {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    font-size: 1rem;
+    height: 2.25em;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    line-height: 1.5;
+    padding-bottom: calc(0.375em - 1px);
+    padding-left: calc(0.625em - 1px);
+    padding-right: calc(0.625em - 1px);
+    padding-top: calc(0.375em - 1px);
+    position: relative;
+    vertical-align: top;
+
+    background-color: white;
+    border-color: #dbdbdb;
+    border-width: 1px;
+    color: #363636;
+    cursor: pointer;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    padding-bottom: calc(0.375em - 1px);
+    padding-left: 0.75em;
+    padding-right: 0.75em;
+    padding-top: calc(0.375em - 1px);
+    text-align: center;
+    white-space: nowrap;
+}
+
+.is-danger {
+    background-color: #ff2b56;
+    border-color: transparent;
+    color: #fff;
+}
+
+.bg-primary {
+    color: #fff;
+    background-color: var(--primary);
+}
+
+.is-medium {
+    font-size: 1.25rem !important;
+}
+
+
+/*
+	Layout Styling
+*/
+
+:root {
+    --primary: #3aafa9;
+    --secondary: #2b7a78;
+    --light-color: #def2f1;
+    --green-black: #17252a;
+    --grey-white: #feffff;
+}
+/*
+    Styling for Elements like Boxes, hr, etc.
+*/
+
+.content_margin {
+    margin-bottom: 0.7rem;
+}
+
+.kommentar_margin {
+    margin-left: 4em;
+}
+
+hr {
+    background-color: var(--light-color);
+    display: block;
+    height: 2px;
+    margin: 1.5rem 0;
+    padding: 0;
+    border: none;
+}
+
+.radiusless {
+    border-radius: 0 !important;
+}
+
+.box {
+    background-color: white;
+    border-radius: 6px;
+    box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
+    color: #4a4a4a;
+    display: block;
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+
+.grid_box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.grid_box_links {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-basis: auto;
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+
+.grid_box_rechts {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-basis: auto;
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+
+.grid_box_element {
+    align-items: center;
+    display: flex;
+    flex-basis: auto;
+    flex-grow: 0;
+    flex-shrink: 0;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+/*
+    styling for the postings
+*/
+
+.post {
+    align-items: flex-start;
+    display: flex;
+    text-align: left;
+}
+
+.post_content {
+    flex-basis: auto;
+    flex-grow: 1;
+    flex-shrink: 1;
+    text-align: left;
+}
+
+/*
+	Sizing
+*/
+
+:root {
+    --primary: #3aafa9;
+    --secondary: #2b7a78;
+    --light-color: #def2f1;
+    --green-black: #17252a;
+    --grey-white: #feffff;
+}
+/*
+    Some helpers for the size of elements in our application
+*/
+.is-medium {
+    font-size: 1.25rem !important;
+}
+
+.is-size-1 {
+    font-size: 3rem !important;
+}
+
+.is-size-2 {
+    font-size: 2.5rem !important;
+} 	
+.is-size-3 {
+    font-size: 2rem !important; 
+} 
+
+.is-size-4 {
+    font-size: 1.5rem !important;
+} 	
+
+.is-size-5 {
+    font-size: 1.25rem !important;
+} 	
+
+.is-size-6 {
+    font-size: 1rem !important;
+}
+
+.is-size-7 {
+    font-size: 0.75rem !important;
+}
+
+.heading {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+
+.title {
+    color: var(--green-black);
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 1.125;
+}
+
+.title:not(:last-child) {
+    margin-bottom: 1.5rem;
+}
+
+.has-text-centered {
+    text-align: center !important;
+}
+
+.landing {
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    overflow: hidden;
+    position: fixed;
+}
+
+.is-fullwidth {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    width: 95%;
+}
+
+.large {
+    font-size: 1rem;
+    height: 1.5em;
+    width: 1.5em;
+}
+
+.is-block {
+    display: block !important;
+}
+
+.is_128 {
+    height: 128px;
+    width: 128px;   
+}
+
+.image_style {
+    display: block;
+    position: relative;
+}
+
+/*
+	More styling
+*/
+
+a {
+    text-decoration: none;
+}
+
+*, ::before, ::after {
+
+    -webkit-box-sizing: inherit;
+    box-sizing: inherit;
+
+}
+
+.bg-gradient {
+    background-image: linear-gradient(to right, var(--secondary), var(--primary));
+}
+
+.bg-primary {
+    color: #fff;
+    background-color: var(--primary);
+}
+
+.text-color-primary {
+    color: var(--primary);
+}
+
+/*
+    Layout created with a grid System
+*/
+.wrapper {
+    display: grid;
+    padding: 30px;
+    /* 12 columns, each 1 friction of view
+    */
+    grid-template-columns: repeat(12,1fr);
+    /*
+    height of row is minimum 100px maximum aber auto
+    */
+    grid-auto-rows: minmax(100px, auto);
+    grid-gap: 10px; 
+    margin: 0 auto;
+}
+
+.linkeSeite {
+    grid-column: 1/5;
+}
+
+.rechteSeite {
+    grid-column: 5/13;
+}
+
+.ganzeSeite {
+    grid-column: 1/13;
+}
+
+.mittlereVier {
+    grid-column: 5/9;
+}
+
+/*
+    Box Item Creation
+*/
+
+.box-item-ein-viertel {
+    width: 25%;
+    float: left;
+}
+
+.has-items {
+    height: 100%;
+}
+
+/*
+cplors
+*/
+
+.has-text-white {
+    color: white !important;
+}
+
+.has-text-primary {
+    color: var(--primary) !important;
+}
+
+
