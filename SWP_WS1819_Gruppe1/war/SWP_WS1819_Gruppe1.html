@@ -11,12 +11,12 @@
     <!--                                                               -->
     <!-- Consider inlining CSS to reduce the number of requested files -->
     <!--                                                               -->
-    <link type="text/css" rel="stylesheet" href="SWP_WS1819_Gruppe1.css">
+    <link type="text/css" rel="stylesheet" href="PinnersGui.css">
 
     <!--                                           -->
     <!-- Any title is fine                         -->
     <!--                                           -->
-    <title>Web Application Starter Project</title>
+    <title>Pinners | Editor</title>
     
     <!--                                           -->
     <!-- This script loads your compiled module.   -->
@@ -31,7 +31,7 @@
   <!-- you can leave the body empty if you want  -->
   <!-- to create a completely dynamic UI.        -->
   <!--                                           -->
-  <body>
+  <body style="border: 0px none !important; margin: 0; padding: 0;">
 
     <!-- RECOMMENDED if your web app will not function without JavaScript enabled -->
     <noscript>
@@ -41,19 +41,10 @@
       </div>
     </noscript>
 
-    <h1>Web Application Starter Project</h1>
-
-    <table align="center">
-      <tr>
-        <td colspan="2" style="font-weight:bold;">Please enter your name:</td>        
-      </tr>
-      <tr>
-        <td id="nameFieldContainer"></td>
-        <td id="sendButtonContainer"></td>
-      </tr>
-      <tr>
-        <td colspan="2" style="color:red;" id="errorLabelContainer"></td>
-      </tr>
-    </table>
+    <div id="header">
+    </div>
+    
+    <div id="container" class="wrapper">
+    </div>
   </body>
 </html>
