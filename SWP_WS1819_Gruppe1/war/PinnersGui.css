@@ -376,6 +376,10 @@ hr {
     font-size: 1.25rem !important;
 }
 
+.is-italic {
+	font-style: italic;
+}
+
 .is-size-1 {
     font-size: 3rem !important;
 }
