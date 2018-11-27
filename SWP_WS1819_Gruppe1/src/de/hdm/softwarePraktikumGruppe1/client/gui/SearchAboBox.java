@@ -2,6 +2,10 @@ package de.hdm.softwarePraktikumGruppe1.client.gui;
 
 import com.google.gwt.user.client.ui.*;
 
+/**
+ * @author AdamGniady
+ *
+ */
 public class SearchAboBox extends FlowPanel {
 	private Label accountName = new Label("Gianluca Bernert");
 	private Label nickName = new Label("@derLucker");

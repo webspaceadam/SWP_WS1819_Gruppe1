@@ -4,12 +4,12 @@
 package de.hdm.softwarePraktikumGruppe1.shared.bo;
 
 /**
- * @author gianluca
+ * @author GianlucaBernert
  * Klasse eines Pinnwand Objekts das BusinessObject als SuperKlasse besitzt
  */
 public class Pinnwand extends BusinessObject{
 	
-	private long serialVersionUID;
+	private static final long serialVersionUID = 1L;
 	private User owner;
 	private int abonnementId;
 	private int ownerId;
@@ -55,7 +55,14 @@ public class Pinnwand extends BusinessObject{
 	public void setOwnerId(int ownerId) {
 		this.ownerId = ownerId;
 	}
-	
+
+	/**
+	 * Methode um eine textuelle Dastellung der jeweiligen Instanz zu erzeugen
+	 */
+	public String toString() {
+		return super.toString() + " " + this.owner;
+	}
+
 	
 	
 

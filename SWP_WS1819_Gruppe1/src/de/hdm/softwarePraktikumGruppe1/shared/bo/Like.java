@@ -4,12 +4,12 @@
 package de.hdm.softwarePraktikumGruppe1.shared.bo;
 
 /**
- * @author gianluca
+ * @author GianlucaBernert
  * Klasse eines Like Objekts das BusinessObject als Superklasse besitzt
  */
 public class Like extends BusinessObject{
 	
-	private long serialVersionUID;
+	private static final long serialVersionUID = 1L;
 	private int beitragId;
 	private int ownerId;
 	private User owner;

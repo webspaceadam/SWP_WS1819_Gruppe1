@@ -4,12 +4,12 @@
 package de.hdm.softwarePraktikumGruppe1.shared.bo;
 
 /**
- * @author gianluca
+ * @author GianlucaBernert
  * Klasse eines Abonnement Objekts das BusinessObject als Superklasse besitzt
  */
 public class Abonnement {
 	
-	private long serialVersionUID;
+	private static final long serialVersionUID = 1L;
 	private User owner;
 	private Pinnwand pinnwand;
 	private int ownerId;

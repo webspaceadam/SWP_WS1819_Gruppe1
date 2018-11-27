@@ -8,6 +8,10 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.ui.*;
 
+/**
+ * @author AdamGniady
+ *
+ */
 public class KommentarBox extends FlowPanel {
 	// Panels for the Element
 	private VerticalPanel parentVerticalPanel = new VerticalPanel();

@@ -6,12 +6,12 @@ package de.hdm.softwarePraktikumGruppe1.shared.bo;
 import java.util.*;
 
 /**
- * @author gianluca
+ * @author GianlucaBernert
  * Klasse eines Beitrag Objekts das Textbeitrag als Superklasse besitzt
  */
 public class Beitrag extends Textbeitrag{
 	
-	private long serialVersionUID;
+	private static final long serialVersionUID = 1L;
 	private int ownerId;
 	private int likeID;
 	private int likeAmount;
@@ -134,12 +134,11 @@ public class Beitrag extends Textbeitrag{
 	}
 	
 	/**
-	 * Methode die das Objekt Beitrag als String zurueck gibt
+	 * Methode um eine textuelle Dastellung der jeweiligen Instanz zu erzeugen
 	 */
 	public String toString() {
-		return null;
+		return super.toString() + " " + User.getNickname();
 	}
-	
 	
 	
 	

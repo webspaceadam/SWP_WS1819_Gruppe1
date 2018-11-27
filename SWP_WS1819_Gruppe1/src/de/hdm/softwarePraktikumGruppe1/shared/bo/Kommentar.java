@@ -4,12 +4,12 @@
 package de.hdm.softwarePraktikumGruppe1.shared.bo;
 
 /**
- * @author gianluca
+ * @author GianlucaBernert
  * Klasse eines Kommentar Objekts das Textbeitrag als Superklasse besitzt
  */
 public class Kommentar extends Textbeitrag{
 	
-	private long serialVersionUID;
+	private static final long serialVersionUID = 1L;
 	private int ownerId;
 	private int beitragId;
 	private User owner;

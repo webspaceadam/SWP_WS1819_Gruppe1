@@ -10,7 +10,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.Pinnwandverwaltung;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.*;
 
 /**
- * @author gianluca
+ * @author GianlucaBernert
  * Klasse die das Interface Pinnwandverwaltung Implementiert und das RemoteServiceServlet als Superklasse besitzt
  */
 public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinnwandverwaltung{

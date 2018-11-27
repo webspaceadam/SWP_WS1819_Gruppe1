@@ -4,7 +4,7 @@
 package de.hdm.softwarePraktikumGruppe1.shared;
 
 /**
- * @author gianluca
+ * @author GianlucaBernert
  *
  */
 public class LoginInfo {

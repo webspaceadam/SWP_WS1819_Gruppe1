@@ -8,18 +8,33 @@ import java.util.ArrayList;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Abonnement;
 
 /**
- * @author gianluca
+ * @author GianlucaBernert und YesinSoufi
  * 
  */
 public class AbonnementMapper {
 	
-	private AbonnementMapper aMapper;
+	private static AbonnementMapper abonnementMapper;
 	
 	/**
-	 * Konstruktor der Klasse
+	 * Ein gesch�tzter Konstruktor der weitere Instanzierungen von AbonnementMapper Objekten verhindert.
 	 */
 	protected AbonnementMapper() {
 	}
+	
+	/**
+	 * Stellt die Singeleton-Eigenschaft der Mapperklasse sicher
+	 * @return Sie gibt den AbonnementMapper zur�ck.
+	 */
+	
+	public static AbonnementMapper AbonnementMapper() {
+		if (abonnementMapper == null) {
+			abonnementMapper = new AbonnementMapper();
+		} 
+		
+		return abonnementMapper;
+	}
+		
+	
 	
 	/**
 	 * Methode zum speichern eines Abonnements
@@ -37,7 +52,7 @@ public class AbonnementMapper {
 	 * Methode 
 	 */
 	public AbonnementMapper abonnementMapper() {
-		return aMapper;
+		return abonnementMapper;
 	}
 	
 	/**

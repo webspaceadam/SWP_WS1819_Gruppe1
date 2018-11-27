@@ -9,12 +9,12 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.Abonnement;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Beitrag;
 
 /**
- * @author gianluca
+ * @author GianlucaBernert
  *
  */
 public class BeitragMapper {
 	
-	private BeitragMapper bMapper;
+	private BeitragMapper beitragMapper;
 	
 	/** 
 	* Konstruktor der Klasse
@@ -45,7 +45,7 @@ public class BeitragMapper {
 	 * Methode 
 	 */
 	public BeitragMapper beitragMapper() {
-		return bMapper;
+		return beitragMapper;
 	}
 	
 	/**
