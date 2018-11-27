@@ -26,7 +26,7 @@ public class KommentarBox extends FlowPanel {
 	public KommentarBox() {
 		// Date Stuff
 		Date now = new Date();
-		DateTimeFormat fmt = DateTimeFormat.getFormat("EEEE, dd MMMM, yyyy");
+		DateTimeFormat fmt = DateTimeFormat.getFormat("HH:mm:ss, EEEE, dd MMMM, yyyy");
 		String date = fmt.format(now).toString();
 		creationDate.setText("Erstellungszeitpunkg: " + date);
 		
