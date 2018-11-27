@@ -71,8 +71,8 @@ public class BeitragBox extends FlowPanel {
 		editBtn.addClickHandler(new EditBeitragBoxClickHandler(this));
 		editBtn.getElement().setPropertyString("style", "max-width: 25%;");
 		
-		socialWrapper.add(commentBtn);
 		socialWrapper.add(likeBtn);
+		socialWrapper.add(commentBtn);
 		
 		creationDate.setText("Erstellungszeitpunkt: " + date);
 		
