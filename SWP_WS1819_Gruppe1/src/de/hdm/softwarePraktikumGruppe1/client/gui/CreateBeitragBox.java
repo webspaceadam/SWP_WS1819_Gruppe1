@@ -5,7 +5,7 @@ import com.google.gwt.user.client.ui.*;
 /**
  * Die Klasse <code>CreateBeitragBox</code> enthält alle Elemente die zum Erstellen eines  
  * Beitrags benötigt werden. 
- *@author Adam Gniady
+ *@author AdamGniady
  */
 
 public class CreateBeitragBox extends FlowPanel {

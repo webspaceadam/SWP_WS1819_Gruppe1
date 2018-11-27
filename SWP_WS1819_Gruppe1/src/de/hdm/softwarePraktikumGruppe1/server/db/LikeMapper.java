@@ -9,7 +9,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.Beitrag;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Like;
 
 /**
- * @author gianluca
+ * @author GianlucaBernert
  *
  */
 public class LikeMapper {

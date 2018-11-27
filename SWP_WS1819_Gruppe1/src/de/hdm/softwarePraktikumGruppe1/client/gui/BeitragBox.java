@@ -9,10 +9,10 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.ui.*;
 
 /**
- * Die <code>Beitrag</code>-Klasse ist eine Custom-Widget-Class die dafür verwendet wird, 
+ * Die <code>Beitrag</code>-Klasse ist eine Custom-Widget-Class die dafï¿½r verwendet wird, 
  * um einen Beitrag im System korrekt anzuzeigen
  * 
- * @author Adam Gniady
+ * @author AdamGniady
  * @version 1.0
  */
 
@@ -109,9 +109,9 @@ public class BeitragBox extends FlowPanel {
 	
 	/**
 	 * Die innere Klasse <code>LikeCountClickHandler</code> implementiert das Clickhandler 
-	 * Interface und dessen dazugehörige <code>onClick(ClickEvent event)</code> Methode.
+	 * Interface und dessen dazugehï¿½rige <code>onClick(ClickEvent event)</code> Methode.
 	 * Diese Methode arbeitet mit der Anzahl der Likes auf einem Beitrag und passt die Anzahl auf den 
-	 * dazugehörigen Beitrag an. 
+	 * dazugehï¿½rigen Beitrag an. 
 	 * @author Adam Gniady
 	 *
 	 */
@@ -145,8 +145,8 @@ public class BeitragBox extends FlowPanel {
 	
 	/**
 	 * Die innere Klasse <code>EditBeitragDialogBox</code> implementiert das Clickhandler 
-	 * Interface und dessen dazugehörige <code>onClick(ClickEvent event)</code> Methode.
-	 * Diese Methode ist dafür zuständig die Editierung eines Beitrags zu ermöglichen.
+	 * Interface und dessen dazugehï¿½rige <code>onClick(ClickEvent event)</code> Methode.
+	 * Diese Methode ist dafï¿½r zustï¿½ndig die Editierung eines Beitrags zu ermï¿½glichen.
 	 * @author Adam Gniady
 	 *
 	 */

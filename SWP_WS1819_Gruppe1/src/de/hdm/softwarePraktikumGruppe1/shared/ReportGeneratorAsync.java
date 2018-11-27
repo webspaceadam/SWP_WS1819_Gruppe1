@@ -10,7 +10,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.*;
 
 /**
- * @author gianluca
+ * @author GianlucaBernert
  *Interface das von ReportGeneratorServiceProxy Implementiert wird
  */
 public interface ReportGeneratorAsync {

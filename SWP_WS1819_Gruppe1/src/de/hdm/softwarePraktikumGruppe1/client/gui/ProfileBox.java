@@ -2,22 +2,22 @@ package de.hdm.softwarePraktikumGruppe1.client.gui;
 import com.google.gwt.user.client.ui.*;
 
 /**
- * Die <code>ProfileBox</code>-Klasse ist eine Custom-Widget-Class die dafür verwendet wird, 
- * um auf der Pinnwand des Users alle wichtigen Informationen über seinen Account anzugeigen.
- * Des Weiteren wird ermöglicht, dass der User über dieses Widget sein Konto bearbeiten kann. 
- * @author Adam Gniady
+ * Die <code>ProfileBox</code>-Klasse ist eine Custom-Widget-Class die dafï¿½r verwendet wird, 
+ * um auf der Pinnwand des Users alle wichtigen Informationen ï¿½ber seinen Account anzugeigen.
+ * Des Weiteren wird ermï¿½glicht, dass der User ï¿½ber dieses Widget sein Konto bearbeiten kann. 
+ * @author AdamGniady
  * @version 1.0
  */
 
 public class ProfileBox extends FlowPanel {
 		// Oberer Teil
 	
-		// dazugehörige Label
+		// dazugehï¿½rige Label
 		private Label accountName = new Label("Sebastian Hermann");
 		private Label nickName = new Label("@sebmeister");
 		private Button editAccountButton = new Button("Konto Bearbeiten");
 		private HTML hrElement = new HTML("<hr/>");
-		// dazugehörige wrapper
+		// dazugehï¿½rige wrapper
 		private FlowPanel wrapper1 = new FlowPanel();
 		private FlowPanel wrapper1_el_links = new FlowPanel();
 		private FlowPanel wrapper1_el_rechts = new FlowPanel();
@@ -25,14 +25,14 @@ public class ProfileBox extends FlowPanel {
 		
 		// unterer Teil
 		private Label aboHeader = new Label("ABBONIERT");
-		private Label beitragHeader = new Label("BEITRÄGE");
+		private Label beitragHeader = new Label("BEITRï¿½GE");
 		private Label likeHeader = new Label("LIKES");
 		
 		private Label aboCount = new Label("22");
 		private Label beitragCount = new Label("123");
 		private Label likeCount = new Label("312");
 		
-		// dazugehörige wrapper 2
+		// dazugehï¿½rige wrapper 2
 		private FlowPanel wrapper2 = new FlowPanel();
 		private VerticalPanel wrapper2_el_1 = new VerticalPanel();
 		private VerticalPanel wrapper2_el_2 = new VerticalPanel();
@@ -99,7 +99,7 @@ public class ProfileBox extends FlowPanel {
 		/**
 		 * In dieser Methode werden die Desings der Buttons festgelegt. Auch
 		 * die Kontakt-Editor und ReportGenerator-Buttons werden zum Kopfbereich
-		 * des Kontaktverwaltungstools hinzugefügt. 
+		 * des Kontaktverwaltungstools hinzugefï¿½gt. 
 		 */
 		public void onLoad() {
 		}
