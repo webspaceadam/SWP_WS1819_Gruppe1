@@ -1,6 +1,8 @@
 package de.hdm.softwarePraktikumGruppe1.client.gui;
 import com.google.gwt.user.client.ui.*;
 
+import de.hdm.softwarePraktikumGruppe1.client.gui.BeitragBox.EditBeitragBoxClickHandler;
+
 /**
  * Die <code>ProfileBox</code>-Klasse ist eine Custom-Widget-Class die dafür verwendet wird, 
  * um auf der Pinnwand des Users alle wichtigen Informationen über seinen Account anzugeigen.
@@ -15,7 +17,7 @@ public class ProfileBox extends FlowPanel {
 		// dazugehörige Label
 		private Label accountName = new Label("Sebastian Hermann");
 		private Label nickName = new Label("@sebmeister");
-		private Button editAccountButton = new Button("Konto Bearbeiten");
+		private Image editPenBtn = new Image("images/SVG/cog.png");
 		private HTML hrElement = new HTML("<hr/>");
 		// dazugehörige wrapper
 		private FlowPanel wrapper1 = new FlowPanel();
@@ -31,6 +33,7 @@ public class ProfileBox extends FlowPanel {
 		private Label aboCount = new Label("22");
 		private Label beitragCount = new Label("123");
 		private Label likeCount = new Label("312");
+		
 		
 		// dazugehörige wrapper 2
 		private FlowPanel wrapper2 = new FlowPanel();
@@ -49,7 +52,8 @@ public class ProfileBox extends FlowPanel {
 			wrapper1_el_rechts.addStyleName("grid_box_rechts");
 			
 			accountName.addStyleName("title is-size-4 grid_box_element");
-			editAccountButton.addStyleName("grid_box_element button bg-primary");
+			editPenBtn.addStyleName("grid_box_element");
+			editPenBtn.getElement().setPropertyString("style", "max-width: 25px;");
 			
 			// nickname styling
 			nickName.addStyleName("is-size-5");
@@ -70,7 +74,7 @@ public class ProfileBox extends FlowPanel {
 			
 			// Adding Elements to Wrapper 1
 			wrapper1_el_links.add(accountName);
-			wrapper1_el_rechts.add(editAccountButton);
+			wrapper1_el_rechts.add(editPenBtn);
 			wrapper1.add(wrapper1_el_links);
 			wrapper1.add(wrapper1_el_rechts);
 			
