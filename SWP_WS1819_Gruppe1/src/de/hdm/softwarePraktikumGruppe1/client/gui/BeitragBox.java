@@ -43,7 +43,14 @@ public class BeitragBox extends FlowPanel {
 	private Label beitragContent = new Label("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis. ");
 	
 	
+	// Images for the Buttons
+	private Image likeHeart = new Image("images/SVG/heart.svg");
+	private Image likeHeartBtn = new Image("images/SVG/heart.svg");
+	private Image replyBtn = new Image("images/SVG/reply.svg");
+	
 	// Other Elements for this Widget
+	private FlowPanel heartWrapper = new FlowPanel();
+	private FlowPanel replyWrapper = new FlowPanel();
 	
 	public BeitragBox() {
 		// Date
@@ -63,7 +70,7 @@ public class BeitragBox extends FlowPanel {
 		
 		// Social Wrapper
 		socialWrapper.addStyleName("grid_box_links");
-		
+		likeInfoWrapper.addStyleName("grid_box");
 		
 		commentBtn.addStyleName("button bg-primary grid_box_element");
 		likeBtn.addStyleName("button bg-primary grid_box_element");
@@ -71,19 +78,31 @@ public class BeitragBox extends FlowPanel {
 		editBtn.addClickHandler(new EditBeitragBoxClickHandler(this));
 		editBtn.getElement().setPropertyString("style", "max-width: 25%;");
 		
-		socialWrapper.add(commentBtn);
-		socialWrapper.add(likeBtn);
+		// Social Wrapper
+		heartWrapper.addStyleName("grid_box_element");
+		replyWrapper.addStyleName("grid_box_element");
+		likeHeartBtn.getElement().setPropertyString("style", "max-width: 25px;");
+		replyBtn.getElement().setPropertyString("style", "max-width: 25px;");
+		
+		heartWrapper.add(likeHeartBtn);
+		replyWrapper.add(replyBtn);
+		
+		// ClickHandler Call for Like Action
+		likeHeartBtn.addClickHandler(new LikeCountClickHandler(this));
+		socialWrapper.add(heartWrapper);
+		socialWrapper.add(replyWrapper);
+		
 		
 		creationDate.setText("Erstellungszeitpunkt: " + date);
 		
+		// Likecount info
+		likeHeart.setWidth("1rem");
+		likeHeart.addStyleName("small-padding-right");
 		likeCountText.addStyleName("is-size-6 is-italic");
-		likeCountText.setText("Likes auf diesem Beitrag: " + likeCount);
+		likeCountText.setText(" auf diesem Beitrag: " + likeCount);
 		
-		
+		likeInfoWrapper.add(likeHeart);
 		likeInfoWrapper.add(likeCountText);
-		
-		// Add ClickHandler for Button
-		likeBtn.addClickHandler(new LikeCountClickHandler(this));
 		
 		
 		// Add Elements to Wrapper
@@ -125,7 +144,7 @@ public class BeitragBox extends FlowPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			parentBB.likeCount += 1;
-			parentBB.likeCountText.setText("Likes auf diesem Beitrag: " + parentBB.likeCount);
+			parentBB.likeCountText.setText(" auf diesem Beitrag: " + parentBB.likeCount);
 			GWT.log("Like Count is: " + parentBB.likeCount);
 		}
 	}
