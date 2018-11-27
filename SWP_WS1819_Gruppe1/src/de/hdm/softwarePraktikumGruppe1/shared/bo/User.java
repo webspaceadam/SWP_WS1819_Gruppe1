@@ -9,8 +9,8 @@ package de.hdm.softwarePraktikumGruppe1.shared.bo;
  */
 public class User extends BusinessObject{
 	
-	private long serialVersionUID;
-	private String nickname;
+	private static final long serialVersionUID = 1L;
+	private static String nickname;
 	private String firstName;
 	private String lastName;
 	private String password;
@@ -21,7 +21,7 @@ public class User extends BusinessObject{
 	/**
 	 * Methode die den Nicknamen eines Users zurück gibt
 	 */
-	public String getNickname() {
+	public static String getNickname() {
 		return nickname;
 	}
 	
@@ -116,6 +116,13 @@ public class User extends BusinessObject{
 		this.commentAmount = commentAmount;
 	}
 	
-	
+	/**
+	 * Methode um eine textuelle Dastellung der jeweiligen Instanz zu erzeugen
+	 */
+	public String toString() {
+		return super.toString() + " " + this.firstName + " " + this.lastName;
+	}
+
+
 
 }

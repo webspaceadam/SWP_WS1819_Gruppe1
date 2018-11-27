@@ -10,7 +10,7 @@ package de.hdm.softwarePraktikumGruppe1.shared.bo;
  */
 public class Textbeitrag extends BusinessObject{
 	
-	private long serialVersionUID;
+	private static final long serialVersionUID = 1L;
 	private String text;
 	
 	/**
