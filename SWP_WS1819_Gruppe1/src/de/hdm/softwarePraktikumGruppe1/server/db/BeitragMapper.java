@@ -14,13 +14,28 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.Beitrag;
  */
 public class BeitragMapper {
 	
-	private BeitragMapper bMapper;
+	private static BeitragMapper BeitragMapper;
 	
-	/** 
-	* Konstruktor der Klasse
+	/**
+	 * Ein geschützter Konstruktor der weitere Instanzierungen von AbonnementMapper Objekten verhindert.
 	 */
+	
 	protected BeitragMapper() {
 	}
+	
+	/**
+	 * Stellt die Singeleton-Eigenschaft der Mapperklasse sicher
+	 * @return Sie gibt den AbonnementMapper zurück.
+	 */
+	
+	public static BeitragMapper BeitragMapper() {
+		if (BeitragMapper == null) {
+			BeitragMapper = new BeitragMapper();
+		}
+		return BeitragMapper;
+	}
+	
+	
 	
 	/**
 	 * Methode zum speichern eines Beitrags
