@@ -21,7 +21,8 @@ public class KommentarBox extends FlowPanel {
 	private Label nickName = new Label("@john");
 	private Label kommentarContent = new Label("Some Kommentar Content about Kommentars");
 	private Label creationDate = new Label();
-	private Button editBtn = new Button("Editiere Kommentar");
+	
+	private Image editPenBtn = new Image("images/SVG/pen.svg");
 	
 	public KommentarBox() {
 		// Date Stuff
@@ -39,13 +40,12 @@ public class KommentarBox extends FlowPanel {
 		creationInfoWrapper.addStyleName("content_margin");
 		
 		// Editierbutton
-		editBtn.addStyleName("button bg-primary");
-		editBtn.addClickHandler(new EditKommentarBoxClickHandler(this));
-		editBtn.getElement().setPropertyString("style", "max-width: 40%;");
+		editPenBtn.addClickHandler(new EditKommentarBoxClickHandler(this));
+		editPenBtn.getElement().setPropertyString("style", "max-width: 20px;");
 
 		userInfoWrapper.add(accountName);
 		userInfoWrapper.add(nickName);
-		userInfoWrapper.add(editBtn);
+		userInfoWrapper.add(editPenBtn);
 		creationInfoWrapper.add(creationDate);
 		contentWrapper.add(kommentarContent);
 		

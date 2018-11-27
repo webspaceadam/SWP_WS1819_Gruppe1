@@ -32,11 +32,6 @@ public class BeitragBox extends FlowPanel {
 	private Label creationDate = new Label();
 	private Label likeCountText = new Label();
 	private int likeCount = 0;
-	
-	// Buttons for Social
-	private Button commentBtn = new Button("Kommentiere");
-	private Button likeBtn = new Button("Like");
-	private Button editBtn = new Button("Editiere Beitrag");
 
 	
 	// Paragraph Elements
@@ -47,6 +42,7 @@ public class BeitragBox extends FlowPanel {
 	private Image likeHeart = new Image("images/SVG/heart.svg");
 	private Image likeHeartBtn = new Image("images/SVG/heart.svg");
 	private Image replyBtn = new Image("images/SVG/reply.svg");
+	private Image editPenBtn = new Image("images/SVG/pen.svg");
 	
 	// Other Elements for this Widget
 	private FlowPanel heartWrapper = new FlowPanel();
@@ -72,11 +68,9 @@ public class BeitragBox extends FlowPanel {
 		socialWrapper.addStyleName("grid_box_links");
 		likeInfoWrapper.addStyleName("grid_box");
 		
-		commentBtn.addStyleName("button bg-primary grid_box_element");
-		likeBtn.addStyleName("button bg-primary grid_box_element");
-		editBtn.addStyleName("button bg-primary grid_box_element");
-		editBtn.addClickHandler(new EditBeitragBoxClickHandler(this));
-		editBtn.getElement().setPropertyString("style", "max-width: 25%;");
+		editPenBtn.addStyleName("grid_box_element");
+		editPenBtn.addClickHandler(new EditBeitragBoxClickHandler(this));
+		editPenBtn.getElement().setPropertyString("style", "max-width: 25px;");
 		
 		// Social Wrapper
 		heartWrapper.addStyleName("grid_box_element");
@@ -108,7 +102,7 @@ public class BeitragBox extends FlowPanel {
 		// Add Elements to Wrapper
 		userInfoWrapper.add(accountName);
 		userInfoWrapper.add(nickName);
-		userInfoWrapper.add(editBtn);
+		userInfoWrapper.add(editPenBtn);
 		creationInfoWrapper.add(creationDate);
 		contentWrapper.add(beitragContent);
 		
