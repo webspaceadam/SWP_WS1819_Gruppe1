@@ -171,10 +171,17 @@ public class BeitragBox extends FlowPanel {
 			
 			setText("Editiere deinen Beitrag");
 
+
 			Button safeButton = new Button("Speichere den Edit", this);
+			safeButton.addStyleName("button bg-primary");
+			Image cancelImage = new Image("images/SVG/timesCircle.png");
+			cancelImage.getElement().setPropertyString("style", "max-width: 25px;");
+			cancelImage.addClickHandler(this);
 			
+			// Creating TextArea and filling it with the content of the "Beitrag".
 			String beitragText = parentBB.beitragContent.getText();
 			TextArea beitragTextArea = new TextArea();
+			beitragTextArea.getElement().setPropertyString("style", "min-width: 590px;");
 			beitragTextArea.setText(beitragText);
 			HTML msg = new HTML("Hier kannst du deinen Text editieren",true);
 
@@ -182,12 +189,13 @@ public class BeitragBox extends FlowPanel {
 			dock.setSpacing(6);
 			dock.add(beitragTextArea, DockPanel.CENTER);
 			dock.add(safeButton, DockPanel.SOUTH);
+			dock.add(cancelImage, DockPanel.EAST);
 			dock.add(msg, DockPanel.NORTH);
 			
 			safeButton.addClickHandler(new SafeEditedContentClickHandler(parentBB, beitragTextArea));
 
 			dock.setCellHorizontalAlignment(safeButton, DockPanel.ALIGN_CENTER);
-			dock.setWidth("100%");
+			dock.setWidth("600px");
 			setWidget(dock);
 		}
 

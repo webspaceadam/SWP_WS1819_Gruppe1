@@ -1,7 +1,7 @@
 package de.hdm.softwarePraktikumGruppe1.client.gui;
 import com.google.gwt.user.client.ui.*;
 
-import de.hdm.softwarePraktikumGruppe1.client.gui.BeitragBox.EditBeitragBoxClickHandler;
+
 
 /**
  * Die <code>ProfileBox</code>-Klasse ist eine Custom-Widget-Class die dafür verwendet wird, 

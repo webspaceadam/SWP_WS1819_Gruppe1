@@ -87,22 +87,28 @@ public class KommentarBox extends FlowPanel {
 			setText("Editiere deinen Beitrag");
 
 			Button safeButton = new Button("Speichere den Edit", this);
+			Image cancelImage = new Image("images/SVG/timesCircle.png");
+			cancelImage.getElement().setPropertyString("style", "max-width: 25px;");
+			cancelImage.addClickHandler(this);
 			
+			// Creating TextArea and filling it with the Content of the Kommentar
 			String beitragText = parentKB.kommentarContent.getText();
 			TextArea beitragTextArea = new TextArea();
+			beitragTextArea.getElement().setPropertyString("style", "min-width: 590px;");
 			beitragTextArea.setText(beitragText);
-			HTML msg = new HTML("Hier kannst du deinen Text editieren",true);
+			HTML msg = new HTML("Hier kannst du deinen Text editieren", true);
 
 			DockPanel dock = new DockPanel();
 			dock.setSpacing(6);
 			dock.add(beitragTextArea, DockPanel.CENTER);
 			dock.add(safeButton, DockPanel.SOUTH);
+			dock.add(cancelImage, DockPanel.EAST);
 			dock.add(msg, DockPanel.NORTH);
 			
 			safeButton.addClickHandler(new SafeEditedKommentarContentClickHandler(parentKB, beitragTextArea));
 
 			dock.setCellHorizontalAlignment(safeButton, DockPanel.ALIGN_CENTER);
-			dock.setWidth("100%");
+			dock.setWidth("600px");
 			setWidget(dock);
 		}
 		
