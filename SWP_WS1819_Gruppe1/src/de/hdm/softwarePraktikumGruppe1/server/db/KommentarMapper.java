@@ -9,7 +9,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.Beitrag;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Kommentar;
 
 /**
- * @author gianluca
+ * @author GianlucaBernert
  *
  */
 public class KommentarMapper {

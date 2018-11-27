@@ -9,7 +9,7 @@ import java.util.Date;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.*;
 
 /**
- * @author gianluca
+ * @author GianlucaBernert
  * Interface das RemoteService als Superklasse hat und von ReportGeneratorImpl Implementiert wird
  */
 public interface ReportGenerator extends RemoteService{

@@ -4,7 +4,7 @@
 package de.hdm.softwarePraktikumGruppe1.shared.bo;
 
 /**
- * @author gianluca
+ * @author GianlucaBernert
  * Klasse eines Kommentar Objekts das Textbeitrag als Superklasse besitzt
  */
 public class Kommentar extends Textbeitrag{

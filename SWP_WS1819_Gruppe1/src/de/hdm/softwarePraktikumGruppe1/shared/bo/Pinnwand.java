@@ -4,7 +4,7 @@
 package de.hdm.softwarePraktikumGruppe1.shared.bo;
 
 /**
- * @author gianluca
+ * @author GianlucaBernert
  * Klasse eines Pinnwand Objekts das BusinessObject als SuperKlasse besitzt
  */
 public class Pinnwand extends BusinessObject{

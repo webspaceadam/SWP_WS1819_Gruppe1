@@ -2,6 +2,10 @@ package de.hdm.softwarePraktikumGruppe1.client.gui;
 
 import com.google.gwt.user.client.ui.*;
 
+/**
+ * @author AdamGniady
+ *
+ */
 public class SearchBox extends FlowPanel {
 	private FlowPanel inputWrapper = new FlowPanel();
 	private FlowPanel searchWrapper = new FlowPanel();

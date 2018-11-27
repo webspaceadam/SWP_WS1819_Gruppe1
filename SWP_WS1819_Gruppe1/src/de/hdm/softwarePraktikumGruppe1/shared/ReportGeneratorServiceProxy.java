@@ -15,7 +15,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.Pinnwand;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
 /**
- * @author gianluca
+ * @author GianlucaBernert
  * Klasse die ReportGeneratorAsync und ServiceDefTarget implementiert
  */
 public class ReportGeneratorServiceProxy implements ReportGeneratorAsync, ServiceDefTarget{
