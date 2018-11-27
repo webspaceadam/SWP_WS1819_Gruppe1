@@ -9,7 +9,7 @@ package de.hdm.softwarePraktikumGruppe1.shared.bo;
  */
 public class Like extends BusinessObject{
 	
-	private long serialVersionUID;
+	private static final long serialVersionUID = 1L;
 	private int beitragId;
 	private int ownerId;
 	private User owner;

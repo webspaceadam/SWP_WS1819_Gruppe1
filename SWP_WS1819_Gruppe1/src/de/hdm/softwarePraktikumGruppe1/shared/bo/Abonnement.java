@@ -9,7 +9,7 @@ package de.hdm.softwarePraktikumGruppe1.shared.bo;
  */
 public class Abonnement {
 	
-	private long serialVersionUID;
+	private static final long serialVersionUID = 1L;
 	private User owner;
 	private Pinnwand pinnwand;
 	private int ownerId;
