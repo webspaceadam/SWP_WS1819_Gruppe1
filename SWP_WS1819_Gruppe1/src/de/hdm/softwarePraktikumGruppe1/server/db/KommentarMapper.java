@@ -10,21 +10,35 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.Kommentar;
 
 /**
  * @author GianlucaBernert
+ * @author Yesin Soufi
  *
  */
 public class KommentarMapper {
 	
-	private KommentarMapper kMapper;
-	
-	/** 
-	* Konstruktor der Klasse
+	private static KommentarMapper kommentarMapper;
+	/**
+	 * Ein gesch�tzter Konstruktor der weitere Instanzierungen von KommentarMapper Objekten verhindert.
 	 */
 	protected KommentarMapper() {
 	}
 	
 	/**
-	 * Methode zum speichern eines Kommentars
+	 * Stellt die Singeleton-Eigenschaft der Mapperklasse sicher
+	 * @return Sie gibt den KommentarMapper zur�ck.
 	 */
+	
+	public static KommentarMapper kommentarMapper() {
+		if (kommentarMapper == null) {
+			kommentarMapper = new KommentarMapper();
+		} 
+		
+		return kommentarMapper;
+	}
+
+	
+	
+	 //* Methode zum speichern eines Kommentars
+	 
 	public void insertKommentar(Kommentar k) {
 	}
 	
@@ -41,12 +55,6 @@ public class KommentarMapper {
 	public void deleteKommentar(Kommentar k) {
 	}
 	
-	/**
-	 * Methode 
-	 */
-	public KommentarMapper kommentarMapper() {
-		return kMapper;
-	}
 	
 	/**
 	 * Methode zum suchen eines Kommentar anhand der Kommentar ID
