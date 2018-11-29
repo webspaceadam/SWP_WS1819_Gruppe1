@@ -6,7 +6,7 @@ package de.hdm.softwarePraktikumGruppe1.server.db;
 import java.sql.*;
 
 /**
- * @author gianluca
+ * @author GianlucaBernert
  * Wird von allen Mappern benutzt um die Verbindung zur Datenbank zu erstellen
  */
 public class DbVerbindung {

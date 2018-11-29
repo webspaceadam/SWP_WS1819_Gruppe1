@@ -9,10 +9,10 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.ui.*;
 
 /**
- * Die <code>Beitrag</code>-Klasse ist eine Custom-Widget-Class die dafür verwendet wird, 
+ * Die <code>Beitrag</code>-Klasse ist eine Custom-Widget-Class die dafï¿½r verwendet wird, 
  * um einen Beitrag im System korrekt anzuzeigen
  * 
- * @author Adam Gniady
+ * @author AdamGniady
  * @version 1.0
  */
 
@@ -32,18 +32,21 @@ public class BeitragBox extends FlowPanel {
 	private Label creationDate = new Label();
 	private Label likeCountText = new Label();
 	private int likeCount = 0;
-	
-	// Buttons for Social
-	private Button commentBtn = new Button("Kommentiere");
-	private Button likeBtn = new Button("Like");
-	private Button editBtn = new Button("Editiere Beitrag");
 
 	
 	// Paragraph Elements
 	private Label beitragContent = new Label("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis. ");
 	
 	
+	// Images for the Buttons
+	private Image likeHeart = new Image("images/SVG/heart.svg");
+	private Image likeHeartBtn = new Image("images/SVG/heart.svg");
+	private Image replyBtn = new Image("images/SVG/reply.svg");
+	private Image editPenBtn = new Image("images/SVG/pen.svg");
+	
 	// Other Elements for this Widget
+	private FlowPanel heartWrapper = new FlowPanel();
+	private FlowPanel replyWrapper = new FlowPanel();
 	
 	public BeitragBox() {
 		// Date
@@ -63,33 +66,43 @@ public class BeitragBox extends FlowPanel {
 		
 		// Social Wrapper
 		socialWrapper.addStyleName("grid_box_links");
+		likeInfoWrapper.addStyleName("grid_box");
 		
+		editPenBtn.addStyleName("grid_box_element");
+		editPenBtn.addClickHandler(new EditBeitragBoxClickHandler(this));
+		editPenBtn.getElement().setPropertyString("style", "max-width: 25px;");
 		
-		commentBtn.addStyleName("button bg-primary grid_box_element");
-		likeBtn.addStyleName("button bg-primary grid_box_element");
-		editBtn.addStyleName("button bg-primary grid_box_element");
-		editBtn.addClickHandler(new EditBeitragBoxClickHandler(this));
-		editBtn.getElement().setPropertyString("style", "max-width: 25%;");
+		// Social Wrapper
+		heartWrapper.addStyleName("grid_box_element");
+		replyWrapper.addStyleName("grid_box_element");
+		likeHeartBtn.getElement().setPropertyString("style", "max-width: 25px;");
+		replyBtn.getElement().setPropertyString("style", "max-width: 25px;");
 		
-		socialWrapper.add(commentBtn);
-		socialWrapper.add(likeBtn);
+		heartWrapper.add(likeHeartBtn);
+		replyWrapper.add(replyBtn);
+		
+		// ClickHandler Call for Like Action
+		likeHeartBtn.addClickHandler(new LikeCountClickHandler(this));
+		socialWrapper.add(heartWrapper);
+		socialWrapper.add(replyWrapper);
+
 		
 		creationDate.setText("Erstellungszeitpunkt: " + date);
 		
+		// Likecount info
+		likeHeart.setWidth("1rem");
+		likeHeart.addStyleName("small-padding-right");
 		likeCountText.addStyleName("is-size-6 is-italic");
-		likeCountText.setText("Likes auf diesem Beitrag: " + likeCount);
+		likeCountText.setText(" auf diesem Beitrag: " + likeCount);
 		
-		
+		likeInfoWrapper.add(likeHeart);
 		likeInfoWrapper.add(likeCountText);
-		
-		// Add ClickHandler for Button
-		likeBtn.addClickHandler(new LikeCountClickHandler(this));
 		
 		
 		// Add Elements to Wrapper
 		userInfoWrapper.add(accountName);
 		userInfoWrapper.add(nickName);
-		userInfoWrapper.add(editBtn);
+		userInfoWrapper.add(editPenBtn);
 		creationInfoWrapper.add(creationDate);
 		contentWrapper.add(beitragContent);
 		
@@ -109,9 +122,9 @@ public class BeitragBox extends FlowPanel {
 	
 	/**
 	 * Die innere Klasse <code>LikeCountClickHandler</code> implementiert das Clickhandler 
-	 * Interface und dessen dazugehörige <code>onClick(ClickEvent event)</code> Methode.
+	 * Interface und dessen dazugehï¿½rige <code>onClick(ClickEvent event)</code> Methode.
 	 * Diese Methode arbeitet mit der Anzahl der Likes auf einem Beitrag und passt die Anzahl auf den 
-	 * dazugehörigen Beitrag an. 
+	 * dazugehï¿½rigen Beitrag an. 
 	 * @author Adam Gniady
 	 *
 	 */
@@ -125,7 +138,7 @@ public class BeitragBox extends FlowPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			parentBB.likeCount += 1;
-			parentBB.likeCountText.setText("Likes auf diesem Beitrag: " + parentBB.likeCount);
+			parentBB.likeCountText.setText(" auf diesem Beitrag: " + parentBB.likeCount);
 			GWT.log("Like Count is: " + parentBB.likeCount);
 		}
 	}
@@ -145,8 +158,8 @@ public class BeitragBox extends FlowPanel {
 	
 	/**
 	 * Die innere Klasse <code>EditBeitragDialogBox</code> implementiert das Clickhandler 
-	 * Interface und dessen dazugehörige <code>onClick(ClickEvent event)</code> Methode.
-	 * Diese Methode ist dafür zuständig die Editierung eines Beitrags zu ermöglichen.
+	 * Interface und dessen dazugehï¿½rige <code>onClick(ClickEvent event)</code> Methode.
+	 * Diese Methode ist dafï¿½r zustï¿½ndig die Editierung eines Beitrags zu ermï¿½glichen.
 	 * @author Adam Gniady
 	 *
 	 */
@@ -158,10 +171,17 @@ public class BeitragBox extends FlowPanel {
 			
 			setText("Editiere deinen Beitrag");
 
+
 			Button safeButton = new Button("Speichere den Edit", this);
+			safeButton.addStyleName("button bg-primary");
+			Image cancelImage = new Image("images/SVG/timesCircle.png");
+			cancelImage.getElement().setPropertyString("style", "max-width: 25px;");
+			cancelImage.addClickHandler(this);
 			
+			// Creating TextArea and filling it with the content of the "Beitrag".
 			String beitragText = parentBB.beitragContent.getText();
 			TextArea beitragTextArea = new TextArea();
+			beitragTextArea.getElement().setPropertyString("style", "min-width: 590px;");
 			beitragTextArea.setText(beitragText);
 			HTML msg = new HTML("Hier kannst du deinen Text editieren",true);
 
@@ -169,12 +189,13 @@ public class BeitragBox extends FlowPanel {
 			dock.setSpacing(6);
 			dock.add(beitragTextArea, DockPanel.CENTER);
 			dock.add(safeButton, DockPanel.SOUTH);
+			dock.add(cancelImage, DockPanel.EAST);
 			dock.add(msg, DockPanel.NORTH);
 			
 			safeButton.addClickHandler(new SafeEditedContentClickHandler(parentBB, beitragTextArea));
 
 			dock.setCellHorizontalAlignment(safeButton, DockPanel.ALIGN_CENTER);
-			dock.setWidth("100%");
+			dock.setWidth("600px");
 			setWidget(dock);
 		}
 

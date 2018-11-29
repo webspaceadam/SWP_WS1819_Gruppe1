@@ -9,15 +9,15 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.Abonnement;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Beitrag;
 
 /**
- * @author gianluca
+ * @author GianlucaBernert
  *
  */
 public class BeitragMapper {
 	
-	private static BeitragMapper BeitragMapper;
+	private BeitragMapper beitragMapper;
 	
 	/**
-	 * Ein geschützter Konstruktor der weitere Instanzierungen von AbonnementMapper Objekten verhindert.
+	 * Ein geschï¿½tzter Konstruktor der weitere Instanzierungen von AbonnementMapper Objekten verhindert.
 	 */
 	
 	protected BeitragMapper() {
@@ -25,7 +25,7 @@ public class BeitragMapper {
 	
 	/**
 	 * Stellt die Singeleton-Eigenschaft der Mapperklasse sicher
-	 * @return Sie gibt den AbonnementMapper zurück.
+	 * @return Sie gibt den AbonnementMapper zurï¿½ck.
 	 */
 	
 	public static BeitragMapper BeitragMapper() {
@@ -60,7 +60,7 @@ public class BeitragMapper {
 	 * Methode 
 	 */
 	public BeitragMapper beitragMapper() {
-		return bMapper;
+		return beitragMapper;
 	}
 	
 	/**

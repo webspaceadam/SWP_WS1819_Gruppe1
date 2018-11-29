@@ -18,7 +18,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.Like;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
 /**
- * @author gianluca
+ * @author GianlucaBernert
  *
  */
 public interface Pinnwandverwaltung {

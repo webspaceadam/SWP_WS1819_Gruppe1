@@ -9,7 +9,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.*;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.*;
 
 /**
- * @author gianluca
+ * @author GianlucaBernert
  * Klasse die RemoveServerServlet als Superklasse besitzt und das Interface ReportGenerator implementiert
  */
 public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportGenerator{

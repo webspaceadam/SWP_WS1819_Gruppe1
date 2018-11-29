@@ -4,7 +4,7 @@
 package de.hdm.softwarePraktikumGruppe1.shared.bo;
 
 /**
- * @author gianluca
+ * @author GianlucaBernert
  * Klasse eines Abonnement Objekts das BusinessObject als Superklasse besitzt
  */
 public class Abonnement {

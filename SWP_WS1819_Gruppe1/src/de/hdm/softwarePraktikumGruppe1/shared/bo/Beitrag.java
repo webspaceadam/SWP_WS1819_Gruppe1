@@ -6,7 +6,7 @@ package de.hdm.softwarePraktikumGruppe1.shared.bo;
 import java.util.*;
 
 /**
- * @author gianluca
+ * @author GianlucaBernert
  * Klasse eines Beitrag Objekts das Textbeitrag als Superklasse besitzt
  */
 public class Beitrag extends Textbeitrag{

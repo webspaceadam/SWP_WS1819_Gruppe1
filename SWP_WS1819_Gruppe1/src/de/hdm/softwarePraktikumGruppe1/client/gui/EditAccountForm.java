@@ -2,6 +2,10 @@ package de.hdm.softwarePraktikumGruppe1.client.gui;
 
 import com.google.gwt.user.client.ui.*;
 
+/**
+ * @author AdamGniady
+ *
+ */
 public class EditAccountForm extends FlowPanel {
 	// Whole Wrappers
 	private FlowPanel nickWrapper = new FlowPanel();

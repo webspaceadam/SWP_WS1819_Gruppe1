@@ -9,7 +9,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.Pinnwand;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
 /**
- * @author gianluca
+ * @author Gianluca Bernert
  *
  */
 public class UserMapper {
