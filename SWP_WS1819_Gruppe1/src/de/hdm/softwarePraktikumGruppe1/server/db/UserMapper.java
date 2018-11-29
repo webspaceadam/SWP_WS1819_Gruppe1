@@ -11,6 +11,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 /**
  * @author Gianluca Bernert
  * @author Yesin Soufi
+ * 
  *
  */
 public class UserMapper {
