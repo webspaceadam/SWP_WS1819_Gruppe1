@@ -18,7 +18,7 @@ public class UserMapper {
 	
 	private static UserMapper userMapper;
 	/**
-	 * Ein gesch�tzter Konstruktor der weitere Instanzierungen von AbonnementMapper Objekten verhindert.
+	 * Ein gesch�tzter Konstruktor der weitere Instanzierungen von UserMapper Objekten verhindert.
 	 */
 	protected UserMapper() {
 	}
