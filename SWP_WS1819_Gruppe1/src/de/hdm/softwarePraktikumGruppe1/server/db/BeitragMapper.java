@@ -16,11 +16,26 @@ public class BeitragMapper {
 	
 	private BeitragMapper beitragMapper;
 	
-	/** 
-	* Konstruktor der Klasse
+	/**
+	 * Ein gesch�tzter Konstruktor der weitere Instanzierungen von AbonnementMapper Objekten verhindert.
 	 */
+	
 	protected BeitragMapper() {
 	}
+	
+	/**
+	 * Stellt die Singeleton-Eigenschaft der Mapperklasse sicher
+	 * @return Sie gibt den AbonnementMapper zur�ck.
+	 */
+	
+	public static BeitragMapper BeitragMapper() {
+		if (BeitragMapper == null) {
+			BeitragMapper = new BeitragMapper();
+		}
+		return BeitragMapper;
+	}
+	
+	
 	
 	/**
 	 * Methode zum speichern eines Beitrags
