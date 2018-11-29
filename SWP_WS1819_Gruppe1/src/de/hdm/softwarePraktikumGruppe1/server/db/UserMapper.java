@@ -10,16 +10,30 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
 /**
  * @author Gianluca Bernert
+ * @author Yesin Soufi
+ * 
  *
  */
 public class UserMapper {
 	
-	private UserMapper uMapper;
-	
+	private static UserMapper userMapper;
 	/**
-	 * Konstruktor der Klasse
+	 * Ein gesch�tzter Konstruktor der weitere Instanzierungen von UserMapper Objekten verhindert.
 	 */
 	protected UserMapper() {
+	}
+	
+	/**
+	 * Stellt die Singeleton-Eigenschaft der Mapperklasse sicher
+	 * @return Sie gibt den UserMapper zur�ck.
+	 */
+	
+	public static UserMapper UserMapper() {
+		if (userMapper == null) {
+			userMapper = new UserMapper();
+		} 
+		
+		return userMapper;
 	}
 	/**
 	 * Methode zum speichern eines User
