@@ -21,14 +21,34 @@ public class KommentarBox extends FlowPanel {
 	private HTML hrElement = new HTML("<hr/>");
 	
 	// Content des Kommentars
-	private Label accountName = new Label("John Smith");
-	private Label nickName = new Label("@john");
-	private Label kommentarContent = new Label("Some Kommentar Content about Kommentars");
+	private Label accountName = new Label();
+	private Label nickName = new Label();
+	private Label kommentarContent = new Label();
 	private Label creationDate = new Label();
 	
+	// Additional Information
 	private Image editPenBtn = new Image("images/SVG/pen.svg");
+	private BeitragBox parentBeitragBox;
+	private Button removeKommentarBtn = new Button("Delete");
 	
 	public KommentarBox() {
+		// Adding Author relationship
+		accountName.setText("Johny Smith");
+		nickName.setText("@" + "johnnysmith");
+		kommentarContent.setText("Some Kommentarstuff inside a Kommentar");
+	}
+	
+	public KommentarBox(String inhalt, BeitragBox parentBB) {
+		// Adding Author relationship
+		accountName.setText("Johny Smith");
+		nickName.setText("@" + "johnnysmith");
+		
+		// Adding the Content
+		kommentarContent.setText(inhalt);
+		this.parentBeitragBox = parentBB;
+	}
+	
+	public void onLoad() {
 		// Date Stuff
 		Date now = new Date();
 		DateTimeFormat fmt = DateTimeFormat.getFormat("HH:mm:ss, EEEE, dd MMMM, yyyy");
@@ -56,14 +76,13 @@ public class KommentarBox extends FlowPanel {
 		parentVerticalPanel.add(userInfoWrapper);
 		parentVerticalPanel.add(creationInfoWrapper);
 		parentVerticalPanel.add(contentWrapper);
+		parentVerticalPanel.add(removeKommentarBtn);
+		
+		removeKommentarBtn.addClickHandler(new removeKommentarFromParent(this));
 		
 		
 		this.add(hrElement);
-		this.add(parentVerticalPanel);
-	}
-	
-	public void onLoad() {
-		
+		this.add(parentVerticalPanel);		
 	}
 	
 	private class EditKommentarBoxClickHandler implements ClickHandler {
@@ -135,6 +154,27 @@ public class KommentarBox extends FlowPanel {
 				parentKB.kommentarContent.setText(newContent.getValue());
 			}
 			
+		}
+		
+	}
+	
+	/**
+	 * This Method calls a the <code>deleteKommentar</code> Method in the 
+	 * parent BeitragBox. 
+	 * 
+	 * @author AdamGniady
+	 *
+	 */
+	private class removeKommentarFromParent implements ClickHandler {
+		KommentarBox thisKommentarBox;
+		
+		public removeKommentarFromParent(KommentarBox thisKB) {
+			thisKommentarBox = thisKB;
+		}
+		
+		@Override
+		public void onClick(ClickEvent event) {
+			parentBeitragBox.deleteKommentar(thisKommentarBox);
 		}
 		
 	}
