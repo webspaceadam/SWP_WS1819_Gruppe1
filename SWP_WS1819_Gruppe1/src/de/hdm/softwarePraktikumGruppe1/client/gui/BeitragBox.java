@@ -48,6 +48,13 @@ public class BeitragBox extends FlowPanel {
 	private FlowPanel heartWrapper = new FlowPanel();
 	private FlowPanel replyWrapper = new FlowPanel();
 	
+	// Creating Kommentar
+	private VerticalPanel createKommentarWrapper = new VerticalPanel();
+	private HTML hrElementKommentar = new HTML("<hr/>");
+	private TextArea kommentarTextArea = new TextArea();
+	private Button addKommentarBtn = new Button("Poste Kommentar");
+	
+	
 	public BeitragBox() {
 		// Date
 		Date now = new Date();
@@ -85,8 +92,6 @@ public class BeitragBox extends FlowPanel {
 		likeHeartBtn.addClickHandler(new LikeCountClickHandler(this));
 		socialWrapper.add(heartWrapper);
 		socialWrapper.add(replyWrapper);
-
-		
 		creationDate.setText("Erstellungszeitpunkt: " + date);
 		
 		// Likecount info
@@ -95,8 +100,22 @@ public class BeitragBox extends FlowPanel {
 		likeCountText.addStyleName("is-size-6 is-italic");
 		likeCountText.setText(" auf diesem Beitrag: " + likeCount);
 		
+		// Adding Elements to the Wrapper
 		likeInfoWrapper.add(likeHeart);
 		likeInfoWrapper.add(likeCountText);
+		
+		// Here we can create a Kommentar
+		createKommentarWrapper.setWidth("100%");
+		createKommentarWrapper.addStyleName("post_content");
+		kommentarTextArea.getElement().setPropertyString("placeholder", "Erstelle hier deinen Kommentar!");
+		kommentarTextArea.setWidth("100%");
+		kommentarTextArea.addStyleName("textarea content_margin control");
+		addKommentarBtn.addStyleName("button bg-primary");
+		
+		// Adding Elements to KommentarParent
+		createKommentarWrapper.add(hrElementKommentar);
+		createKommentarWrapper.add(kommentarTextArea);
+		createKommentarWrapper.add(addKommentarBtn);
 		
 		
 		// Add Elements to Wrapper
@@ -114,6 +133,7 @@ public class BeitragBox extends FlowPanel {
 		this.add(likeInfoWrapper);
 		this.add(hrElement);
 		this.add(socialWrapper);
+		this.add(createKommentarWrapper);
 	}
 	
 	public void onLoad() {
