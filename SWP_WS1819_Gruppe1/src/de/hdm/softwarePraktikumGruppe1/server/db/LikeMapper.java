@@ -10,18 +10,31 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.Like;
 
 /**
  * @author GianlucaBernert
+ * @author Yesin Soufi
  *
  */
 public class LikeMapper {
 	
-	private LikeMapper lMapper;
-	
-	/** 
-	* Konstruktor der Klasse
+	private static LikeMapper likeMapper;
+	/**
+	 * Ein gesch�tzter Konstruktor der weitere Instanzierungen von LikeMapper Objekten verhindert.
 	 */
 	protected LikeMapper() {
 	}
 	
+	/**
+	 * Stellt die Singeleton-Eigenschaft der Mapperklasse sicher
+	 * @return Sie gibt den LikeMapper zur�ck.
+	 */
+	
+	public static LikeMapper likeMapper() {
+		if (likeMapper == null) {
+			likeMapper = new LikeMapper();
+		} 
+		
+		return likeMapper;
+	}
+
 	/**
 	 * Methode zum speichern eines Likes
 	 */
@@ -34,12 +47,7 @@ public class LikeMapper {
 	public void deleteLike(Like l) {
 	}
 	
-	/**
-	 * Methode 
-	 */
-	public LikeMapper likeMapper() {
-		return lMapper;
-	}
+	
 	
 	/**
 	 * Methode zum zählen aler Likes eines Beitrags

@@ -10,14 +10,15 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.Beitrag;
 
 /**
  * @author GianlucaBernert
+ * @author Yesin Soufi
  *
  */
 public class BeitragMapper {
 	
-	private BeitragMapper beitragMapper;
+	private static BeitragMapper beitragMapper;
 	
 	/**
-	 * Ein gesch�tzter Konstruktor der weitere Instanzierungen von AbonnementMapper Objekten verhindert.
+	 * Ein gesch�tzter Konstruktor der weitere Instanzierungen von BeitragMapper Objekten verhindert.
 	 */
 	
 	protected BeitragMapper() {
@@ -25,14 +26,14 @@ public class BeitragMapper {
 	
 	/**
 	 * Stellt die Singeleton-Eigenschaft der Mapperklasse sicher
-	 * @return Sie gibt den AbonnementMapper zur�ck.
+	 * @return Sie gibt den BeitragMapper zur�ck.
 	 */
 	
-	public static BeitragMapper BeitragMapper() {
-		if (BeitragMapper == null) {
-			BeitragMapper = new BeitragMapper();
+	public static BeitragMapper beitragMapper() {
+		if (beitragMapper == null) {
+			beitragMapper = new BeitragMapper();
 		}
-		return BeitragMapper;
+		return beitragMapper;
 	}
 	
 	
@@ -56,12 +57,6 @@ public class BeitragMapper {
 	public void deleteBeitrag(Beitrag b) {
 	}
 	
-	/**
-	 * Methode 
-	 */
-	public BeitragMapper beitragMapper() {
-		return beitragMapper;
-	}
 	
 	/**
 	 * Methode zum suchen eines Beitrags anhand der Beitrags ID
