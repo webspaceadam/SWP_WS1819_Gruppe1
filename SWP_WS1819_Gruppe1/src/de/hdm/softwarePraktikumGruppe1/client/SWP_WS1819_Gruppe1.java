@@ -41,9 +41,6 @@ public class SWP_WS1819_Gruppe1 implements EntryPoint {
 		CreateBeitragBox cB = new CreateBeitragBox();
 		BeitragBox b1 = new BeitragBox();
 		BeitragBox b2 = new BeitragBox();
-		KommentarBox k1 = new KommentarBox();
-		
-		b1.add(k1);
 		
 		linkeSeite.add(pB);
 		rechteSeite.add(cB);

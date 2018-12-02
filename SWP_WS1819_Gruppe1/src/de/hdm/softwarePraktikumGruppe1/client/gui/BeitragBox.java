@@ -1,6 +1,7 @@
 package de.hdm.softwarePraktikumGruppe1.client.gui;
 
 import java.util.Date;
+import java.util.Vector;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -17,6 +18,8 @@ import com.google.gwt.user.client.ui.*;
  */
 
 public class BeitragBox extends FlowPanel {
+	private Vector<KommentarBox> kommentarsOfBeitrag = new Vector<KommentarBox>();
+	
 	// Panels for the Element
 	private VerticalPanel parentVerticalPanel = new VerticalPanel();
 	private FlowPanel userInfoWrapper = new FlowPanel();
@@ -32,7 +35,6 @@ public class BeitragBox extends FlowPanel {
 	private Label creationDate = new Label();
 	private Label likeCountText = new Label();
 	private int likeCount = 0;
-
 	
 	// Paragraph Elements
 	private Label beitragContent = new Label("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis. ");
@@ -54,8 +56,16 @@ public class BeitragBox extends FlowPanel {
 	private TextArea kommentarTextArea = new TextArea();
 	private Button addKommentarBtn = new Button("Poste Kommentar");
 	
+	// Constructor for the creation of Beitrag
+	public BeitragBox(String content) {
+		this.beitragContent.setText(content);
+	}
 	
 	public BeitragBox() {
+		
+	}
+	
+	public void onLoad() {
 		// Date
 		Date now = new Date();
 		DateTimeFormat fmt = DateTimeFormat.getFormat("HH:mm:ss, EEEE, dd MMMM, yyyy");
@@ -135,10 +145,6 @@ public class BeitragBox extends FlowPanel {
 		this.add(hrElement);
 		this.add(socialWrapper);
 		this.add(createKommentarWrapper);
-	}
-	
-	public void onLoad() {
-		
 	}
 	
 	/**
@@ -257,7 +263,19 @@ public class BeitragBox extends FlowPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			createKommentarWrapper.setVisible(false);
+			String kommentarContent = kommentarTextArea.getValue();
+			erzeugeKommentar(kommentarContent);
+			GWT.log(kommentarsOfBeitrag.toString());
+			kommentarTextArea.setText("");
 		}
 		
 	}
+	
+	public KommentarBox erzeugeKommentar(String commentarContent) {
+		KommentarBox neueKommentarBox = new KommentarBox(commentarContent, this);
+		kommentarsOfBeitrag.addElement(neueKommentarBox);
+		this.add(kommentarsOfBeitrag.lastElement());
+		return neueKommentarBox; 
+	}
+	
 }

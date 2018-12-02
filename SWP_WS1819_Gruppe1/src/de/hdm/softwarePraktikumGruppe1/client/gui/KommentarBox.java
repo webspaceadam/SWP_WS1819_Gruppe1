@@ -21,14 +21,33 @@ public class KommentarBox extends FlowPanel {
 	private HTML hrElement = new HTML("<hr/>");
 	
 	// Content des Kommentars
-	private Label accountName = new Label("John Smith");
-	private Label nickName = new Label("@john");
-	private Label kommentarContent = new Label("Some Kommentar Content about Kommentars");
+	private Label accountName = new Label();
+	private Label nickName = new Label();
+	private Label kommentarContent = new Label();
 	private Label creationDate = new Label();
 	
+	// Additional Information
 	private Image editPenBtn = new Image("images/SVG/pen.svg");
+	private BeitragBox parentBB;
 	
 	public KommentarBox() {
+		// Adding Author relationship
+		accountName.setText("Johny Smith");
+		nickName.setText("@" + "johnnysmith");
+		kommentarContent.setText("Some Kommentarstuff inside a Kommentar");
+	}
+	
+	public KommentarBox(String inhalt, BeitragBox parentBB) {
+		// Adding Author relationship
+		accountName.setText("Johny Smith");
+		nickName.setText("@" + "johnnysmith");
+		
+		// Adding the Content
+		kommentarContent.setText(inhalt);
+		this.parentBB = parentBB;
+	}
+	
+	public void onLoad() {
 		// Date Stuff
 		Date now = new Date();
 		DateTimeFormat fmt = DateTimeFormat.getFormat("HH:mm:ss, EEEE, dd MMMM, yyyy");
@@ -59,11 +78,7 @@ public class KommentarBox extends FlowPanel {
 		
 		
 		this.add(hrElement);
-		this.add(parentVerticalPanel);
-	}
-	
-	public void onLoad() {
-		
+		this.add(parentVerticalPanel);		
 	}
 	
 	private class EditKommentarBoxClickHandler implements ClickHandler {
