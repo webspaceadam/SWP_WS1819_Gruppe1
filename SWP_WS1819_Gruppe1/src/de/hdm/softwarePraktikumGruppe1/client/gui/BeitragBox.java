@@ -278,4 +278,8 @@ public class BeitragBox extends FlowPanel {
 		return neueKommentarBox; 
 	}
 	
+	public void deleteKommentar(KommentarBox deletableKB) {
+		deletableKB.removeFromParent();
+	}
+	
 }

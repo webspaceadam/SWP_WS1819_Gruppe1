@@ -28,7 +28,8 @@ public class KommentarBox extends FlowPanel {
 	
 	// Additional Information
 	private Image editPenBtn = new Image("images/SVG/pen.svg");
-	private BeitragBox parentBB;
+	private BeitragBox parentBeitragBox;
+	private Button removeKommentarBtn = new Button("Delete");
 	
 	public KommentarBox() {
 		// Adding Author relationship
@@ -44,7 +45,7 @@ public class KommentarBox extends FlowPanel {
 		
 		// Adding the Content
 		kommentarContent.setText(inhalt);
-		this.parentBB = parentBB;
+		this.parentBeitragBox = parentBB;
 	}
 	
 	public void onLoad() {
@@ -75,6 +76,9 @@ public class KommentarBox extends FlowPanel {
 		parentVerticalPanel.add(userInfoWrapper);
 		parentVerticalPanel.add(creationInfoWrapper);
 		parentVerticalPanel.add(contentWrapper);
+		parentVerticalPanel.add(removeKommentarBtn);
+		
+		removeKommentarBtn.addClickHandler(new removeKommentarFromParent(this));
 		
 		
 		this.add(hrElement);
@@ -150,6 +154,27 @@ public class KommentarBox extends FlowPanel {
 				parentKB.kommentarContent.setText(newContent.getValue());
 			}
 			
+		}
+		
+	}
+	
+	/**
+	 * This Method calls a the <code>deleteKommentar</code> Method in the 
+	 * parent BeitragBox. 
+	 * 
+	 * @author AdamGniady
+	 *
+	 */
+	private class removeKommentarFromParent implements ClickHandler {
+		KommentarBox thisKommentarBox;
+		
+		public removeKommentarFromParent(KommentarBox thisKB) {
+			thisKommentarBox = thisKB;
+		}
+		
+		@Override
+		public void onClick(ClickEvent event) {
+			parentBeitragBox.deleteKommentar(thisKommentarBox);
 		}
 		
 	}
