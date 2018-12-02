@@ -37,8 +37,7 @@ public class BeitragBox extends FlowPanel {
 	private int likeCount = 0;
 	
 	// Paragraph Elements
-	private Label beitragContent = new Label("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis. ");
-	
+	private Label beitragContent = new Label();
 	
 	// Images for the Buttons
 	private Image likeHeart = new Image("images/SVG/heart.svg");
@@ -49,6 +48,7 @@ public class BeitragBox extends FlowPanel {
 	// Other Elements for this Widget
 	private FlowPanel heartWrapper = new FlowPanel();
 	private FlowPanel replyWrapper = new FlowPanel();
+	private PinnwandBox parentPinnwandBox;
 	
 	// Creating Kommentar
 	private VerticalPanel createKommentarWrapper = new VerticalPanel();
@@ -57,7 +57,8 @@ public class BeitragBox extends FlowPanel {
 	private Button addKommentarBtn = new Button("Poste Kommentar");
 	
 	// Constructor for the creation of Beitrag
-	public BeitragBox(String content) {
+	public BeitragBox(String content, PinnwandBox pb) {
+		this.parentPinnwandBox = pb;
 		this.beitragContent.setText(content);
 	}
 	
@@ -198,7 +199,6 @@ public class BeitragBox extends FlowPanel {
 			
 			setText("Editiere deinen Beitrag");
 
-
 			Button safeButton = new Button("Speichere den Edit", this);
 			safeButton.addStyleName("button bg-primary");
 			Image cancelImage = new Image("images/SVG/timesCircle.png");
@@ -211,12 +211,17 @@ public class BeitragBox extends FlowPanel {
 			beitragTextArea.getElement().setPropertyString("style", "min-width: 590px;");
 			beitragTextArea.setText(beitragText);
 			HTML msg = new HTML("Hier kannst du deinen Text editieren",true);
+			
+			// Create the Button to make Beitrag deletable
+			Button deleteBtn = new Button("Delete");
+			deleteBtn.addClickHandler(new removeBeitragFromParent(parentBB, this));
 
 			DockPanel dock = new DockPanel();
 			dock.setSpacing(6);
 			dock.add(beitragTextArea, DockPanel.CENTER);
 			dock.add(safeButton, DockPanel.SOUTH);
 			dock.add(cancelImage, DockPanel.EAST);
+			dock.add(deleteBtn, DockPanel.EAST);
 			dock.add(msg, DockPanel.NORTH);
 			
 			safeButton.addClickHandler(new SafeEditedContentClickHandler(parentBB, beitragTextArea));
@@ -224,6 +229,10 @@ public class BeitragBox extends FlowPanel {
 			dock.setCellHorizontalAlignment(safeButton, DockPanel.ALIGN_CENTER);
 			dock.setWidth("600px");
 			setWidget(dock);
+		}
+		
+		public void hideElement() {
+			hide();
 		}
 
 		@Override
@@ -264,22 +273,57 @@ public class BeitragBox extends FlowPanel {
 		public void onClick(ClickEvent event) {
 			createKommentarWrapper.setVisible(false);
 			String kommentarContent = kommentarTextArea.getValue();
-			erzeugeKommentar(kommentarContent);
+			createKommentar(kommentarContent);
 			GWT.log(kommentarsOfBeitrag.toString());
 			kommentarTextArea.setText("");
 		}
 		
 	}
 	
-	public KommentarBox erzeugeKommentar(String commentarContent) {
-		KommentarBox neueKommentarBox = new KommentarBox(commentarContent, this);
-		kommentarsOfBeitrag.addElement(neueKommentarBox);
+	public KommentarBox createKommentar(String commentarContent) {
+		KommentarBox newKommentarBox = new KommentarBox(commentarContent, this);
+		kommentarsOfBeitrag.addElement(newKommentarBox);
 		this.add(kommentarsOfBeitrag.lastElement());
-		return neueKommentarBox; 
+		
+		return newKommentarBox; 
 	}
 	
+	/**
+	 * This Method enables the User to delete KommentarBox-Elements from the
+	 * <code>kommentarsOfBeitrag</code> Vector. It gets its parameters from 
+	 * the KommentarBox and its <code>ClickHandler</code> called <code>removeFromParent</code>.
+	 * 
+	 * @param deletableKB passed by the ClickHandler of the KommentarBox Class.
+	 * @author AdamGniady
+	 */
 	public void deleteKommentar(KommentarBox deletableKB) {
 		deletableKB.removeFromParent();
+		
+		kommentarsOfBeitrag.removeElement(deletableKB);
+	}
+	
+	/**
+	 * This Method calls a the <code>deleteBeitrag</code> Method in the 
+	 * parent PinnwandBox. 
+	 * 
+	 * @author AdamGniady
+	 *
+	 */
+	private class removeBeitragFromParent implements ClickHandler {
+		BeitragBox thisBeitragBox;
+		EditBeitragDialogBox parentDialogBox;
+		
+		public removeBeitragFromParent(BeitragBox thisBB, EditBeitragDialogBox beitragDialogBox) {
+			thisBeitragBox = thisBB;
+			this.parentDialogBox = beitragDialogBox;
+		}
+		
+		@Override
+		public void onClick(ClickEvent event) {
+			parentPinnwandBox.deleteBeitrag(thisBeitragBox);
+			parentDialogBox.hideElement();
+		}
+		
 	}
 	
 }
