@@ -8,7 +8,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.Like;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Pinnwand;
 
 /**
- * @author gianluca
+ * @author GianlucaBernert
  *
  */
 public class PinnwandMapper {

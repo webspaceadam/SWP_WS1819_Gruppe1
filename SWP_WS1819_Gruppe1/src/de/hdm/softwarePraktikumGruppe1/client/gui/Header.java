@@ -5,7 +5,7 @@ import com.google.gwt.user.client.ui.*;
  * Die <code>Header</code>-Klasse ist eine Custom-Widget-Class die daf�r verwendet wird, 
  * alle wichtigen Bereiche des Systems zu erreichen. 
  * 
- * @author Adam Gniady
+ * @author AdamGniady
  * @version 1.0
  */
 

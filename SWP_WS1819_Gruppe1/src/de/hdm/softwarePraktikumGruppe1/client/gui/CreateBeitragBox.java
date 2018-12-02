@@ -5,7 +5,7 @@ import com.google.gwt.user.client.ui.*;
 /**
  * Die Klasse <code>CreateBeitragBox</code> enthält alle Elemente die zum Erstellen eines  
  * Beitrags benötigt werden. 
- *@author Adam Gniady
+ *@author AdamGniady
  */
 
 public class CreateBeitragBox extends FlowPanel {
@@ -18,8 +18,11 @@ public class CreateBeitragBox extends FlowPanel {
 	private TextArea textArea = new TextArea();
 	private Button submitBtn = new Button("Beitrag erstellen");
 	
-	
+
 	public CreateBeitragBox() {
+	}
+	
+	public void onLoad() {
 		this.addStyleName("post radiusless content_margin");
 		parentWrapper.addStyleName("post_content");
 		
@@ -27,7 +30,6 @@ public class CreateBeitragBox extends FlowPanel {
 		contentWrapper.addStyleName("content_margin");
 		textArea.addStyleName("control textarea is-fullwidth");
 		textArea.getElement().setPropertyString("placeholder", "Erstelle einen neuen Beitrag!");
-		
 		contentWrapper.add(textArea);
 		
 		// Button Wrapper
@@ -44,11 +46,5 @@ public class CreateBeitragBox extends FlowPanel {
 		parentWrapper.add(btnWrapper);
 		
 		this.add(parentWrapper);
-		
 	}
-	
-	public void onLoad() {
-		// TODO
-	}
-
 }

@@ -26,7 +26,7 @@ public class DBConnection {
 	/**
 	 * Methode zum erzeugen einer Verbindung zur Datenbank. Durch
 	 * DBConnection.connection kann diese statische Methode aufgerufen werden.
-	 * stellt die Singelton-Eigenschaft sicher, weil sie dafür sorgt, dass nur eine
+	 * stellt die Singelton-Eigenschaft sicher, weil sie dafÃ¼r sorgt, dass nur eine
 	 * einzige Instanz von DbVerbindung existiert.
 	 */
 	public static Connection connection() {
@@ -37,7 +37,7 @@ public class DBConnection {
 
 			try {
 				if (SystemProperty.environment.value() == SystemProperty.Environment.Value.Production) {// Library noch
-																										// hinzufügen(wegen
+																										// hinzufÃ¼gen(wegen
 																										// SystemProperty)
 					// Load the class that provides the new
 					// "jdbc:google:mysql://" prefix.
@@ -67,7 +67,7 @@ public class DBConnection {
 		}
 
 		/**
-		 * Zurückgegeben der Verbindung
+		 * ZurÃ¼ckgegeben der Verbindung
 		 */
 		return con;
 

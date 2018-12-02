@@ -2,8 +2,12 @@ package de.hdm.softwarePraktikumGruppe1.client.gui;
 
 import com.google.gwt.user.client.ui.*;
 
+/**
+ * @author AdamGniady
+ *
+ */
 public class AuthenticationForm extends FlowPanel {
-	private Label welcomeLabel = new Label("Zugang über dein Google Konto");
+	private Label welcomeLabel = new Label("Zugang ï¿½ber dein Google Konto");
 	private Button googleBtn = new Button();
 	private Image imgGoogle = new Image("images/googleLogo.png");
 	private Image pinnersLogo = new Image("images/SVG/standard_logo.svg");

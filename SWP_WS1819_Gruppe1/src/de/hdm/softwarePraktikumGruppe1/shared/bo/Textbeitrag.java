@@ -4,7 +4,7 @@
 package de.hdm.softwarePraktikumGruppe1.shared.bo;
 
 /**
- * @author gianluca
+ * @author GianlucaBernert
  * Klasse eines Textbeitrags Objekts das BusinessObject als Superklasse besitzt 
  * und selbst Superklasse von Beitrag und Kommentar ist 
  */

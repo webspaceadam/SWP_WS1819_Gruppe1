@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.*;
 
 /**
- * @author Gianluca
+ * @author GianlucaBernert
  * BusinessObject Klasse als Superklasse für Abonnement, Like, Pinnwand, Textbeitrag und User
  */
 public abstract class BusinessObject implements Serializable{
