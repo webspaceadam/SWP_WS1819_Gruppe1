@@ -25,7 +25,7 @@ public class DBConnection {
 	/**
 	 * Methode zum erzeugen einer Verbindung zur Datenbank
 	 */
-	public Connection connection() {
+	public static Connection connection() {
 		if (con == null) {
 
 			String url = null;
