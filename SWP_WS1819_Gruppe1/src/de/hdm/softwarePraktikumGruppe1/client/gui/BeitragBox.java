@@ -127,7 +127,6 @@ public class BeitragBox extends FlowPanel {
 		creationInfoWrapper.add(creationDate);
 		contentWrapper.add(beitragContent);
 		
-		
 		// Add Wrappers to Element
 		this.add(userInfoWrapper);
 		this.add(creationInfoWrapper);
