@@ -84,6 +84,7 @@ public class BeitragBox extends FlowPanel {
 		replyWrapper.addStyleName("grid_box_element");
 		likeHeartBtn.getElement().setPropertyString("style", "max-width: 25px;");
 		replyBtn.getElement().setPropertyString("style", "max-width: 25px;");
+		replyBtn.addClickHandler(new showKommentarWrapperClickHandler());
 		
 		heartWrapper.add(likeHeartBtn);
 		replyWrapper.add(replyBtn);
@@ -111,12 +112,13 @@ public class BeitragBox extends FlowPanel {
 		kommentarTextArea.setWidth("100%");
 		kommentarTextArea.addStyleName("textarea content_margin control");
 		addKommentarBtn.addStyleName("button bg-primary");
+		addKommentarBtn.addClickHandler(new addKommentarClickHandler());
 		
 		// Adding Elements to KommentarParent
 		createKommentarWrapper.add(hrElementKommentar);
 		createKommentarWrapper.add(kommentarTextArea);
 		createKommentarWrapper.add(addKommentarBtn);
-		
+		createKommentarWrapper.setVisible(false);
 		
 		// Add Elements to Wrapper
 		userInfoWrapper.add(accountName);
@@ -240,5 +242,23 @@ public class BeitragBox extends FlowPanel {
 			}
 			
 		}
+	}
+	
+	private class showKommentarWrapperClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			createKommentarWrapper.setVisible(true);
+		}
+		
+	}
+	
+	private class addKommentarClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			createKommentarWrapper.setVisible(false);
+		}
+		
 	}
 }
