@@ -12,8 +12,6 @@ import com.google.appengine.api.rdbms.AppEngineDriver; //google play service SDK
  */
 public class DBConnection {
 	
-	
-	
 	/**
 	 * Sie speichert die einzige Instanz dieser Klasse.
 	 * Sie ist durch static nur einmal für alle sämtlichen Instanzen dieser Klasse vorhanden
@@ -26,9 +24,8 @@ public class DBConnection {
 	/**Die URL, mit deren Hilfe die Datenbank angesprochen wird
 	 * 
 	 */
-	
-	private static String googleUrl;
-	private static String localUrl;
+	private static String googleUrl ="";
+	private static String localUrl="";
 	
 	
 	/**
