@@ -12,7 +12,7 @@ import com.gooogle.appengine.api.utils.SystemProperty; //google play services SD
  *         erstellen. Diese Klasse wird nur einmal instanziiert Dies ist das
  *         Singelton-Prinzip.
  */
-public class DbVerbindung {
+public class DBConnection {
 
 	private static Connection con = null;
 
@@ -25,7 +25,7 @@ public class DbVerbindung {
 
 	/**
 	 * Methode zum erzeugen einer Verbindung zur Datenbank. Durch
-	 * DbVerbindung.connection kann diese statische Methode aufgerufen werden.
+	 * DBConnection.connection kann diese statische Methode aufgerufen werden.
 	 * stellt die Singelton-Eigenschaft sicher, weil sie dafür sorgt, dass nur eine
 	 * einzige Instanz von DbVerbindung existiert.
 	 */
