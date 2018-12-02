@@ -1,7 +1,7 @@
 package de.hdm.softwarePraktikumGruppe1.server.db;
 
 import java.sql.*;
-import com.google.appengine.api.rdbms.AppEngineDriver; //google play service SDK installieren
+//import com.google.appengine.api.rdbms.AppEngineDriver; //google play service SDK installieren
 
 /**
  * @author GianlucaBernert, ulusserhat Wird von allen Mappern benutzt um die
@@ -20,51 +20,35 @@ public class DBConnection {
 	 * 
 	 */
 	private static String googleUrl = "";
-	private static String localUrl = "";
+	
 
 	/**
 	 * Methode zum erzeugen einer Verbindung zur Datenbank
 	 */
 	public static Connection connection() {
-		if (con == null) {
-
-			String url = null;
-
+		// Wenn es bisher keine Conncetion zur DB gab, ... 
+		if ( con == null ) {
 			try {
-				if (SystemProperty.environment.value() == SystemProperty.Environment.Value.Production) {// library muss
-																										// noch
-																										// hinzugefügt
-																										// werden
-					// Load the class that provides the new
-					// "jdbc:google:mysql://" prefix.
-					Class.forName("com.mysql.jdbc.GoogleDriver");
-					url = googleUrl;
-				} else {
-					// Local MySQL instance to use during development.
-					Class.forName("com.mysql.jdbc.Driver");
-					url = localUrl;
-				}
+				// Ersteinmal muss der passende DB-Treiber geladen werden
+				DriverManager.registerDriver(new AppEngineDriver());
 
-				/**
-				 * Dann erst kann uns der DriverManager eine Verbindung mit den oben in der
-				 * Variable url angegebenen Verbindungsinformationen aufbauen.
-				 *
-				 * Diese Verbindung wird dann in der statischen Variable con abgespeichert und
-				 * fortan verwendet.
+				/*
+				 * Dann erst kann uns der DriverManager eine Verbindung mit den oben
+				 * in der Variable url angegebenen Verbindungsinformationen aufbauen.
+				 * 
+				 * Diese Verbindung wird dann in der statischen Variable con 
+				 * abgespeichert und fortan verwendet.
 				 */
-
-				con = DriverManager.getConnection(url);
-			} catch (Exception e) {
+				con = DriverManager.getConnection(googleUrl);
+			} 
+			catch (SQLException e1) {
 				con = null;
-				e.printStackTrace();
-				throw new RuntimeException(e.getMessage());
+				e1.printStackTrace();
 			}
-
 		}
-
+		
 		// Zurückgegeben der Verbindung
 		return con;
-
 	}
 
 }
