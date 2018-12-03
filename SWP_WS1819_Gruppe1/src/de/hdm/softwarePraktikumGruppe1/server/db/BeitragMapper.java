@@ -12,6 +12,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.Beitrag;
  * @author GianlucaBernert
  * @author Yesin Soufi
  *
+ *
  */
 public class BeitragMapper {
 	
