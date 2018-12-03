@@ -3,6 +3,11 @@
  */
 package de.hdm.softwarePraktikumGruppe1.server.db;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Beitrag;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Like;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Pinnwand;
@@ -35,23 +40,57 @@ public class UserMapper {
 		
 		return userMapper;
 	}
-	/**
-	 * Methode zum speichern eines User
-	 */
-	public void insertUser(User u) {
-	}
 	
-	/**
-	 * Methode zum loeschen eines User
-	 */
-	public void deleteUser(User u) {
-	}
+	public User findByUserID(int id) {
+		
+		Connection con = DBConnection.connection();
+		
+		try {
+			Statement stmt = con.createStatement();
+			
+			ResultSet rs = stmt.executeQuery("SELECT User_ID, Vorname, Nachname, Nickname " + "WHERE User_ID=" + id + "ORDED BY Nachname");
+			
+			if(rs.next()) {
+				User u = new User();
+				u.setId(rs.getInt("User_ID"));
+				u.setFirstName(rs.getString("FirstName"));
+				u.setLastName(rs.getString("Nachname"));
+				u.setNickname(rs.getString("Nickname"));
+				
+				return u;
+				
+			}
+			
+		}catch(SQLException e) {
+				e.printStackTrace();
+			
+			}
+		return null ;
+
+			
+		
+		
+		
+
 	
-	/**
-	 * Methode zum anzeigen eines User anhand der User ID
-	 */
-	public User findeUserByUserId(int id) {
-	return null;
+	
+	
 	}
+			
+			/**
+			 * Methode zum speichern eines User
+			 */
+			public void insertUser(User u) {
+			}
+			
+			/**
+			 * Methode zum loeschen eines User
+			 */
+			public void deleteUser(User u) {
+			}
+			
+			/**
+			 * Methode zum anzeigen eines User anhand der User ID
+			 */
 
 }
