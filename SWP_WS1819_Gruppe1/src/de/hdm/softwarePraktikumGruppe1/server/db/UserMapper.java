@@ -120,6 +120,34 @@ public class UserMapper {
 		}
 		return result;
 	}
+	
+
+	public User insert(User user) {
+		Connection con = DBConnection.connection();
+
+		try {
+			Statement stmt = con.createStatement();
+
+			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM User ");
+
+			if (rs.next()) {
+				
+				user.setId(rs.getInt("maxid") + 1);
+
+				stmt = con.createStatement();
+				
+				stmt.executeUpdate("INSERT INTO customers (User_ID, FirstName, LastName, Nickname) " + "VALUES (" + user.getId(user) + ",'"
+						+ user.getFirstName() + "'" +
+						user.getLastName() + "'" + user.getNickname());
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return user;
+		
+	}
+		
 
 	
 	
