@@ -48,7 +48,7 @@ public class UserMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("SELECT User_ID, Vorname, Nachname, Nickname " + "WHERE User_ID=" + id + "ORDED BY Nachname");
+			ResultSet rs = stmt.executeQuery("SELECT User_ID, FirstName, LastName, Nickname " + "WHERE User_ID=" + id + "ORDED BY LastName");
 			
 			if(rs.next()) {
 				User u = new User();
