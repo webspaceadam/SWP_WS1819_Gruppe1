@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Vector;
 
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Beitrag;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Like;
@@ -68,13 +69,31 @@ public class UserMapper {
 		return null ;
 
 			
-		
-		
-		
-
+	}
 	
 	
-	
+	public Vector<User> findAll(Vector<User> result){
+		Connection con = DBConnection.connection();
+		
+		try {
+			Statement stmt = con.createStatement();
+			
+			ResultSet rs = stmt.executeQuery("SELECT User_ID, FirstName, LastName, Nickname" + "FROM User " + "ORDED BY LastName");
+			
+			while(rs.next()) {
+				User user = new User();
+				user.setId(rs.getInt("User_ID"));
+				user.setFirstName(rs.getString("FirstName"));
+				user.setLastName(rs.getString("LastName"));
+				user.setNickname(rs.getString("Nickname"));
+				
+				result.addElement(user);
+			}}catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+			return result;
+			
 	}
 			
 			/**
