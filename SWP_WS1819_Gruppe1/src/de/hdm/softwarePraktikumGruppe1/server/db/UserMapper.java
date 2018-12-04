@@ -13,6 +13,8 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.Beitrag;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Like;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Pinnwand;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
+import de.hdm.thies.bankProjekt.server.db.DBConnection;
+import de.hdm.thies.bankProjekt.shared.bo.Customer;
 
 /**
  * @author Gianluca Bernert
@@ -95,14 +97,34 @@ public class UserMapper {
 			return result;
 			
 	}
+	
+	public Vector<User> findByLastName(String name) {
+		Connection con = DBConnection.connection();
+		Vector<User> result = new Vector<User>();
+
+		try {
+			Statement stmt = con.createStatement();
+
+			ResultSet rs = stmt.executeQuery("SELECT id, firstName, lastName " + "FROM User "
+					+ "WHERE lastName" + name + "' ORDER BY lastName");
+
 			
-			/**
-			 * Methode zum speichern eines User
-			 */
-			public void insertUser(User u) {
+			while (rs.next()) {
+				User user = new User();
+				user.setId(rs.getInt("id"));
+				user.setFirstName(rs.getString("firstName"));
+				user.setLastName(rs.getString("lastName"));
+
 			}
-			
-			/**
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	
+	
+	/**
 			 * Methode zum loeschen eines User
 			 */
 			public void deleteUser(User u) {
