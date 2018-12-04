@@ -154,7 +154,21 @@ public class UserMapper {
 	/**
 			 * Methode zum loeschen eines User
 			 */
-			public void deleteUser(User u) {
+			public User deleteUser(User user) {
+				Connection con = DBConnection.connection();
+
+				try {
+					Statement stmt = con.createStatement();
+
+					stmt.executeUpdate("UPDATE User " + "SET Vorname=\"" + user.getFirstName() + "\", " + "Nachname=\""
+							+ user.getLastName() + "\" " + user.getNickname() + "WHERE id=" + user.getId(user));
+
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+
+				
+				return user;
 			}
 			
 			/**
