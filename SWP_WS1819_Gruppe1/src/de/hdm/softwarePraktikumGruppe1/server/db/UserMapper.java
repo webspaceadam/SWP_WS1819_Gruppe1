@@ -13,8 +13,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.Beitrag;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Like;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Pinnwand;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
-import de.hdm.thies.bankProjekt.server.db.DBConnection;
-import de.hdm.thies.bankProjekt.shared.bo.Customer;
+
 
 /**
  * @author Gianluca Bernert
@@ -36,7 +35,7 @@ public class UserMapper {
 	 * @return Sie gibt den UserMapper zur�ck.
 	 */
 	
-	public static UserMapper UserMapper() {
+	public static UserMapper userMapper() {
 		if (userMapper == null) {
 			userMapper = new UserMapper();
 		} 
