@@ -107,7 +107,7 @@ public class BeitragMapper {
 				try {
 					Statement stmt = con.createStatement();
 				
-					stmt.executeUpdate("DELETE FROM beitrag" + "WHERE User_ID=" + user.getId(user));
+					stmt.executeUpdate("DELETE FROM beitrag" + "WHERE User_User_ID=" + user.getId(user));
 				}
 				
 				catch(SQLException e) {
