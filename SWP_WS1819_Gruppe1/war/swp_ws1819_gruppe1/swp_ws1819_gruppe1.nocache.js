@@ -23,7 +23,7 @@
   // Compute some codeserver urls so as the user does not need bookmarklets
   var hostName = $wnd.location.hostname;
   var serverUrl = 'http://' + hostName + ':9876';
-  var module = 'swp_ws1819_gruppe1';
+  var module = 'SWP_WS1819_Gruppe1';
   var nocacheUrl = serverUrl + '/recompile-requester/' + module;
 
   // Insert the superdevmode nocache script in the first position of the head

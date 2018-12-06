@@ -1,3 +1,4 @@
 eclipse.preferences.version=1
 entryPointModules=
 filesCopiedToWebInfLib=gwt-servlet.jar
+gwtSyncCodeServer=true
