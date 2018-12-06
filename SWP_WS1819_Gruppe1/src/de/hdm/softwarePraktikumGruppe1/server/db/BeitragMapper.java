@@ -174,7 +174,7 @@ public class BeitragMapper {
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
-		}
+		} 
 		return result;
 	
 
