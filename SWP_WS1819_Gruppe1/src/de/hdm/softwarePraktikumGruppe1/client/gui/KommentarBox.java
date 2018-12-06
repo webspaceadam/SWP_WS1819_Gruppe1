@@ -62,6 +62,7 @@ public class KommentarBox extends FlowPanel {
 		creationDate.addStyleName("is-size-7");
 		userInfoWrapper.addStyleName("grid_box content_margin");
 		creationInfoWrapper.addStyleName("content_margin");
+		removeKommentarBtn.addStyleName("button is-danger");
 		
 		// Editierbutton
 		editPenBtn.addClickHandler(new EditKommentarBoxClickHandler(this));
@@ -76,9 +77,6 @@ public class KommentarBox extends FlowPanel {
 		parentVerticalPanel.add(userInfoWrapper);
 		parentVerticalPanel.add(creationInfoWrapper);
 		parentVerticalPanel.add(contentWrapper);
-		parentVerticalPanel.add(removeKommentarBtn);
-		
-		removeKommentarBtn.addClickHandler(new removeKommentarFromParent(this));
 		
 		
 		this.add(hrElement);
@@ -107,9 +105,10 @@ public class KommentarBox extends FlowPanel {
 		public EditKommentarDialogBox(KommentarBox kb) {
 			parentKB = kb;
 			
-			setText("Editiere deinen Beitrag");
+			setText("Editiere deinen Kommentar");
 
 			Button safeButton = new Button("Speichere den Edit", this);
+			safeButton.addStyleName("button bg-primary");
 			Image cancelImage = new Image("images/SVG/timesCircle.png");
 			cancelImage.getElement().setPropertyString("style", "max-width: 25px;");
 			cancelImage.addClickHandler(this);
@@ -121,11 +120,15 @@ public class KommentarBox extends FlowPanel {
 			beitragTextArea.setText(beitragText);
 			HTML msg = new HTML("Hier kannst du deinen Text editieren", true);
 
+			// Button
+			removeKommentarBtn.addClickHandler(new removeKommentarFromParent(parentKB, this));
+			
 			DockPanel dock = new DockPanel();
 			dock.setSpacing(6);
 			dock.add(beitragTextArea, DockPanel.CENTER);
 			dock.add(safeButton, DockPanel.SOUTH);
 			dock.add(cancelImage, DockPanel.EAST);
+			dock.add(removeKommentarBtn, DockPanel.EAST);
 			dock.add(msg, DockPanel.NORTH);
 			
 			safeButton.addClickHandler(new SafeEditedKommentarContentClickHandler(parentKB, beitragTextArea));
@@ -167,14 +170,17 @@ public class KommentarBox extends FlowPanel {
 	 */
 	private class removeKommentarFromParent implements ClickHandler {
 		KommentarBox thisKommentarBox;
+		EditKommentarDialogBox parentDialogBox;
 		
-		public removeKommentarFromParent(KommentarBox thisKB) {
+		public removeKommentarFromParent(KommentarBox thisKB, EditKommentarDialogBox kommentarDialogBox) {
 			thisKommentarBox = thisKB;
+			parentDialogBox = kommentarDialogBox;
 		}
 		
 		@Override
 		public void onClick(ClickEvent event) {
 			parentBeitragBox.deleteKommentar(thisKommentarBox);
+			parentDialogBox.hide();
 		}
 		
 	}
