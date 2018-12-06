@@ -5,12 +5,13 @@ package de.hdm.softwarePraktikumGruppe1.shared.bo;
 
 /**
  * @author GianlucaBernert
+ * @author Yesin Soufi
  * Klasse eines User Objekts das BusinessObject als Superklasse besitzt
  */
 public class User extends BusinessObject{
 	
 	private static final long serialVersionUID = 1L;
-	private static String nickname;
+	private String nickname;
 	private String firstName;
 	private String lastName;
 	private String password;

@@ -9,20 +9,33 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.Pinnwand;
 
 /**
  * @author GianlucaBernert
+ * @author Yesin Soufi
  *
  */
 public class PinnwandMapper {
 	
-	private PinnwandMapper pMapper;
-	
+	private static PinnwandMapper pinnwandMapper;
 	/**
-	 * Konstruktor der Klasse
+	 * Ein gesch�tzter Konstruktor der weitere Instanzierungen von PinnwandMapper Objekten verhindert.
 	 */
 	protected PinnwandMapper() {
 	}
+	
 	/**
-	 * Methode zum speichern einer Pinnwand
+	 * Stellt die Singeleton-Eigenschaft der Mapperklasse sicher
+	 * @return Sie gibt den PinnwandMapper zur�ck.
 	 */
+	
+	public static PinnwandMapper pinnwandMapper() {
+		if (pinnwandMapper == null) {
+			pinnwandMapper = new PinnwandMapper();
+		} 
+		
+		return pinnwandMapper;
+	}
+
+	
+	
 	public void insertPinnwand(Pinnwand p) {
 	}
 	
