@@ -560,34 +560,38 @@ cplors
 	GWT DialogBox Styling
 */
 
+.gwt-DialogBox {
+	background: #def2f1;
+}
+
 .gwt-DialogBox .Caption {
-   background: #e3e8f3 url(images/hborder.png) repeat-x 0px -2003px;
-   padding: 4px 4px 4px 8px;
+   background: #def2f1;
+   padding: 10px 10px 10px 10px;
    cursor: default;
-   border-bottom: 1px solid #bbbbbb;
-   border-top: 5px solid #d0e4f6;
 }
 
 .gwt-DialogBox .dialogContent {
+	background: #def2f1;
 }
 
 .gwt-DialogBox .dialogMiddleCenter {
    padding: 3px;
-   background: white;
+   background: #def2f1;
 }
 
 .gwt-DialogBox .dialogBottomCenter {
-   background: url(images/hborder.png) repeat-x 0px -4px;
-   -background: url(images/hborder_ie6.png) repeat-x 0px -4px;
+	background: #def2f1;
+	padding: 3px;
 }
 
 .gwt-DialogBox .dialogMiddleLeft {
-   background: url(images/vborder.png) repeat-y;
+   background: #def2f1;
+   padding: 3px;	
 }
 
 .gwt-DialogBox .dialogMiddleRight {
-   background: url(images/vborder.png) repeat-y -4px 0px;
-   -background: url(images/vborder_ie6.png) repeat-y -4px 0px;
+	background: #def2f1;
+	padding: 3px;
 }
 
 .gwt-DialogBox .dialogTopLeftInner {
@@ -613,23 +617,23 @@ cplors
 }
 
 .gwt-DialogBox .dialogTopLeft {
-   background: url(images/corner.png) no-repeat -13px 0px;
-   -background: url(images/corner_ie6.png) no-repeat -13px 0px;
+	background: #def2f1;
+	padding: 3px;
 }
 
 .gwt-DialogBox .dialogTopRight {
-   background: url(images/corner.png) no-repeat -18px 0px;
-   -background: url(images/corner_ie6.png) no-repeat -18px 0px;
+	background: #def2f1;
+	padding: 3px;
 }
 
 .gwt-DialogBox .dialogBottomLeft {
-   background: url(images/corner.png) no-repeat 0px -15px;
-   -background: url(images/corner_ie6.png) no-repeat 0px -15px;
+	background: #def2f1;
+	padding: 3px;
 }
 
 .gwt-DialogBox .dialogBottomRight {
-   background: url(images/corner.png) no-repeat -5px -15px;
-   -background: url(images/corner_ie6.png) no-repeat -5px -15px;
+	background: #def2f1;
+	padding: 3px;
 }
 
 html>body .gwt-DialogBox {
