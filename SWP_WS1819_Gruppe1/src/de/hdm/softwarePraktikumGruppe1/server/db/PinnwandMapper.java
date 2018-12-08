@@ -14,7 +14,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
  */
 	public class PinnwandMapper {
 		
-		// Variable die besagt ob schon nutzerMapperverbindung besteht
+		// Variable die besagt, ob schon userMapperverbindung besteht
 		private static PinnwandMapper pinnwandMapper = null;
 
 		
@@ -32,9 +32,10 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 			}
 		 
 		 
-		 
+		//Objekt -> Tupel
 		 public void insertPinnwand (Pinnwand p) {
 			 
+			//leeres SQL-Statement anlegen
 			 Connection con = DBConnection.connection();
 		 
 		 try{
@@ -42,8 +43,8 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 			 Statement stmt = con.createStatement();
 			 
 			        // Jetzt erst erfolgt die tatsächliche Einfügeoperation
-			        stmt.executeUpdate("INSERT INTO pinnwand (PinnwandID, UserID, CreationTimeStamp) "
-			            + "VALUES (" + p.getId(p) + ",'" + p.getOwnerId()+ ",'" + p.getCreationTimeStamp());
+			        stmt.executeUpdate("INSERT INTO pinnwand (PinnwandID, User_UserID) "
+			            + "VALUES (" + p.getId() + ",'" + p.getOwnerId());
 		      	
 		    }
 			
@@ -55,17 +56,18 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 		 }
 
 
-
+		 //Objekt -> Tupel
 		public void deletePinnwand(Pinnwand p) {
 			
-
+			
 			 Connection con = DBConnection.connection();
 			 
 		 try {
+			//leeres SQL-Statement anlegen
 			 Statement stmt = con.createStatement();
 			 
 			 
-			 stmt.executeUpdate("DELETE FROM `pinnwand` " + "WHERE `UserId`=" + p.getOwnerId() + " `pinnwandID`=" +p.getId(p));
+			 stmt.executeUpdate("DELETE FROM pinnwand WHERE User_UserID =" + p.getOwnerId() + " PinnwandID=" +p.getId());
 		 }
 		 
 		 catch (SQLException e) {
@@ -75,24 +77,26 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
 		}
 		 
-	
+		//Tupel -> Objekt
 		 public Pinnwand findPinnwandByUserID(User u) {
 				
-				//Aufbau der DBVerbindung
+			
 				Connection con = DBConnection.connection();
 						
 				//Versuch der Abfrage
 				try{
+					
+					//leeres SQL-Statement anlegen
 					Statement stmt = con.createStatement();
+					
 					//Suche alle Felder der Pinnwandtabelle anhand von ID
-					ResultSet rs = stmt.executeQuery("SELECT * FROM pinnwand " + "WHERE UserID=" + u.getId(u));
+					ResultSet rs = stmt.executeQuery("SELECT * FROM pinnwand " + "WHERE User_UserID=" + u.getId());
 
-					 //Maximal ein Rückgabewert da Id Primärschlüssel
+					 
 					if (rs.next()) {
 						// Ergebnis in Pinnwandobjekt umwandeln
 						Pinnwand p = new Pinnwand();
 						p.setId(rs.getInt("PinnwandID"));
-						p.setCreationTimeStamp(rs.getDate("CreationTimeStamp"));
 						p.setOwner(u);   	
 						return p;
 						}
