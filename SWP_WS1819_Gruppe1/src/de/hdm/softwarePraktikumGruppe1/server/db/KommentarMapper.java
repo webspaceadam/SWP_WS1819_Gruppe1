@@ -16,6 +16,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
  */
 
 public class KommentarMapper {
+	
 	// Variable die besagt ob schon kommentarMapperverbindung besteht
 	 private static KommentarMapper kommentarMapper = null;
 	 
@@ -35,6 +36,7 @@ public class KommentarMapper {
 	 
 	 
 	 public void insertKommentar(Kommentar k){
+		 
 			//Aufbau der DBVerbindung
 			Connection con = DBConnection.connection();
 			
@@ -42,10 +44,10 @@ public class KommentarMapper {
 				
 				Statement stmt = con.createStatement();
 				
-		        // Jetzt erst erfolgt die tatsï¿½chliche Einfï¿½geoperation
-		        stmt.executeUpdate("INSERT INTO kommentar (KommentarID, Inhalt, UserID, CreationTimeStamp, BeitragID) "
-		            + "VALUES (" + k.getId(k) + ",'"  + k.getText() + "','" + k.getOwnerId() + "','" + k.getCreationTimeStamp()
-		        	+ k.getBeitragId() +"')");
+		        // Jetzt erst erfolgt die tatsächliche Einfügeoperation
+		        stmt.executeUpdate("INSERT INTO kommentar (Inhalt,Beitrag_BeitragID, User_UserID) "
+		            + "VALUES (" + k.getText() + "','" + k.getBeitragId() + "','" + k.getOwnerId()
+		        	 +"')");			                 
 		       
 	      }
 		
@@ -62,10 +64,11 @@ public class KommentarMapper {
 			//Versuch der Abfrage
 		    try {
 		      Statement stmt = con.createStatement();
-		      //Lï¿½sche Beitrag mit gleicher ID aus Tabelle
-		      stmt.executeUpdate("DELETE FROM kommentar WHERE KommentarID=" + k.getId(k) + "UserID=" + k.getOwnerId() );
-		    }
-		    catch (SQLException e) {
+		      
+		      //Lösche Beitrag mit gleicher ID aus Tabelle
+		      stmt.executeUpdate("DELETE FROM kommentar WHERE KommentarID=" + k.getId());
+		    }																
+		    catch (SQLException e) {	
 		      e.printStackTrace();
 		    } 
 		 }
@@ -78,9 +81,9 @@ public class KommentarMapper {
 				    try {
 				      Statement stmt = con.createStatement();
 				      //Aktualisieren des Inhalts
-				      stmt.executeUpdate("UPDATE kommentar SET Inhalt=\"" + k.getText() + "\" WHERE KommentarID=" + k.getOwnerId());
-			
-				    }
+				      stmt.executeUpdate("UPDATE kommentar SET Inhalt=\"" + k.getText() + "\" WHERE KommentarID=" + k.getId());
+				      						
+				    }	
 				    catch (SQLException e) {
 				      e.printStackTrace();
 				    }
@@ -95,21 +98,22 @@ public class KommentarMapper {
 				
 				//Versuch der Abfrage
 				try{
+					//leeres SQL-Statement anlegen
 					Statement stmt = con.createStatement();
 					//Suche alle Felder der Kommentartabelle anhand von ID
 					ResultSet rs = stmt.executeQuery("SELECT * FROM kommentar WHERE KommentarID=" + kommentarID );
 					
-					//Maximal ein Rückgabewert da Id Primärrschlüssel
+					
 					if (rs.next()) {
+						
 				        // Ergebnis in Beitrag- Objekt umwandeln
 				        Kommentar k = new Kommentar();
 				        k.setId(rs.getInt("KommentarID"));
-				        k.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
 				        k.setText(rs.getString("inhalt"));
-				        k.setOwnerId(rs.getInt("UserID"));
+				        k.setOwnerId(rs.getInt("User_UserID"));
 				        
 				        
-				        //Kommentar Objekt zurï¿½ckgeben
+				        //Kommentar Objekt zurückgeben
 				        return k;
 					}
 				}
@@ -131,9 +135,9 @@ public class KommentarMapper {
 					try{
 						Statement stmt = con.createStatement();
 						//Suche alle Beitrag
-						ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM Kommentar WHERE BeitragID=" +beitrag.getId(beitrag));
+						ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM Kommentar WHERE Beitrag_BeitragID=" +beitrag.getId());
 
-					    //Maximal ein Rückgabewert da Id Primärschlüssel
+					    
 						while (rs.next()) {
 					        counter=rs.getInt(1);
 					      }
@@ -157,10 +161,11 @@ public class KommentarMapper {
 			//Versuch der Abfrage
 			try{
 				Statement stmt = con.createStatement();
+				
 				//Suche alle Beitrag
-				ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM User WHERE BeitragID=" +user.getId(user));
-
-			    //Maximal ein Rükgabewert da Id Primärschlï¿½ssel
+				ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM kommentar WHERE User_UserID=" +user.getId());
+													
+			    		
 				while (rs.next()) {
 			        counter=rs.getInt(1);
 			      }
