@@ -41,11 +41,6 @@ public class LikeMapper {
 	}
 	
 	
-	
-	
-	
-	
-	
 	/**
 	 * Methode zum speichern eines Likes
 	 */
@@ -53,14 +48,12 @@ public class LikeMapper {
 		 Connection con = DBConnection.connection();
 
 		    try {
+				//leeres SQL-Statement anlegen
 		      Statement stmt = con.createStatement();
 
-		       
-		        stmt = con.createStatement();
-
 		        // Jetzt erst erfolgt die tatsächliche Einfügeoperation
-		        stmt.executeUpdate("INSERT INTO like (LikeID, creationTimeStamp,UserID,KommentarID) "
-		            + "VALUES (" + l.getOwnerId() + ",'" + l.getCreationTimeStamp() + "','" + l.getOwnerId() + ",'" + l.getBeitragId() );
+		        stmt.executeUpdate("INSERT INTO like (LikeID,Beitrag_BeitragID, User_UserID) "
+		            + "VALUES ("+ l.getBeitragId() + "','" + l.getOwnerId()+ "','" + l.getId());
 		      }
 		    
 		    catch (SQLException e) {
@@ -78,9 +71,10 @@ public class LikeMapper {
 		Connection con = DBConnection.connection();
 		
 		try {
-		      Statement stmt = con.createStatement();
+			//leeres SQL-Statement anlegen
+				Statement stmt = con.createStatement();
 
-		      stmt.executeUpdate("DELETE FROM Like " + "WHERE id=" + l.getOwnerId());
+		      stmt.executeUpdate("DELETE FROM Like " + "WHERE LikeID=" + l.getId());
 		    }
 		    catch (SQLException e) {
 		      e.printStackTrace();
@@ -105,21 +99,25 @@ public class LikeMapper {
 			//leeres SQL-Statement anlegen
 			Statement stmt  = con.createStatement();
 			
-			//Suche alle Likes zu einem Beitrag
-			ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM like WHERE BeitragID=" + b.getId(b) + "LikeID=" + l.getId(l));
+			// Statement ausfuellen und als Query an die DB schicken
+			ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM like WHERE BeitragID=" + b.getCommentID() + "LikeID=" + l.getId());
 					
 					
 					while (rs.next()) {
 				        counter=rs.getInt(1);
 				      }
-
+					
+					return counter;
+					
 				}
 
 			    catch (SQLException e) {
 			    		e.printStackTrace();
-			    }
+			    		
 
-				return counter;
+			    }
+		return counter;
+				
 			}
 	
 	/**
@@ -132,16 +130,18 @@ public class LikeMapper {
 		Vector <Like> vector= new Vector<Like>();
 
 		try {
+			//leeres SQL-Statement anlegen
 			Statement stmt = con.createStatement();
-
+			
+			// Statement ausfuellen und als Query an die DB schicken
 			ResultSet rs = stmt.executeQuery("SELECT * FROM like WHERE UserID=" + userID);
 
 			while (rs.next()) {
 
 		        Like l = new Like();
-		        l.setOwnerId(rs.getInt("Like_ID"));
-		        l.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
-		        l.setOwner(UserMapper.UserMapper().findeUserByUserId(rs.getInt("UserID")));
+		        l.setId(rs.getInt("Like_ID"));
+		        l.setOwnerId(rs.getInt("User_UserID"));
+		        l.setBeitragId(rs.getInt("Beitrag_BeitragID"));
 		        vector.add(l);
 
 		      }
@@ -151,6 +151,6 @@ public class LikeMapper {
 	    catch (SQLException e) {
 	    		e.printStackTrace();
 	    }
-		return vector;
+		return null;
 	 }
 }
