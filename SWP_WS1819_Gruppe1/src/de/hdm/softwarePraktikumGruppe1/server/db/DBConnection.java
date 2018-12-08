@@ -19,7 +19,7 @@ public class DBConnection {
 	 * 
 	 */
 	private static String googleUrl = "";
-	private static String localUrl = "jdbc:mysql://localhost/itprojekt?user=root&password=********";
+	private static String localUrl = "jdbc:mysql://localhost/pinners?user=root&password=********";
 
 	/**
 	 * Methode zum erzeugen einer Verbindung zur Datenbank
