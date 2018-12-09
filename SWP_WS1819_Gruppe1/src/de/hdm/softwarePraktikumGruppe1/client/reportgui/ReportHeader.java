@@ -2,7 +2,11 @@
 package de.hdm.softwarePraktikumGruppe1.client.reportgui;
 
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.*;
+
+import de.hdm.softwarePraktikumGruppe1.client.ReportGenerator;
 
 /**
  * Die <code>Header</code>-Klasse ist eine Custom-Widget-Class die 
@@ -14,7 +18,7 @@ import com.google.gwt.user.client.ui.*;
  * @version 1.0
  */
 
-public class Header extends FlowPanel {
+public class ReportHeader extends FlowPanel {
 	
 	// Create Header Divs 
 	private FlowPanel headerLogoDiv = new FlowPanel();
@@ -40,8 +44,11 @@ public class Header extends FlowPanel {
 	Label reportLabel = new Label("Report Generator");
 	
 	
+	//Create DockLayoutPanel to be able to update content in clickhandler
+	private DockLayoutPanel dockPanel = null;
 
-	public Header() {
+	public ReportHeader(DockLayoutPanel dockPanel) {
+		this.dockPanel = dockPanel;
 		// Add styling to this element
 		this.addStyleName("header bg-primary");
 		headerLeft.addStyleName("header_left");
@@ -82,10 +89,46 @@ public class Header extends FlowPanel {
 		this.add(headerLeft);
 		this.add(headerRight);
 		
+		
+		//Add ClickHandler
+		beitraegeButton.addClickHandler(new beitraegeButtonClickHandler());
+		userButton.addClickHandler(new userButtonClickHandler());
+		
 	}
 
 	
 
+
+
+
 	public void onLoad() {
 	}
+	
+	
+	
+	//Clickhandler für beitraegeButton
+	//Remove existing ReportForm then add beitragReportForm
+	private class beitraegeButtonClickHandler implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			
+			dockPanel.clear();
+			dockPanel.addNorth(ReportHeader.this, 4);
+			dockPanel.addWest(new BeitragReportForm(), 25);
+			
+		}		
+	}
+	
+	
+	//Clickhandler für userButton
+	//Remove existing ReportForm then add userReportForm
+		private class userButtonClickHandler implements ClickHandler{
+			@Override
+			public void onClick(ClickEvent event) {
+				dockPanel.clear();
+				dockPanel.addNorth(ReportHeader.this, 4);
+				dockPanel.addWest(new UserReportForm(), 25);
+			}			
+		}
+	
 }

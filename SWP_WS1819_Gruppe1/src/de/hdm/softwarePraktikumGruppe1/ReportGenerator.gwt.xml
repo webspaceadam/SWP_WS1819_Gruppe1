@@ -23,6 +23,9 @@
 
   <!-- Specify the app entry point class.                         -->
   <entry-point class='de.hdm.softwarePraktikumGruppe1.client.ReportGenerator'/>
+  
+  
+  <extend-property name="locale" values="de" />
 
   <!-- Specify the paths for translatable code                    -->
   <source path='client'/>

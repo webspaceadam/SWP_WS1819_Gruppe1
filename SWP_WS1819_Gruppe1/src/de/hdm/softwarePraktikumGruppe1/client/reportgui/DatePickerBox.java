@@ -13,22 +13,21 @@ import com.google.gwt.user.datepicker.client.DatePicker;
  * @author JakobBenkoe
  * @version 1.0
  */
-public class datePickerBox extends FlowPanel {
+public class DatePickerBox extends FlowPanel {
 
 	
 	
 	
 	DatePicker datePicker = new DatePicker();
 	
-	public datePickerBox() {
+	public DatePickerBox() {
 		this.addStyleName("grid_box box radiusless");
 
 
 	
 		
 			//Add Styling to Date Box and DatePicker
-		   @SuppressWarnings("deprecation")
-		   	DateTimeFormat dateFormat = DateTimeFormat.getLongDateFormat();
+		   	DateTimeFormat dateFormat = DateTimeFormat.getFormat("dd.MM.yyyy");
 		    DateBox dateBox = new DateBox();
 		    dateBox.addStyleName("input radiusless");
 		    dateBox.getElement().setPropertyString("placeholder", "Wähle ein Datum aus");

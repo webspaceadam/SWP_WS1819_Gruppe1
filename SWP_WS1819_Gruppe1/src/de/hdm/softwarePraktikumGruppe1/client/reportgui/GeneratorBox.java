@@ -11,14 +11,14 @@ import com.google.gwt.user.client.ui.FlowPanel;
  * @author JakobBenkoe
  * @version 1.0
  */
-public class generatorBox extends FlowPanel {
+public class GeneratorBox extends FlowPanel {
 	private FlowPanel searchWrapper = new FlowPanel();
 	
 
 	private Button searchBtn = new Button("Report Generieren!");
 	
 	
-	public generatorBox() {
+	public GeneratorBox() {
 		//this.addStyleName("grid_box box radiusless");
 		searchWrapper.addStyleName("grid_box_element");
 		searchBtn.addStyleName("button bg-primary has-text-white");

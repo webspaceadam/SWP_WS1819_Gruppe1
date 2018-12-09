@@ -17,7 +17,7 @@ import de.hdm.softwarePraktikumGruppe1.client.gui.SearchBox;
  * @author JakobBenkoe
  * @version 1.0
  */
-public class userReportForm extends FlowPanel {
+public class UserReportForm extends FlowPanel {
 
 	
 	// dazugehörige Label
@@ -32,7 +32,7 @@ public class userReportForm extends FlowPanel {
 	
 
 
-	public userReportForm() {
+	public UserReportForm() {
 		// Adding Styling for userReportForm
 		this.addStyleName("box radiusless");
 		
@@ -61,9 +61,9 @@ public class userReportForm extends FlowPanel {
 		
 		
 		this.add(new SearchBox());
-		this.add(new datePickerBox());
-		this.add(new datePickerBox());
-		this.add(new generatorBox());
+		this.add(new DatePickerBox());
+		this.add(new DatePickerBox());
+		this.add(new GeneratorBox());
 	}
 
 	

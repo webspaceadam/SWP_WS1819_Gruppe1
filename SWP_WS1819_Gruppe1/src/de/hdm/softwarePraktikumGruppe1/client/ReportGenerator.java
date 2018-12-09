@@ -9,8 +9,8 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 
-import de.hdm.softwarePraktikumGruppe1.client.reportgui.Header;
-import de.hdm.softwarePraktikumGruppe1.client.reportgui.userReportForm;
+import de.hdm.softwarePraktikumGruppe1.client.reportgui.ReportHeader;
+import de.hdm.softwarePraktikumGruppe1.client.reportgui.UserReportForm;
 
 /**
  * Die Klasse <code>ReportGenerator</code> enthält alle Elemente zur 
@@ -27,8 +27,8 @@ public class ReportGenerator  implements EntryPoint {
 		DockLayoutPanel dockPanel = new DockLayoutPanel(Unit.EM);
 		
 
-		dockPanel.addNorth(new Header(), 4);
-		dockPanel.addWest(new userReportForm(), 25);
+		dockPanel.addNorth(new ReportHeader(dockPanel), 4);
+		dockPanel.addWest(new UserReportForm(), 25);
 		dockPanel.add(new Label("Hier wird der Report eingeblendet werden"));
 		
 		
