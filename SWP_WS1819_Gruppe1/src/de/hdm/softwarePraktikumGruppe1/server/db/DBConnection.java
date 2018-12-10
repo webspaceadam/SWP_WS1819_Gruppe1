@@ -1,75 +1,57 @@
 package de.hdm.softwarePraktikumGruppe1.server.db;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-
-import com.gooogle.appengine.api.utils.SystemProperty; //google play services SDK installieren
+import java.sql.*;
 
 /**
- * @author gianluca, ulusserhat
- * 
- *         Wird von allen Mappern benutzt um die Verbindung zur Datenbank zu
- *         erstellen. Diese Klasse wird nur einmal instanziiert Dies ist das
- *         Singelton-Prinzip.
- */
+ * @author GianlucaBernert, ulusserhat Wird von allen Mappern benutzt um die
+ *         Verbindung zur Datenbank zu erstellen
+ **/
 public class DBConnection {
 
+	/**
+	 * Sie speichert die einzige Instanz dieser Klasse. Sie ist durch static nur
+	 * einmal f�r alle s�mtlichen Instanzen dieser Klasse vorhanden
+	 */
 	private static Connection con = null;
 
 	/**
-	 * Mithilfe der Url wird die Datenbank angesprochen.
+	 * Die URL, mit deren Hilfe die Datenbank angesprochen wird
 	 * 
 	 */
 	private static String googleUrl = "";
-	private static String localUrl = "";
+	private static String localUrl = "jdbc:mysql://localhost/pinners?user=root&password=********"; //useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 
 	/**
-	 * Methode zum erzeugen einer Verbindung zur Datenbank. Durch
-	 * DBConnection.connection kann diese statische Methode aufgerufen werden.
-	 * stellt die Singelton-Eigenschaft sicher, weil sie dafür sorgt, dass nur eine
-	 * einzige Instanz von DbVerbindung existiert.
+	 * Methode zum erzeugen einer Verbindung zur Datenbank
 	 */
 	public static Connection connection() {
-
+		// Wenn es bisher keine Conncetion zur DB gab, ...
 		if (con == null) {
-
-			String url = null;
-
 			try {
-				if (SystemProperty.environment.value() == SystemProperty.Environment.Value.Production) {// Library noch
-																										// hinzufügen(wegen
-																										// SystemProperty)
-					// Load the class that provides the new
-					// "jdbc:google:mysql://" prefix.
-					Class.forName("com.mysql.jdbc.GoogleDriver");
-					url = googleUrl;
-				} else {
-					// Local MySQL instance to use during development.
-					Class.forName("com.mysql.jdbc.Driver");
-					url = localUrl;
-				}
 
-				/**
-				 * Dann erst kann uns der DriverManager eine Verbindung mit den oben in der
-				 * Variable url angegebenen Verbindungsinformationen aufbauen.
+				Class.forName("com.mysql.cj.jdbc.Driver"); //  JDBC -Treiber für Mysql
+				con = DriverManager.getConnection(localUrl);
+				/*
+				 * die Verbindung zur Datenbank wird in der Variable con gespeichert
 				 * 
-				 * Diese Verbindung wird dann in der statischen Variable con abgespeichert und
-				 * fortan verwendet.
 				 */
 
-				con = DriverManager.getConnection(url);
+				Statement stmt = con.createStatement();
+				System.out.println("DB Connection!");
+				/*
+				 * Wird angezeigt, ob die Verbindung zur Datenbank funktioniert hat
+				 * 
+				 */
+
 			} catch (Exception e) {
 				con = null;
 				e.printStackTrace();
-				throw new RuntimeException(e.getMessage());
 			}
-
 		}
 
-		/**
-		 * Zurückgegeben der Verbindung
-		 */
+		// Zurückgegeben der Verbindung
 		return con;
-
 	}
+
 }
+//OK
