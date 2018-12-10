@@ -1,5 +1,10 @@
 package de.hdm.softwarePraktikumGruppe1.client.gui;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.*;
+
+import de.hdm.softwarePraktikumGruppe1.client.gui.BeitragBox.EditBeitragDialogBox;
 
 
 
@@ -42,6 +47,10 @@ public class ProfileBox extends FlowPanel {
 	
 	
 		public ProfileBox() {
+		}
+
+		
+		public void onLoad() {
 			// Adding Styling for ProfileBox
 			this.addStyleName("box radiusless");
 			
@@ -53,6 +62,7 @@ public class ProfileBox extends FlowPanel {
 			accountName.addStyleName("title is-size-4 grid_box_element");
 			editPenBtn.addStyleName("grid_box_element");
 			editPenBtn.getElement().setPropertyString("style", "max-width: 25px;");
+			editPenBtn.addClickHandler(new EditProfileBoxClickHandler(this));
 			
 			// nickname styling
 			nickName.addStyleName("is-size-5");
@@ -97,13 +107,77 @@ public class ProfileBox extends FlowPanel {
 			this.add(hrElement);
 			this.add(wrapper2);
 		}
-
+		
+		private class EditProfileBoxClickHandler implements ClickHandler {
+			private ProfileBox parentPB;
+			
+			public EditProfileBoxClickHandler(ProfileBox pb) {
+				parentPB = pb;
+			}
+			
+			public void onClick(ClickEvent event) {
+				EditProfileBoxDialogBox dlg = new EditProfileBoxDialogBox(parentPB);
+				dlg.center();
+			}
+		}
 		
 		/**
-		 * In dieser Methode werden die Desings der Buttons festgelegt. Auch
-		 * die Kontakt-Editor und ReportGenerator-Buttons werden zum Kopfbereich
-		 * des Kontaktverwaltungstools hinzugef�gt. 
+		 * Die innere Klasse <code>EditBeitragDialogBox</code> implementiert das Clickhandler 
+		 * Interface und dessen dazugeh�rige <code>onClick(ClickEvent event)</code> Methode.
+		 * Diese Methode ist daf�r zust�ndig die Editierung eines Beitrags zu erm�glichen.
+		 * @author Adam Gniady
+		 *
 		 */
-		public void onLoad() {
+		public class EditProfileBoxDialogBox extends DialogBox implements ClickHandler {
+			ProfileBox parentPB;
+			
+			public EditProfileBoxDialogBox(ProfileBox pb) {
+				parentPB = pb;
+
+				//Button safeButton = new Button("Speichere den Edit", this);
+				//safeButton.addStyleName("button bg-primary");
+				Image cancelImage = new Image("images/SVG/timesCircle.png");
+				cancelImage.getElement().setPropertyString("style", "max-width: 25px;");
+				cancelImage.addClickHandler(this);
+				
+				// Creating TextArea and filling it with the content of the "Beitrag".
+				EditAccountForm editForm = new EditAccountForm(parentPB, this);
+
+				DockPanel dock = new DockPanel();
+				dock.setSpacing(6);
+				dock.add(editForm, DockPanel.CENTER);
+				//dock.add(safeButton, DockPanel.SOUTH);
+				dock.add(cancelImage, DockPanel.EAST);
+				
+				//safeButton.addClickHandler();
+
+				//dock.setCellHorizontalAlignment(safeButton, DockPanel.ALIGN_CENTER);
+				dock.setWidth("600px");
+				setWidget(dock);
+			}
+
+			@Override
+			public void onClick(ClickEvent event) {
+				hide();
+			}
+			
+			private class SafeEditedContentClickHandler implements ClickHandler {
+				
+				public SafeEditedContentClickHandler(BeitragBox bb, TextArea textArea) {
+				}
+				
+				@Override
+				public void onClick(ClickEvent event) {
+				}
+				
+			}
+		}
+		
+		public void setNickname(String newNickname) {
+			this.nickName.setText("@" + newNickname);
+		}
+		
+		public void setAccountname(String newVorname, String newNachname) {
+			this.accountName.setText(newVorname + " " + newNachname);
 		}
 }
