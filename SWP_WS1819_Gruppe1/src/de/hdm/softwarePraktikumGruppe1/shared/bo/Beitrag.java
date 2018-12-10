@@ -137,7 +137,7 @@ public class Beitrag extends Textbeitrag{
 	 * Methode um eine textuelle Dastellung der jeweiligen Instanz zu erzeugen
 	 */
 	public String toString() {
-		return super.toString() + " " + User.getNickname();
+		return super.toString() + " User ID #" + this.getOwnerId();
 	}
 	
 	

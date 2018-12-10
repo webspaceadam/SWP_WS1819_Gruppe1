@@ -214,6 +214,7 @@ public class BeitragBox extends FlowPanel {
 			
 			// Create the Button to make Beitrag deletable
 			Button deleteBtn = new Button("Delete");
+			deleteBtn.addStyleName("button is-danger");
 			deleteBtn.addClickHandler(new removeBeitragFromParent(parentBB, this));
 
 			DockPanel dock = new DockPanel();
