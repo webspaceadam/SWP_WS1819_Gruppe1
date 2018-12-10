@@ -1,7 +1,6 @@
 
 package de.hdm.softwarePraktikumGruppe1.server.db;
 import java.sql.*;
-import java.util.ArrayList;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Beitrag;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Kommentar;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
@@ -11,7 +10,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 /**
  * @author GianlucaBernert, 
  * @author Yesin Soufi
- * @author Serhat Ulus
+ * @author SerhatUlus
  *
  */
 
@@ -21,12 +20,14 @@ public class KommentarMapper {
 	 private static KommentarMapper kommentarMapper = null;
 	 
 	 
-	 //leerer Konstruktor wegen Singleton
+	 
+		//Ein gesch√ºtzter Konstruktor der weitere Instanzierungen von LikeMapper Objekten verhindert.
 	 protected KommentarMapper() {
 	 }
 
 	 
-	 //Singleton "Konstruktor"-methode
+	//Diese Methode stellt die Singelton-Eigenschaft sicher, indem sie daf√ºr sorgt, 
+	//dass nur eine einzige Instanz dieser Klasse existiert.
 	 public static KommentarMapper kommentarMapper(){
 		 if (kommentarMapper==null){
 			 kommentarMapper= new KommentarMapper();
@@ -34,7 +35,7 @@ public class KommentarMapper {
 		 return kommentarMapper;
 	 }
 	 
-	 
+	//Objekt -> Tupel
 	 public void insertKommentar(Kommentar k){
 		 
 			//Aufbau der DBVerbindung
@@ -42,9 +43,10 @@ public class KommentarMapper {
 			
 			try{
 				
+				//leeres SQL-Statement anlegen
 				Statement stmt = con.createStatement();
 				
-		        // Jetzt erst erfolgt die tats‰chliche Einf¸geoperation
+		        // Jetzt erst erfolgt die tats√§chliche Einf√ºgeoperation
 		        stmt.executeUpdate("INSERT INTO kommentar (Inhalt,Beitrag_BeitragID, User_UserID) "
 		            + "VALUES (" + k.getText() + "','" + k.getBeitragId() + "','" + k.getOwnerId()
 		        	 +"')");			                 
@@ -56,16 +58,18 @@ public class KommentarMapper {
 	      
 	    }
 	 }
-	    
+	 	//Objekt -> Tupel
 	    public void deleteKommentar(Kommentar k){
 			//Aufbau der DBVerbindung
 			Connection con = DBConnection.connection();
 			
 			//Versuch der Abfrage
 		    try {
+		    	
+				//leeres SQL-Statement anlegen	
 		      Statement stmt = con.createStatement();
 		      
-		      //Lˆsche Beitrag mit gleicher ID aus Tabelle
+		      //L√∂sche Beitrag mit gleicher ID aus Tabelle
 		      stmt.executeUpdate("DELETE FROM kommentar WHERE KommentarID=" + k.getId());
 		    }																
 		    catch (SQLException e) {	
@@ -73,13 +77,17 @@ public class KommentarMapper {
 		    } 
 		 }
 	    
+	    //Objekt -> Tupel
 		 public void updateKommentar(Kommentar k){
 				//Aufbau der DBVerbindung
 				Connection con = DBConnection.connection();
 				
 					//Versuch der Abfrage
 				    try {
+				    	
+						//leeres SQL-Statement anlegen	
 				      Statement stmt = con.createStatement();
+				      
 				      //Aktualisieren des Inhalts
 				      stmt.executeUpdate("UPDATE kommentar SET Inhalt=\"" + k.getText() + "\" WHERE KommentarID=" + k.getId());
 				      						
@@ -91,29 +99,33 @@ public class KommentarMapper {
 			 
 				 
 			 }
-	    
-		 public Kommentar findKommentarByKommentarID(int kommentarID){
-				//Aufbau der DBVerbindung
+		 
+			//Methode die Tupels in Objekte umwandelt
+		 	public Kommentar findKommentarByKommentarID(int kommentarID){
+				
+		 		//Aufbau der DBVerbindung
 				Connection con = DBConnection.connection();
 				
 				//Versuch der Abfrage
 				try{
+					
 					//leeres SQL-Statement anlegen
 					Statement stmt = con.createStatement();
+					
 					//Suche alle Felder der Kommentartabelle anhand von ID
 					ResultSet rs = stmt.executeQuery("SELECT * FROM kommentar WHERE KommentarID=" + kommentarID );
 					
 					
 					if (rs.next()) {
 						
-				        // Ergebnis in Beitrag- Objekt umwandeln
+				        // Ergebnis in Beitragobjekt umwandeln
 				        Kommentar k = new Kommentar();
 				        k.setText(rs.getString("inhalt"));
 				        k.setOwnerId(rs.getInt("User_UserID"));
 				        k.setBeitragId(rs.getInt("Beitrag_BeitragID"));
 				        
 				        
-				        //Kommentar Objekt zur¸ckgeben
+				        //Kommentarobjekt zur√ºckgeben
 				        return k;
 					}
 				}
@@ -121,20 +133,24 @@ public class KommentarMapper {
 			      e.printStackTrace();
 			     
 		 }
-				// falls keine gefundene leere Liste
+				// falls keine gefundene Liste, dann gibst du nichts zur√ºck
 				return null;
 		 }
 		 
 	    
 				 public int countAllKommentareFromBeitrag(Beitrag beitrag){
-					 int counter = 0; //Z‰hler
+					 int counter = 0; //Z√§hler
+					 
 					//Aufbau der DBVerbindung
 					Connection con = DBConnection.connection();
 					
 					//Versuch der Abfrage
 					try{
+						
+						//leeres SQL-Statement anlegen
 						Statement stmt = con.createStatement();
-						//Suche alle Beitrag
+						
+						//Suche alle Beitr√§ge
 						ResultSet rs = stmt.executeQuery("SELECT * FROM Kommentar WHERE Beitrag_BeitragID=" +beitrag.getId());
 
 					    
@@ -154,15 +170,19 @@ public class KommentarMapper {
 	 
 		 
 		 public int countKommentareFromUser(User user){
-			 int counter = 0; //Z‰hler
+			 
+			 int counter = 0; //Z√§hler
+			 
 			//Aufbau der DBVerbindung
 			Connection con = DBConnection.connection();
 			
 			//Versuch der Abfrage
 			try{
+				
+				//leeres SQL-Statement anlegen
 				Statement stmt = con.createStatement();
 				
-				//Suche alle Beitrag
+				//Suche alle Beitr√§ge
 				ResultSet rs = stmt.executeQuery("SELECT * FROM kommentar WHERE User_UserID=" +user.getId());
 													
 			    		
@@ -179,19 +199,5 @@ public class KommentarMapper {
 			return counter;
 			
 		 }
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 	 

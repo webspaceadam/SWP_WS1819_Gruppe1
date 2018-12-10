@@ -1,0 +1,198 @@
+-- MySQL dump 10.13  Distrib 5.7.23, for Win64 (x86_64)
+--
+-- Host: localhost    Database: pinners_itprojekt
+-- ------------------------------------------------------
+-- Server version	5.7.23-log
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `abonnement`
+--
+
+DROP TABLE IF EXISTS `abonnement`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `abonnement` (
+  `AbonnementID` int(11) NOT NULL AUTO_INCREMENT,
+  `CreationTimeStamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `Pinnwand_PinnwandID` int(11) NOT NULL,
+  `User_UserID` int(11) NOT NULL,
+  PRIMARY KEY (`AbonnementID`,`Pinnwand_PinnwandID`,`User_UserID`),
+  KEY `fk_Abonnement_Pinnwand1_idx` (`Pinnwand_PinnwandID`),
+  KEY `fk_Abonnement_User1_idx` (`User_UserID`),
+  CONSTRAINT `fk_Abonnement_Pinnwand1` FOREIGN KEY (`Pinnwand_PinnwandID`) REFERENCES `pinnwand` (`PinnwandID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Abonnement_User1` FOREIGN KEY (`User_UserID`) REFERENCES `user` (`UserID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `abonnement`
+--
+
+LOCK TABLES `abonnement` WRITE;
+/*!40000 ALTER TABLE `abonnement` DISABLE KEYS */;
+/*!40000 ALTER TABLE `abonnement` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `beitrag`
+--
+
+DROP TABLE IF EXISTS `beitrag`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `beitrag` (
+  `BeitragID` int(11) NOT NULL AUTO_INCREMENT,
+  `Inhalt` varchar(45) DEFAULT NULL,
+  `CreationTimeStamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `Pinnwand_PinnwandID` int(11) NOT NULL,
+  `User_UserID` int(11) NOT NULL,
+  PRIMARY KEY (`BeitragID`,`Pinnwand_PinnwandID`,`User_UserID`),
+  KEY `fk_Beitrag_Pinnwand1_idx` (`Pinnwand_PinnwandID`),
+  KEY `fk_Beitrag_User1_idx` (`User_UserID`),
+  CONSTRAINT `fk_Beitrag_Pinnwand1` FOREIGN KEY (`Pinnwand_PinnwandID`) REFERENCES `pinnwand` (`PinnwandID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Beitrag_User1` FOREIGN KEY (`User_UserID`) REFERENCES `user` (`UserID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `beitrag`
+--
+
+LOCK TABLES `beitrag` WRITE;
+/*!40000 ALTER TABLE `beitrag` DISABLE KEYS */;
+/*!40000 ALTER TABLE `beitrag` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `kommentar`
+--
+
+DROP TABLE IF EXISTS `kommentar`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `kommentar` (
+  `KommentarID` int(11) NOT NULL AUTO_INCREMENT,
+  `Inhalt` varchar(45) DEFAULT NULL,
+  `CreationTimeStamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `Beitrag_BeitragID` int(11) NOT NULL,
+  `User_UserID` int(11) NOT NULL,
+  PRIMARY KEY (`KommentarID`,`Beitrag_BeitragID`,`User_UserID`),
+  KEY `fk_Kommentar_Beitrag1_idx` (`Beitrag_BeitragID`),
+  KEY `fk_Kommentar_User1_idx` (`User_UserID`),
+  CONSTRAINT `fk_Kommentar_Beitrag1` FOREIGN KEY (`Beitrag_BeitragID`) REFERENCES `beitrag` (`BeitragID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Kommentar_User1` FOREIGN KEY (`User_UserID`) REFERENCES `user` (`UserID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `kommentar`
+--
+
+LOCK TABLES `kommentar` WRITE;
+/*!40000 ALTER TABLE `kommentar` DISABLE KEYS */;
+/*!40000 ALTER TABLE `kommentar` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `like`
+--
+
+DROP TABLE IF EXISTS `like`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `like` (
+  `LikeID` int(11) NOT NULL AUTO_INCREMENT,
+  `CreationTimeStamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `Beitrag_BeitragID` int(11) NOT NULL,
+  `User_UserID` int(11) NOT NULL,
+  PRIMARY KEY (`LikeID`,`Beitrag_BeitragID`,`User_UserID`),
+  KEY `fk_Like_Beitrag1_idx` (`Beitrag_BeitragID`),
+  KEY `fk_Like_User1_idx` (`User_UserID`),
+  CONSTRAINT `fk_Like_Beitrag1` FOREIGN KEY (`Beitrag_BeitragID`) REFERENCES `beitrag` (`BeitragID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Like_User1` FOREIGN KEY (`User_UserID`) REFERENCES `user` (`UserID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `like`
+--
+
+LOCK TABLES `like` WRITE;
+/*!40000 ALTER TABLE `like` DISABLE KEYS */;
+/*!40000 ALTER TABLE `like` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `pinnwand`
+--
+
+DROP TABLE IF EXISTS `pinnwand`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pinnwand` (
+  `PinnwandID` int(11) NOT NULL AUTO_INCREMENT,
+  `CreationTimeStamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `User_UserID` int(11) NOT NULL,
+  PRIMARY KEY (`PinnwandID`,`User_UserID`),
+  KEY `fk_Pinnwand_User1_idx` (`User_UserID`),
+  CONSTRAINT `fk_Pinnwand_User1` FOREIGN KEY (`User_UserID`) REFERENCES `user` (`UserID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pinnwand`
+--
+
+LOCK TABLES `pinnwand` WRITE;
+/*!40000 ALTER TABLE `pinnwand` DISABLE KEYS */;
+/*!40000 ALTER TABLE `pinnwand` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user`
+--
+
+DROP TABLE IF EXISTS `user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user` (
+  `UserID` int(11) NOT NULL AUTO_INCREMENT,
+  `Nickname` varchar(45) DEFAULT NULL,
+  `Firstname` varchar(45) DEFAULT NULL,
+  `Lastname` varchar(45) DEFAULT NULL,
+  `Gmail` varchar(45) DEFAULT NULL,
+  `CreationTimeStamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`UserID`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user`
+--
+
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2018-12-06 16:40:19
