@@ -33,6 +33,14 @@ public class PinnwandBox extends FlowPanel {
 		
 	}
 	
+	public PinnwandBox(Vector<BeitragBox> pinnwandBeitragBoxes) {
+		this.allBeitragBoxesOfPinnwand = pinnwandBeitragBoxes;
+		
+		for(int i = 0; i < allBeitragBoxesOfPinnwand.size(); i++) {
+			this.add(allBeitragBoxesOfPinnwand.elementAt(i));
+		}
+	}
+	
 	public void onLoad() {
 		this.addStyleName("rechteSeite");
 		

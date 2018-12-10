@@ -48,6 +48,11 @@ public class ProfileBox extends FlowPanel {
 	
 		public ProfileBox() {
 		}
+		
+		public ProfileBox(String newAccName, String newNickname) {
+			this.accountName.setText(newAccName);
+			this.nickName.setText("@" + newNickname);
+		}
 
 		
 		public void onLoad() {

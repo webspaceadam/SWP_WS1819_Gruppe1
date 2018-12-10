@@ -1,5 +1,9 @@
 package de.hdm.softwarePraktikumGruppe1.client.gui;
 
+import java.util.Vector;
+
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.*;
 
 /**
@@ -41,9 +45,46 @@ public class AbonnementBox extends FlowPanel {
 		pinnwandWrapper.add(pinnwandBtn);
 		deaboWrapper.add(deaboBtn);
 		
+		// Adding ClickHandlers to Buttons
+		pinnwandBtn.addClickHandler(new ShowPinnwandClickHandler());
+		
 		this.add(accountWrapper);
 		this.add(nickWrapper);
 		this.add(pinnwandWrapper);
 		this.add(deaboWrapper);
 	}
+	
+	private class ShowPinnwandClickHandler implements ClickHandler {
+		@Override
+		public void onClick(ClickEvent event) {
+			RootPanel rootPanelContainerPanel = RootPanel.get("container");
+			rootPanelContainerPanel.clear();
+			
+			FlowPanel linkeSeite = new FlowPanel();
+			ProfileBox newProfile = new ProfileBox("Adam Gniady", "javaGod");
+			
+			// Pinnwand Stuff
+			Vector<BeitragBox> allBeitragBoxesOfPinnwand = new Vector<BeitragBox>();
+			
+			for(int i = 0; i < 10; i++) {
+				BeitragBox tempBB = new BeitragBox();
+				
+				allBeitragBoxesOfPinnwand.add(tempBB);
+			}
+			
+			PinnwandBox newPinnwand = new PinnwandBox(allBeitragBoxesOfPinnwand);
+			
+			
+			
+			linkeSeite.addStyleName("linkeSeite");
+			
+			linkeSeite.add(newProfile);
+			
+			rootPanelContainerPanel.add(linkeSeite);
+			rootPanelContainerPanel.add(newPinnwand);
+			
+		}
+		
+	}
+
 }

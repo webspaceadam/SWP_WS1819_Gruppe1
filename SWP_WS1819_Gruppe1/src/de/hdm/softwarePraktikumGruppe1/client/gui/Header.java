@@ -132,8 +132,6 @@ public class Header extends FlowPanel {
 			private ScrollPanel parentScrolling = new ScrollPanel();
 			private FlowPanel aboParentPanel = new FlowPanel();
 			
-			
-			
 			public ShowAbosDialogBox() {
 				
 				for(int i = 0; i < 20; i++) {
