@@ -1,7 +1,6 @@
 
 package de.hdm.softwarePraktikumGruppe1.server.db;
 
-import java.util.ArrayList;
 import java.util.Vector;
 import java.sql.*;
 
@@ -11,7 +10,9 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.Like;
 
 
 /**
- * @author GianlucaBernert,Ulusserhat
+ * @author GianlucaBernert
+ * @autor SerhatUlus
+ * @author Yesin Soufi
  *
  */
 public class LikeMapper {
@@ -20,18 +21,15 @@ public class LikeMapper {
 	private static LikeMapper likeMapper = null;
 	
 	
-	/** 
-	* Konstruktor der Klasse
-	 */
+	//Ein gesch√ºtzter Konstruktor der weitere Instanzierungen von LikeMapper Objekten verhindert.
 	protected LikeMapper() {
 	}
 	
 	
 	
-	/**
-	 * Diese Methode stellt die Singelton-Eigenschaft sicher, indem sie daf¸r sorgt, 
-	 * dass nur eine einzige Instanz dieser Klasse existiert
-	 */
+	
+	 //Diese Methode stellt die Singelton-Eigenschaft sicher, indem sie daf√ºr sorgt, 
+	 //dass nur eine einzige Instanz dieser Klasse existiert.
 	public LikeMapper likeMapper() {
 		if (likeMapper == null) {
 			likeMapper = new LikeMapper();
@@ -44,6 +42,7 @@ public class LikeMapper {
 	/**
 	 * Methode zum speichern eines Likes
 	 */
+	//Objekt -> Tupel
 	public void insertLike(Like l) {
 		 Connection con = DBConnection.connection();
 
@@ -51,7 +50,7 @@ public class LikeMapper {
 				//leeres SQL-Statement anlegen
 		      Statement stmt = con.createStatement();
 
-		        // Jetzt erst erfolgt die tats‰chliche Einf¸geoperation
+		        // Jetzt erst erfolgt die tatsÔøΩchliche EinfÔøΩgeoperation
 		        stmt.executeUpdate("INSERT INTO like (Beitrag_BeitragID, User_UserID) "
 		            + "VALUES (" + l.getBeitragId()+ "','" + l.getOwnerId());
 		      }
@@ -67,6 +66,7 @@ public class LikeMapper {
 	/**
 	 * Methode zum loeschen eines Likes
 	 */
+	//Objekt -> Tupel
 	public void deleteLike(Like l) {
 		Connection con = DBConnection.connection();
 		
@@ -84,7 +84,7 @@ public class LikeMapper {
 
 	
 	/**
-	 * Methode zum z‰hlen aller Likes eines Beitrags
+	 * Methode zum z√§hlen aller Likes eines Beitrags
 	 */
 	public int countAllLikesFromBeitrag(Beitrag b) {
 		

@@ -9,8 +9,9 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.Pinnwand;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
 /**
- * @author GianlucaBernert, SerhatUlus
- *
+ * @author GianlucaBernert 
+ * @author SerhatUlus
+ * @author Yesin Soufi
  */
 	public class PinnwandMapper {
 		
@@ -18,12 +19,13 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 		private static PinnwandMapper pinnwandMapper = null;
 
 		
-		//leerer Konstruktor wegen Singleton
+		//Ein geschÃ¼tzter Konstruktor der weitere Instanzierungen von PinnwandMapper Objekten verhindert.
 		protected PinnwandMapper() {
 		}
 
 		
-		//Singleton "Konstruktor"-methode
+		//Diese Methode stellt die Singelton-Eigenschaft sicher, indem sie dafÃ¼r sorgt, 
+		 //dass nur eine einzige Instanz dieser Klasse existiert.
 		 public static PinnwandMapper pinnwandMapper(){
 			if (pinnwandMapper==null){
 				 pinnwandMapper= new PinnwandMapper();
@@ -40,9 +42,10 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 		 
 		 try{
 			 
+				//leeres SQL-Statement anlegen
 			 Statement stmt = con.createStatement();
 			 
-			        // Jetzt erst erfolgt die tatsächliche Einfügeoperation
+			        // Jetzt erst erfolgt die tatsï¿½chliche Einfï¿½geoperation
 			        stmt.executeUpdate("INSERT INTO pinnwand (User_UserID) "
 			            + "VALUES (" + p.getOwnerId());
 		      	
@@ -63,6 +66,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 			 Connection con = DBConnection.connection();
 			 
 		 try {
+			 
 			//leeres SQL-Statement anlegen
 			 Statement stmt = con.createStatement();
 			 
@@ -77,7 +81,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
 		}
 		 
-		//Tupel -> Objekt
+		//Methode die Tupels -> Objekte umwandelt
 		 public Pinnwand findPinnwandByUserID(User u) {
 				
 			
@@ -108,9 +112,3 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 				return null;
 		 }
 	}
-			 
-			 
-			 
-			 
-			 
-			 
