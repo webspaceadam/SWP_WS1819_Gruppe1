@@ -56,7 +56,7 @@ public class SearchAboBox extends FlowPanel {
 			rootPanelContainerPanel.clear();
 			
 			FlowPanel linkeSeite = new FlowPanel();
-			ProfileBox newProfile = new ProfileBox("Adam Gniady", "javaGod");
+			ProfileBox newProfile = new ProfileBox("Adam", "Gniady", "javaGod");
 			
 			// Pinnwand Stuff
 			Vector<BeitragBox> allBeitragBoxesOfPinnwand = new Vector<BeitragBox>();

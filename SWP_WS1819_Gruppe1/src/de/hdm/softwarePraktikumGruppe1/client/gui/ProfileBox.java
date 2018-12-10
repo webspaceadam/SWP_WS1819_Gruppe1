@@ -20,15 +20,17 @@ public class ProfileBox extends FlowPanel {
 		// Oberer Teil
 	
 		// dazugeh�rige Label
-		private Label accountName = new Label("Sebastian Hermann");
-		private Label nickName = new Label("@sebmeister");
+		private Label vorName = new Label("Sebastian");
+		private Label nachName = new Label("Hermann");
+		private Label nickName = new Label("sebmeister");
 		private Image editPenBtn = new Image("images/SVG/cog.png");
 		private HTML hrElement = new HTML("<hr/>");
+		
 		// dazugeh�rige wrapper
 		private FlowPanel wrapper1 = new FlowPanel();
 		private FlowPanel wrapper1_el_links = new FlowPanel();
 		private FlowPanel wrapper1_el_rechts = new FlowPanel();
-		
+		private FlowPanel accountNameWrapper = new FlowPanel();
 		
 		// unterer Teil
 		private Label aboHeader = new Label("ABBONIERT");
@@ -49,8 +51,9 @@ public class ProfileBox extends FlowPanel {
 		public ProfileBox() {
 		}
 		
-		public ProfileBox(String newAccName, String newNickname) {
-			this.accountName.setText(newAccName);
+		public ProfileBox(String newVorname, String newNachname, String newNickname) {
+			this.vorName.setText(newVorname);
+			this.nachName.setText(newNachname);
 			this.nickName.setText("@" + newNickname);
 		}
 
@@ -64,7 +67,13 @@ public class ProfileBox extends FlowPanel {
 			wrapper1_el_links.addStyleName("grid_box_links");
 			wrapper1_el_rechts.addStyleName("grid_box_rechts");
 			
-			accountName.addStyleName("title is-size-4 grid_box_element");
+			
+			accountNameWrapper.addStyleName("grid_box_element");
+			vorName.addStyleName("title margin_right is-size-4");
+			nachName.addStyleName("title margin_right is-size-4");
+			accountNameWrapper.add(vorName);
+			accountNameWrapper.add(nachName);
+			
 			editPenBtn.addStyleName("grid_box_element");
 			editPenBtn.getElement().setPropertyString("style", "max-width: 25px;");
 			editPenBtn.addClickHandler(new EditProfileBoxClickHandler(this));
@@ -87,7 +96,7 @@ public class ProfileBox extends FlowPanel {
 			likeCount.addStyleName("title");
 			
 			// Adding Elements to Wrapper 1
-			wrapper1_el_links.add(accountName);
+			wrapper1_el_links.add(accountNameWrapper);
 			wrapper1_el_rechts.add(editPenBtn);
 			wrapper1.add(wrapper1_el_links);
 			wrapper1.add(wrapper1_el_rechts);
@@ -172,10 +181,26 @@ public class ProfileBox extends FlowPanel {
 		}
 		
 		public void setNickname(String newNickname) {
-			this.nickName.setText("@" + newNickname);
+			this.nickName.setText(newNickname);
 		}
 		
-		public void setAccountname(String newVorname, String newNachname) {
-			this.accountName.setText(newVorname + " " + newNachname);
+		public void setVorname(String newVorname) {
+			this.vorName.setText(newVorname);
+		}
+		
+		public void setNachname(String newNachname) {
+			this.nachName.setText(newNachname);
+		}
+		
+		public String getNickname() {
+			return this.nickName.getText();
+		}
+		
+		public String getVorname() {
+			return this.vorName.getText();
+		}
+		
+		public String getNachname() {
+			return this.nachName.getText();
 		}
 }
