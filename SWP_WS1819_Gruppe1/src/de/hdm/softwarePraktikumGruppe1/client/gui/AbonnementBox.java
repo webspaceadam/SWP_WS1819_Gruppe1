@@ -18,14 +18,21 @@ public class AbonnementBox extends FlowPanel {
 	private FlowPanel deaboWrapper = new FlowPanel();
 	
 	public AbonnementBox() {
+	}
+	
+	public AbonnementBox(int aboCount) {
+		this.accountName.setText("Abonnement" + aboCount);
+	}
+	
+	public void onLoad() {
 		this.addStyleName("box grid_box radiusless");
 		accountWrapper.addStyleName("box-item-ein-viertel");
 		nickWrapper.addStyleName("box-item-ein-viertel");
 		pinnwandWrapper.addStyleName("box-item-ein-viertel");
 		deaboWrapper.addStyleName("box-item-ein-viertel");
 		
-		accountName.addStyleName("title is-size-3");
-		nickName.addStyleName("is-size-4");
+		accountName.addStyleName("title is-size-4");
+		nickName.addStyleName("is-size-5");
 		pinnwandBtn.addStyleName("button bg-primary has-text-white");
 		deaboBtn.addStyleName("button is-danger");
 		
@@ -38,9 +45,5 @@ public class AbonnementBox extends FlowPanel {
 		this.add(nickWrapper);
 		this.add(pinnwandWrapper);
 		this.add(deaboWrapper);
-	}
-	
-	public void onLoad() {
-		
 	}
 }

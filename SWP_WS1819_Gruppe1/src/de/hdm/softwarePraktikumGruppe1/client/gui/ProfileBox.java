@@ -133,9 +133,6 @@ public class ProfileBox extends FlowPanel {
 			
 			public EditProfileBoxDialogBox(ProfileBox pb) {
 				parentPB = pb;
-
-				//Button safeButton = new Button("Speichere den Edit", this);
-				//safeButton.addStyleName("button bg-primary");
 				Image cancelImage = new Image("images/SVG/timesCircle.png");
 				cancelImage.getElement().setPropertyString("style", "max-width: 25px;");
 				cancelImage.addClickHandler(this);
@@ -146,12 +143,8 @@ public class ProfileBox extends FlowPanel {
 				DockPanel dock = new DockPanel();
 				dock.setSpacing(6);
 				dock.add(editForm, DockPanel.CENTER);
-				//dock.add(safeButton, DockPanel.SOUTH);
 				dock.add(cancelImage, DockPanel.EAST);
-				
-				//safeButton.addClickHandler();
 
-				//dock.setCellHorizontalAlignment(safeButton, DockPanel.ALIGN_CENTER);
 				dock.setWidth("600px");
 				setWidget(dock);
 			}
