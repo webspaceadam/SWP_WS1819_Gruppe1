@@ -22,7 +22,7 @@ public class User extends BusinessObject{
 	/**
 	 * Methode die den Nicknamen eines Users zurück gibt
 	 */
-	public static String getNickname() {
+	public String getNickname() {
 		return nickname;
 	}
 	
