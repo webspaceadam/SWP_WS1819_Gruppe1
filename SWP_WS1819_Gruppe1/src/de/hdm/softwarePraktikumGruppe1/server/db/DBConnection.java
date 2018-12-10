@@ -10,7 +10,7 @@ public class DBConnection {
 
 	/**
 	 * Sie speichert die einzige Instanz dieser Klasse. Sie ist durch static nur
-	 * einmal für alle sämtlichen Instanzen dieser Klasse vorhanden
+	 * einmal fï¿½r alle sï¿½mtlichen Instanzen dieser Klasse vorhanden
 	 */
 	private static Connection con = null;
 
@@ -29,7 +29,7 @@ public class DBConnection {
 		if (con == null) {
 			try {
 
-				Class.forName("com.mysql.cj.jdbc.Driver"); // lädt den JDBC -Treiber für Mysql
+				Class.forName("com.mysql.cj.jdbc.Driver"); //  JDBC -Treiber fÃ¼r Mysql
 				con = DriverManager.getConnection(localUrl);
 				/*
 				 * die Verbindung zur Datenbank wird in der Variable con gespeichert
@@ -49,7 +49,7 @@ public class DBConnection {
 			}
 		}
 
-		// Zurückgegeben der Verbindung
+		// ZurÃ¼ckgegeben der Verbindung
 		return con;
 	}
 
