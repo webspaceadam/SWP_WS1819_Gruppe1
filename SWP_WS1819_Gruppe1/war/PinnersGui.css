@@ -279,6 +279,10 @@ h1 {
     margin-bottom: 0.7rem;
 }
 
+.margin_right {
+	margin-right: 0.5rem;
+}
+
 .kommentar_margin {
     margin-left: 4em;
 }
@@ -420,10 +424,6 @@ hr {
     font-size: 2rem;
     font-weight: 600;
     line-height: 1.125;
-}
-
-.title:not(:last-child) {
-    margin-bottom: 1.5rem;
 }
 
 .has-text-centered {
@@ -777,5 +777,7 @@ td.datePickerYear {
   font-weight: bold;
   color: #333;
 }
+
+
 
 

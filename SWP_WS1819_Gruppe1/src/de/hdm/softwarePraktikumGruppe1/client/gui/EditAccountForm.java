@@ -3,6 +3,7 @@ package de.hdm.softwarePraktikumGruppe1.client.gui;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
 
 import de.hdm.softwarePraktikumGruppe1.client.gui.ProfileBox.EditProfileBoxDialogBox;
@@ -34,7 +35,7 @@ public class EditAccountForm extends FlowPanel {
 	
 	public EditAccountForm(ProfileBox parentProfileBox, EditProfileBoxDialogBox parentDB) {
 		this.parentPB = parentProfileBox;
-		this.parentDialogBox = parentDB;
+		this.parentDialogBox = parentDB;	
 	}
 	
 	public void onLoad() {
@@ -43,7 +44,8 @@ public class EditAccountForm extends FlowPanel {
 		nickName.addStyleName("label has-text-primary content_margin");
 		nickInput.addStyleName("control input");
 		nickInput.setWidth("300px");
-		nickInput.getElement().setPropertyString("placeholder", "Dein Nickname");
+		nickInput.getElement().setPropertyString("placeholder", "Dein aktueller Nickname: " + parentPB.getNickname());
+		nickInput.setValue(parentPB.getNickname());
 		
 		nickWrapper.add(nickName);
 		nickWrapper.add(nickInput);
@@ -54,6 +56,7 @@ public class EditAccountForm extends FlowPanel {
 		lastInput.addStyleName("control input");
 		lastInput.setWidth("300px");
 		lastInput.getElement().setPropertyString("placeholder", "Dein Nachname");
+		lastInput.setValue(parentPB.getNachname());
 		
 		nameWrapper.add(lastName);
 		nameWrapper.add(lastInput);
@@ -64,6 +67,7 @@ public class EditAccountForm extends FlowPanel {
 		firstInput.addStyleName("control input");
 		firstInput.setWidth("300px");
 		firstInput.getElement().setPropertyString("placeholder", "Dein Vorname");
+		firstInput.setValue(parentPB.getVorname());
 		
 		firstNameWrapper.add(firstName);
 		firstNameWrapper.add(firstInput);
@@ -85,9 +89,29 @@ public class EditAccountForm extends FlowPanel {
 			String newVorname = firstInput.getValue();
 			String newNachname = lastInput.getValue();
 			
-			parentPB.setNickname(newNickname);
-			parentPB.setAccountname(newVorname, newNachname);
+			// Check if Input for Nickname is empty
+			if(newNickname.isEmpty()) {
+				Window.alert("'Nickname' is empty!");
+			} else {
+				parentPB.setNickname(newNickname);
+			}
+			
+			// Check if Input for Vorname is empty
+			if(newVorname.isEmpty()) {
+				Window.alert("'Vorname' is empty!");
+			} else {
+				parentPB.setVorname(newVorname);
+			}
+			
+			// Check if Input for Nickname is empty
+			if(newNachname.isEmpty()) {
+				Window.alert("'Nachname' is empty!");
+			} else {
+				parentPB.setNachname(newNachname);
+			}
+			
 			parentDialogBox.hide();
+			
 		}
 		
 	}
