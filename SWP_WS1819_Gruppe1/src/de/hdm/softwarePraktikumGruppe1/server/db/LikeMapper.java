@@ -52,8 +52,8 @@ public class LikeMapper {
 		      Statement stmt = con.createStatement();
 
 		        // Jetzt erst erfolgt die tatsächliche Einfügeoperation
-		        stmt.executeUpdate("INSERT INTO like (LikeID,Beitrag_BeitragID, User_UserID) "
-		            + "VALUES ("+ l.getBeitragId() + "','" + l.getOwnerId()+ "','" + l.getId());
+		        stmt.executeUpdate("INSERT INTO like (Beitrag_BeitragID, User_UserID) "
+		            + "VALUES (" + l.getBeitragId()+ "','" + l.getOwnerId());
 		      }
 		    
 		    catch (SQLException e) {
@@ -86,7 +86,7 @@ public class LikeMapper {
 	/**
 	 * Methode zum zählen aller Likes eines Beitrags
 	 */
-	public int countAllLikesFromBeitrag(Beitrag b, Like l) {
+	public int countAllLikesFromBeitrag(Beitrag b) {
 		
 
 		int counter = 0;
@@ -100,11 +100,11 @@ public class LikeMapper {
 			Statement stmt  = con.createStatement();
 			
 			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM like WHERE BeitragID=" + b.getCommentID() + "LikeID=" + l.getId());
+			ResultSet rs = stmt.executeQuery("SELECT * FROM like WHERE BeitragID=" + b.getId());
 					
 					
 					while (rs.next()) {
-				        counter=rs.getInt(1);
+				        counter++;
 				      }
 					
 					return counter;
@@ -138,8 +138,7 @@ public class LikeMapper {
 
 			while (rs.next()) {
 
-		        Like l = new Like();
-		        l.setId(rs.getInt("Like_ID"));
+		        Like l = new Like();	        
 		        l.setOwnerId(rs.getInt("User_UserID"));
 		        l.setBeitragId(rs.getInt("Beitrag_BeitragID"));
 		        vector.add(l);

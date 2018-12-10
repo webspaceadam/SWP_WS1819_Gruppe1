@@ -108,9 +108,9 @@ public class KommentarMapper {
 						
 				        // Ergebnis in Beitrag- Objekt umwandeln
 				        Kommentar k = new Kommentar();
-				        k.setId(rs.getInt("KommentarID"));
 				        k.setText(rs.getString("inhalt"));
 				        k.setOwnerId(rs.getInt("User_UserID"));
+				        k.setBeitragId(rs.getInt("Beitrag_BeitragID"));
 				        
 				        
 				        //Kommentar Objekt zurückgeben
@@ -135,11 +135,11 @@ public class KommentarMapper {
 					try{
 						Statement stmt = con.createStatement();
 						//Suche alle Beitrag
-						ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM Kommentar WHERE Beitrag_BeitragID=" +beitrag.getId());
+						ResultSet rs = stmt.executeQuery("SELECT * FROM Kommentar WHERE Beitrag_BeitragID=" +beitrag.getId());
 
 					    
 						while (rs.next()) {
-					        counter=rs.getInt(1);
+					        counter++;
 					      }
 						
 					}
@@ -163,11 +163,11 @@ public class KommentarMapper {
 				Statement stmt = con.createStatement();
 				
 				//Suche alle Beitrag
-				ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM kommentar WHERE User_UserID=" +user.getId());
+				ResultSet rs = stmt.executeQuery("SELECT * FROM kommentar WHERE User_UserID=" +user.getId());
 													
 			    		
 				while (rs.next()) {
-			        counter=rs.getInt(1);
+			        counter++;
 			      }
 				
 			}

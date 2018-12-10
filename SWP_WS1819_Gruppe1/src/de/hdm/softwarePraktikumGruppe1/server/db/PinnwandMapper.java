@@ -43,8 +43,8 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 			 Statement stmt = con.createStatement();
 			 
 			        // Jetzt erst erfolgt die tatsächliche Einfügeoperation
-			        stmt.executeUpdate("INSERT INTO pinnwand (PinnwandID, User_UserID) "
-			            + "VALUES (" + p.getId() + ",'" + p.getOwnerId());
+			        stmt.executeUpdate("INSERT INTO pinnwand (User_UserID) "
+			            + "VALUES (" + p.getOwnerId());
 		      	
 		    }
 			
@@ -67,7 +67,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 			 Statement stmt = con.createStatement();
 			 
 			 
-			 stmt.executeUpdate("DELETE FROM pinnwand WHERE User_UserID =" + p.getOwnerId() + " PinnwandID=" +p.getId());
+			 stmt.executeUpdate("DELETE FROM pinnwand WHERE  PinnwandID=" +p.getId());
 		 }
 		 
 		 catch (SQLException e) {
@@ -90,14 +90,13 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 					Statement stmt = con.createStatement();
 					
 					//Suche alle Felder der Pinnwandtabelle anhand von ID
-					ResultSet rs = stmt.executeQuery("SELECT * FROM pinnwand " + "WHERE User_UserID=" + u.getId());
+					ResultSet rs = stmt.executeQuery("SELECT * FROM pinnwand WHERE User_UserID=" + u.getId());
 
 					 
 					if (rs.next()) {
 						// Ergebnis in Pinnwandobjekt umwandeln
-						Pinnwand p = new Pinnwand();
-						p.setId(rs.getInt("PinnwandID"));
-						p.setOwner(u);   	
+						Pinnwand p = new Pinnwand();	
+						p.setOwnerId(u.getId());
 						return p;
 						}
 					}
