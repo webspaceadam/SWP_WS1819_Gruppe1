@@ -48,7 +48,7 @@ public abstract class BusinessObject implements Serializable{
 	 * Methode um den Klassennamen + die ID des Objekts zurueck zu geben
 	 */
 	public String toString() {
-		return this.getClass().getName() + " #" + this.id;
+		return this.getClass().getName() + " BO ID #" + this.id;
 	}
 	
 	/**
