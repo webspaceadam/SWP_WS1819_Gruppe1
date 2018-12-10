@@ -1,6 +1,7 @@
 package de.hdm.softwarePraktikumGruppe1.client.gui;
 import java.util.Vector;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.*;
@@ -42,6 +43,7 @@ public class Header extends FlowPanel {
 		// Create Anchors / Links
 		private Anchor meinePinnwand = new Anchor("Meine Pinnwand");
 		private Anchor meineAbos = new Anchor("Meine Abos");
+	
 
 		/**
 		 * Im Konstruktor dieser Klasse werden die Buttons in die Panels
@@ -106,10 +108,14 @@ public class Header extends FlowPanel {
 			headerRight.add(logoutDiv);
 			
 			/*
-			 * Logik to add the ClickHandlers
+			 * Logic to add the ClickHandlers
 			 */
 			
+			
+			
+			searchButton.addClickHandler(new SearchUserClickHandler(this));
 			meineAbos.addClickHandler(new ShowAbosClickHandler());
+			
 			
 			this.add(headerLogo);
 			this.add(headerLinkList);
@@ -141,6 +147,69 @@ public class Header extends FlowPanel {
 				
 				for(int i = 0; i < userAbos.size(); i++) {
 					aboParentPanel.add(userAbos.elementAt(i));
+				}
+				
+				parentScrolling.add(aboParentPanel);
+				parentScrolling.setSize("800px", "400px");
+				
+				
+				Image cancelImage = new Image("images/SVG/timesCircle.png");
+				cancelImage.getElement().setPropertyString("style", "max-width: 25px;");
+				cancelImage.addClickHandler(this);
+
+				DockPanel dock = new DockPanel();
+				dock.setSpacing(6);
+				dock.add(parentScrolling, DockPanel.CENTER);
+				dock.add(cancelImage, DockPanel.EAST);
+				
+				//safeButton.addClickHandler();
+
+				//dock.setCellHorizontalAlignment(safeButton, DockPanel.ALIGN_CENTER);
+				dock.setWidth("900px");
+				dock.setHeight("400px");
+				setWidget(dock);
+			}
+
+			@Override
+			public void onClick(ClickEvent event) {
+				hide();
+			}
+		}
+		
+		private class SearchUserClickHandler implements ClickHandler {
+			private Header parentHeader;			
+			
+			public SearchUserClickHandler(Header parentHeader) {
+				this.parentHeader = parentHeader;
+			}
+
+			@Override
+			public void onClick(ClickEvent event) {
+				SearchUserDialogBox dlg = new SearchUserDialogBox(parentHeader.searchUserInput.getValue());
+				dlg.center();
+			}
+			
+		}
+		
+		private class SearchUserDialogBox extends DialogBox implements ClickHandler {
+			private ScrollPanel parentScrolling = new ScrollPanel();
+			private FlowPanel aboParentPanel = new FlowPanel();
+			private String keyword;
+			
+			private Vector<SearchAboBox> searchResult = new Vector<SearchAboBox>();
+			
+			public SearchUserDialogBox(String keyword) {
+				this.keyword = keyword;
+				setText("Hier ist das Ergebnis deiner Suche nach: " + keyword);
+				
+				for(int i = 0; i < 5; i++) {
+					SearchAboBox tempSAB = new SearchAboBox();
+					
+					searchResult.add(tempSAB);
+				}
+				
+				for(int i = 0; i < searchResult.size(); i++) {
+					aboParentPanel.add(searchResult.elementAt(i));
 				}
 				
 				parentScrolling.add(aboParentPanel);
