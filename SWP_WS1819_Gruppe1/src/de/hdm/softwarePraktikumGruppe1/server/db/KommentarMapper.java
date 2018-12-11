@@ -16,7 +16,11 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
 public class KommentarMapper {
 	
-	// Variable die besagt ob schon kommentarMapperverbindung besteht
+	
+	/* Diese Variable ist durch den Bezeichner <code>static</code> nur einmal für
+	   * sämtliche eventuellen Instanzen dieser Klasse vorhanden. Sie speichert die
+	   * einzige Instanz dieser Klasse.--> Singeltoneigenschaft
+	   */
 	 private static KommentarMapper kommentarMapper = null;
 	 
 	 
