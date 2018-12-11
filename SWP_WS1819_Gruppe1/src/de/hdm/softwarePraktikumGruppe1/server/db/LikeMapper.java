@@ -18,6 +18,10 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.Like;
 public class LikeMapper {
 	
 	
+	/* Diese Variable ist durch den Bezeichner <code>static</code> nur einmal für
+	   * sämtliche eventuellen Instanzen dieser Klasse vorhanden. Sie speichert die
+	   * einzige Instanz dieser Klasse.--> Singeltoneigenschaft
+	   */
 	private static LikeMapper likeMapper = null;
 	
 	
