@@ -23,8 +23,8 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
 /**
  * Mit Hilfe der MapperKlasse <code>UserMapper</code> werden User-Objekte auf eine relationale Datenbank abgebildet.
- * Durch das implementieren der Methoden können User-Objekte gesucht, erzeugt, modifiziert und
- * gelöscht werden.
+ * Durch das implementieren der Methoden kï¿½nnen User-Objekte gesucht, erzeugt, modifiziert und
+ * gelï¿½scht werden.
  */
 public class UserMapper {
 	
@@ -44,7 +44,7 @@ public class UserMapper {
 	
 	/**
 	 * Stellt die Singeleton-Eigenschaft der Mapperklasse sicher
-	 * Sie dafür sorgt, dass nur eine einzige Instanz von <code>UserMapper</code> existiert.
+	 * Sie dafï¿½r sorgt, dass nur eine einzige Instanz von <code>UserMapper</code> existiert.
 	 * @return Sie gibt den UserMapper zurï¿½ck.
 	 */
 	
@@ -58,12 +58,12 @@ public class UserMapper {
 	
 	/**
 	 * /**
-	 * Die Methode <code>findByUserId</code> ermöglicht das suchen eines Kunden mit einer
-	 * vorgegebnen KundenID. Dadurch dass die ID eindeutig ist kann genau ein Objekt zurückgegeben werden.
+	 * Die Methode <code>findByUserId</code> ermï¿½glicht das suchen eines Kunden mit einer
+	 * vorgegebnen KundenID. Dadurch dass die ID eindeutig ist kann genau ein Objekt zurï¿½ckgegeben werden.
 	 * 
 	 * @param User_ID
-	 *            Primärschlüsselattribut (->DB)
-	 * @return Kunden-Objekt, das dem übergebenen Schlüssel entspricht, null bei
+	 *            Primï¿½rschlï¿½sselattribut (->DB)
+	 * @return Kunden-Objekt, das dem ï¿½bergebenen Schlï¿½ssel entspricht, null bei
 	 *         nicht vorhandenem DB
 	 */
 	 
@@ -98,7 +98,7 @@ public class UserMapper {
 	}
 	
 	/**
-	 * Die Methode <code> findAll </code> ermöglicht das auslesen sämtlicher User-Objekte durch einen Vektor.
+	 * Die Methode <code> findAll </code> ermï¿½glicht das auslesen sï¿½mtlicher User-Objekte durch einen Vektor.
 	 */
 	
 	public Vector<User> findAll(Vector<User> result){
@@ -178,9 +178,9 @@ public class UserMapper {
    
    }
    /**
-    * Die Methode <code> insert </> ermöglicht das einfügen eines User-Objekts in die Datebbank
+    * Die Methode <code> insert </> ermï¿½glicht das einfï¿½gen eines User-Objekts in die Datebbank
 	 * @param user
-	 * @return übergebene Objekt <code>User_ID</code>.
+	 * @return ï¿½bergebene Objekt <code>User_ID</code>.
 	 */
 		
 		public User insert(User user) {
@@ -197,7 +197,7 @@ public class UserMapper {
 
 				stmt = con.createStatement();
 				
-				stmt.executeUpdate("INSERT INTO customers (User_ID, FirstName, LastName, Nickname) " + "VALUES (" + user.getId(user) + ",'"
+				stmt.executeUpdate("INSERT INTO customers (User_ID, FirstName, LastName, Nickname) " + "VALUES (" + user.getUserId(user) + ",'"
 						+ user.getFirstName() + "'" +
 						user.getLastName() + "'" + user.getNickname());
 			}
@@ -221,7 +221,7 @@ public class UserMapper {
 					Statement stmt = con.createStatement();
 
 					stmt.executeUpdate("UPDATE User " + "SET Firstname=\"" + user.getFirstName() + "\", " + "Lastname=\""
-							+ user.getLastName() + "\" " + user.getNickname() + "WHERE User_ID=" + user.getId(user));
+							+ user.getLastName() + "\" " + user.getNickname() + "WHERE User_ID=" + user.getUserId(user));
 
 				} catch (SQLException e) {
 					e.printStackTrace();
@@ -232,7 +232,7 @@ public class UserMapper {
 			}
 			
 	/**
-	 * Löschen der Daten eines User-Objekts aus der Datenbank.
+	 * Lï¿½schen der Daten eines User-Objekts aus der Datenbank.
 	 */
 			
 			public void delete(User user) {
@@ -241,7 +241,7 @@ public class UserMapper {
 				try {
 					Statement stmt = con.createStatement();
 
-					stmt.executeUpdate("DELETE FROM User " + "WHERE User_ID=" + user.getId(user));
+					stmt.executeUpdate("DELETE FROM User " + "WHERE User_ID=" + user.getUserId(user));
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}

@@ -20,6 +20,7 @@ public class Beitrag extends Textbeitrag{
 	private Pinnwand pinnwand;
 	private Vector<Kommentar> kommentare;
 	private String text;
+	private int beitragID;
 	
 	/**
 	 * Methode die die ID des Users zurueck gibt der den Beitrag verfasst hat
@@ -138,6 +139,22 @@ public class Beitrag extends Textbeitrag{
 	 */
 	public String toString() {
 		return super.toString() + " User ID #" + this.getOwnerId();
+	}
+	
+
+	/**
+	 * Methode die die Beitrags ID zurueck gibt
+	 */
+	public int getBeitragID(Beitrag b) {
+		return beitragID;
+	}
+
+	
+	/**
+	 * Methode die die Beitrags ID setzt
+	 */
+	public void setBeitragID(int beitragID) {
+		this.beitragID = beitragID;
 	}
 	
 	
