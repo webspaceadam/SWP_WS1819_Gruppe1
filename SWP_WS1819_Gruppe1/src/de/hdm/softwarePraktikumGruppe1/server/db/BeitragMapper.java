@@ -25,8 +25,8 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
 /**
  * Mit Hilfe der MapperKlasse <code>UserMapper</code> werden User-Objekte auf eine relationale Datenbank abgebildet.
- * Durch das implementieren der Methoden können User-Objekte gesucht, erzeugt, modifiziert und
- * gelöscht werden.
+ * Durch das implementieren der Methoden kï¿½nnen User-Objekte gesucht, erzeugt, modifiziert und
+ * gelï¿½scht werden.
  */
 
 public class BeitragMapper {
@@ -55,9 +55,9 @@ public class BeitragMapper {
 	
 	
 	 /**
-	    * Die Methode <code> insert </> ermöglicht das einfügen eines Beitrag-Objekts in die Datebbank
+	    * Die Methode <code> insert </> ermï¿½glicht das einfï¿½gen eines Beitrag-Objekts in die Datebbank
 		 * @param user
-		 * @return übergebene Objekt <code>BeitragID</code>.
+		 * @return ï¿½bergebene Objekt <code>BeitragID</code>.
 		 */
 	
 	public void insertBeitrag(Beitrag b) {
@@ -67,7 +67,7 @@ public class BeitragMapper {
 			try {
 				PreparedStatement statement = con.prepareStatement(
 						"INSERT INTO textbeitrag (BeitragID, inhalt, creationTimeStamp) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
-				statement.setInt(1, b.getId(b));
+				statement.setInt(1, b.getBeitragID(b));
 				statement.setString(2, b.getText());
 				statement.setDate(3, (Date) b.getCreationTimeStamp());
 
@@ -83,7 +83,7 @@ public class BeitragMapper {
 	}
 	
 	/**
-	 * Löschen der Daten eines Beitrag-Objekts aus der Datenbank.
+	 * Lï¿½schen der Daten eines Beitrag-Objekts aus der Datenbank.
 	 */
 	
 	public void deleteBeitrag(Beitrag b) {
@@ -91,14 +91,14 @@ public class BeitragMapper {
 			Connection con = DBConnection.connection();
 			try {
 				Statement stmt = con.createStatement();
-				stmt.executeUpdate("DELETE FROM textbeitrag " + "WHERE id = " + b.getId(b));
+				stmt.executeUpdate("DELETE FROM textbeitrag " + "WHERE id = " + b.getBeitragID(b));
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 	}
 	
 	/**
-	 * Löschen der Daten eines Beitrag-Objekts von einem bestimmten User aus der Datenbank.
+	 * Lï¿½schen der Daten eines Beitrag-Objekts von einem bestimmten User aus der Datenbank.
 	 */
 			
 			public void deleteBeitraegeOfUser(User user) {
@@ -107,7 +107,7 @@ public class BeitragMapper {
 				try {
 					Statement stmt = con.createStatement();
 				
-					stmt.executeUpdate("DELETE FROM beitrag" + "WHERE User_User_ID=" + user.getId(user));
+					stmt.executeUpdate("DELETE FROM beitrag" + "WHERE User_User_ID=" + user.getBeitragID(user));
 				}
 				
 				catch(SQLException e) {
@@ -150,7 +150,7 @@ public class BeitragMapper {
 	}
 	
 	/**
-	 * Die Methode <code> findAll </code> ermöglicht das auslesen sämtlicher User-Objekte durch einen Vektor.
+	 * Die Methode <code> findAll </code> ermï¿½glicht das auslesen sï¿½mtlicher User-Objekte durch einen Vektor.
 	 */
 	
 	public Vector<Beitrag> getAllBeitraege() {
