@@ -14,6 +14,7 @@ import java.util.Vector;
 
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Abonnement;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Beitrag;
+import de.hdm.softwarePraktikumGruppe1.shared.bo.Pinnwand;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
 /**
@@ -160,15 +161,14 @@ public class BeitragMapper {
 		
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, inhalt, creationTimeStamp FROM beitrag"
-			+ "ORDER BY id");
+			ResultSet rs = stmt.executeQuery("SELECT BeitragID, Inhalt, CreationTimeStamp FROM beitrag"
+			+ "ORDER BY BeitragID");
 			
 			while (rs.next());{
 				Beitrag b = new Beitrag();
-				b.setId(rs.getInt("id"));
+				b.setId(rs.getInt("BeitragID"));
 				b.setText(rs.getString("inhalt"));
-				b.setCreationTimeStamp(rs.getDate(0));
-				
+				b.setCreationTimeStamp(rs.getDate("CreationTimeStamp"));
 				result.addElement(b);
 			}
 		}
@@ -179,6 +179,35 @@ public class BeitragMapper {
 	
 
 }
+	
+	public Vector <Beitrag> getAllBeitraegeOfPinnwand(int Pinnwand_PinnwandID){
+		Connection con = DBConnection.connection();
+		Vector<Beitrag> result = new Vector<Beitrag>();
+		
+		try {
+			Statement stmt = con.createStatement();
+			
+			ResultSet rs = stmt.executeQuery("SELECT BeitragID, Inhalt, CreationTimeStamp FROM beitrag"
+			+"WHERE = Pinnwand_PinnwandID=" +"'"+ Pinnwand_PinnwandID + "'" + "ORDER BY BeitragID");
+			
+			while (rs.next()) {
+				Beitrag b = new Beitrag();
+				b.setId(rs.getInt("BeitragID"));
+				b.setText(rs.getString("Inhalt"));
+				b.setCreationTimeStamp(rs.getDate("CreationTimeStamp"));
+				
+				result.addElement(b);
+			}			
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+
+		
+		
+		
+	}
 	
 
 
