@@ -11,7 +11,7 @@ package de.hdm.softwarePraktikumGruppe1.shared.bo;
 public class User extends BusinessObject{
 	
 	private static final long serialVersionUID = 1L;
-	private String nickname;
+	private static String nickname;
 	private String firstName;
 	private String lastName;
 	private String password;

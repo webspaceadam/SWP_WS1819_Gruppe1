@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Abonnement;
+import de.hdm.softwarePraktikumGruppe1.shared.bo.Pinnwand;
+import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
 /**
  * @author GianlucaBerner
@@ -103,7 +105,14 @@ public Abonnement findById(int id) {
 
 						stmt = con.createStatement();
 						
-						stmt.executeUpdate("INSERT INTO customers (User_ID) " + "VALUES (" + a.getOwnerId());
+						stmt.executeUpdate("INSERT INTO abonnement (AbonnementID, CreationTimeStamp, Pinnwand_PinnwandID, User_UserID)" 
+						+ "Values("+ a.getOwnerId()+","+
+								a.getPinnwand_PinnwandID()+","+
+								a.getUser_UserID()+ ","
+								);
+						
+								
+					
 					}
 				} catch (SQLException e) {
 					e.printStackTrace();
@@ -140,6 +149,63 @@ public Abonnement findById(int id) {
 					e.printStackTrace();
 					} 
 				}
+			
+			public Vector<Abonnement> getAllAbonnementByUser(User u){
 				
+				Connection con= DBConnection.connection();
+				Vector <Abonnement> result = new Vector <Abonnement>();
+				
+			try {
+				
+				Statement stmt = con.createStatement();
+				ResultSet rs = stmt.executeQuery("SELECT (AbonnementID, Pinnwand_PinnwandID, User_UserID) FROM abonnement" + "WHERE User_UserID" + u.getId(u));
+						
+						while(rs.next()) {
+							
+							Abonnement a = new Abonnement();
+							
+							a.setOwnerId(rs.getInt("UserID"));
+							a.setPinnwand_PinnwandID(rs.getInt("Pinnwand_PinnwandID"));
+							a.setUser_UserID(rs.getInt("User_UserID"));
+							result.addElement(a);
+						}
+						
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+			return result;
+			
+				
+			
+			}
+			
+			public Vector<Abonnement> getAllAbonnementsByPinnwand(Pinnwand p){
+				
+				Connection con= DBConnection.connection();
+				Vector <Abonnement> result = new Vector <Abonnement>();
+				
+			try {
+				
+				Statement stmt = con.createStatement();
+				ResultSet rs = stmt.executeQuery("SELECT (PinnwandID, Pinnwand_PinnwandID, User_UserID) FROM pinnwand" + "WHERE Pinnwand_PinnwandID" + p.getId(p));
+						
+						while(rs.next()) {
+							
+							Abonnement a = new Abonnement();
+							
+							a.setOwnerId(rs.getInt("UserID"));
+							a.setPinnwand_PinnwandID(rs.getInt("Pinnwand_PinnwandID"));
+							a.setUser_UserID(rs.getInt("User_UserID"));
+							result.addElement(a);
+						}
+						
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+			return result;
+			
+}		
 				
 }
