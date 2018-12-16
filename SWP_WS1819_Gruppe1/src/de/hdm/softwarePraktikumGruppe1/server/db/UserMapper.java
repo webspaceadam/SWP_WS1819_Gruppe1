@@ -197,9 +197,9 @@ public class UserMapper {
 
 				stmt = con.createStatement();
 				
-				stmt.executeUpdate("INSERT INTO customers (User_ID, FirstName, LastName, Nickname) " + "VALUES (" + user.getId(user) + ",'"
-						+ user.getFirstName() + "'" +
-						user.getLastName() + "'" + user.getNickname());
+				stmt.executeUpdate("INSERT INTO user (UserID, Nickname, Firstname, Lastname, CreationTimeStamp) " + "VALUES (" + user.getId(user) + ",'"
+						+ user.getNickname() + "'" +
+						user.getFirstName() + "'" + user.getLastName() + "'" + user.getCreationTimeStamp());
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
