@@ -197,6 +197,7 @@ public class UserMapper {
 
 				stmt = con.createStatement();
 				
+
 				stmt.executeUpdate("INSERT INTO customers (User_ID, FirstName, LastName, Nickname) " + "VALUES (" + user.getUserId(user) + ",'"
 						+ user.getFirstName() + "'" +
 						user.getLastName() + "'" + user.getNickname());
