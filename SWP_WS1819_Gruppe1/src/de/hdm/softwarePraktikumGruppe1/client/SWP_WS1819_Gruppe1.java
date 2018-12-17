@@ -12,14 +12,15 @@ import de.hdm.softwarePraktikumGruppe1.client.gui.PinnwandBox;
 import de.hdm.softwarePraktikumGruppe1.client.gui.ProfileBox;
 
 /**
- * Die Klasse <code>SWP_WS1819_Gruppe1</code> enthält alle Elemente zur Darstellung des
- * Dashboards für das KontaktSystem bzw. den Systemteil des <em>Editor</em>.
+ * Die Klasse <code>SWP_WS1819_Gruppe1</code> enthï¿½lt alle Elemente zur Darstellung des
+ * Dashboards fï¿½r das KontaktSystem bzw. den Systemteil des <em>Editor</em>.
  * Dieses ist in mehrere Bereiche aufgeteilt.
  * Dabei ist es aufgeteilt in einen Header-Bereich und einen ein- bis zweiteiligen 
  * Dashboardteil.  
  *@author Adam Gniady
  */
 public class SWP_WS1819_Gruppe1 implements EntryPoint {
+	
 	public void onModuleLoad() {
 		// RootPanels
 		RootPanel rootPanelHeader = RootPanel.get("header");

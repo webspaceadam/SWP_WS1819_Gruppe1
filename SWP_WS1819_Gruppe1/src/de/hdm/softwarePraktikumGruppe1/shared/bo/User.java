@@ -18,11 +18,12 @@ public class User extends BusinessObject{
 	private String eMail;
 	private int likeAmount;
 	private int commentAmount;
+	private int userID;
 	
 	/**
 	 * Methode die den Nicknamen eines Users zurück gibt
 	 */
-	public static String getNickname() {
+	public String getNickname() {
 		return nickname;
 	}
 	
@@ -123,6 +124,27 @@ public class User extends BusinessObject{
 	public String toString() {
 		return super.toString() + " " + this.firstName + " " + this.lastName;
 	}
+	
+	/**
+	 * Methode die die User ID zurueck gibt
+	 */
+	public int getUserId(User user) {
+		return userID;
+	}
+	
+	/**
+	 * Methode die die User ID setzt
+	 */
+	public void setUserId(int userId) {
+		this.userID = userId;
+	}
+
+	
+	/**
+	 * Methode die die Beitrags ID eines vom User verfassten Beitrags zurueck gibt
+	 */
+	
+	
 
 
 

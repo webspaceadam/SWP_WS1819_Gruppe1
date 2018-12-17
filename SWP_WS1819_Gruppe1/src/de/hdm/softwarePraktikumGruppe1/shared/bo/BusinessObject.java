@@ -19,7 +19,7 @@ public abstract class BusinessObject implements Serializable{
 	/**
 	 * Methode um die ID des BusinessObjects zurueck zu bekommen
 	 */
-	public int getId(BusinessObject bo) {
+	public int getId() {//Argument rausgenommen, weil ich nur id des objektes haben möchte.
 		return this.id;
 	}
 	
@@ -48,7 +48,7 @@ public abstract class BusinessObject implements Serializable{
 	 * Methode um den Klassennamen + die ID des Objekts zurueck zu geben
 	 */
 	public String toString() {
-		return this.getClass().getName() + " #" + this.id;
+		return this.getClass().getName() + " BO ID #" + this.id;
 	}
 	
 	/**
@@ -58,7 +58,7 @@ public abstract class BusinessObject implements Serializable{
 		if (o != null && o instanceof BusinessObject) {
 			BusinessObject bo = (BusinessObject) o;
 			try {
-				if (bo.getId(bo) == this.id)
+				if (bo.getId() == this.id)
 					return true;
 			}
 			catch (IllegalArgumentException e) {

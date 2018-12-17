@@ -1,5 +1,10 @@
 package de.hdm.softwarePraktikumGruppe1.client.gui;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.*;
+
+import de.hdm.softwarePraktikumGruppe1.client.gui.BeitragBox.EditBeitragDialogBox;
 
 
 
@@ -15,19 +20,21 @@ public class ProfileBox extends FlowPanel {
 		// Oberer Teil
 	
 		// dazugeh�rige Label
-		private Label accountName = new Label("Sebastian Hermann");
-		private Label nickName = new Label("@sebmeister");
+		private Label vorName = new Label("Sebastian");
+		private Label nachName = new Label("Hermann");
+		private Label nickName = new Label("sebmeister");
 		private Image editPenBtn = new Image("images/SVG/cog.png");
 		private HTML hrElement = new HTML("<hr/>");
+		
 		// dazugeh�rige wrapper
 		private FlowPanel wrapper1 = new FlowPanel();
 		private FlowPanel wrapper1_el_links = new FlowPanel();
 		private FlowPanel wrapper1_el_rechts = new FlowPanel();
-		
+		private FlowPanel accountNameWrapper = new FlowPanel();
 		
 		// unterer Teil
 		private Label aboHeader = new Label("ABBONIERT");
-		private Label beitragHeader = new Label("BEITR�GE");
+		private Label beitragHeader = new Label("BEITRÄGE");
 		private Label likeHeader = new Label("LIKES");
 		
 		private Label aboCount = new Label("22");
@@ -42,6 +49,16 @@ public class ProfileBox extends FlowPanel {
 	
 	
 		public ProfileBox() {
+		}
+		
+		public ProfileBox(String newVorname, String newNachname, String newNickname) {
+			this.vorName.setText(newVorname);
+			this.nachName.setText(newNachname);
+			this.nickName.setText("@" + newNickname);
+		}
+
+		
+		public void onLoad() {
 			// Adding Styling for ProfileBox
 			this.addStyleName("box radiusless");
 			
@@ -50,9 +67,16 @@ public class ProfileBox extends FlowPanel {
 			wrapper1_el_links.addStyleName("grid_box_links");
 			wrapper1_el_rechts.addStyleName("grid_box_rechts");
 			
-			accountName.addStyleName("title is-size-4 grid_box_element");
+			
+			accountNameWrapper.addStyleName("grid_box_element");
+			vorName.addStyleName("title margin_right is-size-4");
+			nachName.addStyleName("title margin_right is-size-4");
+			accountNameWrapper.add(vorName);
+			accountNameWrapper.add(nachName);
+			
 			editPenBtn.addStyleName("grid_box_element");
 			editPenBtn.getElement().setPropertyString("style", "max-width: 25px;");
+			editPenBtn.addClickHandler(new EditProfileBoxClickHandler(this));
 			
 			// nickname styling
 			nickName.addStyleName("is-size-5");
@@ -72,7 +96,7 @@ public class ProfileBox extends FlowPanel {
 			likeCount.addStyleName("title");
 			
 			// Adding Elements to Wrapper 1
-			wrapper1_el_links.add(accountName);
+			wrapper1_el_links.add(accountNameWrapper);
 			wrapper1_el_rechts.add(editPenBtn);
 			wrapper1.add(wrapper1_el_links);
 			wrapper1.add(wrapper1_el_rechts);
@@ -97,13 +121,86 @@ public class ProfileBox extends FlowPanel {
 			this.add(hrElement);
 			this.add(wrapper2);
 		}
-
+		
+		private class EditProfileBoxClickHandler implements ClickHandler {
+			private ProfileBox parentPB;
+			
+			public EditProfileBoxClickHandler(ProfileBox pb) {
+				parentPB = pb;
+			}
+			
+			public void onClick(ClickEvent event) {
+				EditProfileBoxDialogBox dlg = new EditProfileBoxDialogBox(parentPB);
+				dlg.center();
+			}
+		}
 		
 		/**
-		 * In dieser Methode werden die Desings der Buttons festgelegt. Auch
-		 * die Kontakt-Editor und ReportGenerator-Buttons werden zum Kopfbereich
-		 * des Kontaktverwaltungstools hinzugef�gt. 
+		 * Die innere Klasse <code>EditBeitragDialogBox</code> implementiert das Clickhandler 
+		 * Interface und dessen dazugeh�rige <code>onClick(ClickEvent event)</code> Methode.
+		 * Diese Methode ist daf�r zust�ndig die Editierung eines Beitrags zu erm�glichen.
+		 * @author Adam Gniady
+		 *
 		 */
-		public void onLoad() {
+		public class EditProfileBoxDialogBox extends DialogBox implements ClickHandler {
+			ProfileBox parentPB;
+			
+			public EditProfileBoxDialogBox(ProfileBox pb) {
+				parentPB = pb;
+				Image cancelImage = new Image("images/SVG/timesCircle.png");
+				cancelImage.getElement().setPropertyString("style", "max-width: 25px;");
+				cancelImage.addClickHandler(this);
+				
+				// Creating TextArea and filling it with the content of the "Beitrag".
+				EditAccountForm editForm = new EditAccountForm(parentPB, this);
+
+				DockPanel dock = new DockPanel();
+				dock.setSpacing(6);
+				dock.add(editForm, DockPanel.CENTER);
+				dock.add(cancelImage, DockPanel.EAST);
+
+				dock.setWidth("600px");
+				setWidget(dock);
+			}
+
+			@Override
+			public void onClick(ClickEvent event) {
+				hide();
+			}
+			
+			private class SafeEditedContentClickHandler implements ClickHandler {
+				
+				public SafeEditedContentClickHandler(BeitragBox bb, TextArea textArea) {
+				}
+				
+				@Override
+				public void onClick(ClickEvent event) {
+				}
+				
+			}
+		}
+		
+		public void setNickname(String newNickname) {
+			this.nickName.setText(newNickname);
+		}
+		
+		public void setVorname(String newVorname) {
+			this.vorName.setText(newVorname);
+		}
+		
+		public void setNachname(String newNachname) {
+			this.nachName.setText(newNachname);
+		}
+		
+		public String getNickname() {
+			return this.nickName.getText();
+		}
+		
+		public String getVorname() {
+			return this.vorName.getText();
+		}
+		
+		public String getNachname() {
+			return this.nachName.getText();
 		}
 }
