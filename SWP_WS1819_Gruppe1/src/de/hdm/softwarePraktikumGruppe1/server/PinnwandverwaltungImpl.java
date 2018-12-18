@@ -3,53 +3,54 @@
  */
 package de.hdm.softwarePraktikumGruppe1.server;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Vector;
 
 import de.hdm.softwarePraktikumGruppe1.server.db.*;
 import de.hdm.softwarePraktikumGruppe1.shared.Pinnwandverwaltung;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.*;
 
 /**
- * @author GianlucaBernert
+ * @author SebastianHermann
  * Klasse die das Interface Pinnwandverwaltung Implementiert und das RemoteServiceServlet als Superklasse besitzt
  */
 public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinnwandverwaltung{
 	
-	private UserMapper uMapper;
-	private PinnwandMapper pMapper;
-	private BeitragMapper bMapper;
-	private KommentarMapper kMapper;
-	private LikeMapper lMapper;
-	private AbonnementMapper aMapper;
+	private UserMapper uMapper = null;
+	private PinnwandMapper pMapper = null;
+	private BeitragMapper bMapper = null;
+	private KommentarMapper kMapper = null;
+	private LikeMapper lMapper = null;
+	private AbonnementMapper aMapper = null;
 	
 	/**
 	 * Konstruktor der Klasse PinnwandverwaltungIMpl der bei jedem erzeugten Objekt dieser Klasse ausfgerufen wird
 	 */
-	public PinnwandverwaltungImpl() {
+	public PinnwandverwaltungImpl() throws IllegalArgumentException {
 		
 	}
 	
-	/*
-	 **********************************
-	 * Initialisierung
-	 **********************************
+
+	/* Initialisierungsmethode, welche die alle Mapper initialisiert.
+	 * 
 	 */
 	
-	public void init() {
-			
-			this.uMapper = UserMapper.userMapper();
-			this.pMapper = PinnwandMapper.pinnwandMapper();
-			this.bMapper = BeitragMapper.beitragMapper();
-			this.kMapper = KommentarMapper.kommentarMapper();
-			//this.lMapper = LikeMapper.
-			//this.aMapper = AbonnementMapper;
+	public void init() throws IllegalArgumentException {
+		this.uMapper = UserMapper.userMapper();
+		this.pMapper = PinnwandMapper.pinnwandMapper();
+		this.bMapper = BeitragMapper.beitragMapper();
+		this.kMapper = KommentarMapper.kommentarMapper();
+		this.lMapper = LikeMapper.likeMapper();
+		this.aMapper = AbonnementMapper.abonnementMapper();
 	}
-	
+
 	/**
+	 * 
 	 * Methode die alle User als ArrayList zurueck gibt
 	 */
-	public ArrayList<User> showAllUser(){
-		return null;
+	public Vector<User> showAllUser(){
+		return uMapper.findAll();
 	}
 	
 	// TESTMETHODE
@@ -77,19 +78,34 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	/**
 	 * Methode um einen User zu erzeugen
 	 */
-	public void createUser() {
+	public void createUser(String firstName, String lastName, String nickName, String gMail, Timestamp timestamp ) throws IllegalArgumentException {
+		User u = new User();
+		u.setFirstName(firstName);
+		u.setLastName(lastName);
+		u.setNickname(nickName);
+		u.seteMail(gMail);
+		//u.setTimestamp(timestamp);
+		uMapper.insert(u);
+	
 	}
 	
 	/**
 	 * Methode um einen User zu Bearbeiten
 	 */
-	public void editUser() {
+	public void editUser(User u) {
+		uMapper.update(u);
 	}
 	
 	/**
 	 * Methode um einen User zu Loeschen
 	 */
 	public void deleteUser() {
+		//Alle Likes des Users löschen
+		//Alle Abonements des Users löschen
+		//Alle Kommentare des Users löschen
+		//Alle Beiträge des Users löschen
+		//Pinnwand des Users löschen
+		//User des Users löschen
 	}
 	
 	/**
@@ -103,21 +119,22 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	 * Methode um einen User anhand seiner ID zu suchen
 	 */
 	public User searchUserById(int userId) {
-		return null;
+		return uMapper.findByUserID(userId);
 	}
 	
 	/**
 	 * Methode um einen User upzudaten
 	 */
 	public User updateUser(User u) {
+		// ?
 		return null;
 	}
 	
 	/**
 	 * Methode um einen User anhand seines Nicknamens zu suchen
 	 */
-	public User  searchUserByNickname(String nickname) {
-		return null;
+	public User searchUserByNickname(String nickname) {
+		return uMapper.findUserByNickname(nickname);
 	}
 	
 	/**
@@ -229,6 +246,18 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	 */
 	public void deleteLikesOfBeitrag(Beitrag b) {
 
+	}
+
+	@Override
+	public void createUser() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void editUser() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

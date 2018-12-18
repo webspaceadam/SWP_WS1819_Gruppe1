@@ -101,7 +101,8 @@ public class UserMapper {
 	 * Die Methode <code> findAll </code> erm�glicht das auslesen s�mtlicher User-Objekte durch einen Vektor.
 	 */
 	
-	public Vector<User> findAll(Vector<User> result){
+	public Vector<User> findAll(){
+		Vector v = new Vector();
 		Connection con = DBConnection.connection();
 		
 		try {
@@ -116,12 +117,12 @@ public class UserMapper {
 				user.setLastName(rs.getString("LastName"));
 				user.setNickname(rs.getString("Nickname"));
 				
-				result.addElement(user);
+				v.addElement(user);
 			}}catch (SQLException e) {
 				e.printStackTrace();
 			}
 			
-			return result;
+			return v;
 			
 	}
 	
