@@ -3,6 +3,10 @@ package de.hdm.softwarePraktikumGruppe1.client.gui;
 import com.google.gwt.user.client.ui.*;
 
 /**
+ * Die <code>AuthenticationForm</code>-Klasse ist zuständig für
+ * die Zugangsberechtigungsüberprüfung der User in das Social-Media-Pinnwand
+ * System. 
+ * 
  * @author AdamGniady
  *
  */
@@ -13,6 +17,9 @@ public class AuthenticationForm extends FlowPanel {
 	private Image pinnersLogo = new Image("images/SVG/standard_logo.svg");
 	
 	public AuthenticationForm() {
+	}
+	
+	public void onLoad() {
 		this.addStyleName("box radiusless");
 		this.getElement().setAttribute("style", "width: 500px; height:350px; text-align: center;");
 		imgGoogle.getElement().setAttribute("style", "width: 35px;");
@@ -29,9 +36,5 @@ public class AuthenticationForm extends FlowPanel {
 		this.add(pinnersLogo);
 		this.add(welcomeLabel);
 		this.add(googleBtn);
-	}
-	
-	public void onLoad() {
-		
 	}
 }
