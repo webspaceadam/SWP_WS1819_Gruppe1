@@ -11,7 +11,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.Like;
 
 /**
  * @author GianlucaBernert
- * @autor SerhatUlus
+ * @autor Ulus Serhat
  * @author Yesin Soufi
  *
  */

@@ -10,7 +10,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
 /**
  * @author GianlucaBernert 
- * @author SerhatUlus
+ * @author Ulus Serhat
  * @author Yesin Soufi
  */
 	public class PinnwandMapper {
