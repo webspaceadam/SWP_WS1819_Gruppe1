@@ -197,10 +197,12 @@ public class UserMapper {
 
 				stmt = con.createStatement();
 				
-
-				stmt.executeUpdate("INSERT INTO customers (User_ID, FirstName, LastName, Nickname) " + "VALUES (" + user.getUserId(user) + ",'"
-						+ user.getFirstName() + "'" +
-						user.getLastName() + "'" + user.getNickname());
+				stmt.executeUpdate("INSERT INTO user (FirstName, LastName, Nickname) " + "VALUES (" + 
+						"'" + user.getFirstName() + "'," + 
+						"'" + user.getLastName() + "'," + 
+						"'" + user.getNickname() + "'" +
+						");"
+						);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -222,7 +224,8 @@ public class UserMapper {
 					Statement stmt = con.createStatement();
 
 					stmt.executeUpdate("UPDATE User " + "SET Firstname=\"" + user.getFirstName() + "\", " + "Lastname=\""
-							+ user.getLastName() + "\" " + user.getNickname() + "WHERE User_ID=" + user.getUserId(user));
+							+ user.getLastName() + "\" " + user.getNickname() + "WHERE User_ID=" + user.getId());
+
 
 				} catch (SQLException e) {
 					e.printStackTrace();
@@ -241,8 +244,8 @@ public class UserMapper {
 
 				try {
 					Statement stmt = con.createStatement();
-
-					stmt.executeUpdate("DELETE FROM User " + "WHERE User_ID=" + user.getUserId(user));
+					stmt.executeUpdate("DELETE FROM User " + "WHERE User_ID=" + user.getId());
+          
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
