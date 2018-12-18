@@ -19,7 +19,7 @@ public class testDB {
 		User user = new User();
 		
 		user.setFirstName("Adam");
-		user.setLastName("gniady");
+		user.setLastName("Schwarz");
 		user.setNickname("adam");
 
 		System.out.println("INSERT INTO user (FirstName, LastName, Nickname) " + "VALUES (" + 
