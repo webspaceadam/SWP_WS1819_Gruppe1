@@ -11,13 +11,17 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.Like;
 
 /**
  * @author GianlucaBernert
- * @autor SerhatUlus
+ * @autor Ulus Serhat
  * @author Yesin Soufi
  *
  */
 public class LikeMapper {
 	
 	
+	/* Diese Variable ist durch den Bezeichner <code>static</code> nur einmal für
+	   * sämtliche eventuellen Instanzen dieser Klasse vorhanden. Sie speichert die
+	   * einzige Instanz dieser Klasse.--> Singeltoneigenschaft
+	   */
 	private static LikeMapper likeMapper = null;
 	
 	
@@ -80,9 +84,40 @@ public class LikeMapper {
 		      e.printStackTrace();
 		    }
 		  }
-
-
 	
+	
+	/**
+	 * Methode zum suchen eines Beitrags anhand der User ID
+	 */
+	public Vector<Like> getLikeByUserId(int userID){
+		
+	
+		Connection con = DBConnection.connection();
+		Vector <Like> vector= new Vector<Like>();
+
+		try {
+			//leeres SQL-Statement anlegen
+			Statement stmt = con.createStatement();
+			
+			// Statement ausfuellen und als Query an die DB schicken
+			ResultSet rs = stmt.executeQuery("SELECT * FROM like WHERE UserID=" + userID);
+
+			while (rs.next()) {
+
+		        Like l = new Like();	        
+		        l.setOwnerId(rs.getInt("User_UserID"));
+		        l.setBeitragId(rs.getInt("Beitrag_BeitragID"));
+		        vector.add(l);
+
+		      }
+			return vector;
+		}
+
+	    catch (SQLException e) {
+	    		e.printStackTrace();
+	    }
+		return null;
+	 }
 	/**
 	 * Methode zum zählen aller Likes eines Beitrags
 	 */
@@ -118,38 +153,7 @@ public class LikeMapper {
 			    }
 		return counter;
 				
+	}
 			}
 	
-	/**
-	 * Methode zum suchen eines Beitrags anhand der User ID
-	 */
-	public Vector<Like> getLikeByUserId(int userID){
-		
 	
-		Connection con = DBConnection.connection();
-		Vector <Like> vector= new Vector<Like>();
-
-		try {
-			//leeres SQL-Statement anlegen
-			Statement stmt = con.createStatement();
-			
-			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT * FROM like WHERE UserID=" + userID);
-
-			while (rs.next()) {
-
-		        Like l = new Like();	        
-		        l.setOwnerId(rs.getInt("User_UserID"));
-		        l.setBeitragId(rs.getInt("Beitrag_BeitragID"));
-		        vector.add(l);
-
-		      }
-			return vector;
-		}
-
-	    catch (SQLException e) {
-	    		e.printStackTrace();
-	    }
-		return null;
-	 }
-}

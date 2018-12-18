@@ -2,15 +2,21 @@ package de.hdm.softwarePraktikumGruppe1.server.db;
 
 import java.sql.*;
 
+
+
+
 /**
- * @author GianlucaBernert, ulusserhat Wird von allen Mappern benutzt um die
+ * @author GianlucaBernert
+ * @author Ulus Serhat
+ * 
+ * Wird von allen Mappern benutzt um die
  *         Verbindung zur Datenbank zu erstellen
  **/
 public class DBConnection {
 
 	/**
 	 * Sie speichert die einzige Instanz dieser Klasse. Sie ist durch static nur
-	 * einmal f�r alle s�mtlichen Instanzen dieser Klasse vorhanden
+	 * einmal für alle sämtlichen Instanzen dieser Klasse vorhanden
 	 */
 	private static Connection con = null;
 
@@ -52,6 +58,4 @@ public class DBConnection {
 		// Zurückgegeben der Verbindung
 		return con;
 	}
-
 }
-//OK

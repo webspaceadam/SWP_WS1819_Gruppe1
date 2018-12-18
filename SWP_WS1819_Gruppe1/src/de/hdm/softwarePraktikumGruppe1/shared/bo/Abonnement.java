@@ -14,7 +14,8 @@ public class Abonnement {
 	private Pinnwand pinnwand;
 	private int ownerId;
 	private int pinnwandId;
-	
+	private int User_UserID;
+	private int Pinnwand_PinnwandID;
 	/**
 	 * Methode die den Besitzer des Abonnements zurueck gibt
 	 */
@@ -77,6 +78,39 @@ public class Abonnement {
 	public String pinnwandUserString() {
 		return null;
 	}
+	
+	/**
+	 * Methode die die Fremdschlüssel ID der zu abonierenden Pinnwand setzt
+	 */
+	
+	public void setUser_UserID(int User_UserID) {
+		this.User_UserID = User_UserID;
+	}
+	
+	/*
+	 * Methode die den User_UserID abbildet
+	 */
+	
+	public int getUser_UserID() {
+		return User_UserID;
+	}
+	
+	/**
+	 * Methode die die Fremdschlüssel ID der zu abonierenden Pinnwand setzt
+	 */
+	
+	public void setPinnwand_PinnwandID(int Pinnwand_PinnwandID) {
+		this.Pinnwand_PinnwandID = Pinnwand_PinnwandID;
+	}
+	
+	/*
+	 * Methode die den Pinnwand_PinnwandID abbildet
+	 */
+	
+	public int getPinnwand_PinnwandID() {
+		return Pinnwand_PinnwandID;
+	}
+	
 	
 
 }

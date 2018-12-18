@@ -226,6 +226,7 @@ public class UserMapper {
 					stmt.executeUpdate("UPDATE User " + "SET Firstname=\"" + user.getFirstName() + "\", " + "Lastname=\""
 							+ user.getLastName() + "\" " + user.getNickname() + "WHERE User_ID=" + user.getId());
 
+
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -243,8 +244,8 @@ public class UserMapper {
 
 				try {
 					Statement stmt = con.createStatement();
-
 					stmt.executeUpdate("DELETE FROM User " + "WHERE User_ID=" + user.getId());
+          
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}

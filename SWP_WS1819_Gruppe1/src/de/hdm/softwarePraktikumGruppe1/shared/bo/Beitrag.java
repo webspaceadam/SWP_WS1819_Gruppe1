@@ -20,6 +20,20 @@ public class Beitrag extends Textbeitrag{
 	private Pinnwand pinnwand;
 	private Vector<Kommentar> kommentare;
 	private String text;
+	private int Beitrag_BeitragID;
+  
+  public int getBeitrag_BeitragID() {
+		return Beitrag_BeitragID;
+	}
+
+	public void setBeitrag_BeitragID(int beitrag_BeitragID) {
+		Beitrag_BeitragID = beitrag_BeitragID;
+	}
+
+	// Fremdschlüsselbezeichnungen
+	private int Pinnwand_PinnwandID;
+	private int User_UserID;
+
 	
 	/**
 	 * Methode die die ID des Users zurueck gibt der den Beitrag verfasst hat
@@ -101,8 +115,8 @@ public class Beitrag extends Textbeitrag{
 	/**
 	 * Methode die die Pinnwand auf der ein Beitrag geteilt werden soll setzt
 	 */
-	public void setPinnwand(Pinnwand pinnwand) {
-		this.pinnwand = pinnwand;
+	public void setPinnwand(Pinnwand p) {
+		this.pinnwand = p;
 	}
 	
 	/**
@@ -133,6 +147,22 @@ public class Beitrag extends Textbeitrag{
 		this.text = text;
 	}
 	
+	public int getPinnwand_PinnwandID() {
+		return Pinnwand_PinnwandID;
+	}
+	
+	public void setPinnwand_PinnwandID(int Pinnwand_PinnwandID) {
+		this.Pinnwand_PinnwandID = Pinnwand_PinnwandID;
+	}
+	
+	public int getUser_UserID() {
+		return User_UserID;
+	}
+	
+	public void setUser_UserID(int User_UserID) {
+		this.User_UserID = User_UserID;
+	}
+	
 	/**
 	 * Methode um eine textuelle Dastellung der jeweiligen Instanz zu erzeugen
 	 */
@@ -140,7 +170,12 @@ public class Beitrag extends Textbeitrag{
 		return super.toString() + " User ID #" + this.getOwnerId();
 	}
 	
-	
-	
 
+	
+	
+	
+	
+	
 }
+
+

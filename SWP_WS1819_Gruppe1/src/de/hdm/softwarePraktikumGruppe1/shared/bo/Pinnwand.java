@@ -13,7 +13,16 @@ public class Pinnwand extends BusinessObject{
 	private User owner;
 	private int abonnementId;
 	private int ownerId;
+	private int User_UserID;
 	
+	public int getUser_UserID() {
+		return User_UserID;
+	}
+
+	public void setUser_UserID(int user_UserID) {
+		User_UserID = user_UserID;
+	}
+
 	/**
 	 * Methode die den Besitzer der Pinnwand zurück gibt
 	 */
