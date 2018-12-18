@@ -34,7 +34,7 @@ public class LikeMapper {
 	
 	 //Diese Methode stellt die Singelton-Eigenschaft sicher, indem sie dafür sorgt, 
 	 //dass nur eine einzige Instanz dieser Klasse existiert.
-	public LikeMapper likeMapper() {
+	public static LikeMapper likeMapper() {
 		if (likeMapper == null) {
 			likeMapper = new LikeMapper();
 		    }

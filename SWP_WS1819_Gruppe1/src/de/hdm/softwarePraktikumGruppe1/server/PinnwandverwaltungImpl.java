@@ -3,7 +3,9 @@
  */
 package de.hdm.softwarePraktikumGruppe1.server;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Vector;
 
 import de.hdm.softwarePraktikumGruppe1.server.db.*;
 import de.hdm.softwarePraktikumGruppe1.shared.Pinnwandverwaltung;
@@ -47,26 +49,41 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	 * 
 	 * Methode die alle User als ArrayList zurueck gibt
 	 */
-	public ArrayList<User> showAllUser(){
-		return null;
+	public Vector<User> showAllUser(){
+		return uMapper.findAll();
 	}
 	
 	/**
 	 * Methode um einen User zu erzeugen
 	 */
-	public void createUser() {
+	public void createUser(String firstName, String lastName, String nickName, String gMail, Timestamp timestamp ) throws IllegalArgumentException {
+		User u = new User();
+		u.setFirstName(firstName);
+		u.setLastName(lastName);
+		u.setNickname(nickName);
+		u.seteMail(gMail);
+		//u.setTimestamp(timestamp);
+		uMapper.insert(u);
+	
 	}
 	
 	/**
 	 * Methode um einen User zu Bearbeiten
 	 */
-	public void editUser() {
+	public void editUser(User u) {
+		uMapper.update(u);
 	}
 	
 	/**
 	 * Methode um einen User zu Loeschen
 	 */
 	public void deleteUser() {
+		//Alle Likes des Users löschen
+		//Alle Abonements des Users löschen
+		//Alle Kommentare des Users löschen
+		//Alle Beiträge des Users löschen
+		//Pinnwand des Users löschen
+		//User des Users löschen
 	}
 	
 	/**
@@ -80,21 +97,22 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	 * Methode um einen User anhand seiner ID zu suchen
 	 */
 	public User searchUserById(int userId) {
-		return null;
+		return uMapper.findByUserID(userId);
 	}
 	
 	/**
 	 * Methode um einen User upzudaten
 	 */
 	public User updateUser(User u) {
+		// ?
 		return null;
 	}
 	
 	/**
 	 * Methode um einen User anhand seines Nicknamens zu suchen
 	 */
-	public User  searchUserByNickname(String nickname) {
-		return null;
+	public User searchUserByNickname(String nickname) {
+		return uMapper.findUserByNickname(nickname);
 	}
 	
 	/**
@@ -206,6 +224,18 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	 */
 	public void deleteLikesOfBeitrag(Beitrag b) {
 
+	}
+
+	@Override
+	public void createUser() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void editUser() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	
