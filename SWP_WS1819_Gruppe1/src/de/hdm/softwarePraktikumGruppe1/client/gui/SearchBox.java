@@ -3,6 +3,8 @@ package de.hdm.softwarePraktikumGruppe1.client.gui;
 import com.google.gwt.user.client.ui.*;
 
 /**
+ * Die Klasse <code>SearchBox</code> ermöglicht die Suche nach Usern. 
+ * 
  * @author AdamGniady
  *
  */

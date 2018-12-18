@@ -150,9 +150,9 @@ public class BeitragBox extends FlowPanel {
 	
 	/**
 	 * Die innere Klasse <code>LikeCountClickHandler</code> implementiert das Clickhandler 
-	 * Interface und dessen dazugeh�rige <code>onClick(ClickEvent event)</code> Methode.
+	 * Interface und dessen dazugehörige <code>onClick(ClickEvent event)</code> Methode.
 	 * Diese Methode arbeitet mit der Anzahl der Likes auf einem Beitrag und passt die Anzahl auf den 
-	 * dazugeh�rigen Beitrag an. 
+	 * dazugehörigen Beitrag an. 
 	 * @author Adam Gniady
 	 *
 	 */
@@ -171,6 +171,12 @@ public class BeitragBox extends FlowPanel {
 		}
 	}
 	
+	/**
+	 * Die innere Klasse <code>EditBeitragBoxClickHandler</code> ist zuständig für die Editierbarkeit
+	 * der BeitragBox. 
+	 *  
+	 * @author AdamGniady
+	 */
 	private class EditBeitragBoxClickHandler implements ClickHandler {
 		private BeitragBox parentBB;
 		
@@ -186,9 +192,9 @@ public class BeitragBox extends FlowPanel {
 	
 	/**
 	 * Die innere Klasse <code>EditBeitragDialogBox</code> implementiert das Clickhandler 
-	 * Interface und dessen dazugeh�rige <code>onClick(ClickEvent event)</code> Methode.
-	 * Diese Methode ist daf�r zust�ndig die Editierung eines Beitrags zu erm�glichen.
-	 * @author Adam Gniady
+	 * Interface und dessen dazugehörige <code>onClick(ClickEvent event)</code> Methode.
+	 * Diese Methode ist dafür zuständig die Editierung eines Beitrags zu erm�glichen.
+	 * @author AdamGniady
 	 *
 	 */
 	private class EditBeitragDialogBox extends DialogBox implements ClickHandler {
@@ -232,6 +238,11 @@ public class BeitragBox extends FlowPanel {
 			setWidget(dock);
 		}
 		
+		/**
+		 * Die Methode HideElement() wird nur dann genutzt um von außen auf die <code>hide()</code>-Methode
+		 * der DialogBox zuzugreifen. 
+		 * @author AdamGniady
+		 */
 		public void hideElement() {
 			hide();
 		}
@@ -241,6 +252,12 @@ public class BeitragBox extends FlowPanel {
 			hide();
 		}
 		
+		/**
+		 * Die innere Klasse <code>SafeEditedContentClickHandler</code> implementiert das ClickHandler-Interface
+		 * und ermöglicht es die Änderungen die der User eingegeben hat auch dauerhaft zu speichern.  
+		 * @author AdamGniady
+		 *
+		 */
 		private class SafeEditedContentClickHandler implements ClickHandler {
 			BeitragBox parentBB;
 			TextArea newContent;
@@ -259,6 +276,12 @@ public class BeitragBox extends FlowPanel {
 		}
 	}
 	
+	/**
+	 * 
+	 * 
+	 * @author AdamGniady
+	 *
+	 */
 	private class showKommentarWrapperClickHandler implements ClickHandler {
 
 		@Override
@@ -281,6 +304,13 @@ public class BeitragBox extends FlowPanel {
 		
 	}
 	
+	/**
+	 * Die Methode <code>createKommentar</code> erstellt einen Kommentar mit dem eingegebenen
+	 * Inhalt den Kommentar erstellt und an die <code>BeitragBox</code> anhängt. 
+	 * 
+	 * @param commentarContent
+	 * @return newKommentarBox an der BeitragBox
+	 */
 	public KommentarBox createKommentar(String commentarContent) {
 		KommentarBox newKommentarBox = new KommentarBox(commentarContent, this);
 		kommentarsOfBeitrag.addElement(newKommentarBox);

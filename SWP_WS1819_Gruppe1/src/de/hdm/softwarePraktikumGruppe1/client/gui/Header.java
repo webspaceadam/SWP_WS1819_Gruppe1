@@ -1,12 +1,11 @@
 package de.hdm.softwarePraktikumGruppe1.client.gui;
 import java.util.Vector;
 
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.*;
-
-import de.hdm.softwarePraktikumGruppe1.client.gui.ProfileBox.EditProfileBoxDialogBox;
 
 /**
  * Die <code>Header</code>-Klasse ist eine Custom-Widget-Class die daf�r verwendet wird, 
@@ -17,7 +16,7 @@ import de.hdm.softwarePraktikumGruppe1.client.gui.ProfileBox.EditProfileBoxDialo
  */
 
 public class Header extends FlowPanel {
-	
+
 		// Create Header Divs 
 		private FlowPanel headerLogo = new FlowPanel();
 		private FlowPanel headerLinkList = new FlowPanel();
@@ -34,7 +33,7 @@ public class Header extends FlowPanel {
 		private TextBox searchUserInput = new TextBox();
 		private Button searchButton = new Button("Suche!");
 		private Button logoutButton = new Button("Logout");
-
+		private Button reportButton = new Button("Report");
 		
 		
 		// Create Images
@@ -59,6 +58,7 @@ public class Header extends FlowPanel {
 		 * des Kontaktverwaltungstools hinzugef�gt. 
 		 */
 		public void onLoad() {
+			
 			
 			// Add Styling to this Element
 			this.addStyleName("header bg-primary");
@@ -98,10 +98,12 @@ public class Header extends FlowPanel {
 			searchUserInput.getElement().setPropertyString("placeholder", "Suche nach Usern!");
 			searchButton.addStyleName("button bg-primary");
 			logoutButton.addStyleName("button bg-primary");
+			reportButton.addStyleName("button bg-primary");
 			
 			inputDiv.add(searchUserInput);
 			searchDiv.add(searchButton);
 			logoutDiv.add(logoutButton);
+			logoutDiv.add(reportButton);
 			
 			headerRight.add(inputDiv);
 			headerRight.add(searchDiv);

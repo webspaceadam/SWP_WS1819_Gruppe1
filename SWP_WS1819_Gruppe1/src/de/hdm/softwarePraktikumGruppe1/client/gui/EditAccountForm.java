@@ -9,8 +9,9 @@ import com.google.gwt.user.client.ui.*;
 import de.hdm.softwarePraktikumGruppe1.client.gui.ProfileBox.EditProfileBoxDialogBox;
 
 /**
+ * Die Klasse <code>EditAccountForm</code> wird für die Änderung der Account-Daten
+ * eines eingeloggten Users genutzt. 
  * @author AdamGniady
- *
  */
 public class EditAccountForm extends FlowPanel {
 	// Whole Wrappers
@@ -33,6 +34,13 @@ public class EditAccountForm extends FlowPanel {
 	public EditAccountForm() {
 	}
 	
+	/**
+	 * Der Konstruktor der <code>EditAccountForm</code>-Klasse speichert die übergeordnete 
+	 * <em>parentProfileBox</em> und die dazugehörige <em>DialogBox</em>. 
+	 * @param parentProfileBox
+	 * @param parentDB
+	 * 
+	 */
 	public EditAccountForm(ProfileBox parentProfileBox, EditProfileBoxDialogBox parentDB) {
 		this.parentPB = parentProfileBox;
 		this.parentDialogBox = parentDB;	
@@ -82,6 +90,12 @@ public class EditAccountForm extends FlowPanel {
 		this.add(safeButton);
 	}
 	
+	/**
+	 * Die innere Klasse <code>SafeNewNames</code> implementiert das ClickHandler Interface
+	 * um die Speicherung der neu eingegebenen Namen zu speichern. 
+	 * 
+	 * @author AdamGniady
+	 */
 	private class SafeNewNames implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
