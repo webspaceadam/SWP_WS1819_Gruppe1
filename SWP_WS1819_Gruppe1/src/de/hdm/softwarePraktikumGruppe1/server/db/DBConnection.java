@@ -25,7 +25,7 @@ public class DBConnection {
 	 * 
 	 */
 	private static String googleUrl = "";
-	private static String localUrl = "jdbc:mysql://localhost/pinners?user=root&password=********"; //useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+	private static String localUrl = "jdbc:mysql://localhost/pinners?user=root&password=lhkgc75ge&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 
 	/**
 	 * Methode zum erzeugen einer Verbindung zur Datenbank

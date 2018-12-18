@@ -14,7 +14,18 @@ public class testDB {
 	private static UserMapper uMapper;
 
 	public static void main(String[] args) {
-		Connection con = DBConnection.connection();
+		
+		PinnwandverwaltungImpl impl = new  PinnwandverwaltungImpl();
+		impl.init();
+		
+		impl.createSingleUserTestMethod("Adam", "Gniady", "adam2");
+	}
+
+}
+
+
+/*
+ * Connection con = DBConnection.connection();
 		
 		User user = new User();
 		
@@ -48,6 +59,4 @@ public class testDB {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	}
-
-}
+		*/
