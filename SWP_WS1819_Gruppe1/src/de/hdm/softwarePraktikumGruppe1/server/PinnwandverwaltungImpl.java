@@ -15,21 +15,36 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.*;
  */
 public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinnwandverwaltung{
 	
-	private UserMapper uMapper;
-	private PinnwandMapper pMapper;
-	private BeitragMapper bMapper;
-	private KommentarMapper kMapper;
-	private LikeMapper lMapper;
-	private AbonnementMapper aMapper;
+	private UserMapper uMapper = null;
+	private PinnwandMapper pMapper = null;
+	private BeitragMapper bMapper = null;
+	private KommentarMapper kMapper = null;
+	private LikeMapper lMapper = null;
+	private AbonnementMapper aMapper = null;
 	
 	/**
 	 * Konstruktor der Klasse PinnwandverwaltungIMpl der bei jedem erzeugten Objekt dieser Klasse ausfgerufen wird
 	 */
-	public PinnwandverwaltungImpl() {
+	public PinnwandverwaltungImpl() throws IllegalArgumentException {
 		
 	}
 	
+	/* Initialisierungsmethode, welche die alle Mapper initialisiert.
+	 * 
+	 */
+	
+	public void init() throws IllegalArgumentException {
+		this.uMapper = UserMapper.userMapper();
+		this.pMapper = PinnwandMapper.pinnwandMapper();
+		this.bMapper = BeitragMapper.beitragMapper();
+		this.kMapper = KommentarMapper.kommentarMapper();
+		this.lMapper = LikeMapper.likeMapper();
+		this.aMapper = AbonnementMapper.abonnementMapper();
+	}
+	
+	
 	/**
+	 * 
 	 * Methode die alle User als ArrayList zurueck gibt
 	 */
 	public ArrayList<User> showAllUser(){

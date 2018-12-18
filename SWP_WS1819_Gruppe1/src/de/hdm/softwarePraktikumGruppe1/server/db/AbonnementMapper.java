@@ -34,7 +34,7 @@ public class AbonnementMapper {
 	 * @return Sie gibt den AbonnementMapper zur�ck.
 	 */
 	
-	public static AbonnementMapper AbonnementMapper() {
+	public static AbonnementMapper abonnementMapper() {
 		if (abonnementMapper == null) {
 			abonnementMapper = new AbonnementMapper();
 		} 
