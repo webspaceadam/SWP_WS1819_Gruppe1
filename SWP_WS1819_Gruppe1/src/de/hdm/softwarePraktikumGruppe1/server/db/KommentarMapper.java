@@ -9,8 +9,9 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
 /**
  * @author GianlucaBernert, 
+ * @author Ulus Serhat
  * @author Yesin Soufi
- * @author SerhatUlus
+ * 
  *
  */
 
