@@ -190,7 +190,7 @@ public class UserMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM User ");
+			ResultSet rs = stmt.executeQuery("SELECT MAX(UserID) AS maxid " + "FROM User ");
 
 			if (rs.next()) {
 				

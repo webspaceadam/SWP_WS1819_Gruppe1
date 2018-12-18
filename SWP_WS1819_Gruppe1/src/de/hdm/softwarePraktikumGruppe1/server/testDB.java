@@ -14,12 +14,23 @@ public class testDB {
 	private static UserMapper uMapper;
 
 	public static void main(String[] args) {
-		Connection con = DBConnection.connection();
+		
+		PinnwandverwaltungImpl impl = new  PinnwandverwaltungImpl();
+		impl.init();
+		
+		impl.createSingleUserTestMethod("Adam", "Gniady", "adam2");
+	}
+
+}
+
+
+/*
+ * Connection con = DBConnection.connection();
 		
 		User user = new User();
 		
 		user.setFirstName("Adam");
-		user.setLastName("gniady");
+		user.setLastName("Schwarz");
 		user.setNickname("adam");
 
 		System.out.println("INSERT INTO user (FirstName, LastName, Nickname) " + "VALUES (" + 
@@ -48,6 +59,4 @@ public class testDB {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	}
-
-}
+		*/
