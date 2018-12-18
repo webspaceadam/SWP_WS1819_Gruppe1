@@ -4,6 +4,7 @@
 package de.hdm.softwarePraktikumGruppe1.shared;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 import de.hdm.softwarePraktikumGruppe1.server.db.AbonnementMapper;
 import de.hdm.softwarePraktikumGruppe1.server.db.BeitragMapper;
@@ -26,7 +27,7 @@ public interface Pinnwandverwaltung {
 	/**
 	 * Methode die alle User als ArrayList zurueck gibt
 	 */
-	public ArrayList<User> showAllUser();
+	public Vector<User> showAllUser();
 	
 	/**
 	 * Methode um einen User zu erzeugen
