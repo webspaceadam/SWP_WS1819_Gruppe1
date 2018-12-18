@@ -20,8 +20,17 @@ public class Beitrag extends Textbeitrag{
 	private Pinnwand pinnwand;
 	private Vector<Kommentar> kommentare;
 	private String text;
+	private int Beitrag_BeitragID;
   
-  // Fremdschlüsselbezeichnungen
+  public int getBeitrag_BeitragID() {
+		return Beitrag_BeitragID;
+	}
+
+	public void setBeitrag_BeitragID(int beitrag_BeitragID) {
+		Beitrag_BeitragID = beitrag_BeitragID;
+	}
+
+	// Fremdschlüsselbezeichnungen
 	private int Pinnwand_PinnwandID;
 	private int User_UserID;
 
@@ -162,22 +171,11 @@ public class Beitrag extends Textbeitrag{
 	}
 	
 
-	/**
-	 * Methode die die Beitrags ID zurueck gibt
-	 */
-	public int getBeitragID(Beitrag b) {
-		return beitragID;
-	}
-
-	
-	/**
-	 * Methode die die Beitrags ID setzt
-	 */
-	public void setBeitragID(int beitragID) {
-		this.beitragID = beitragID;
-	}
 	
 	
 	
-
+	
+	
 }
+
+
