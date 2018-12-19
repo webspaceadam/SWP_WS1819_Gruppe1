@@ -176,10 +176,15 @@ public class BeitragMapper {
 			e.printStackTrace();
 		} 
 		return result;
+		}
 	
-
-}
 	
+	//Methode updateBeitrag;
+	public Beitrag updateBeitrag(Beitrag b) {
+		
+		return null;
+		
+	}
 
 
 }

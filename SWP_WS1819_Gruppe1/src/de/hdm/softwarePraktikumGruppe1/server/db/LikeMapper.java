@@ -6,6 +6,7 @@ import java.sql.*;
 
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Beitrag;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Like;
+import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
 
 
@@ -28,9 +29,6 @@ public class LikeMapper {
 	//Ein geschützter Konstruktor der weitere Instanzierungen von LikeMapper Objekten verhindert.
 	protected LikeMapper() {
 	}
-	
-	
-	
 	
 	 //Diese Methode stellt die Singelton-Eigenschaft sicher, indem sie dafür sorgt, 
 	 //dass nur eine einzige Instanz dieser Klasse existiert.
@@ -156,4 +154,43 @@ public class LikeMapper {
 	    }
 		return null;
 	 }
+
+
+		// Methode, die alle Likes eines Beitrags löscht
+
+	public void deleteAllLikesFromBeitrag(Beitrag b) {
+		
+		
+	}
+	
+		// Methode, die eine LikeBeziehung zwischen Nutzer und Beitrag prüft
+	
+	public boolean likeCheck(User u, Beitrag b) {
+		
+		Connection con = DBConnection.connection();
+			try {
+				Statement stmt = con.createStatement();
+				
+				// Statement ausfuellen und als Query an die DB schicken
+				ResultSet rs = stmt.executeQuery("SELECT * FROM like WHERE UserID=" + u.getUserId() + " & Beitrag_BeitragID=" + b.getBeitragID());
+				
+				if (rs.next()) {
+					return true;
+				}else {
+					return false;
+				}
+				
+				
+				}
+			catch(SQLException e) {
+				e.printStackTrace();
+				return false;
+			}
+			
+	}
+
+	public void deleteAllLikesFromUser(User u) {
+		// TODO Auto-generated method stub
+		
+	}
 }
