@@ -17,6 +17,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.*;
  */
 public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinnwandverwaltung{
 	
+	
 	private UserMapper uMapper = null;
 	private PinnwandMapper pMapper = null;
 	private BeitragMapper bMapper = null;
@@ -79,11 +80,19 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	 */
 	public void deleteUser(User u) {
 		//Alle Likes des Users löschen
+		lMapper.deleteAllLikesFromUser(u);
 		//Alle Abonements des Users löschen
+		aMapper.deleteAllAbonnementsOfUser(u);
+		//Alle Abos der Pinnwand des Users löschen
+		aMapper.deleteAllAbosOfPinnwand(u);
 		//Alle Kommentare des Users löschen
+		kMapper.deleteAllKommentareOfUser(u);
 		//Alle Beiträge des Users löschen
+		bMapper.deleteBeitraegeOfUser(u);
 		//Pinnwand des Users löschen
-		//User des Users löschen
+		pMapper.deletePinnwandOfUser(u);
+		//User löschen
+		uMapper.delete(u);
 	}
 	
 	/**
@@ -146,77 +155,103 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	 * Methode um einen Beitrag zu Bearbeiten
 	 */
 	public Beitrag editBeitrag(Beitrag b) {
-		return null;
+		return bMapper.updateBeitrag(b);
 	}
 	
 	/**
 	 * Methode um alle Abonnements eines Users anzuzeigen
 	 */
 	public Vector<Abonnement> showAllAbonnementsByUser(User u){
-		return null;
+		return aMapper.getAllAbonnementByUser(u);
 	}
 	
 	/**
 	 * Methode um ein neues Abonnement zu erzeugen
 	 */
-	public void creatAbonnement(User u1, User u2) {
+	public void creatAbonnement(User u1, Pinnwand p1) {
+		Abonnement a = new Abonnement();
+		a.setOwner(u1);
+		a.setPinnwand(p1);
+		
+		aMapper.insert(a);
+		
 	}
 	
 	/**
 	 * Methode um ein bestehendes Abonnement zu Loeschen
 	 */
 	public void deleteAbonnement(Abonnement a) {
+		aMapper.delete(a);
 	}
 	
 	/**
 	 * Methode um einen neues Kommentar zu erzeugen
 	 */
-	public void createKommentar(String text, User user, Timestamp timeStamp) {
+	public void createKommentar(String text, User user, Beitrag b, Timestamp timeStamp) {
+		Kommentar k = new Kommentar();
+		
+		k.setText(text);
+		k.setOwner(user);
+		k.setBeitrag(b);
+		//k.setCreationDate(timeStamp);
+		
+		kMapper.insertKommentar(k);
 	}
 	
 	/**
 	 * Methode zum Loeschen eines Kommentars
 	 */
 	public void deleteKommentar(Kommentar k) {
+		kMapper.deleteKommentar(k);
 	}
 	
 	/**
 	 * Methode zum anzeigen aller Kommentare
 	 */
-	public Vector<Kommentar> findAllKommentare(Beitrag b){
-		return null;
+	public Vector<Kommentar> findAllKommentareOfBeitrag(Beitrag b){
+		return kMapper.getAllKommentarOfBeitrag(b);
+		
 	}
 	
 	/**
 	 * Methode zum Bearbeiten eines Kommentars
 	 */
-	public Kommentar editKommentar(Kommentar k) {
-		return null;
+	public void editKommentar(Kommentar k) {
+		 kMapper.updateKommentar(k);
 	}
 	
 	/**
 	 * Methode zum erzeugen eines Likes
 	 */
 	public void createLike(User u, Beitrag b) {
+		Like l1 = new Like();
+		l1.setOwner(u);
+		l1.setBeitrag(b);
+		lMapper.insertLike(l1);
+		
 	}
 	
 	/**
 	 * Methode zur Ueberpruefung ob der Beitrag bereits geliket ist
 	 */
 	public boolean likeCheck(User u, Beitrag b) {
-		return true;
+		return lMapper.likeCheck(u, b);	
 	}
 	
 	/**
 	 * Methode um einen Beitrag zu entliken
 	 */
 	public void deleteLike(Like l) {
+		lMapper.deleteLike(l);
+		
 	}
 	
 	/**
 	 * Methode um ein Like zu suchen
 	 */
 	public Like searchLike(Like l) {
+		// Nutzen?
+		// Worin besteht der Unterschied zur Methode likeCheck?
 		return null;
 	}
 	
@@ -224,23 +259,15 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	 * Methode um alle Likes eines Beitrags zu zaehlen
 	 */
 	public int countLikes(Beitrag b) {
-		return 0;
+		return lMapper.countAllLikesFromBeitrag(b);
 	}
 	
 	/**
 	 * Methode um Likes eines Beitrags zu entfernen
 	 */
 	public void deleteLikesOfBeitrag(Beitrag b) {
-
+		lMapper.deleteAllLikesFromBeitrag(b);
 	}
-
-
-	
-	
-
-
-
-	
 	
 }
 
