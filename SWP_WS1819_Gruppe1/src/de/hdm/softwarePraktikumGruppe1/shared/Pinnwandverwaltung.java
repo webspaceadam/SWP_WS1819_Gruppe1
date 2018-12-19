@@ -116,7 +116,7 @@ public interface Pinnwandverwaltung extends RemoteService {
 	/**
 	 * Methode zum Bearbeiten eines Kommentars
 	 */
-	public Kommentar editKommentar(Kommentar k);
+	public void editKommentar(Kommentar k);
 	
 	/**
 	 * Methode zum erzeugen eines Likes
