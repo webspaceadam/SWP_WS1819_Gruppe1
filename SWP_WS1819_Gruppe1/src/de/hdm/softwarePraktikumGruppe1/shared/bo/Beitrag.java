@@ -14,7 +14,7 @@ public class Beitrag extends Textbeitrag{
 	private static final long serialVersionUID = 1L;
 	private int beitragID;
 	private User user;
-	private Like like;
+	private Vector<Like> likes;
 	private int likeAmount;
 	private Kommentar kommentar;
 	private int commentAmount;

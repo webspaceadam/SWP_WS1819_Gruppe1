@@ -20,6 +20,7 @@ public class User extends BusinessObject{
 	private int commentAmount;
 	private int userID;
 	
+	
 	/**
 	 * Methode die den Nicknamen eines Users zurück gibt
 	 */
@@ -128,7 +129,7 @@ public class User extends BusinessObject{
 	/**
 	 * Methode die die User ID zurueck gibt
 	 */
-	public int getUserId(User user) {
+	public int getUserId() {
 		return userID;
 	}
 	
