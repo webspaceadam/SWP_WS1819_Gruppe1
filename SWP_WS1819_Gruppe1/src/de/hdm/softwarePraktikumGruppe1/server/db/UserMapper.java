@@ -247,5 +247,27 @@ public class UserMapper {
 					e.printStackTrace();
 				}
 			}
+			
+	//Methode zum Aufruf aller Beiträge eines bestimmten Users
+			public Vector<Beitrag> getAllBeitraegeOfUser(User user){
+				Connection con = DBConnection.connection();	
+				Vector <Beitrag> v= new Vector<Beitrag>();
+				try {
+					Statement stmt = con.createStatement();
+					ResultSet rs = stmt.executeQuery("Select * FROM Beitrag WHERE User_UserID = "+ user.getId());
+					
+					while(rs.next()) {
+						Beitrag b =new Beitrag();
+//						b.setId(rs.getInt(""));
+//						b.setText(rs.getString(""));
+//						b.setTimeStamp(rs.getTimestamp(""));
+//						v.add(b);
+					}
+					
+				} catch (SQLException e) {
+				e.printStackTrace();
+			}
+				return v;
+			}
 
 }

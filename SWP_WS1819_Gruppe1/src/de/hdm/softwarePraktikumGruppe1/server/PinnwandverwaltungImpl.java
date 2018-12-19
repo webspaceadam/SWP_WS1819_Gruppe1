@@ -4,7 +4,7 @@
 package de.hdm.softwarePraktikumGruppe1.server;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
+import java.util.Vector;
 import java.util.Vector;
 
 import de.hdm.softwarePraktikumGruppe1.server.db.*;
@@ -47,7 +47,7 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	
 	/**
 	 * 
-	 * Methode die alle User als ArrayList zurueck gibt
+	 * Methode die alle User als Vector zurueck gibt
 	 */
 	public Vector<User> showAllUser(){
 		return uMapper.findAll();
@@ -77,7 +77,7 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	/**
 	 * Methode um einen User zu Loeschen
 	 */
-	public void deleteUser() {
+	public void deleteUser(User u) {
 		//Alle Likes des Users löschen
 		//Alle Abonements des Users löschen
 		//Alle Kommentare des Users löschen
@@ -118,20 +118,28 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	/**
 	 * Methode um einen Beitrag zu erzeugen
 	 */
-	public void createBeitrag(String inhalt) {
+	public void createBeitrag(String text, User user, Timestamp timeStamp) {
+		Beitrag b = new Beitrag();
+		b.setText(text);
+		b.setUser(user);
+		//b.setTimeStamp(timeStamp);
+		bMapper.insertBeitrag(b);
 	}
 	
 	/**
 	 * Methode um alle Beiträge eines Users auszugeben
 	 */
-	public ArrayList<Beitrag> findAllBeitraegeOfUser(User u){
-		return null;
+	public Vector<Beitrag> findAllBeitraegeOfUser(User u){
+		return bMapper.getAllBeitraege();
 	}
 	
 	/**
 	 * Methode um einen Beitrag zu Loeschen
 	 */
 	public void deleteBeitrag(Beitrag b) {
+		//Alle Likes löschen
+		//Alle Kommentare löschen
+		//Beitrag löschen
 	}
 	
 	/**
@@ -144,7 +152,7 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	/**
 	 * Methode um alle Abonnements eines Users anzuzeigen
 	 */
-	public ArrayList<Abonnement> showAllAbonnementsByUser(User u){
+	public Vector<Abonnement> showAllAbonnementsByUser(User u){
 		return null;
 	}
 	
@@ -163,7 +171,7 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	/**
 	 * Methode um einen neues Kommentar zu erzeugen
 	 */
-	public void createKommentar(String inhalt) {
+	public void createKommentar(String text, User user, Timestamp timeStamp) {
 	}
 	
 	/**
@@ -175,7 +183,7 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	/**
 	 * Methode zum anzeigen aller Kommentare
 	 */
-	public ArrayList<Kommentar> findAllKommentare(Beitrag b){
+	public Vector<Kommentar> findAllKommentare(Beitrag b){
 		return null;
 	}
 	
@@ -189,7 +197,7 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	/**
 	 * Methode zum erzeugen eines Likes
 	 */
-	public void createLike(Like l, Beitrag b) {
+	public void createLike(User u, Beitrag b) {
 	}
 	
 	/**
@@ -226,17 +234,12 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 
 	}
 
-	@Override
-	public void createUser() {
-		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
-	public void editUser() {
-		// TODO Auto-generated method stub
-		
-	}
+	
+	
+
+
+
 	
 	
 }

@@ -3,7 +3,8 @@
  */
 package de.hdm.softwarePraktikumGruppe1.shared;
 
-import java.util.ArrayList;
+import java.sql.Timestamp;
+import java.util.Vector;
 import java.util.Vector;
 
 import de.hdm.softwarePraktikumGruppe1.server.db.AbonnementMapper;
@@ -22,27 +23,27 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
  * @author GianlucaBernert
  *
  */
-public interface Pinnwandverwaltung {
+public interface Pinnwandverwaltung extends RemoteService {
 
 	/**
-	 * Methode die alle User als ArrayList zurueck gibt
+	 * Methode die alle User als Vector zurueck gibt
 	 */
 	public Vector<User> showAllUser();
 	
 	/**
 	 * Methode um einen User zu erzeugen
 	 */
-	public void createUser();
+	public void createUser(String firstName, String lastName, String nickName, String gMail, Timestamp timestamp);
 	
 	/**
 	 * Methode um einen User zu Bearbeiten
 	 */
-	public void editUser();
+	public void editUser(User u);
 	
 	/**
 	 * Methode um einen User zu Loeschen
 	 */
-	public void deleteUser();
+	public void deleteUser(User u);
 	
 	/**
 	 * Methode zur Ueberpruefung der Zugangsberechtigung 
@@ -61,17 +62,17 @@ public interface Pinnwandverwaltung {
 	/**
 	 * Methode um einen User anhand seines Nicknamens zu suchen
 	 */
-	public User  searchUserByNickname(String nickname);
+	public User searchUserByNickname(String nickname);
 	
 	/**
 	 * Methode um einen Beitrag zu erzeugen
 	 */
-	public void createBeitrag(String inhalt);
+	public void createBeitrag(String text, User user, Timestamp timeStamp);
 	
 	/**
 	 * Methode um alle Beiträge eines Users auszugeben
 	 */
-	public ArrayList<Beitrag> findAllBeitraegeOfUser(User u);
+	public Vector<Beitrag> findAllBeitraegeOfUser(User u);
 	/**
 	 * Methode um einen Beitrag zu Loeschen
 	 */
@@ -85,7 +86,7 @@ public interface Pinnwandverwaltung {
 	/**
 	 * Methode um alle Abonnements eines Users anzuzeigen
 	 */
-	public ArrayList<Abonnement> showAllAbonnementsByUser(User u);
+	public Vector<Abonnement> showAllAbonnementsByUser(User u);
 	
 	/**
 	 * Methode um ein neues Abonnement zu erzeugen
@@ -100,7 +101,7 @@ public interface Pinnwandverwaltung {
 	/**
 	 * Methode um einen neues Kommentar zu erzeugen
 	 */
-	public void createKommentar(String inhalt);
+	public void createKommentar(String text, User user, Timestamp timeStamp);
 	
 	/**
 	 * Methode zum Loeschen eines Kommentars
@@ -110,7 +111,7 @@ public interface Pinnwandverwaltung {
 	/**
 	 * Methode zum anzeigen aller Kommentare
 	 */
-	public ArrayList<Kommentar> findAllKommentare(Beitrag b);
+	public Vector<Kommentar> findAllKommentare(Beitrag b);
 	
 	/**
 	 * Methode zum Bearbeiten eines Kommentars
@@ -120,7 +121,7 @@ public interface Pinnwandverwaltung {
 	/**
 	 * Methode zum erzeugen eines Likes
 	 */
-	public void createLike(Like l, Beitrag b);
+	public void createLike(User u, Beitrag b);
 	
 	/**
 	 * Methode zur Ueberpruefung ob der Beitrag bereits geliket ist
