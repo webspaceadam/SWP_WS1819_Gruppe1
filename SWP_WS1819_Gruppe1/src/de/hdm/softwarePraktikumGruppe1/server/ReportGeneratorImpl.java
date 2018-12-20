@@ -5,6 +5,8 @@ package de.hdm.softwarePraktikumGruppe1.server;
 
 import java.util.*;
 
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+
 import de.hdm.softwarePraktikumGruppe1.shared.*;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.*;
 
@@ -12,7 +14,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.*;
  * @author GianlucaBernert
  * Klasse die RemoveServerServlet als Superklasse besitzt und das Interface ReportGenerator implementiert
  */
-public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportGenerator{
+public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements ReportGenerator{
 	
 	/**
 	 * Methode die die Beitraege eines Users zurück gibt

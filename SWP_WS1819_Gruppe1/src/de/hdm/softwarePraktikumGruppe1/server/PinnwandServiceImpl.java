@@ -6,7 +6,7 @@ import java.util.Vector;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-import de.hdm.softwarePraktikumGruppe1.client.service.PinnwandService;
+import de.hdm.softwarePraktikumGruppe1.client.service.Pinnwand.PinnwandService;
 import de.hdm.softwarePraktikumGruppe1.server.db.AbonnementMapper;
 import de.hdm.softwarePraktikumGruppe1.server.db.BeitragMapper;
 import de.hdm.softwarePraktikumGruppe1.server.db.KommentarMapper;
@@ -256,17 +256,4 @@ public class PinnwandServiceImpl extends RemoteServiceServlet implements Pinnwan
 	public void deleteLikesOfBeitrag(Beitrag b) {
 
 	}
-
-	@Override
-	public void createUser() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void editUser() {
-		// TODO Auto-generated method stub
-		
-	}
-	
 }

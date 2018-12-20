@@ -1,22 +1,27 @@
-/**
- * 
- */
-package de.hdm.softwarePraktikumGruppe1.server;
+package de.hdm.softwarePraktikumGruppe1.client.service.Pinnwand;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Vector;
 
-import de.hdm.softwarePraktikumGruppe1.server.db.*;
-import de.hdm.softwarePraktikumGruppe1.shared.Pinnwandverwaltung;
-import de.hdm.softwarePraktikumGruppe1.shared.bo.*;
+import de.hdm.softwarePraktikumGruppe1.server.db.AbonnementMapper;
+import de.hdm.softwarePraktikumGruppe1.server.db.BeitragMapper;
+import de.hdm.softwarePraktikumGruppe1.server.db.KommentarMapper;
+import de.hdm.softwarePraktikumGruppe1.server.db.LikeMapper;
+import de.hdm.softwarePraktikumGruppe1.server.db.PinnwandMapper;
+import de.hdm.softwarePraktikumGruppe1.server.db.UserMapper;
+import de.hdm.softwarePraktikumGruppe1.shared.bo.Abonnement;
+import de.hdm.softwarePraktikumGruppe1.shared.bo.Beitrag;
+import de.hdm.softwarePraktikumGruppe1.shared.bo.Kommentar;
+import de.hdm.softwarePraktikumGruppe1.shared.bo.Like;
+import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
-/**
- * @author SebastianHermann
- * Klasse die das Interface Pinnwandverwaltung Implementiert und das RemoteServiceServlet als Superklasse besitzt
- */
-public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinnwandverwaltung{
-	
+public class PinnwandServiceClientImpl implements PinnwandServiceClientInt{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private UserMapper uMapper = null;
 	private PinnwandMapper pMapper = null;
 	private BeitragMapper bMapper = null;
@@ -26,14 +31,15 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	
 	/**
 	 * Konstruktor der Klasse PinnwandverwaltungIMpl der bei jedem erzeugten Objekt dieser Klasse ausfgerufen wird
+	 * @return 
 	 */
-	public PinnwandverwaltungImpl() throws IllegalArgumentException {
+	public PinnwandServiceClientImpl() throws IllegalArgumentException {
 		
 	}
 	
 
-	/* Initialisierungsmethode, welche die alle Mapper initialisiert.
-	 * 
+	/* 
+	 * Initialisierungsmethode, welche die alle Mapper initialisiert.
 	 */
 	
 	public void init() throws IllegalArgumentException {
@@ -247,27 +253,6 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	public void deleteLikesOfBeitrag(Beitrag b) {
 
 	}
-
-	@Override
-	public void createUser() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void editUser() {
-		// TODO Auto-generated method stub
-		
-	}
 	
-	
+
 }
-
-	
-	
-	
-	
-	
-	
-	
-

@@ -1,4 +1,4 @@
-package de.hdm.softwarePraktikumGruppe1.client.service;
+package de.hdm.softwarePraktikumGruppe1.client.service.Pinnwand;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
