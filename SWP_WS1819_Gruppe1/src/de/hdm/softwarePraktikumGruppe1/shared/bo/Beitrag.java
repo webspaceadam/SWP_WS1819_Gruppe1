@@ -21,10 +21,7 @@ public class Beitrag extends Textbeitrag{
 	private Pinnwand pinnwand;
 	private Vector<Kommentar> kommentare;
 	private String text;
-	
-	
-	
-	
+
 	//Getter- und Setter-Methoden
 	
 	public int getBeitragID() {
@@ -66,6 +63,7 @@ public class Beitrag extends Textbeitrag{
 	public Pinnwand getPinnwand() {
 		return pinnwand;
 	}
+
 	public void setPinnwand(Pinnwand pinnwand) {
 		this.pinnwand = pinnwand;
 	}
@@ -81,10 +79,10 @@ public class Beitrag extends Textbeitrag{
 	public void setText(String text) {
 		this.text = text;
 	}
+  
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
-	
-	
 }
+
+

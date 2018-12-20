@@ -42,7 +42,7 @@ public class AbonnementMapper {
 		return abonnementMapper;
 	}
 	
-public Abonnement findById(int id) {
+public Abonnement findById(int AbonnementID) {
 		
 		Connection con = DBConnection.connection();
 		
@@ -50,11 +50,11 @@ public Abonnement findById(int id) {
 	try {
 		Statement stmt = con.createStatement();
 		
-		ResultSet rs = stmt.executeQuery ("SELECT Abonnement_ID,  FROM Abonnement " + "WHERE Abonnement_id=" + id + " ORDER BY Abonnement_ID");
+		ResultSet rs = stmt.executeQuery ("SELECT Abonnement_ID,  FROM Abonnement " + "WHERE Abonnement_id=" + AbonnementID + " ORDER BY Abonnement_ID");
 	
 		if(rs.next()) {
 			Abonnement a = new Abonnement();
-			a.setOwnerId(rs.getInt("id"));
+			a.setOwnerId(rs.getInt("AbonnementID"));
 			
 			
 			return a;
@@ -74,11 +74,11 @@ public Abonnement findById(int id) {
 			try {
 				Statement stmt = con.createStatement();
 				
-				ResultSet rs = stmt.executeQuery("SELECT Abonnement_ID" + "FROM Abonnement" + "ORDED BY Abonnement_ID");
+				ResultSet rs = stmt.executeQuery("SELECT AbonnementID" + "FROM Abonnement" + "ORDED BY AbonnementID");
 				
 				while(rs.next()) {
 					Abonnement a = new Abonnement();
-					a.setOwnerId(rs.getInt("id"));
+					a.setOwnerId(rs.getInt("AbonnementID"));
 					
 					
 					result.addElement(a);
@@ -97,7 +97,7 @@ public Abonnement findById(int id) {
 				try {
 					Statement stmt = con.createStatement();
 
-					ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM User ");
+					ResultSet rs = stmt.executeQuery("SELECT MAX(AbonnementID) AS maxid " + "FROM User ");
 
 					if (rs.next()) {
 						
@@ -105,11 +105,10 @@ public Abonnement findById(int id) {
 
 						stmt = con.createStatement();
 						
-						stmt.executeUpdate("INSERT INTO abonnement (AbonnementID, CreationTimeStamp, Pinnwand_PinnwandID, User_UserID)" 
-						+ "Values("+ a.getOwnerId()+","+
-								a.getPinnwand_PinnwandID()+","+
-								a.getUser_UserID()+ ","
-								);
+						stmt.executeUpdate("INSERT INTO user (AbonnementID, Pinnwand_PinnwandID, User_UserID) " + "VALUES (" + 
+								"'" + a.getOwnerId() + "'," + 
+								"'" + a.getPinnwand_PinnwandID() + "'," + 
+								"'" + a.getUser_UserID() + "'");
 						
 								
 					
@@ -128,7 +127,7 @@ public Abonnement findById(int id) {
 				try {
 					Statement stmt = con.createStatement();
 
-					stmt.executeUpdate("UPDATE User " + "SET Abonnement_ID=\"" + a.getOwnerId()  + "WHERE id=" + a.getOwnerId());
+					stmt.executeUpdate("UPDATE User " + "SET AbonnementID=\"" + a.getOwnerId()  + "WHERE id=" + a.getOwnerId());
 
 				} catch (SQLException e) {
 					e.printStackTrace();
@@ -144,7 +143,7 @@ public Abonnement findById(int id) {
 				try {
 					Statement stmt = con.createStatement();
 
-					stmt.executeUpdate("DELETE FROM Abonnement " + "WHERE id=" + a.getOwnerId());
+					stmt.executeUpdate("DELETE FROM Abonnement " + "WHERE AbonnementID=" + a.getOwnerId());
 				} catch (SQLException e) {
 					e.printStackTrace();
 					} 
@@ -158,13 +157,13 @@ public Abonnement findById(int id) {
 			try {
 				
 				Statement stmt = con.createStatement();
-				ResultSet rs = stmt.executeQuery("SELECT (AbonnementID, Pinnwand_PinnwandID, User_UserID) FROM abonnement" + "WHERE User_UserID" + u.getId(u));
+				ResultSet rs = stmt.executeQuery("SELECT (AbonnementID, Pinnwand_PinnwandID, User_UserID) FROM abonnement" + "WHERE User_UserID" + u.getUserId(u));
 						
 						while(rs.next()) {
 							
 							Abonnement a = new Abonnement();
 							
-							a.setOwnerId(rs.getInt("UserID"));
+							a.setOwnerId(rs.getInt("AbonnementID"));
 							a.setPinnwand_PinnwandID(rs.getInt("Pinnwand_PinnwandID"));
 							a.setUser_UserID(rs.getInt("User_UserID"));
 							result.addElement(a);
@@ -188,13 +187,13 @@ public Abonnement findById(int id) {
 			try {
 				
 				Statement stmt = con.createStatement();
-				ResultSet rs = stmt.executeQuery("SELECT (PinnwandID, Pinnwand_PinnwandID, User_UserID) FROM pinnwand" + "WHERE Pinnwand_PinnwandID" + p.getId(p));
+				ResultSet rs = stmt.executeQuery("SELECT (PinnwandID, Pinnwand_PinnwandID, User_UserID) FROM pinnwand" + "WHERE Pinnwand_PinnwandID" + p.getOwnerId());
 						
 						while(rs.next()) {
 							
 							Abonnement a = new Abonnement();
 							
-							a.setOwnerId(rs.getInt("UserID"));
+							a.setOwnerId(rs.getInt("PinnwandID"));
 							a.setPinnwand_PinnwandID(rs.getInt("Pinnwand_PinnwandID"));
 							a.setUser_UserID(rs.getInt("User_UserID"));
 							result.addElement(a);

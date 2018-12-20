@@ -9,6 +9,8 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.ui.*;
 
 /**
+ * Die Klasse <code>KommentarBox</code> ist zuständig für die Anzeige eines Kommentars unter 
+ * einer BeitragBox.  
  * @author AdamGniady
  *
  */
@@ -38,6 +40,12 @@ public class KommentarBox extends FlowPanel {
 		kommentarContent.setText("Some Kommentarstuff inside a Kommentar");
 	}
 	
+	/**
+	 * Der Konstruktor übernimmt einen Inhalt und die dazugehörige <em>parentBeitragBox</em>. 
+	 * 
+	 * @param inhalt
+	 * @param parentBB
+	 */
 	public KommentarBox(String inhalt, BeitragBox parentBB) {
 		// Adding Author relationship
 		accountName.setText("Johny Smith");

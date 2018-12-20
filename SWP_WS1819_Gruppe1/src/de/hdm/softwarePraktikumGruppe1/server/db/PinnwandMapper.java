@@ -2,6 +2,7 @@
 package de.hdm.softwarePraktikumGruppe1.server.db;
 
 import java.sql.*;
+import java.util.Vector;
 
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Beitrag;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Like;
@@ -10,7 +11,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
 /**
  * @author GianlucaBernert 
- * @author SerhatUlus
+ * @author Ulus Serhat
  * @author Yesin Soufi
  */
 	public class PinnwandMapper {
@@ -104,8 +105,11 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 					if (rs.next()) {
 						// Ergebnis in Pinnwandobjekt umwandeln
 						Pinnwand p = new Pinnwand();	
-						p.setOwnerId(u.getId());
+						p.setOwnerId(rs.getInt("PinnwandID"));
+						p.setUser_UserID(rs.getInt("User_UserID"));
+						
 						return p;
+
 						}
 					}
 						
@@ -117,8 +121,70 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 		 }
 
 
+
 		public void deletePinnwandOfUser(User u) {
 			// TODO Auto-generated method stub
 			
 		}
 	}
+		 
+		 public Pinnwand findPinnwandByUser (int PinnwandID) {
+			 Connection con = DBConnection.connection();
+			 
+			 try {
+				 
+				 Statement stmt = con.createStatement();
+				 
+				 ResultSet rs = stmt.executeQuery("SELECT * FROM pinnwand" + "WHERE User_UserID = " + "'" + PinnwandID + "'");
+				 
+				 if(rs.next()) {
+					 Pinnwand p = new Pinnwand();
+					 p.setId(rs.getInt("PinnwandID"));
+					 p.setUser_UserID(rs.getInt("User_UserID"));
+//					 p.setCreationTimeStamp("creationTimeStamp");
+					 return p;
+					 
+				 }
+				 }catch(SQLException e1) {
+					 e1.printStackTrace();
+					 return null;
+				 
+				 
+			 }
+			 
+			 return null;
+			 
+		 }
+		 
+	    public Pinnwand findPinnwandByUser(User u) {
+	    	return findPinnwandByUser(u.getId());
+	    }
+	    
+	    public Vector<Pinnwand> findAllPinnwaende(){
+	    	Connection con = DBConnection.connection();
+	    	
+	    	Vector<Pinnwand> result = new Vector<Pinnwand>();
+	    	
+	    	try {
+	    		
+	    		Statement stmt = con.createStatement();
+	    		ResultSet rs = stmt.executeQuery("SELECT * FROM pinnwand" + "ORDED BY PinnwandID");
+	    		
+	    		while(rs.next()) {
+	    			Pinnwand p = new Pinnwand();
+	    			p.setId(rs.getInt("PinnwandID"));
+	    			p.setUser_UserID(rs.getInt("User_UserID"));
+	    			p.setCreationTimeStamp(rs.getDate("CreationTimeStamp"));
+	    			
+	    			result.addElement(p);
+	    			
+	    		}
+	    		
+	    	}catch (SQLException e1) {
+	    		e1.printStackTrace();
+	    			
+	    			
+	    		}
+	    	return result;
+	    	
+	    }}

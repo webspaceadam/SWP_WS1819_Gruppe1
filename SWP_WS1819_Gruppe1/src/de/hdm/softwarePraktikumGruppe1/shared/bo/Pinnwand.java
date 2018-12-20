@@ -13,10 +13,10 @@ public class Pinnwand extends BusinessObject{
 	
 	private static final long serialVersionUID = 1L;
 	private User owner;
+
 	private Vector<Beitrag> alleBeitraege;
 	private Vector<Abonnement> alleAbonnements;
-	
-	
+
 	public User getOwner() {
 		return owner;
 	}

@@ -12,7 +12,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.Pinnwandverwaltung;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.*;
 
 /**
- * @author GianlucaBernert
+ * @author SebastianHermann
  * Klasse die das Interface Pinnwandverwaltung Implementiert und das RemoteServiceServlet als Superklasse besitzt
  */
 public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinnwandverwaltung{
@@ -32,6 +32,7 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 		
 	}
 	
+
 	/* Initialisierungsmethode, welche die alle Mapper initialisiert.
 	 * 
 	 */
@@ -44,14 +45,35 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 		this.lMapper = LikeMapper.likeMapper();
 		this.aMapper = AbonnementMapper.abonnementMapper();
 	}
-	
-	
+
 	/**
 	 * 
 	 * Methode die alle User als Vector zurueck gibt
 	 */
 	public Vector<User> showAllUser(){
 		return uMapper.findAll();
+	}
+	
+	// TESTMETHODE
+	
+	/*
+	 * VORSICHT TESTMETHODE
+	 * 
+	 * Bitte beim anfangen der richtigen implementierung entweder löschen oder in der korrekten methode
+	 * den methodenkörper wiederverwenden!!!
+	 */
+	public User createSingleUserTestMethod(String vorname, String nachname, String nickname) {
+		
+		//Erstellen eines Nutzerobjekts mit Vorname, Nachname und Nachname
+		User u = new User();
+		
+		u.setFirstName(vorname);
+		u.setLastName(nachname);
+		u.setNickname(nickname);
+		
+		//Speichern in der DB
+		return this.uMapper.insert(u);
+			
 	}
 	
 	/**

@@ -7,8 +7,9 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.*;
 
 /**
+ * Die Klasse <code>SearchAboBox</code> zeigt alle möglichen Ergebnisse der Suche 
+ * nach einem vom User eingegebenen Keyword.  
  * @author AdamGniady
- *
  */
 public class SearchAboBox extends FlowPanel {
 	private Label accountName = new Label("Gianluca Bernert");

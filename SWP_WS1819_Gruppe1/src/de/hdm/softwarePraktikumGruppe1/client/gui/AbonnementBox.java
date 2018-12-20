@@ -7,12 +7,15 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.*;
 
 /**
+ * Die Klasse <code>AbonnementBox</code> ist zuständig für die Anzeige der Abonnements
+ * die einem User zugeordnet sind. Diese Box hat über zwei Buttons die Möglichkeit 
+ * auf die jeweiligen Pinnwände der Abo's zuzugreifen oder das Abonnement zu kündigen. 
+ * 
  * @author AdamGniady
- *
  */
 public class AbonnementBox extends FlowPanel {
-	private Label accountName = new Label("Sebastian Hermann");
-	private Label nickName = new Label("@sebmeister");
+	private Label accountName = new Label("Abo Name");
+	private Label nickName = new Label("@aboNickname");
 	private Button pinnwandBtn = new Button("Pinnwand");
 	private Button deaboBtn = new Button("Deabbonieren");
 	
@@ -22,6 +25,21 @@ public class AbonnementBox extends FlowPanel {
 	private FlowPanel deaboWrapper = new FlowPanel();
 	
 	public AbonnementBox() {
+		
+	}
+	
+	/**
+	 * Der Konstruktor der Klasse ermöglicht die Übergabe von zwei Parametern um die richtigen 
+	 * Namen des jeweiligen Abo's anzuzeigen. 
+	 * 
+	 * @param aboAccountName
+	 * @param aboNickname
+	 * 
+	 * @author AdamGniady
+	 */
+	public AbonnementBox(String aboAccountName, String aboNickname) {
+		this.accountName.setText(aboAccountName);
+		this.nickName.setText(aboNickname);
 	}
 	
 	public AbonnementBox(int aboCount) {
@@ -54,6 +72,14 @@ public class AbonnementBox extends FlowPanel {
 		this.add(deaboWrapper);
 	}
 	
+	/**
+	 * Der <code>ShowPinnwandClickHandler</code> kümmert sich um die Anzeige 
+	 * des Editors. Durch die Betätigung des ClickHandlers wird die entsprechende Pinnwand
+	 * des Users im Editor angezeigt. 
+	 * 
+	 * @author AdamGniady
+	 *
+	 */
 	private class ShowPinnwandClickHandler implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
