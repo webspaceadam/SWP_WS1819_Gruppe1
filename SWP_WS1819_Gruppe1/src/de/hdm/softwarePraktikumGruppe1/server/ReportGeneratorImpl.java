@@ -4,9 +4,7 @@
 package de.hdm.softwarePraktikumGruppe1.server;
 
 import java.util.*;
-
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-
 import de.hdm.softwarePraktikumGruppe1.shared.*;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.*;
 
@@ -16,6 +14,11 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.*;
  */
 public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements ReportGenerator{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Methode die die Beitraege eines Users zurück gibt
 	 */

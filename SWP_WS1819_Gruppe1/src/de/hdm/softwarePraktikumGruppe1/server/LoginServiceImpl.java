@@ -3,6 +3,8 @@
  */
 package de.hdm.softwarePraktikumGruppe1.server;
 
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+
 import de.hdm.softwarePraktikumGruppe1.shared.LoginInfo;
 import de.hdm.softwarePraktikumGruppe1.shared.LoginService;
 
