@@ -12,14 +12,16 @@ import java.util.*;
 public class Beitrag extends Textbeitrag{
 	
 	private static final long serialVersionUID = 1L;
-	private int ownerId;
-	private int likeID;
+	private int beitragID;
+	private User user;
+	private Vector<Like> likes;
 	private int likeAmount;
-	private int commentID;
+	private Kommentar kommentar;
 	private int commentAmount;
 	private Pinnwand pinnwand;
 	private Vector<Kommentar> kommentare;
 	private String text;
+
 	private int beitragID;
   
 	
@@ -28,119 +30,64 @@ public class Beitrag extends Textbeitrag{
 	private int Pinnwand_PinnwandID;
 	private int User_UserID;
 
+	//Getter- und Setter-Methoden
 	
-	/**
-	 * Methode die die ID des Users zurueck gibt der den Beitrag verfasst hat
-	 */
-	public int getOwnerId() {
-		return ownerId;
+	public int getBeitragID() {
+		return beitragID;
 	}
-	
-	/**
-	 * Methode die die ID des Users setzt der den Beitrag verfasst
-	 */
-	public void setOwnerId(int ownerId) {
-		this.ownerId = ownerId;
+	public void setBeitragID(int beitragID) {
+		this.beitragID = beitragID;
 	}
-	
-	/**
-	 * Methode die die ID der Likes für einen Beitrag zurueck gibt
-	 */
-	public int getLikeID() {
-		return likeID;
+	public User getUser() {
+		return user;
 	}
-	
-	/**
-	 * Methode die die ID des Likes für einen Beitrag setzt
-	 */
-	public void setLikeID(int likeID) {
-		this.likeID = likeID;
+	public void setUser(User user) {
+		this.user = user;
 	}
-	
-	/**
-	 * Methode die die Anzahl der Likes für einen Beitrag zurueck gibt
-	 */
+	public Like getLike() {
+		return like;
+	}
+	public void setLike(Like like) {
+		this.like = like;
+	}
 	public int getLikeAmount() {
 		return likeAmount;
 	}
-	
-	/**
-	 * Methode die die Anzahl der Likes für einen Beitrag setzt 
-	 */
 	public void setLikeAmount(int likeAmount) {
 		this.likeAmount = likeAmount;
 	}
-	
-	/**
-	 * Methode die die ID der Kommentare für einen Beitag zurueck gibt
-	 */
-	public int getCommentID() {
-		return commentID;
+	public Kommentar getKommentar() {
+		return kommentar;
 	}
-	
-	/**
-	 * Methode die die ID des Kommentars für einen Beitrag setzt
-	 */
-	public void setCommentID(int commentID) {
-		this.commentID = commentID;
+	public void setKommentar(Kommentar kommentar) {
+		this.kommentar = kommentar;
 	}
-	
-	/**
-	 * Methode die die Anzahl der Kommentare eines Beitrags zurueck gibt
-	 */
 	public int getCommentAmount() {
 		return commentAmount;
 	}
-	
-	/**
-	 * Methode die die ANzahl von Kommentaren eines BEitrags setzt
-	 */
 	public void setCommentAmount(int commentAmount) {
 		this.commentAmount = commentAmount;
 	}
-	
-	/**
-	 * Methode die die Pinnwand auf der ein Beitrag geteilt wurde zurueck gibt
-	 */
 	public Pinnwand getPinnwand() {
 		return pinnwand;
 	}
-	
-	/**
-	 * Methode die die Pinnwand auf der ein Beitrag geteilt werden soll setzt
-	 */
-	public void setPinnwand(Pinnwand p) {
-		this.pinnwand = p;
+
+	public void setPinnwand(Pinnwand pinnwand) {
+		this.pinnwand = pinnwand;
 	}
-	
-	/**
-	 * Methode die einen Vector aus Kommentaren eines Beitrags zurueck gibt
-	 */
 	public Vector<Kommentar> getKommentare() {
 		return kommentare;
 	}
-	
-	/**
-	 * Methode die einen Vector aus Kommentaren eines Beitrags erstellt
-	 */
 	public void setKommentare(Vector<Kommentar> kommentare) {
 		this.kommentare = kommentare;
 	}
-	
-	/**
-	 * Methode die den Text eines Beitrags zurueck gibt
-	 */
 	public String getText() {
 		return text;
 	}
-	
-	/**
-	 * Methode die den Text eines Beitrags setzt
-	 */
 	public void setText(String text) {
 		this.text = text;
 	}
-	
+
 	public int getPinnwand_PinnwandID() {
 		return Pinnwand_PinnwandID;
 	}
@@ -172,15 +119,9 @@ public class Beitrag extends Textbeitrag{
 		return super.toString() + " User ID #" + this.getOwnerId();
 	}
 
-
-	
-
-
-	
-	
-	
-	
-	
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 }
 
 

@@ -1,6 +1,8 @@
 
 package de.hdm.softwarePraktikumGruppe1.server.db;
 import java.sql.*;
+import java.util.Vector;
+
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Beitrag;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Kommentar;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
@@ -204,5 +206,18 @@ public class KommentarMapper {
 			return counter;
 			
 		 }
+		 
+		 
+		 //To be defined: getAllKommentarOfBeitrag
+		 public Vector<Kommentar> getAllKommentarOfBeitrag(Beitrag b){
+			 
+			 return null;
+		 }
+
+
+		public void deleteAllKommentareOfUser(User u) {
+			// TODO Auto-generated method stub
+			
+		}
+
 }
-	 

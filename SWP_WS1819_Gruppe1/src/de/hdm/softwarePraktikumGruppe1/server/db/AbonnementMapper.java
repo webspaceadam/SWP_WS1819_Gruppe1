@@ -205,6 +205,16 @@ public Abonnement findById(int AbonnementID) {
 			
 			return result;
 			
-}		
+}
+
+			public void deleteAllAbonnementsOfUser(User u) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			public void deleteAllAbosOfPinnwand(User u) {
+				// TODO Auto-generated method stub
+				
+			}		
 				
 }

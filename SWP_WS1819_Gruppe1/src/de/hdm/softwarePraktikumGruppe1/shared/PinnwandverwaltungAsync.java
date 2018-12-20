@@ -3,7 +3,8 @@
  */
 package de.hdm.softwarePraktikumGruppe1.shared;
 
-import java.util.ArrayList;
+import java.sql.Timestamp;
+import java.util.Vector;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -16,129 +17,127 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.*;
 public interface PinnwandverwaltungAsync {
 	
 	/**
-	 * Methode zum erstellen eines Beitrags
+	 * Methode die alle User als Vector zurueck gibt
 	 */
-	public void createBeitrag(String inhalt, AsyncCallback callback);
+	public Vector<User> showAllUser(AsyncCallback callback);
 	
 	/**
-	 * Methode zum erstellen eines Kommentars
+	 * Methode um einen User zu erzeugen
 	 */
-	public void createKommentar(String inhalt, AsyncCallback callback);
+	public void createUser(String firstName, String lastName, String nickName, String gMail, Timestamp timestamp, AsyncCallback callback);
 	
 	/**
-	 * Methode zum anzeigen aller Pinnwände
+	 * Methode um einen User zu Bearbeiten
 	 */
-	public void showAllPinnwaende(AsyncCallback callback);
+	public void editUser(User u, AsyncCallback callback);
 	
 	/**
-	 * Methode zum erstellen eines Users
-	 */
-	public User createUser(User u, AsyncCallback callback);
-	
-	/**
-	 * Methode zum bearbeiten eines Users
-	 */
-	public User editUser(User u, AsyncCallback callback);
-	
-	/**
-	 * Methode zum loeschen eines Users
+	 * Methode um einen User zu Loeschen
 	 */
 	public void deleteUser(User u, AsyncCallback callback);
 	
 	/**
-	 * Methode zum anzeigen aller User
+	 * Methode zur Ueberpruefung der Zugangsberechtigung 
 	 */
-	public ArrayList<User> showAllUser(AsyncCallback callback);
+	public User loginCheck(String nickname, String password, AsyncCallback callback);
 	
 	/**
-	 * Methode zur pruefung der Zugangsberechtigung 
+	 * Methode um einen User anhand seiner ID zu suchen
 	 */
-	public String loginCheck(AsyncCallback callback);
-	
+	public User searchUserById(int userId, AsyncCallback callback);
 	/**
-	 * Methode zum suchen einer User ID
-	 */
-	public int searchUserId(int userId, AsyncCallback callback);
-	
-	/**
-	 * Methode zum updaten eines Users
+	 * Methode um einen User upzudaten
 	 */
 	public User updateUser(User u, AsyncCallback callback);
 	
 	/**
-	 * Methode zum anzeigen aller Beitraege eines Users
+	 * Methode um einen User anhand seines Nicknamens zu suchen
 	 */
-	public ArrayList<Beitrag> findAllUserBeitraege(User u, AsyncCallback callback);
+	public User searchUserByNickname(String nickname, AsyncCallback callback);
 	
 	/**
-	 * Methode zum loeschen eines Beitrags
+	 * Methode um einen Beitrag zu erzeugen
+	 */
+	public void createBeitrag(String text, User user, Timestamp timeStamp, AsyncCallback callback);
+	
+	/**
+	 * Methode um alle Beiträge eines Users auszugeben
+	 */
+	public Vector<Beitrag> findAllBeitraegeOfUser(User u, AsyncCallback callback);
+	/**
+	 * Methode um einen Beitrag zu Loeschen
 	 */
 	public void deleteBeitrag(Beitrag b, AsyncCallback callback);
 	
 	/**
-	 * Methode zum bearbeiten eines Beitrags
+	 * Methode um einen Beitrag zu Bearbeiten
 	 */
 	public Beitrag editBeitrag(Beitrag b, AsyncCallback callback);
 	
 	/**
-	 * Methode zum anzeigen aller User Abonnements
+	 * Methode um alle Abonnements eines Users anzuzeigen
 	 */
-	public ArrayList<Abonnement> showAllUserAbonnements(User u, AsyncCallback callback);
+	public Vector<Abonnement> showAllAbonnementsByUser(User u, AsyncCallback callback);
 	
 	/**
-	 * Methode zum anzeigen aller Kommentare eines Users
+	 * Methode um ein neues Abonnement zu erzeugen
 	 */
-	public ArrayList<Kommentar> findAllUserKommentare(Kommentar k, AsyncCallback callback);
+	public void creatAbonnement(User u1, User u2, AsyncCallback callback);
 	
 	/**
-	 * Methode zum suchen eines Beitrags anhand der Pinnwand
+	 * Methode um ein bestehendes Abonnement zu Loeschen
 	 */
-	public ArrayList<Beitrag> searchBeitragByPinnwand(Pinnwand p, AsyncCallback callback);
+	public void deleteAbonnement(Abonnement a, AsyncCallback callback);
 	
 	/**
-	 * Methode zum anzeigen eines Users anhand seiner IDs
+	 * Methode um einen neues Kommentar zu erzeugen
 	 */
-	public User getUserByNickname(String nickname, AsyncCallback callback);
+	public void createKommentar(String text, User user, Timestamp timeStamp, AsyncCallback callback);
 	
 	/**
-	 * Methode zum erstellen eines Abonnements
+	 * Methode zum Loeschen eines Kommentars
 	 */
-	public Abonnement createAbonnement(User u, AsyncCallback callback);
+	public void deleteKommentar(Kommentar k, AsyncCallback callback);
 	
 	/**
-	 * Methode zum loeschen eines Abonnements
+	 * Methode zum anzeigen aller Kommentare
 	 */
-	public void deleteAbonnement(Abonnement abo, AsyncCallback callback);
+	public Vector<Kommentar> findAllKommentare(Beitrag b, AsyncCallback callback);
 	
 	/**
-	 * Methode zum erstellen eines Likes
-	 */
-	public Like createLike(User u, AsyncCallback callback);
-	
-	/**
-	 * Methode zum bearbeiten eines Kommentars
+	 * Methode zum Bearbeiten eines Kommentars
 	 */
 	public Kommentar editKommentar(Kommentar k, AsyncCallback callback);
 	
 	/**
-	 * Methode zum ueberpruefen ob ein Beitrag schon von eienm User geliket wurde
+	 * Methode zum erzeugen eines Likes
 	 */
-	public Boolean likeCheck(User u, Beitrag b, AsyncCallback callback);
+	public void createLike(User u, Beitrag b, AsyncCallback callback);
 	
 	/**
-	 * Methode zum loeschen eines Likes
+	 * Methode zur Ueberpruefung ob der Beitrag bereits geliket ist
+	 */
+	public boolean likeCheck(User u, Beitrag b, AsyncCallback callback);
+	
+	/**
+	 * Methode um einen Beitrag zu entliken
 	 */
 	public void deleteLike(Like l, AsyncCallback callback);
 	
 	/**
-	 * Methode zum suchen eines Likes
+	 * Methode um ein Like zu suchen
 	 */
 	public Like searchLike(Like l, AsyncCallback callback);
 	
 	/**
-	 * Methode zum zählen aller Likes eines Beitrags
+	 * Methode um alle Likes eines Beitrags zu zaehlen
 	 */
-	public int countLike(Beitrag b, AsyncCallback callback);
+	public int countLikes(Beitrag b, AsyncCallback callback);
+	
+	/**
+	 * Methode um Likes eines Beitrags zu entfernen
+	 */
+	public void deleteLikesOfBeitrag(Beitrag b, AsyncCallback callback);
 	
 	
 
