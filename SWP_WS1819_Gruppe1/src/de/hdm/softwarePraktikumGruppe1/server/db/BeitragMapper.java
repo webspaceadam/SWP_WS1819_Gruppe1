@@ -68,7 +68,7 @@ public class BeitragMapper {
 			try {
 				PreparedStatement statement = con.prepareStatement(
 						"INSERT INTO textbeitrag (BeitragID, inhalt, creationTimeStamp) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
-				statement.setInt(1, b.getBeitragID(b));
+				statement.setInt(1, b.getId());
 				statement.setString(2, b.getText());
 				statement.setDate(3, (Date) b.getCreationTimeStamp());
 
@@ -108,7 +108,7 @@ public class BeitragMapper {
 				try {
 					Statement stmt = con.createStatement();
 				
-					stmt.executeUpdate("DELETE FROM beitrag" + "WHERE User_User_ID=" + user.getBeitragID(user));
+					stmt.executeUpdate("DELETE FROM beitrag" + "WHERE User_User_ID=" + user.getUserId(user));
 				}
 				
 				catch(SQLException e) {

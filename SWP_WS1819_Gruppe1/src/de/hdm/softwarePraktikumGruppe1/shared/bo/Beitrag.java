@@ -20,15 +20,9 @@ public class Beitrag extends Textbeitrag{
 	private Pinnwand pinnwand;
 	private Vector<Kommentar> kommentare;
 	private String text;
-	private int Beitrag_BeitragID;
+	private int beitragID;
   
-  public int getBeitrag_BeitragID() {
-		return Beitrag_BeitragID;
-	}
-
-	public void setBeitrag_BeitragID(int beitrag_BeitragID) {
-		Beitrag_BeitragID = beitrag_BeitragID;
-	}
+	
 
 	// Fremdschlüsselbezeichnungen
 	private int Pinnwand_PinnwandID;
@@ -163,13 +157,24 @@ public class Beitrag extends Textbeitrag{
 		this.User_UserID = User_UserID;
 	}
 	
+	public int getBeitragID(Beitrag b) {
+		return beitragID;
+	}
+
+	public void setBeitragID(int beitragID) {
+		beitragID = beitragID;
+	}
+	
 	/**
 	 * Methode um eine textuelle Dastellung der jeweiligen Instanz zu erzeugen
 	 */
 	public String toString() {
 		return super.toString() + " User ID #" + this.getOwnerId();
 	}
+
+
 	
+
 
 	
 	

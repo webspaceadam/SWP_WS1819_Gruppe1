@@ -19,7 +19,7 @@ public abstract class BusinessObject implements Serializable{
 	/**
 	 * Methode um die ID des BusinessObjects zurueck zu bekommen
 	 */
-	public int getId() {//Argument rausgenommen, weil ich nur id des objektes haben möchte.
+	public int getId() {//Argument rausgenommen, weil ich nur id des objektes haben moechte.
 		return this.id;
 	}
 	
