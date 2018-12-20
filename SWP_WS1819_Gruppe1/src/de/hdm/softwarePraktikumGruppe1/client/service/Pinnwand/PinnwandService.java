@@ -81,7 +81,7 @@ public interface PinnwandService extends RemoteService{
 	/**
 	 * Methode um ein neues Abonnement zu erzeugen
 	 */
-	public void creatAbonnement(User u1, User u2);
+	public void createAbonnement(User u1, User u2);
 	
 	/**
 	 * Methode um ein bestehendes Abonnement zu Loeschen

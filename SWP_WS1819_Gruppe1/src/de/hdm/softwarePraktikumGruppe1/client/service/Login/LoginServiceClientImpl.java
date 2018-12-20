@@ -36,7 +36,7 @@ public class LoginServiceClientImpl implements LoginServiceClientInt{
 		public void onSuccess(Object result) {
 			if(result instanceof String)	{
 				String url = (String) result;
-				//maingui.updateLabel(url);
+				//maingui.login(url);
 				
 			}
 			

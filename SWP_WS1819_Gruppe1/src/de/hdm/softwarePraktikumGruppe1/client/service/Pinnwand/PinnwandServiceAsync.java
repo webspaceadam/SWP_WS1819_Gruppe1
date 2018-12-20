@@ -82,7 +82,7 @@ public interface PinnwandServiceAsync {
 	/**
 	 * Methode um ein neues Abonnement zu erzeugen
 	 */
-	public void creatAbonnement(User u1, User u2, AsyncCallback callback);
+	public void createAbonnement(User u1, User u2, AsyncCallback callback);
 	
 	/**
 	 * Methode um ein bestehendes Abonnement zu Loeschen

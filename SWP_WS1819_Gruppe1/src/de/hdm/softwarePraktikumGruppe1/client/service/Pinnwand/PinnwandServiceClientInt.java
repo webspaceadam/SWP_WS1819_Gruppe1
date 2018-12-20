@@ -30,7 +30,7 @@ public interface PinnwandServiceClientInt {
 	/**
 	 * Methode um einen User zu Loeschen
 	 */
-	public void deleteUser();
+	public void deleteUser(User u);
 	
 	/**
 	 * Methode zur Ueberpruefung der Zugangsberechtigung 
@@ -80,7 +80,7 @@ public interface PinnwandServiceClientInt {
 	/**
 	 * Methode um ein neues Abonnement zu erzeugen
 	 */
-	public void creatAbonnement(User u1, User u2);
+	public void createAbonnement(User u1, User u2);
 	
 	/**
 	 * Methode um ein bestehendes Abonnement zu Loeschen
