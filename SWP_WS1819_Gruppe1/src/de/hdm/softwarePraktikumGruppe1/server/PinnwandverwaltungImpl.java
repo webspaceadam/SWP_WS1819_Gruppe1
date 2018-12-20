@@ -19,7 +19,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.Kommentar;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Like;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
-public class PinnwandServiceImpl extends RemoteServiceServlet implements PinnwandService{
+public class PinnwandverwaltungImpl extends RemoteServiceServlet implements PinnwandService{
 
 	/**
 	 * 
@@ -36,7 +36,7 @@ public class PinnwandServiceImpl extends RemoteServiceServlet implements Pinnwan
 	 * Konstruktor der Klasse PinnwandverwaltungIMpl der bei jedem erzeugten Objekt dieser Klasse ausfgerufen wird
 	 * @return 
 	 */
-	public PinnwandServiceImpl() throws IllegalArgumentException {
+	public PinnwandverwaltungImpl() throws IllegalArgumentException {
 		
 	}
 	
@@ -61,7 +61,7 @@ public class PinnwandServiceImpl extends RemoteServiceServlet implements Pinnwan
 	public Vector<User> showAllUser(){
 		return uMapper.findAll();
 	}
-	
+
 	// TESTMETHODE
 	
 	/*
