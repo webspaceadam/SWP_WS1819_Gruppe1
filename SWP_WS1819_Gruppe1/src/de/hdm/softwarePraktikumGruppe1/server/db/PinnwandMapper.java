@@ -119,6 +119,14 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 					  }
 				return null;
 		 }
+
+
+
+		public void deletePinnwandOfUser(User u) {
+			// TODO Auto-generated method stub
+			
+		}
+	}
 		 
 		 public Pinnwand findPinnwandByUser (int PinnwandID) {
 			 Connection con = DBConnection.connection();

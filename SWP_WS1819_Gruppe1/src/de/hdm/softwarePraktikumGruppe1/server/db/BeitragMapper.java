@@ -176,10 +176,17 @@ public class BeitragMapper {
 			e.printStackTrace();
 		} 
 		return result;
+		}
+	
 	
 
-}
-	
+	//Methode updateBeitrag;
+	public Beitrag updateBeitrag(Beitrag b) {
+		
+		return null;
+		
+	}
+
 	public Vector <Beitrag> getAllBeitraegeOfPinnwand(int Pinnwand_PinnwandID){
 		Connection con = DBConnection.connection();
 		Vector<Beitrag> result = new Vector<Beitrag>();
@@ -208,7 +215,7 @@ public class BeitragMapper {
 		
 		
 	}
-	
+
 
 
 }
