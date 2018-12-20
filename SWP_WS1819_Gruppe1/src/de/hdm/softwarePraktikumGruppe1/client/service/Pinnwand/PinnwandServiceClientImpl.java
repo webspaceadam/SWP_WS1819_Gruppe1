@@ -406,7 +406,6 @@ public class PinnwandServiceClientImpl implements PinnwandServiceClientInt{
 			if(result instanceof Beitrag)	{
 				Beitrag beitrag = (Beitrag) result;
 				//maingui.editBeitrag(beitrag);
-				
 			}
 		}
 	}
