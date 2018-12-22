@@ -65,11 +65,18 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	// TESTMETHODE
 	
 	/*
+	 * 
 	 * VORSICHT TESTMETHODE
 	 * 
 	 * Bitte beim anfangen der richtigen implementierung entweder löschen oder in der korrekten methode
 	 * den methodenkörper wiederverwenden!!!
 	 */
+	
+	public User getCurrentUser(String mail) {
+		
+		return uMapper.findUserByNickname(mail);
+	}
+	
 	public User createSingleUserTestMethod(String vorname, String nachname, String nickname) {
 		
 		//Erstellen eines Nutzerobjekts mit Vorname, Nachname und Nachname
@@ -93,7 +100,7 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 		u.setLastName(lastName);
 		u.setNickname(nickName);
 		u.seteMail(gMail);
-		//u.setTimestamp(timestamp);
+		u.setTimestamp(timestamp);
 		uMapper.insert(u);
 	
 	}
@@ -161,7 +168,7 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 		Beitrag b = new Beitrag();
 		b.setText(text);
 		b.setUser(user);
-		//b.setTimeStamp(timeStamp);
+		b.setTimeStamp(timeStamp);
 		bMapper.insertBeitrag(b);
 	}
 	

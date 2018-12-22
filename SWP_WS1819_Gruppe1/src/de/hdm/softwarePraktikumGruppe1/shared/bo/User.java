@@ -3,6 +3,8 @@
  */
 package de.hdm.softwarePraktikumGruppe1.shared.bo;
 
+import java.sql.Timestamp;
+
 /**
  * @author GianlucaBernert
  * @author Yesin Soufi
@@ -19,8 +21,25 @@ public class User extends BusinessObject{
 	private int likeAmount;
 	private int commentAmount;
 	private int userID;
+	private Timestamp timestamp;
 	
 	
+	public int getUserID() {
+		return userID;
+	}
+
+	public void setUserID(int userID) {
+		this.userID = userID;
+	}
+
+	public Timestamp getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(Timestamp timestamp) {
+		this.timestamp = timestamp;
+	}
+
 	/**
 	 * Methode die den Nicknamen eines Users zurück gibt
 	 */
@@ -142,6 +161,10 @@ public class User extends BusinessObject{
 
 	
 	
+	/**
+	 * Methode die die Beitrags ID eines vom User verfassten Beitrags zurueck gibt
+	 */
+
 	
 	
 

@@ -3,6 +3,7 @@
  */
 package de.hdm.softwarePraktikumGruppe1.shared.bo;
 
+import java.sql.Timestamp;
 import java.util.*;
 
 /**
@@ -13,14 +14,14 @@ public class Beitrag extends Textbeitrag{
 	
 	private static final long serialVersionUID = 1L;
 	private int beitragID;
-	private User user;
-	private Vector<Like> likes;
-	private int likeAmount;
-	private Kommentar kommentar;
+	private int userFK;
+	private int likeFK;
+	private int pinnwandFK;
+	private int kommentarFK;
 	private int commentAmount;
-	private Pinnwand pinnwand;
-	private Vector<Kommentar> kommentare;
+	private int likeAmount;
 	private String text;
+	private Timestamp timestamp;
 
 	private int beitragID;
   
@@ -32,35 +33,42 @@ public class Beitrag extends Textbeitrag{
 
 	//Getter- und Setter-Methoden
 	
+	public int getLike() {
+		return likeFK;
+	}
+	public void setLike(int likeFK) {
+		this.likeFK = likeFK;
+	}
+	public Timestamp getTimestamp() {
+		return timestamp;
+	}
+	public void setTimestamp(Timestamp timestamp) {
+		this.timestamp = timestamp;
+	}
 	public int getBeitragID() {
 		return beitragID;
 	}
 	public void setBeitragID(int beitragID) {
 		this.beitragID = beitragID;
 	}
-	public User getUser() {
-		return user;
+	public int getUser() {
+		return userFK;
 	}
-	public void setUser(User user) {
-		this.user = user;
+	public void setUser(int userFK) {
+		this.userFK = userFK;
 	}
-	public Like getLike() {
-		return like;
-	}
-	public void setLike(Like like) {
-		this.like = like;
-	}
+	
 	public int getLikeAmount() {
 		return likeAmount;
 	}
 	public void setLikeAmount(int likeAmount) {
 		this.likeAmount = likeAmount;
 	}
-	public Kommentar getKommentar() {
-		return kommentar;
+	public int getKommentar() {
+		return kommentarFK;
 	}
-	public void setKommentar(Kommentar kommentar) {
-		this.kommentar = kommentar;
+	public void setKommentar(int kommentarFK) {
+		this.kommentarFK = kommentarFK;
 	}
 	public int getCommentAmount() {
 		return commentAmount;
@@ -68,12 +76,12 @@ public class Beitrag extends Textbeitrag{
 	public void setCommentAmount(int commentAmount) {
 		this.commentAmount = commentAmount;
 	}
-	public Pinnwand getPinnwand() {
-		return pinnwand;
+	public int getPinnwand() {
+		return pinnwandFK;
 	}
 
-	public void setPinnwand(Pinnwand pinnwand) {
-		this.pinnwand = pinnwand;
+	public void setPinnwand(int pinnwandFK) {
+		this.pinnwandFK = pinnwandFK;
 	}
 	public Vector<Kommentar> getKommentare() {
 		return kommentare;
@@ -122,6 +130,7 @@ public class Beitrag extends Textbeitrag{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	
 }
 
 

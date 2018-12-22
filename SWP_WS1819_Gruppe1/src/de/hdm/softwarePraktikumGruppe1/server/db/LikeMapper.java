@@ -119,6 +119,7 @@ public class LikeMapper {
 	/**
 	 * Methode zum zählen aller Likes eines Beitrags
 	 */
+	// Korrigieren, dass Vector übergeben wird. In der Applikationslogik werden die Likes über Vecor.size() gezählt
 	public int countAllLikesFromBeitrag(Beitrag b) {
 		
 
@@ -152,7 +153,7 @@ public class LikeMapper {
 		return counter;
 				
 	}
-			}
+			//}
 	
 	/**
 	 * Methode zum suchen eines Beitrags anhand der User ID
@@ -208,6 +209,7 @@ public class LikeMapper {
 				
 				if (rs.next()) {
 					return true;
+					
 				}else {
 					return false;
 				}
