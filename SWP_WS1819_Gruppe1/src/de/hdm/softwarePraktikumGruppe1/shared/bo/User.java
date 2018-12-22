@@ -160,11 +160,11 @@ public class User extends BusinessObject{
 	}
 
 	
-
 	
 	/**
 	 * Methode die die Beitrags ID eines vom User verfassten Beitrags zurueck gibt
 	 */
+
 	
 	
 

@@ -3,17 +3,29 @@
  */
 package de.hdm.softwarePraktikumGruppe1.server;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
 
-import de.hdm.softwarePraktikumGruppe1.shared.*;
-import de.hdm.softwarePraktikumGruppe1.shared.bo.*;
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+
+import de.hdm.softwarePraktikumGruppe1.client.service.ReportGenerator.ReportGeneratorService;
+import de.hdm.softwarePraktikumGruppe1.shared.bo.Beitrag;
+import de.hdm.softwarePraktikumGruppe1.shared.bo.Kommentar;
+import de.hdm.softwarePraktikumGruppe1.shared.bo.Like;
+import de.hdm.softwarePraktikumGruppe1.shared.bo.Pinnwand;
+import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
 /**
  * @author GianlucaBernert
  * Klasse die RemoveServerServlet als Superklasse besitzt und das Interface ReportGenerator implementiert
  */
-public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportGenerator{
+public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements ReportGeneratorService{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Methode die die Beitraege eines Users zurück gibt
 	 */

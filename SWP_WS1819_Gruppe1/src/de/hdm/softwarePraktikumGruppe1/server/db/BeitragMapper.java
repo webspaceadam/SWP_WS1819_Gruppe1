@@ -68,7 +68,11 @@ public class BeitragMapper {
 			try {
 				PreparedStatement statement = con.prepareStatement(
 						"INSERT INTO textbeitrag (BeitragID, inhalt, creationTimeStamp) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+<<<<<<< HEAD
+				statement.setInt(1, b.getId());
+=======
 				statement.setInt(1, b.getOwnerId());
+>>>>>>> refs/heads/master
 				statement.setString(2, b.getText());
 				statement.setDate(3, (Date) b.getCreationTimeStamp());
 
