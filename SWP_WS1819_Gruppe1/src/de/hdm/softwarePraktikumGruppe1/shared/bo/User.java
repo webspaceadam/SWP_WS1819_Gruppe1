@@ -6,6 +6,7 @@ package de.hdm.softwarePraktikumGruppe1.shared.bo;
 /**
  * @author GianlucaBernert
  * @author Yesin Soufi
+ * @autor SebastianHermann
  * Klasse eines User Objekts das BusinessObject als Superklasse besitzt
  */
 public class User extends BusinessObject{
@@ -140,10 +141,7 @@ public class User extends BusinessObject{
 		this.userID = userId;
 	}
 
-	
-	/**
-	 * Methode die die Beitrags ID eines vom User verfassten Beitrags zurueck gibt
-	 */
+
 	
 	
 

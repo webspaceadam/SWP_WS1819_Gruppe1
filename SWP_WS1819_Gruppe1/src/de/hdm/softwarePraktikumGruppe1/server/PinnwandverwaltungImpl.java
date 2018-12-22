@@ -1,32 +1,40 @@
-/**
- * 
- */
 package de.hdm.softwarePraktikumGruppe1.server;
 
 import java.sql.Timestamp;
 import java.util.Vector;
 import java.util.Vector;
 
-import de.hdm.softwarePraktikumGruppe1.server.db.*;
-import de.hdm.softwarePraktikumGruppe1.shared.Pinnwandverwaltung;
-import de.hdm.softwarePraktikumGruppe1.shared.bo.*;
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+
+import de.hdm.softwarePraktikumGruppe1.client.service.Pinnwand.PinnwandService;
+import de.hdm.softwarePraktikumGruppe1.server.db.AbonnementMapper;
+import de.hdm.softwarePraktikumGruppe1.server.db.BeitragMapper;
+import de.hdm.softwarePraktikumGruppe1.server.db.KommentarMapper;
+import de.hdm.softwarePraktikumGruppe1.server.db.LikeMapper;
+import de.hdm.softwarePraktikumGruppe1.server.db.PinnwandMapper;
+import de.hdm.softwarePraktikumGruppe1.server.db.UserMapper;
+import de.hdm.softwarePraktikumGruppe1.shared.bo.Abonnement;
+import de.hdm.softwarePraktikumGruppe1.shared.bo.Beitrag;
+import de.hdm.softwarePraktikumGruppe1.shared.bo.Kommentar;
+import de.hdm.softwarePraktikumGruppe1.shared.bo.Like;
+import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
 /**
  * @author SebastianHermann
  * Klasse die das Interface Pinnwandverwaltung Implementiert und das RemoteServiceServlet als Superklasse besitzt
  */
 public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinnwandverwaltung{
-	
-	
+
 	private UserMapper uMapper = null;
 	private PinnwandMapper pMapper = null;
 	private BeitragMapper bMapper = null;
 	private KommentarMapper kMapper = null;
 	private LikeMapper lMapper = null;
 	private AbonnementMapper aMapper = null;
-	
+
 	/**
 	 * Konstruktor der Klasse PinnwandverwaltungIMpl der bei jedem erzeugten Objekt dieser Klasse ausfgerufen wird
+	 * @return 
 	 */
 	public PinnwandverwaltungImpl() throws IllegalArgumentException {
 		
@@ -53,7 +61,7 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	public Vector<User> showAllUser(){
 		return uMapper.findAll();
 	}
-	
+
 	// TESTMETHODE
 	
 	/*
@@ -290,14 +298,4 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	public void deleteLikesOfBeitrag(Beitrag b) {
 		lMapper.deleteAllLikesFromBeitrag(b);
 	}
-	
 }
-
-	
-	
-	
-	
-	
-	
-	
-

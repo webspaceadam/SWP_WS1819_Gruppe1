@@ -22,6 +22,14 @@ public class Beitrag extends Textbeitrag{
 	private Vector<Kommentar> kommentare;
 	private String text;
 
+	private int beitragID;
+  
+	
+
+	// Fremdschlüsselbezeichnungen
+	private int Pinnwand_PinnwandID;
+	private int User_UserID;
+
 	//Getter- und Setter-Methoden
 	
 	public int getBeitragID() {
@@ -79,7 +87,38 @@ public class Beitrag extends Textbeitrag{
 	public void setText(String text) {
 		this.text = text;
 	}
-  
+
+	public int getPinnwand_PinnwandID() {
+		return Pinnwand_PinnwandID;
+	}
+	
+	public void setPinnwand_PinnwandID(int Pinnwand_PinnwandID) {
+		this.Pinnwand_PinnwandID = Pinnwand_PinnwandID;
+	}
+	
+	public int getUser_UserID() {
+		return User_UserID;
+	}
+	
+	public void setUser_UserID(int User_UserID) {
+		this.User_UserID = User_UserID;
+	}
+	
+	public int getBeitragID(Beitrag b) {
+		return beitragID;
+	}
+
+	public void setBeitragID(int beitragID) {
+		beitragID = beitragID;
+	}
+	
+	/**
+	 * Methode um eine textuelle Dastellung der jeweiligen Instanz zu erzeugen
+	 */
+	public String toString() {
+		return super.toString() + " User ID #" + this.getOwnerId();
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
