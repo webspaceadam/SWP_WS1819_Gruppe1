@@ -13,10 +13,12 @@ import de.hdm.softwarePraktikumGruppe1.server.db.KommentarMapper;
 import de.hdm.softwarePraktikumGruppe1.server.db.LikeMapper;
 import de.hdm.softwarePraktikumGruppe1.server.db.PinnwandMapper;
 import de.hdm.softwarePraktikumGruppe1.server.db.UserMapper;
+import de.hdm.softwarePraktikumGruppe1.shared.Pinnwandverwaltung;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Abonnement;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Beitrag;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Kommentar;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Like;
+import de.hdm.softwarePraktikumGruppe1.shared.bo.Pinnwand;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
 /**
@@ -198,7 +200,7 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	/**
 	 * Methode um ein neues Abonnement zu erzeugen
 	 */
-	public void creatAbonnement(User u1, Pinnwand p1) {
+	public void createAbonnement(User u1, Pinnwand p1) {
 		Abonnement a = new Abonnement();
 		a.setOwner(u1);
 		a.setPinnwand(p1);
@@ -297,5 +299,19 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	 */
 	public void deleteLikesOfBeitrag(Beitrag b) {
 		lMapper.deleteAllLikesFromBeitrag(b);
+	}
+	
+	/*
+	 * Methode um eine Pinnwand zu erstellen
+	 */
+	
+	public void createPinnwand(User u, Timestamp timestamp) {
+		if (pMapper.findPinnwandByUser(u)==null) {
+			Pinnwand p = new Pinnwand();
+			p.setId(1);
+			p.setOwner(u);
+			p.setCreationTimeStamp(timestamp);
+			pMapper.insertPinnwand(p);
+		}
 	}
 }
