@@ -314,4 +314,28 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 			pMapper.insertPinnwand(p);
 		}
 	}
+	
+	/*
+	 * Methode um die Pinnwand eines Users zu löschen
+	 */
+	
+//	public void deletePinnwand(Pinnwand p) {
+//		
+//		Vector <Beitrag> beitraege = this.getAllBeitraegeOfPinnwand();
+//		if(beitraege!=null) {
+//			for (Beitrag b : beitraege) {
+//			Vector <Kommentar> kommentare =  b.getKommentare();
+//				if(kommentare!=null) {
+//					for (Kommentar k : kommentare) {
+//						kMapper.deleteKommentar(k);
+//					}
+//				}
+//				bMapper.deleteBeitrag(b);
+//			}
+//		}
+//		pMapper.deletePinnwand(p);
+//		
+//	}
+
+
 }
