@@ -87,7 +87,7 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	}
 	
 	/**
-	 * Methode um einen User zu erzeugen
+	 * Methode um einen User zu erstellen.
 	 */
 	public void createUser(String firstName, String lastName, String nickName, String gMail, Timestamp timestamp ) throws IllegalArgumentException {
 		User u = new User();
@@ -95,13 +95,13 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 		u.setLastName(lastName);
 		u.setNickname(nickName);
 		u.seteMail(gMail);
-		//u.setTimestamp(timestamp);
-		uMapper.insert(u);
+		u.setTimestamp(timestamp);
+		this.uMapper.insert(u);
 	
 	}
 	
 	/**
-	 * Methode um einen User zu Bearbeiten
+	 * Methode um einen User zu speichern
 	 */
 	public void editUser(User u) {
 		uMapper.update(u);
@@ -141,13 +141,13 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 		return uMapper.findByUserID(userId);
 	}
 	
-	/**
-	 * Methode um einen User upzudaten
-	 */
-	public User updateUser(User u) {
-		// ?
-		return null;
-	}
+//	/**
+//	 * Methode um einen User upzudaten (???)
+//	 */
+//	public User updateUser(User u) {
+//		
+//		return null;
+//	}
 	
 	/**
 	 * Methode um einen User anhand seines Nicknamens zu suchen
@@ -163,7 +163,7 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 		Beitrag b = new Beitrag();
 		b.setText(text);
 		b.setUser(user);
-		//b.setTimeStamp(timeStamp);
+		b.setTimeStamp(timeStamp);
 		bMapper.insertBeitrag(b);
 	}
 	
@@ -179,7 +179,20 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	 */
 	public void deleteBeitrag(Beitrag b) {
 		//Alle Likes löschen
+		Vector<Like> likesOfBeitrag = this.lMapper.getLikesOfBeitrag(b.getBeitragID());
+		if (likesOfBeitrag != null) {
+			for (Like l : likesOfBeitrag) {
+				lMapper.deleteLike(l);
+			}
+		}
 		//Alle Kommentare löschen
+		Vector<Kommentar> kommentareOfBeitrag = this.kMapper.getKommentareOfBeitrag(b.getBeitragID());
+		if (kommentareOfBeitrag != null) {
+			for (Kommentar k : kommentareOfBeitrag) {
+				kMapper.deleteKommentar(k);
+			}
+		}
+		bMapper.deleteBeitrag(b);
 		//Beitrag löschen
 	}
 	
@@ -278,20 +291,20 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 		
 	}
 	
-	/**
-	 * Methode um ein Like zu suchen
-	 */
-	public Like searchLike(Like l) {
-		// Nutzen?
-		// Worin besteht der Unterschied zur Methode likeCheck?
-		return null;
-	}
+//	/**
+//	 * Methode um ein Like zu suchen (???)
+//	 */
+//	public Like searchLike(Like l) {
+//		// Nutzen?
+//		// Worin besteht der Unterschied zur Methode likeCheck?
+//		return null;
+//	}
 	
 	/**
 	 * Methode um alle Likes eines Beitrags zu zaehlen
 	 */
 	public int countLikes(Beitrag b) {
-		return lMapper.countAllLikesFromBeitrag(b);
+		return lMapper.getLikesOfBeitrag(b);
 	}
 	
 	/**
