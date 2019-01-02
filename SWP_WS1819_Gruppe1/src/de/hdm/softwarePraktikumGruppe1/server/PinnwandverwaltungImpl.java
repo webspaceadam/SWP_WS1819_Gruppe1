@@ -43,7 +43,7 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	}
 	
 
-	/* Initialisierungsmethode, welche die alle Mapper initialisiert.
+	/* Initialisierungsmethode, welche alle Mapper initialisiert.
 	 * 
 	 */
 	
@@ -94,8 +94,8 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 		u.setFirstName(firstName);
 		u.setLastName(lastName);
 		u.setNickname(nickName);
-		u.seteMail(gMail);
-		u.setTimestamp(timestamp);
+		u.setGMail(gMail);
+		u.setCreationTimeStamp(timestamp);
 		this.uMapper.insert(u);
 	
 	}
@@ -189,8 +189,8 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	public void createBeitrag(String text, User user, Timestamp timeStamp) {
 		Beitrag b = new Beitrag();
 		b.setText(text);
-		b.setUser(user);
-		b.setTimeStamp(timeStamp);
+		b.setOwner(user);
+		b.setCreationTimeStamp(timeStamp);
 		bMapper.insertBeitrag(b);
 	}
 	
@@ -265,7 +265,7 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 		k.setText(text);
 		k.setOwner(user);
 		k.setBeitrag(b);
-		k.setCreationDate(timeStamp);
+		k.setCreationTimeStamp(timeStamp);
 		
 		kMapper.insertKommentar(k);
 	}
