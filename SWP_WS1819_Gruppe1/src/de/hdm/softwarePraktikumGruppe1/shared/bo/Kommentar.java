@@ -5,6 +5,7 @@ package de.hdm.softwarePraktikumGruppe1.shared.bo;
 
 /**
  * @author GianlucaBernert
+ * @author SebastianHermann
  * Klasse eines Kommentar Objekts das Textbeitrag als Superklasse besitzt
  */
 public class Kommentar extends Textbeitrag{
@@ -87,10 +88,16 @@ public class Kommentar extends Textbeitrag{
 		return null;
 	}
 
+	/*
+	 * Methode, die die Id eines Kommentars zurueck gibt
+	 */
 	public int getKommentarId() {
 		return kommentarId;
 	}
 
+	/*
+	 * Methode, die das Setzen eines Kommentars ermöglicht
+	 */
 	public void setKommentarId(int kommentarId) {
 		this.kommentarId = kommentarId;
 	}

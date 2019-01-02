@@ -240,12 +240,12 @@ public class UserMapper {
 	 * L�schen der Daten eines User-Objekts aus der Datenbank.
 	 */
 			
-			public void delete(User user) {
+			public void deleteUser(int userId) {
 				Connection con = DBConnection.connection();
 
 				try {
 					Statement stmt = con.createStatement();
-					stmt.executeUpdate("DELETE FROM User " + "WHERE User_ID=" + user.getId());
+					stmt.executeUpdate("DELETE FROM User " + "WHERE User_ID=" + userId);
           
 				} catch (SQLException e) {
 					e.printStackTrace();

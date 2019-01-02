@@ -195,6 +195,13 @@ public class LikeMapper {
 		
 	}
 	
+	//Methode, die alle Likes eines Beitrags zurückgibt
+	public Vector<Like> getLikesOfBeitrag(int beitragId){
+		Vector<Like> likesOfBeitrag = new Vector<Like>();
+		
+		return likesOfBeitrag;
+	}
+	
 		// Methode, die eine LikeBeziehung zwischen Nutzer und Beitrag prüft
 	
 	public boolean likeCheck(User u, Beitrag b) {

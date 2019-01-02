@@ -13,6 +13,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
  * @author GianlucaBernert, 
  * @author Ulus Serhat
  * @author Yesin Soufi
+ * @author SebastianHermann
  * 
  *
  */
@@ -207,11 +208,45 @@ public class KommentarMapper {
 			
 		 }
 		 
+		 /*
+		  * Methode, die einen Vector mit allen Kommentaren eines Users zurückgibt.
+		  */
+		 public Vector<Kommentar> getKommentareOfUser(int userId){
+			//Aufbau der DBVerbindung
+			Connection con = DBConnection.connection();
+			// Initialisierung eines leeren Vectors welcher Kommentar-Objekte enthalten kann
+			Vector<Kommentar> kommentareOfUser = new Vector<Kommentar>();
+			
+			try {
+				Statement stmt = con.createStatement();
+				
+				ResultSet rs = stmt.executeQuery("SELECT BeitragID, Inhalt, CreationTimeStamp FROM beitrag"
+				+"WHERE = UserId=" +"'"+ userId+ "'" + "ORDER BY BeitragID");
+				
+				while (rs.next()) {
+					Kommentar k = new Kommentar();
+					k.setKommentarId(rs.getInt("BeitragID"));
+					k.setText(rs.getString("Inhalt"));
+					k.setCreationTimestamp(rs.getDate("CreationTimeStamp"));
+					
+					kommentareOfUser.addElement(k);
+				}
+				
+			}catch (SQLException e) {
+	    		e.printStackTrace();
+			}
+
+			return kommentareOfUser;
+		
+			 
+		 }
+		 
 		 
 		 //To be defined: getAllKommentarOfBeitrag
-		 public Vector<Kommentar> getAllKommentarOfBeitrag(Beitrag b){
+		 public Vector<Kommentar> getKommentareOfBeitrag(int beitragId){
+			 Vector<Kommentar> kommentareOfBeitrag = new Vector<Kommentar>();
 			 
-			 return null;
+			 return kommentareOfBeitrag;
 		 }
 
 

@@ -191,7 +191,7 @@ public class BeitragMapper {
 		
 	}
 
-	public Vector <Beitrag> getAllBeitraegeOfPinnwand(int Pinnwand_PinnwandID){
+	public Vector <Beitrag> getBeitraegeOfPinnwand(int Pinnwand_PinnwandID){
 		Connection con = DBConnection.connection();
 		Vector<Beitrag> result = new Vector<Beitrag>();
 		
