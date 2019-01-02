@@ -111,6 +111,9 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	 * Methode um einen User zu Loeschen
 	 */
 	public void deleteUser(User u) {
+		
+		//Delete AbonnementsTo
+		
 		//Alle Likes des Users löschen
 		Vector<Like> likesOfUser = this.lMapper.getLikesOfUser(u.getUserId());
 		if (likesOfUser!=null) {
@@ -126,13 +129,13 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 			}
 		}
 		
-		//Alle Abos der Pinnwand des Users löschen
-		Vector<Abonnement> abonnementsOfPinnwand = this.aMapper.getAbonnementsOfPinnwand(this.pMapper.findPinnwandByUser(u.getUserId()).getPinnwandId());
-		if (abonnementsOfPinnwand!=null) {
-			for(Abonnement a : abonnementsOfPinnwand) {
-				this.aMapper.deleteAbonnement(a);
-			}
-		}
+//		//Alle Abos der Pinnwand des Users löschen
+//		Vector<Abonnement> abonnementsOfPinnwand = this.aMapper.getAbonnementsOfPinnwand(this.pMapper.findPinnwandByUser(u.getUserId()).getPinnwandId());
+//		if (abonnementsOfPinnwand!=null) {
+//			for(Abonnement a : abonnementsOfPinnwand) {
+//				this.aMapper.deleteAbonnement(a);
+//			}
+//		}
 		//Alle Kommentare des Users löschen
 		Vector<Kommentar> kommentareOfUser = this.kMapper.getKommentareOfUser(u.getUserId());
 		if (kommentareOfUser!=null) {
@@ -141,15 +144,16 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 			}
 		}
 		
-		//Alle Beiträge des Users löschen
-		Vector<Beitrag> beitraegeOfUser = bMapper.getBeitraegeOfPinnwand(u.getUserId());
-		if (beitraegeOfUser!=null) {
-			for (Beitrag b : beitraegeOfUser) {
-				deleteBeitrag(b);
-			}
-		}
-		//Pinnwand des Users löschen
-		pMapper.deletePinnwandOfUser(u);
+//		//Alle Beiträge des Users löschen
+//		Vector<Beitrag> beitraegeOfUser = bMapper.getBeitraegeOfPinnwand(u.getUserId());
+//		if (beitraegeOfUser!=null) {
+//			for (Beitrag b : beitraegeOfUser) {
+//				deleteBeitrag(b);
+//			}
+//		}
+		//Delete Pinnwand
+		deletePinnwand(this.pMapper.findPinnwandByUser(u));
+		
 		//User löschen
 		uMapper.deleteUser(u.getUserId());
 	}
@@ -365,20 +369,21 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 		Vector <Abonnement> abonnementsOfPinnwand = this.aMapper.getAbonnementsOfPinnwand(p.getPinnwandId());
 		if(beitraegeOfPinnwand!=null) {
 			for (Beitrag b : beitraegeOfPinnwand) {
-			Vector <Kommentar> kommentare =  this.kMapper.getKommentareOfBeitrag(b.getBeitragId());
-			Vector <Like> likes = this.lMapper.getLikesOfBeitrag(b.getBeitragId());
-			
-				if(kommentare!=null) {
-					for (Kommentar k : kommentare) {
-						kMapper.deleteKommentar(k);
-					}
-				}
-				if(likes!=null) {
-					for(Like l : likes) {
-						lMapper.deleteLike(l);
-					}
-				}
-				bMapper.deleteBeitrag(b);
+//			Vector <Kommentar> kommentare =  this.kMapper.getKommentareOfBeitrag(b.getBeitragId());
+//			Vector <Like> likes = this.lMapper.getLikesOfBeitrag(b.getBeitragId());
+//			
+//				if(kommentare!=null) {
+//					for (Kommentar k : kommentare) {
+//						kMapper.deleteKommentar(k);
+//					}
+//				}
+//				if(likes!=null) {
+//					for(Like l : likes) {
+//						lMapper.deleteLike(l);
+//					}
+//				}
+//				bMapper.deleteBeitrag(b);
+				deleteBeitrag(b);
 			}
 		}
 		if(abonnementsOfPinnwand!=null) {

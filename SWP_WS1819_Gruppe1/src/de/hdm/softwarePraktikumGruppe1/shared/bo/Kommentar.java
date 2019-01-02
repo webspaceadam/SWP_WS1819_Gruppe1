@@ -42,7 +42,7 @@ public class Kommentar extends Textbeitrag{
 	/**
 	 * Methode die den Autor eines Kommentars zurück gibt
 	 */
-	public int getOwner() {
+	public int getOwnerId() {
 		return ownerId;
 	}
 	
