@@ -112,14 +112,14 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	 */
 	public void deleteUser(User u) {
 		//Alle Likes des Users löschen
-		Vector<Like> likesOfUser = this.lMapper.getLikesOfUser(u);
+		Vector<Like> likesOfUser = this.lMapper.getLikesOfUser(u.getUserId());
 		if (likesOfUser!=null) {
 			for(Like l : likesOfUser) {
 				this.lMapper.deleteLike(l);
 			}
 		}
 		//Alle Abonements des Users löschen
-		Vector<Abonnement> abonnementsOfUser = this.aMapper.getAbonnementsOfUser(u);
+		Vector<Abonnement> abonnementsOfUser = this.aMapper.getAbonnementsOfUser(u.getUserId());
 		if (abonnementsOfUser!=null) {
 			for(Abonnement a : abonnementsOfUser) {
 				this.aMapper.deleteAbonnement(a);
@@ -127,7 +127,7 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 		}
 		
 		//Alle Abos der Pinnwand des Users löschen
-		Vector<Abonnement> abonnementsOfPinnwand = this.aMapper.getAbonnementsOfPinnwand(u.getPinnwand());
+		Vector<Abonnement> abonnementsOfPinnwand = this.aMapper.getAbonnementsOfPinnwand(u.getPinnwand().getPinnwandId());
 		if (abonnementsOfPinnwand!=null) {
 			for(Abonnement a : abonnementsOfPinnwand) {
 				this.aMapper.deleteAbonnement(a);

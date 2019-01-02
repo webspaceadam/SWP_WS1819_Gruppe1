@@ -87,7 +87,7 @@ public class LikeMapper {
 	/**
 	 * Methode zum suchen eines Beitrags anhand der User ID
 	 */
-	public Vector<Like> getLikeByUserId(int userID){
+	public Vector<Like> getLikesOfUser(int userID){
 		
 	
 		Connection con = DBConnection.connection();
