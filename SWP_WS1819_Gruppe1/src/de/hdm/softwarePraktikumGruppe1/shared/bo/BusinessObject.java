@@ -5,6 +5,7 @@ package de.hdm.softwarePraktikumGruppe1.shared.bo;
 
 import java.io.Serializable;
 import java.util.*;
+import java.sql.Timestamp;
 
 /**
  * @author GianlucaBernert
@@ -14,7 +15,8 @@ public abstract class BusinessObject implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	private int id = 0;
-	private Date creationTimeStamp;
+	private Timestamp creationTimeStamp;
+	
 	
 	/**
 	 * Methode um die ID des BusinessObjects zurueck zu bekommen
@@ -33,15 +35,15 @@ public abstract class BusinessObject implements Serializable{
 	/**
 	 * Methode um den Erstellungszeitpunkt des BusinessObject zurueck zu bekommen
 	 */
-	public Date getCreationTimeStamp() {
+	public Timestamp getCreationTimeStamp() {
 		return creationTimeStamp;
 	}
 	
 	/**
 	 * Methode um den Erstellungszeitpunkt des BusinessIbjects zu setzen
 	 */
-	public void setCreationTimeStamp(Date creationTimeStamp) {
-		this.creationTimeStamp = creationTimeStamp;
+	public void setCreationTimeStamp(Timestamp erstellZeitpunkt) {
+		this.creationTimeStamp = new Timestamp(System.currentTimeMillis());
 	}
 	
 	/**

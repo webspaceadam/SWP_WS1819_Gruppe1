@@ -9,10 +9,20 @@ import java.util.Vector;
  * @author GianlucaBernert
  * Klasse eines Pinnwand Objekts das BusinessObject als SuperKlasse besitzt
  */
-public class Pinnwand extends BusinessObject{
+public class Pinnwand extends BusinessObject {
 	
 	private static final long serialVersionUID = 1L;
 	private User owner;
+	
+	/**
+	 * Der Konstruktor nimmt einen Parameter des Typs User entgegen, um ihn so als <em>owner</em>
+	 * der Klasse zu setzen. 
+	 * 
+	 * @param owner
+	 */
+	public Pinnwand(User owner) {
+		this.owner = owner;
+	}
 
 	private Vector<Beitrag> alleBeitraege;
 	private Vector<Abonnement> alleAbonnements;

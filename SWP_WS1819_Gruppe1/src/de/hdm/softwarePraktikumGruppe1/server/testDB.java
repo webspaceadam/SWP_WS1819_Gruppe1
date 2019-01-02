@@ -1,24 +1,15 @@
 package de.hdm.softwarePraktikumGruppe1.server;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 
-import de.hdm.softwarePraktikumGruppe1.server.db.DBConnection;
-import de.hdm.softwarePraktikumGruppe1.server.db.UserMapper;
-import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
 public class testDB {
-
-	private static UserMapper uMapper;
 
 	public static void main(String[] args) {
 		
 		PinnwandverwaltungImpl impl = new  PinnwandverwaltungImpl();
 		impl.init();
 		
-		impl.createSingleUserTestMethod("Adam", "Gniady", "adam2");
+		impl.createSingleUserTestMethod("New", "User", "testUser");
 	}
 
 }
