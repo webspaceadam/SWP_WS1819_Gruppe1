@@ -25,6 +25,13 @@ public class Abonnement {
 		this.pinnwand = pinnwand;
 	}
 	
+	/*
+	 * Leerer Konstruktor. Die Zuweisung der Attribute wird über die Setter-Methoden realisiert.
+	 */
+	public Abonnement() {
+		
+	}
+	
 	/**
 	 * Methode die den Besitzer des Abonnements zurueck gibt
 	 */

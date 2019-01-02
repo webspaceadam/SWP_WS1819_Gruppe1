@@ -23,6 +23,13 @@ public class Pinnwand extends BusinessObject {
 	public Pinnwand(User owner) {
 		this.owner = owner;
 	}
+	
+	/*
+	 * Leerer Konstruktor. Die Zuweisung der Attribute wird über die Setter-Methoden realisiert.
+	 */
+	public Pinnwand() {
+		
+	}
 
 	private Vector<Beitrag> alleBeitraege;
 	private Vector<Abonnement> alleAbonnements;

@@ -36,6 +36,14 @@ public class User extends BusinessObject{
 		this.gMail = gMail;
 	}
 	
+	/*
+	 * Leerer Konstruktor. Die Zuweisung der Attribute wird über die Setter-Methoden realisiert.
+	 */
+	
+	public User() {
+		
+	}
+	
 	/**
 	 * Methode die den Nicknamen eines Users zurück gibt
 	 */

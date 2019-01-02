@@ -25,6 +25,13 @@ public class Like extends BusinessObject{
 		this.owner = owner;
 	}
 	
+	/*
+	 * Leerer Konstruktor. Die Zuweisung der Attribute wird über die Setter-Methoden realisiert.
+	 */
+	public Like(){
+		
+	}
+	
 	public Beitrag getBeitrag() {
 		return beitrag;
 	}

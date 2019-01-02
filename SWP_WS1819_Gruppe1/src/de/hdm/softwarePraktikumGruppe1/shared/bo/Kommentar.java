@@ -30,6 +30,13 @@ public class Kommentar extends Textbeitrag{
 		this.inhalt = inhalt;
 	}
 	
+	/*
+	 * Leerer Konstruktor. Die Zuweisung der Attribute wird über die Setter-Methoden realisiert.
+	 */
+	public Kommentar() {
+		
+	}
+	
 	/**
 	 * Methode die den Autor eines Kommentars zurück gibt
 	 */
