@@ -106,9 +106,9 @@ public Abonnement findById(int AbonnementID) {
 						stmt = con.createStatement();
 						
 						stmt.executeUpdate("INSERT INTO user (AbonnementID, Pinnwand_PinnwandID, User_UserID) " + "VALUES (" + 
-								"'" + a.getOwnerId() + "'," + 
-								"'" + a.getPinnwand_PinnwandID() + "'," + 
-								"'" + a.getUser_UserID() + "'");
+								"'" + a.getAbonnementId() + "'," + 
+								"'" + a.getPinnwandId() + "'," + 
+								"'" + a.getOwnerId() + "'");
 						
 								
 					
@@ -121,13 +121,14 @@ public Abonnement findById(int AbonnementID) {
 				
 			}
 			
+			//?????????
 			public Abonnement update(Abonnement a) {
 				Connection con = DBConnection.connection();
 
 				try {
 					Statement stmt = con.createStatement();
 
-					stmt.executeUpdate("UPDATE User " + "SET AbonnementID=\"" + a.getOwnerId()  + "WHERE id=" + a.getOwnerId());
+					stmt.executeUpdate("UPDATE User " + "SET AbonnementID=\"" + a.getAbonnementId()  + "WHERE id=" + a.getOwnerId());
 
 				} catch (SQLException e) {
 					e.printStackTrace();
@@ -137,19 +138,19 @@ public Abonnement findById(int AbonnementID) {
 				return a; 
 			}
 			
-			public void delete(Abonnement a) {
+			public void deleteAbonnement(Abonnement a) {
 				Connection con = DBConnection.connection();
 
 				try {
 					Statement stmt = con.createStatement();
 
-					stmt.executeUpdate("DELETE FROM Abonnement " + "WHERE AbonnementID=" + a.getOwnerId());
+					stmt.executeUpdate("DELETE FROM Abonnement " + "WHERE AbonnementID=" + a.getAbonnementId());
 				} catch (SQLException e) {
 					e.printStackTrace();
 					} 
 				}
 			
-			public Vector<Abonnement> getAllAbonnementByUser(User u){
+			public Vector<Abonnement> getAbonnementsOfUser(int userId){
 				
 				Connection con= DBConnection.connection();
 				Vector <Abonnement> result = new Vector <Abonnement>();
@@ -157,15 +158,15 @@ public Abonnement findById(int AbonnementID) {
 			try {
 				
 				Statement stmt = con.createStatement();
-				ResultSet rs = stmt.executeQuery("SELECT (AbonnementID, Pinnwand_PinnwandID, User_UserID) FROM abonnement" + "WHERE User_UserID" + u.getUserId(u));
+				ResultSet rs = stmt.executeQuery("SELECT (AbonnementID, Pinnwand_PinnwandID, User_UserID) FROM abonnement" + "WHERE User_UserID=" + userId);
 						
 						while(rs.next()) {
 							
 							Abonnement a = new Abonnement();
 							
-							a.setOwnerId(rs.getInt("AbonnementID"));
-							a.setPinnwand_PinnwandID(rs.getInt("Pinnwand_PinnwandID"));
-							a.setUser_UserID(rs.getInt("User_UserID"));
+							a.setAbonnementId(rs.getInt("AbonnementID"));
+							a.setPinnwandId(rs.getInt("Pinnwand_PinnwandID"));
+							a.setOwnerId(rs.getInt("User_UserID"));
 							result.addElement(a);
 						}
 						
@@ -179,7 +180,7 @@ public Abonnement findById(int AbonnementID) {
 			
 			}
 			
-			public Vector<Abonnement> getAllAbonnementsByPinnwand(Pinnwand p){
+			public Vector<Abonnement> getAbonnementsOfPinnwand(int pinnwandId){
 				
 				Connection con= DBConnection.connection();
 				Vector <Abonnement> result = new Vector <Abonnement>();
@@ -187,15 +188,14 @@ public Abonnement findById(int AbonnementID) {
 			try {
 				
 				Statement stmt = con.createStatement();
-				ResultSet rs = stmt.executeQuery("SELECT (PinnwandID, Pinnwand_PinnwandID, User_UserID) FROM pinnwand" + "WHERE Pinnwand_PinnwandID" + p.getOwnerId());
+				ResultSet rs = stmt.executeQuery("SELECT (PinnwandID, Pinnwand_PinnwandID, User_UserID) FROM pinnwand" + "WHERE Pinnwand_PinnwandID=" + pinnwandId);
 						
 						while(rs.next()) {
 							
 							Abonnement a = new Abonnement();
 							
-							a.setOwnerId(rs.getInt("PinnwandID"));
-							a.setPinnwand_PinnwandID(rs.getInt("Pinnwand_PinnwandID"));
-							a.setUser_UserID(rs.getInt("User_UserID"));
+							a.setPinnwandId(rs.getInt("PinnwandID"));
+							a.setOwnerId(rs.getInt("User_UserID"));
 							result.addElement(a);
 						}
 						
@@ -207,14 +207,6 @@ public Abonnement findById(int AbonnementID) {
 			
 }
 
-			public void deleteAllAbonnementsOfUser(User u) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			public void deleteAllAbosOfPinnwand(User u) {
-				// TODO Auto-generated method stub
-				
-			}		
+			
 				
 }

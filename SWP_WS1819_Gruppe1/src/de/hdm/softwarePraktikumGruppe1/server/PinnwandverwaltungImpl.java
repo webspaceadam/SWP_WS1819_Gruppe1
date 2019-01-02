@@ -43,7 +43,7 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	}
 	
 
-	/* Initialisierungsmethode, welche die alle Mapper initialisiert.
+	/* Initialisierungsmethode, welche alle Mapper initialisiert.
 	 * 
 	 */
 	
@@ -94,8 +94,8 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 		u.setFirstName(firstName);
 		u.setLastName(lastName);
 		u.setNickname(nickName);
-		u.seteMail(gMail);
-		u.setTimestamp(timestamp);
+		u.setGMail(gMail);
+		u.setCreationTimeStamp(timestamp);
 		this.uMapper.insert(u);
 	
 	}
@@ -112,14 +112,14 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	 */
 	public void deleteUser(User u) {
 		//Alle Likes des Users löschen
-		Vector<Like> likesOfUser = this.lMapper.getLikesOfUser(u);
+		Vector<Like> likesOfUser = this.lMapper.getLikesOfUser(u.getUserId());
 		if (likesOfUser!=null) {
 			for(Like l : likesOfUser) {
 				this.lMapper.deleteLike(l);
 			}
 		}
 		//Alle Abonements des Users löschen
-		Vector<Abonnement> abonnementsOfUser = this.aMapper.getAbonnementsOfUser(u);
+		Vector<Abonnement> abonnementsOfUser = this.aMapper.getAbonnementsOfUser(u.getUserId());
 		if (abonnementsOfUser!=null) {
 			for(Abonnement a : abonnementsOfUser) {
 				this.aMapper.deleteAbonnement(a);
@@ -127,7 +127,7 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 		}
 		
 		//Alle Abos der Pinnwand des Users löschen
-		Vector<Abonnement> abonnementsOfPinnwand = this.aMapper.getAbonnementsOfPinnwand(u.getPinnwand());
+		Vector<Abonnement> abonnementsOfPinnwand = this.aMapper.getAbonnementsOfPinnwand(u.getPinnwand().getPinnwandId());
 		if (abonnementsOfPinnwand!=null) {
 			for(Abonnement a : abonnementsOfPinnwand) {
 				this.aMapper.deleteAbonnement(a);
@@ -189,8 +189,8 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	public void createBeitrag(String text, User user, Timestamp timeStamp) {
 		Beitrag b = new Beitrag();
 		b.setText(text);
-		b.setUser(user);
-		b.setTimeStamp(timeStamp);
+		b.setOwner(user);
+		b.setCreationTimeStamp(timeStamp);
 		bMapper.insertBeitrag(b);
 	}
 	
@@ -265,7 +265,7 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 		k.setText(text);
 		k.setOwner(user);
 		k.setBeitrag(b);
-		k.setCreationDate(timeStamp);
+		k.setCreationTimeStamp(timeStamp);
 		
 		kMapper.insertKommentar(k);
 	}

@@ -41,6 +41,13 @@ public class Beitrag extends Textbeitrag{
 		this.pinnwand = pinnwand;
 		this.inhalt = inhalt;
 	}
+	
+	/*
+	 * Leerer Konstruktor. Die Zuweisung der Attribute wird über die Setter-Methoden realisiert.
+	 */
+	public Beitrag() {
+		
+	}
 
 	//Getter- und Setter-Methoden
 	public User getOwner() {

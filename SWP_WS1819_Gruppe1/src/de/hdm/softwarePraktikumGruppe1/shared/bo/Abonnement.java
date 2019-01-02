@@ -10,8 +10,9 @@ package de.hdm.softwarePraktikumGruppe1.shared.bo;
 public class Abonnement {
 	
 	private static final long serialVersionUID = 1L;
-	private User owner;
-	private Pinnwand pinnwand;
+	private int abonnementId;
+	private int ownerId;
+	private int pinnwandId;
 
 	/**
 	 * Der Konstruktor nimmt zwei Parameter entgegen. Zum einen den Owner des
@@ -20,37 +21,58 @@ public class Abonnement {
 	 * @param owner
 	 * @param pinnwand
 	 */
-	public Abonnement(User owner, Pinnwand pinnwand) {
-		this.owner = owner;
-		this.pinnwand = pinnwand;
+	public Abonnement(int ownerId, int pinnwandId) {
+		this.ownerId = ownerId;
+		this.pinnwandId = pinnwandId;
+	}
+	
+	/*
+	 * Leerer Konstruktor. Die Zuweisung der Attribute wird über die Setter-Methoden realisiert.
+	 */
+	public Abonnement() {
+		
+	}
+	
+	/*
+	 * Methode, die die AbonnementId zurueck gibt
+	 */
+	public int getAbonnementId() {
+		return abonnementId;
+	}
+
+	/*
+	 * Methode, die das Setzen einer vorläufigen Id ermöglicht
+	 */
+	public void setAbonnementId(int abonnementId) {
+		this.abonnementId = abonnementId;
 	}
 	
 	/**
 	 * Methode die den Besitzer des Abonnements zurueck gibt
 	 */
-	public User getOwner() {
-		return owner;
+	public int getOwnerId() {
+		return ownerId;
 	}
 	
 	/**
 	 * Methode doe den Besitzer des Abonnements setzt
 	 */
-	public void setOwner(User owner) {
-		this.owner = owner;
+	public void setOwnerId(int ownerId) {
+		this.ownerId = ownerId;
 	}
 	
 	/**
 	 * Methode die die abonnierte Pinnwand zurueck gibt
 	 */
-	public Pinnwand getPinnwand() {
-		return pinnwand;
+	public int getPinnwandId() {
+		return pinnwandId;
 	}
 	
 	/**
 	 * Methode die die zu abonierende Pinnwand setzt
 	 */
-	public void setPinnwand(Pinnwand pinnwand) {
-		this.pinnwand = pinnwand;
+	public void setPinnwandId(int pinnwandId) {
+		this.pinnwandId = pinnwandId;
 	}
 	
 	/*
