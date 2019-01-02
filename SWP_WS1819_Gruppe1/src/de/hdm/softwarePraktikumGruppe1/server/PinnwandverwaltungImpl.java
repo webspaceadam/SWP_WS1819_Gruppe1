@@ -27,6 +27,10 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
  */
 public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinnwandverwaltung{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private UserMapper uMapper = null;
 	private PinnwandMapper pMapper = null;
 	private BeitragMapper bMapper = null;
@@ -350,7 +354,7 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	 */
 	
 	public void createPinnwand(User u, Timestamp timestamp) {
-		if (pMapper.findPinnwandByUser(u)==null) {
+		if (this.pMapper.findPinnwandByUser(u)==null) {
 			Pinnwand p = new Pinnwand();
 			p.setId(1);
 			p.setOwnerId(u.getUserId());
@@ -393,6 +397,34 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 		}
 		this.pMapper.deletePinnwand(p);
 		
+	}
+
+
+	@Override
+	public User updateUser(User u) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public void createKommentar(String text, User user, Beitrag b, Timestamp timeStamp) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public Vector<Kommentar> findAllKommentare(Beitrag b) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Like searchLike(Like l) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

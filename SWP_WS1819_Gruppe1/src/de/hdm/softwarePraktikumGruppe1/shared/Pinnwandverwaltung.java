@@ -5,6 +5,9 @@ package de.hdm.softwarePraktikumGruppe1.shared;
 
 import java.sql.Timestamp;
 import java.util.Vector;
+
+import com.google.gwt.user.client.rpc.RemoteService;
+
 import java.util.Vector;
 
 import de.hdm.softwarePraktikumGruppe1.server.db.AbonnementMapper;
@@ -17,6 +20,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.Abonnement;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Beitrag;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Kommentar;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Like;
+import de.hdm.softwarePraktikumGruppe1.shared.bo.Pinnwand;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
 /**
@@ -91,7 +95,7 @@ public interface Pinnwandverwaltung extends RemoteService {
 	/**
 	 * Methode um ein neues Abonnement zu erzeugen
 	 */
-	public void createAbonnement(User u1, User u2);
+	public void createAbonnement(User u, Pinnwand p);
 	
 	/**
 	 * Methode um ein bestehendes Abonnement zu Loeschen
@@ -101,7 +105,7 @@ public interface Pinnwandverwaltung extends RemoteService {
 	/**
 	 * Methode um einen neues Kommentar zu erzeugen
 	 */
-	public void createKommentar(String text, User user, Timestamp timeStamp);
+	public void createKommentar(String text, User user, Beitrag b, Timestamp timeStamp);
 	
 	/**
 	 * Methode zum Loeschen eines Kommentars
