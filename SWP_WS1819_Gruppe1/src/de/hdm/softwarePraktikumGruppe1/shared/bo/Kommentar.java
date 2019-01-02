@@ -10,6 +10,7 @@ package de.hdm.softwarePraktikumGruppe1.shared.bo;
 public class Kommentar extends Textbeitrag{
 	
 	private static final long serialVersionUID = 1L;
+	private int kommentarId;
 	private int ownerId;
 	private int beitragId;
 	private String inhalt;
@@ -84,6 +85,14 @@ public class Kommentar extends Textbeitrag{
 	 */
 	public String toString() {
 		return null;
+	}
+
+	public int getKommentarId() {
+		return kommentarId;
+	}
+
+	public void setKommentarId(int kommentarId) {
+		this.kommentarId = kommentarId;
 	}
 
 }
