@@ -10,8 +10,8 @@ package de.hdm.softwarePraktikumGruppe1.shared.bo;
 public class Kommentar extends Textbeitrag{
 	
 	private static final long serialVersionUID = 1L;
-	private User owner;
-	private Beitrag beitrag;
+	private int ownerId;
+	private int beitragId;
 	private String inhalt;
 	
 	/**
@@ -40,29 +40,29 @@ public class Kommentar extends Textbeitrag{
 	/**
 	 * Methode die den Autor eines Kommentars zurück gibt
 	 */
-	public User getOwner() {
-		return owner;
+	public int getOwner() {
+		return ownerId;
 	}
 	
 	/**
 	 * MEthode die den Autor eines Kommentars setzt
 	 */
-	public void setOwner(User owner) {
-		this.owner = owner;
+	public void setOwnerId(int ownerId) {
+		this.ownerId = ownerId;
 	}
 	
 	/**
 	 * Methode die den kommentierten Beitrag zurück gitb 
 	 */
-	public Beitrag getBeitrag() {
-		return beitrag;
+	public int getBeitragId() {
+		return beitragId;
 	}
 	
 	/**
 	 * Methode die den kommentierten Beitrag sertzt
 	 */
-	public void setBeitrag(Beitrag beitrag) {
-		this.beitrag = beitrag;
+	public void setBeitragId(int beitragId) {
+		this.beitragId = beitragId;
 	}
 	
 	/**
