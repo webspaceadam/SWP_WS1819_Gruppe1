@@ -10,38 +10,24 @@ package de.hdm.softwarePraktikumGruppe1.shared.bo;
 public class Kommentar extends Textbeitrag{
 	
 	private static final long serialVersionUID = 1L;
-	private int ownerId;
-	private int beitragId;
 	private User owner;
 	private Beitrag beitrag;
-	private String text;
+	private String inhalt;
 	
 	/**
-	 * Methode die die ID des Autors eines Kommentars zurück gibt
+	 * Der Konstruktor nimmt drei Parameter entgegen. Einen vom Typ User um so die 
+	 * Verbindung zum dazugehörigen User zu setzen. Einen Parameter des Typs Beitrag um so den dazugehörigen
+	 * Beitrag zu setzen. Als letzten Parameter nimmt der Konstruktor einen String entgegen der den Inhalt
+	 * des Kommentars darstellt. 
+	 * 
+	 * @param owner
+	 * @param beitrag
+	 * @param inhalt
 	 */
-	public int getOwnerId() {
-		return ownerId;
-	}
-	
-	/**
-	 * Methode die die ID des Autors eines Kommentars setzt
-	 */
-	public void setOwnerId(int ownerId) {
-		this.ownerId = ownerId;
-	}
-	
-	/**
-	 * Methode die die ID des kommentierten Beitrags zurück gibt
-	 */
-	public int getBeitragId() {
-		return beitragId;
-	}
-	
-	/**
-	 * Methode die die ID des kommentierten Beitrags setzt
-	 */
-	public void setBeitragId(int beitragId) {
-		this.beitragId = beitragId;
+	public Kommentar(User owner, Beitrag beitrag, String inhalt) {
+		this.owner = owner;
+		this.beitrag = beitrag;
+		this.inhalt = inhalt;
 	}
 	
 	/**
@@ -76,14 +62,14 @@ public class Kommentar extends Textbeitrag{
 	 * Methode die den Text eines Kommentars zurück gibt
 	 */
 	public String getText() {
-		return text;
+		return inhalt;
 	}
 	
 	/**
 	 * Methode die den Text eines Kommentars setzt
 	 */
-	public void setText(String text) {
-		this.text = text;
+	public void setText(String inhalt) {
+		this.inhalt = inhalt;
 	}
 	
 	/**

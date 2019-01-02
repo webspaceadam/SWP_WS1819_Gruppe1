@@ -11,8 +11,19 @@ public class Like extends BusinessObject{
 	
 	private static final long serialVersionUID = 1L;
 	private Beitrag beitrag;
-	private int ownerId;
 	private User owner;
+	
+	/**
+	 * Der Konstruktor nimmt zwei Parameter entgegen. Einen vom Typ Beitrag um so die 
+	 * Verbindung zum dazugehörigen Beitrag zu setzen. Und einen weiteren Parameter des Typs
+	 * User um so den Besitzer des Likes zu identifizieren. 
+	 * @param beitrag
+	 * @param owner
+	 */
+	public Like(Beitrag beitrag, User owner) {
+		this.beitrag = beitrag;
+		this.owner = owner;
+	}
 	
 	public Beitrag getBeitrag() {
 		return beitrag;
@@ -20,12 +31,7 @@ public class Like extends BusinessObject{
 	public void setBeitrag(Beitrag beitrag) {
 		this.beitrag = beitrag;
 	}
-	public int getOwnerId() {
-		return ownerId;
-	}
-	public void setOwnerId(int ownerId) {
-		this.ownerId = ownerId;
-	}
+
 	public User getOwner() {
 		return owner;
 	}

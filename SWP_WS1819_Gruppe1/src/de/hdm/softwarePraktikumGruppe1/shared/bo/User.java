@@ -12,15 +12,29 @@ package de.hdm.softwarePraktikumGruppe1.shared.bo;
 public class User extends BusinessObject{
 	
 	private static final long serialVersionUID = 1L;
-	private static String nickname;
+	private String nickname;
 	private String firstName;
 	private String lastName;
-	private String password;
-	private String eMail;
+	private String gMail;
 	private int likeAmount;
 	private int commentAmount;
 	private int userID;
 	
+	/**
+	 * Der Konstruktor nimmt vier String Parameter entgegen um so die vollständige instanzierung 
+	 * eines User-Objekts zu ermöglichen. 
+	 * 
+	 * @param nickname
+	 * @param first
+	 * @param last
+	 * @param gMail
+	 */
+	public User(String nickname, String first, String last, String gMail) {
+		this.nickname = nickname;
+		this.firstName = first;
+		this.lastName = last;
+		this.gMail = gMail;
+	}
 	
 	/**
 	 * Methode die den Nicknamen eines Users zurück gibt
@@ -65,31 +79,17 @@ public class User extends BusinessObject{
 	}
 	
 	/**
-	 * Methode die das Passwort eines Users zurück gibt
-	 */
-	public String getPassword() {
-		return password;
-	}
-	
-	/**
-	 * Methode die das Passwort eines Users setzt
-	 */
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	
-	/**
 	 * Methode die die E-Mail eines Users zurück gibt
 	 */
-	public String geteMail() {
-		return eMail;
+	public String getGMail() {
+		return gMail;
 	}
 	
 	/**
 	 * Methode die die E-Mail eines Users setzt
 	 */
-	public void seteMail(String eMail) {
-		this.eMail = eMail;
+	public void setGMail(String gMail) {
+		this.gMail = gMail;
 	}
 	
 	/**

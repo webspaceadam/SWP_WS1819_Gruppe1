@@ -6,68 +6,65 @@ package de.hdm.softwarePraktikumGruppe1.shared.bo;
 import java.util.*;
 
 /**
- * @author GianlucaBernert
+ * @author SebastianHermann, GianlucaBernert, AdamGniady
  * Klasse eines Beitrag Objekts das Textbeitrag als Superklasse besitzt
  */
 public class Beitrag extends Textbeitrag{
 	
 	private static final long serialVersionUID = 1L;
-	private int beitragID;
-	private User user;
-	private Vector<Like> likes;
-	private int likeAmount;
-	private Kommentar kommentar;
-	private int commentAmount;
-	private Pinnwand pinnwand;
-	private Vector<Kommentar> kommentare;
-	private String text;
-
-	private int beitragID;
-  
 	
+	// Eigenschaften der Klasse
+	private User owner;
+	private Pinnwand pinnwand;
+	private String inhalt;
+	
+	
+	// Applikationslogikseitig erstellte Eigenschaften der Klasse
+	private Vector<Kommentar> kommentare;
+	private Vector<Like> likes;
+	
+	private int likeAmount;
+	private int commentAmount;
 
-	// Fremdschlüsselbezeichnungen
-	private int Pinnwand_PinnwandID;
-	private int User_UserID;
+	/**
+	 * Der Konstruktor nimmt drei Parameter entgegen. Einen vom Typ User um so die 
+	 * Verbindung zum dazugehörigen User zu setzen. Einen Parameter des Typs Pinnwand um so die dazugehörige
+	 * Pinnwand zu setzen. Als letzten Parameter nimmt der Konstruktor einen String entgegen der den Inhalt
+	 * des Beitrags darstellt. 
+	 * 
+	 * @param owner
+	 * @param pinnwand
+	 * @param inhalt
+	 */
+	public Beitrag(User owner, Pinnwand pinnwand, String inhalt) {
+		this.owner = owner;
+		this.pinnwand = pinnwand;
+		this.inhalt = inhalt;
+	}
 
 	//Getter- und Setter-Methoden
-	
-	public int getBeitragID() {
-		return beitragID;
+	public User getOwner() {
+		return owner;
 	}
-	public void setBeitragID(int beitragID) {
-		this.beitragID = beitragID;
+	public void setOwner(User user) {
+		this.owner = user;
 	}
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
-	}
-	public Like getLike() {
-		return like;
-	}
-	public void setLike(Like like) {
-		this.like = like;
-	}
+
 	public int getLikeAmount() {
 		return likeAmount;
 	}
+	
 	public void setLikeAmount(int likeAmount) {
 		this.likeAmount = likeAmount;
 	}
-	public Kommentar getKommentar() {
-		return kommentar;
-	}
-	public void setKommentar(Kommentar kommentar) {
-		this.kommentar = kommentar;
-	}
+	
 	public int getCommentAmount() {
 		return commentAmount;
 	}
 	public void setCommentAmount(int commentAmount) {
 		this.commentAmount = commentAmount;
 	}
+	
 	public Pinnwand getPinnwand() {
 		return pinnwand;
 	}
@@ -81,31 +78,11 @@ public class Beitrag extends Textbeitrag{
 	public void setKommentare(Vector<Kommentar> kommentare) {
 		this.kommentare = kommentare;
 	}
-	public String getText() {
-		return text;
+	public String getInhalt() {
+		return inhalt;
 	}
-	public void setText(String text) {
-		this.text = text;
-	}
-
-	public int getPinnwand_PinnwandID() {
-		return Pinnwand_PinnwandID;
-	}
-	
-	public void setPinnwand_PinnwandID(int Pinnwand_PinnwandID) {
-		this.Pinnwand_PinnwandID = Pinnwand_PinnwandID;
-	}
-	
-	public int getUser_UserID() {
-		return User_UserID;
-	}
-	
-	public void setUser_UserID(int User_UserID) {
-		this.User_UserID = User_UserID;
-	}
-	
-	public int getBeitragID(Beitrag b) {
-		return beitragID;
+	public void setText(String inhalt) {
+		this.inhalt = inhalt;
 	}
 
 	public void setBeitragID(int beitragID) {
@@ -116,7 +93,7 @@ public class Beitrag extends Textbeitrag{
 	 * Methode um eine textuelle Dastellung der jeweiligen Instanz zu erzeugen
 	 */
 	public String toString() {
-		return super.toString() + " User ID #" + this.getOwnerId();
+		return super.toString() + " User ID #" + this.owner.getId();
 	}
 
 	public static long getSerialversionuid() {
