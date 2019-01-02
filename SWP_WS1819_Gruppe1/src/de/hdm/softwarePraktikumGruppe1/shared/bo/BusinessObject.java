@@ -5,6 +5,7 @@ package de.hdm.softwarePraktikumGruppe1.shared.bo;
 
 import java.io.Serializable;
 import java.util.*;
+import java.sql.Date;
 import java.sql.Timestamp;
 
 /**
@@ -42,7 +43,7 @@ public abstract class BusinessObject implements Serializable{
 	/**
 	 * Methode um den Erstellungszeitpunkt des BusinessIbjects zu setzen
 	 */
-	public void setCreationTimeStamp(Timestamp erstellZeitpunkt) {
+	public void setCreationTimeStamp(Timestamp timestamp) {
 		this.creationTimeStamp = new Timestamp(System.currentTimeMillis());
 	}
 	

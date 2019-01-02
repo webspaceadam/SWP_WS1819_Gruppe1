@@ -104,7 +104,7 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	 * Methode um einen User zu speichern
 	 */
 	public void editUser(User u) {
-		uMapper.update(u);
+		this.uMapper.update(u);
 	}
 	
 	/**
@@ -155,7 +155,7 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 		deletePinnwand(this.pMapper.findPinnwandByUser(u));
 		
 		//User löschen
-		uMapper.deleteUser(u.getUserId());
+		this.uMapper.deleteUser(u.getUserId());
 	}
 	
 	/**
@@ -169,7 +169,7 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	 * Methode um einen User anhand seiner ID zu suchen
 	 */
 	public User searchUserById(int userId) {
-		return uMapper.findByUserID(userId);
+		return this.uMapper.findByUserID(userId);
 	}
 	
 //	/**
@@ -190,19 +190,19 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	/**
 	 * Methode um einen Beitrag zu erzeugen
 	 */
-	public void createBeitrag(String text, int userId, Timestamp timeStamp) {
+	public void createBeitrag(String text, User u, Timestamp timeStamp) {
 		Beitrag b = new Beitrag();
 		b.setText(text);
-		b.setOwnerId(userId);
+		b.setOwnerId(u.getUserId());
 		b.setCreationTimeStamp(timeStamp);
-		bMapper.insertBeitrag(b);
+		this.bMapper.insertBeitrag(b);
 	}
 	
 	/**
 	 * Methode um alle Beiträge eines Users auszugeben
 	 */
 	public Vector<Beitrag> findAllBeitraegeOfUser(User u){
-		return bMapper.getAllBeitraege();
+		return this.bMapper.getAllBeitraege();
 	}
 	
 	/**
@@ -213,14 +213,14 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 		Vector<Like> likesOfBeitrag = this.lMapper.getLikesOfBeitrag(b.getBeitragId());
 		if (likesOfBeitrag != null) {
 			for (Like l : likesOfBeitrag) {
-				lMapper.deleteLike(l);
+				this.lMapper.deleteLike(l);
 			}
 		}
 		//Alle Kommentare löschen
 		Vector<Kommentar> kommentareOfBeitrag = this.kMapper.getKommentareOfBeitrag(b.getBeitragId());
 		if (kommentareOfBeitrag != null) {
 			for (Kommentar k : kommentareOfBeitrag) {
-				kMapper.deleteKommentar(k);
+				this.kMapper.deleteKommentar(k);
 			}
 		}
 		//Beitrag löschen
@@ -231,25 +231,25 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	 * Methode um einen Beitrag zu Bearbeiten
 	 */
 	public Beitrag editBeitrag(Beitrag b) {
-		return bMapper.updateBeitrag(b);
+		return this.bMapper.updateBeitrag(b);
 	}
 	
 	/**
 	 * Methode um alle Abonnements eines Users anzuzeigen
 	 */
-	public Vector<Abonnement> showAllAbonnementsByUser(int userId){
-		return aMapper.getAbonnementsOfUser(userId);
+	public Vector<Abonnement> showAllAbonnementsByUser(User u){
+		return this.aMapper.getAbonnementsOfUser(u.getUserId());
 	}
 	
 	/**
 	 * Methode um ein neues Abonnement zu erzeugen
 	 */
-	public void createAbonnement(int userId, int pinnwandId) {
+	public void createAbonnement(User u, Pinnwand p) {
 		Abonnement a = new Abonnement();
-		a.setOwnerId(userId);
-		a.setPinnwandId(pinnwandId);
+		a.setOwnerId(u.getUserId());
+		a.setPinnwandId(p.getPinnwandId());
 		
-		aMapper.insert(a);
+		this.aMapper.insert(a);
 		
 	}
 	
@@ -257,35 +257,35 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	 * Methode um ein bestehendes Abonnement zu Loeschen
 	 */
 	public void deleteAbonnement(Abonnement a) {
-		aMapper.deleteAbonnement(a);
+		this.aMapper.deleteAbonnement(a);
 	}
 	
 	/**
 	 * Methode um einen neues Kommentar zu erzeugen
 	 */
-	public void createKommentar(String text, int userId, int beitragId, Timestamp timeStamp) {
+	public void createKommentar(String text, int userId, Beitrag b, Timestamp timeStamp) {
 		Kommentar k = new Kommentar();
 		
 		k.setText(text);
 		k.setOwnerId(userId);
-		k.setBeitragId(beitragId);
+		k.setBeitragId(b.getBeitragId());
 		k.setCreationTimeStamp(timeStamp);
 		
-		kMapper.insertKommentar(k);
+		this.kMapper.insertKommentar(k);
 	}
 	
 	/**
 	 * Methode zum Loeschen eines Kommentars
 	 */
 	public void deleteKommentar(Kommentar k) {
-		kMapper.deleteKommentar(k);
+		this.kMapper.deleteKommentar(k);
 	}
 	
 	/**
 	 * Methode zum anzeigen aller Kommentare
 	 */
-	public Vector<Kommentar> findAllKommentareOfBeitrag(int beitragId){
-		return kMapper.getKommentareOfBeitrag(beitragId);
+	public Vector<Kommentar> findAllKommentareOfBeitrag(Beitrag b){
+		return this.kMapper.getKommentareOfBeitrag(b.getBeitragId());
 		
 	}
 	
@@ -293,7 +293,7 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	 * Methode zum Bearbeiten eines Kommentars
 	 */
 	public void editKommentar(Kommentar k) {
-		 kMapper.updateKommentar(k);
+		 this.kMapper.updateKommentar(k);
 	}
 	
 	/**
@@ -301,9 +301,9 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	 */
 	public void createLike(User u, Beitrag b) {
 		Like l1 = new Like();
-		l1.setOwner(u);
-		l1.setBeitrag(b);
-		lMapper.insertLike(l1);
+		l1.setOwnerId(u.getUserId());
+		l1.setBeitragId(b.getBeitragId());
+		this.lMapper.insertLike(l1);
 		
 	}
 	
@@ -311,14 +311,14 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	 * Methode zur Ueberpruefung ob der Beitrag bereits geliket ist
 	 */
 	public boolean likeCheck(User u, Beitrag b) {
-		return lMapper.likeCheck(u, b);	
+		return this.lMapper.likeCheck(u, b);	
 	}
 	
 	/**
 	 * Methode um einen Beitrag zu entliken
 	 */
 	public void deleteLike(Like l) {
-		lMapper.deleteLike(l);
+		this.lMapper.deleteLike(l);
 		
 	}
 	
@@ -335,14 +335,14 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	 * Methode um alle Likes eines Beitrags zu zaehlen
 	 */
 	public int countLikes(Beitrag b) {
-		return lMapper.getLikesOfBeitrag(b.getBeitragId()).size();
+		return this.lMapper.getLikesOfBeitrag(b.getBeitragId()).size();
 	}
 	
 	/**
 	 * Methode um Likes eines Beitrags zu entfernen
 	 */
 	public void deleteLikesOfBeitrag(Beitrag b) {
-		lMapper.deleteAllLikesFromBeitrag(b);
+		this.lMapper.deleteAllLikesFromBeitrag(b);
 	}
 	
 	/*
@@ -353,9 +353,9 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 		if (pMapper.findPinnwandByUser(u)==null) {
 			Pinnwand p = new Pinnwand();
 			p.setId(1);
-			p.setOwner(u.getUserId());
+			p.setOwnerId(u.getUserId());
 			p.setCreationTimeStamp(timestamp);
-			pMapper.insertPinnwand(p);
+			this.pMapper.insertPinnwand(p);
 		}
 	}
 	
@@ -388,10 +388,10 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 		}
 		if(abonnementsOfPinnwand!=null) {
 			for (Abonnement a: abonnementsOfPinnwand) {
-				aMapper.deleteAbonnement(a);
+				this.aMapper.deleteAbonnement(a);
 			}
 		}
-		pMapper.deletePinnwand(p);
+		this.pMapper.deletePinnwand(p);
 		
 	}
 

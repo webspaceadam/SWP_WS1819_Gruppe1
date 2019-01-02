@@ -21,8 +21,8 @@ public class Pinnwand extends BusinessObject {
 	 * 
 	 * @param owner
 	 */
-	public Pinnwand(User owner) {
-		this.owner = owner;
+	public Pinnwand(int userId) {
+		this.ownerId = userId;
 	}
 	
 	/*
@@ -35,10 +35,10 @@ public class Pinnwand extends BusinessObject {
 	private Vector<Beitrag> alleBeitraege;
 	private Vector<Abonnement> alleAbonnements;
 
-	public int getOwner() {
+	public int getOwnerId() {
 		return ownerId;
 	}
-	public void setOwner(int ownerId) {
+	public void setOwnerId(int ownerId) {
 		this.ownerId = ownerId;
 	}
 	public Vector<Beitrag> getAlleBeitraege() {

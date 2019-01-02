@@ -105,8 +105,8 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 					if (rs.next()) {
 						// Ergebnis in Pinnwandobjekt umwandeln
 						Pinnwand p = new Pinnwand();	
-						p.setOwnerId(rs.getInt("PinnwandID"));
-						p.setUser_UserID(rs.getInt("User_UserID"));
+						p.setPinnwandId(rs.getInt("PinnwandID"));
+						p.setOwnerId(rs.getInt("User_UserID"));
 						
 						return p;
 
@@ -126,7 +126,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 			// TODO Auto-generated method stub
 			
 		}
-	}
+	
 		 
 		 public Pinnwand findPinnwandByUser (int PinnwandID) {
 			 Connection con = DBConnection.connection();
@@ -140,8 +140,8 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 				 if(rs.next()) {
 					 Pinnwand p = new Pinnwand();
 					 p.setId(rs.getInt("PinnwandID"));
-					 p.setUser_UserID(rs.getInt("User_UserID"));
-//					 p.setCreationTimeStamp("creationTimeStamp");
+					 p.setOwnerId(rs.getInt("User_UserID"));
+					 p.setCreationTimeStamp(rs.getTimestamp("creationTimeStamp"));
 					 return p;
 					 
 				 }
@@ -173,8 +173,8 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 	    		while(rs.next()) {
 	    			Pinnwand p = new Pinnwand();
 	    			p.setId(rs.getInt("PinnwandID"));
-	    			p.setUser_UserID(rs.getInt("User_UserID"));
-	    			p.setCreationTimeStamp(rs.getDate("CreationTimeStamp"));
+	    			p.setOwnerId(rs.getInt("User_UserID"));
+	    			p.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
 	    			
 	    			result.addElement(p);
 	    			

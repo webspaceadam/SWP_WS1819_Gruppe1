@@ -227,7 +227,7 @@ public class KommentarMapper {
 					Kommentar k = new Kommentar();
 					k.setKommentarId(rs.getInt("BeitragID"));
 					k.setText(rs.getString("Inhalt"));
-					k.setCreationTimestamp(rs.getDate("CreationTimeStamp"));
+					k.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
 					
 					kommentareOfUser.addElement(k);
 				}

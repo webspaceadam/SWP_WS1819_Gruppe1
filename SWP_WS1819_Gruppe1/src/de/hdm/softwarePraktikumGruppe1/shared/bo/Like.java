@@ -10,8 +10,8 @@ package de.hdm.softwarePraktikumGruppe1.shared.bo;
 public class Like extends BusinessObject{
 	
 	private static final long serialVersionUID = 1L;
-	private Beitrag beitrag;
-	private User owner;
+	private int beitragId;
+	private int ownerId;
 	
 	/**
 	 * Der Konstruktor nimmt zwei Parameter entgegen. Einen vom Typ Beitrag um so die 
@@ -32,18 +32,18 @@ public class Like extends BusinessObject{
 		
 	}
 	
-	public Beitrag getBeitrag() {
-		return beitrag;
+	public int getBeitragId() {
+		return beitragId;
 	}
-	public void setBeitrag(Beitrag beitrag) {
-		this.beitrag = beitrag;
+	public void setBeitragId(int beitragId) {
+		this.beitragId = beitragId;
 	}
 
-	public User getOwner() {
-		return owner;
+	public int getOwnerId() {
+		return ownerId;
 	}
-	public void setOwner(User owner) {
-		this.owner = owner;
+	public void setOwnerId(int userId) {
+		this.ownerId = userId;
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;

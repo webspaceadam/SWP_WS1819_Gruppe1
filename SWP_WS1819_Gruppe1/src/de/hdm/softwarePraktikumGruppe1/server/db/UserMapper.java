@@ -253,12 +253,12 @@ public class UserMapper {
 			}
 			
 	//Methode zum Aufruf aller Beiträge eines bestimmten Users
-			public Vector<Beitrag> getAllBeitraegeOfUser(User user){
+			public Vector<Beitrag> getAllBeitraegeOfUser(int userId){
 				Connection con = DBConnection.connection();	
 				Vector <Beitrag> v= new Vector<Beitrag>();
 				try {
 					Statement stmt = con.createStatement();
-					ResultSet rs = stmt.executeQuery("Select * FROM Beitrag WHERE User_UserID = "+ user.getId());
+					ResultSet rs = stmt.executeQuery("Select * FROM Beitrag WHERE User_UserID = "+ userId);
 					
 					while(rs.next()) {
 						Beitrag b =new Beitrag();
