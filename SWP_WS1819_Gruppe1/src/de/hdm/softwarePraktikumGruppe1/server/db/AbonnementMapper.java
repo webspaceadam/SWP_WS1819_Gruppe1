@@ -17,6 +17,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 /**
  * @author GianlucaBerner
  * @author Yesin Soufi
+ * @author SebastianHermann
  * 
  */
 public class AbonnementMapper {
@@ -128,7 +129,7 @@ public class AbonnementMapper {
 				try {
 					Statement stmt = con.createStatement();
 
-					stmt.executeUpdate("UPDATE User " + "SET AbonnementID=\"" + a.getAbonnementId()  + "WHERE id=" + a.getOwnerId());
+					stmt.executeUpdate("UPDATE User SET AbonnementID=\"" + a.getAbonnementId() + "WHERE id=" + a.getOwnerId());
 
 				} catch (SQLException e) {
 					e.printStackTrace();
@@ -158,7 +159,7 @@ public class AbonnementMapper {
 			try {
 				
 				Statement stmt = con.createStatement();
-				ResultSet rs = stmt.executeQuery("SELECT * FROM abonnement" + "WHERE UserFK=" + userId);
+				ResultSet rs = stmt.executeQuery("SELECT * FROM abonnement " + "WHERE UserFK=" + userId);
 						
 						while(rs.next()) {
 							
@@ -167,6 +168,7 @@ public class AbonnementMapper {
 							a.setAbonnementId(rs.getInt("AbonnementID"));
 							a.setPinnwandId(rs.getInt("PinnwandFK"));
 							a.setOwnerId(rs.getInt("UserFK"));
+							
 							result.addElement(a);
 						}
 						
@@ -205,7 +207,7 @@ public class AbonnementMapper {
 			
 			return result;
 			
-}
+			}
 
 			
 				

@@ -76,19 +76,19 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	 * Bitte beim anfangen der richtigen implementierung entweder löschen oder in der korrekten methode
 	 * den methodenkörper wiederverwenden!!!
 	 */
-	public User createSingleUserTestMethod(String vorname, String nachname, String nickname) {
-		
-		//Erstellen eines Nutzerobjekts mit Vorname, Nachname und Nachname
-		User u = new User();
-		
-		u.setFirstName(vorname);
-		u.setLastName(nachname);
-		u.setNickname(nickname);
-		
-		//Speichern in der DB
-		return this.uMapper.insert(u);
-			
-	}
+//	public User createSingleUserTestMethod(String vorname, String nachname, String nickname) {
+//		
+//		//Erstellen eines Nutzerobjekts mit Vorname, Nachname und Nachname
+//		User u = new User();
+//		
+//		u.setFirstName(vorname);
+//		u.setLastName(nachname);
+//		u.setNickname(nickname);
+//		
+//		//Speichern in der DB
+//		return this.uMapper.insert(u);
+//			
+//	}
 	
 	/**
 	 * Methode um einen User zu erstellen.
@@ -159,7 +159,7 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 		deletePinnwand(this.pMapper.findPinnwandByUser(u));
 		
 		//User löschen
-		this.uMapper.deleteUser(u.getUserId());
+		this.uMapper.deleteUser(u);
 	}
 	
 	/**

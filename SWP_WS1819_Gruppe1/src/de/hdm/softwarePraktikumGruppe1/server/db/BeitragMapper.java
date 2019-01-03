@@ -190,7 +190,7 @@ public class BeitragMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("UPDATE beitrag SET Inhalt= '"+ b.getInhalt() + "' " + "WHERE id=" + b.getBeitragId());
+			stmt.executeUpdate("UPDATE beitrag SET Inhalt= '"+ b.getInhalt() + "' " + "WHERE BeitragID=" + b.getBeitragId());
 
 		} catch (SQLException e) {
 			e.printStackTrace();
