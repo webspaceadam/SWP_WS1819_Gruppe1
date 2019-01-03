@@ -105,7 +105,7 @@ public interface Pinnwandverwaltung extends RemoteService {
 	/**
 	 * Methode um einen neues Kommentar zu erzeugen
 	 */
-	public void createKommentar(String text, User user, Beitrag b, Timestamp timeStamp);
+	public void createKommentar(String text, int userId, int beitragId, Timestamp timeStamp);
 	
 	/**
 	 * Methode zum Loeschen eines Kommentars
@@ -115,7 +115,7 @@ public interface Pinnwandverwaltung extends RemoteService {
 	/**
 	 * Methode zum anzeigen aller Kommentare
 	 */
-	public Vector<Kommentar> findAllKommentare(Beitrag b);
+	public Vector<Kommentar> findAllKommentareOfBeitrag(Beitrag b);
 	
 	/**
 	 * Methode zum Bearbeiten eines Kommentars
@@ -130,7 +130,7 @@ public interface Pinnwandverwaltung extends RemoteService {
 	/**
 	 * Methode zur Ueberpruefung ob der Beitrag bereits geliket ist
 	 */
-	public boolean likeCheck(User u, Beitrag b);
+	public Like likeCheck(User u, Beitrag b);
 	
 	/**
 	 * Methode um einen Beitrag zu entliken

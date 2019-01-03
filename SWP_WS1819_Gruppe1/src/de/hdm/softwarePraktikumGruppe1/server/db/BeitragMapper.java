@@ -20,7 +20,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 /**
  * @author GianlucaBernert
  * @author Yesin Soufi
- *
+ * @author SebastianHermann
  *
  */
 
@@ -67,12 +67,11 @@ public class BeitragMapper {
 
 			try {
 				PreparedStatement statement = con.prepareStatement(
-						"INSERT INTO textbeitrag (BeitragID, OwnerID, inhalt, creationTimeStamp) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+						"INSERT INTO beitrag (Inhalt, PinnwandFK, UserFK) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 
-				statement.setInt(1, b.getBeitragId());
-				statement.setInt(2, b.getOwnerId());
-				statement.setString(3, b.getText());
-				statement.setTimestamp(4, b.getCreationTimeStamp());
+				statement.setString(1, b.getInhalt());
+				statement.setInt(2, b.getPinnwandId());
+				statement.setInt(3, b.getOwnerId());
 
 				statement.executeUpdate();
 				ResultSet rs = statement.getGeneratedKeys();
@@ -92,9 +91,10 @@ public class BeitragMapper {
 	public void deleteBeitrag(Beitrag b) {
 		
 			Connection con = DBConnection.connection();
+			
 			try {
 				Statement stmt = con.createStatement();
-				stmt.executeUpdate("DELETE FROM textbeitrag " + "WHERE id = " + b.getOwnerId());
+				stmt.executeUpdate("DELETE FROM beitrag " + "WHERE BeitragID = '" + b.getBeitragId()+"'");
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -104,53 +104,53 @@ public class BeitragMapper {
 	 * L�schen der Daten eines Beitrag-Objekts von einem bestimmten User aus der Datenbank.
 	 */
 			
-			public void deleteBeitraegeOfUser(int userId) {
-				Connection con =DBConnection.connection();
-				
-				try {
-					Statement stmt = con.createStatement();
-				
-					stmt.executeUpdate("DELETE FROM beitrag" + "WHERE User_User_ID=" + userId);
-				}
-				
-				catch(SQLException e) {
-					e.printStackTrace();
-				}
-
-	}
+//	public void deleteBeitragOfUser(int userId) {
+//			Connection con =DBConnection.connection();
+//				
+//			try {
+//				Statement stmt = con.createStatement();
+//				
+//				stmt.executeUpdate("DELETE FROM beitrag" + "WHERE User_User_ID=" + userId);
+//				}
+//				
+//				catch(SQLException e) {
+//					e.printStackTrace();
+//				}
+//
+//	}
+//	
 	
-	
-	/**
-	 * Methode zum suchen eines Beitrags anhand der Beitrags ID
-	 */
-	public Beitrag getBeitragByBeitragtId(int BeitragID) {
-    
-		Connection con = DBConnection.connection();
-		
-		try {
-			Statement stmt= con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT BeitragID, Inhalt, creationTimeStamp" + "WHERE BeitragID =" + BeitragID);
-			
-			if (rs.next()) {
-				Beitrag b = new Beitrag();
-				b.setId(rs.getInt("BeitragID"));
-				b.setText(rs.getString("Inhalt"));
-				b.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
-				
-				return b;
-			}
-			
-		}	
-		catch (SQLException e) {
-			e.printStackTrace();
-			
-			return null;
-		}
-		
-		return null;
-				
-		
-	}
+//	/**
+//	 * Methode zum suchen eines Beitrags anhand der Beitrags ID
+//	 */
+//	public Beitrag getBeitragByBeitragtId(int BeitragID) {
+//    
+//		Connection con = DBConnection.connection();
+//		
+//		try {
+//			Statement stmt= con.createStatement();
+//			ResultSet rs = stmt.executeQuery("SELECT BeitragID, Inhalt, creationTimeStamp" + "WHERE BeitragID =" + BeitragID);
+//			
+//			if (rs.next()) {
+//				Beitrag b = new Beitrag();
+//				b.setId(rs.getInt("BeitragID"));
+//				b.setText(rs.getString("Inhalt"));
+//				b.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
+//				
+//				return b;
+//			}
+//			
+//		}	
+//		catch (SQLException e) {
+//			e.printStackTrace();
+//			
+//			return null;
+//		}
+//		
+//		return null;
+//				
+//		
+//	}
 	
 	/**
 	 * Die Methode <code> findAll </code> erm�glicht das auslesen s�mtlicher User-Objekte durch einen Vektor.
@@ -163,7 +163,7 @@ public class BeitragMapper {
 		
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT BeitragID, Inhalt, CreationTimeStamp FROM beitrag"
+			ResultSet rs = stmt.executeQuery("SELECT * FROM beitrag"
 			+ "ORDER BY BeitragID");
 			
 			while (rs.next());{
@@ -182,28 +182,41 @@ public class BeitragMapper {
 	
 	
 
-	//Methode updateBeitrag;
+	//To be defined: Methode updateBeitrag;
 	public Beitrag updateBeitrag(Beitrag b) {
 		
-		return null;
+		Connection con = DBConnection.connection();
+
+		try {
+			Statement stmt = con.createStatement();
+
+			stmt.executeUpdate("UPDATE beitrag SET Inhalt= '"+ b.getInhalt() + "' " + "WHERE BeitragID=" + b.getBeitragId());
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 		
+		return b;
 	}
 
-	public Vector <Beitrag> getBeitraegeOfPinnwand(int Pinnwand_PinnwandID){
+	public Vector <Beitrag> getBeitraegeOfPinnwand(int pinnwandFK){
 		Connection con = DBConnection.connection();
 		Vector<Beitrag> result = new Vector<Beitrag>();
 		
 		try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("SELECT BeitragID, Inhalt, CreationTimeStamp FROM beitrag"
-			+"WHERE = Pinnwand_PinnwandID=" +"'"+ Pinnwand_PinnwandID + "'" + "ORDER BY BeitragID");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM beitrag"
+			+"WHERE = PinnwandFK= '" + pinnwandFK  +"' "+ "ORDER BY BeitragID");
 			
 			while (rs.next()) {
 				Beitrag b = new Beitrag();
-				b.setId(rs.getInt("BeitragID"));
+				b.setBeitragId(rs.getInt("BeitragID"));
 				b.setText(rs.getString("Inhalt"));
 				b.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
+				b.setPinnwandId(rs.getInt("PinnwandFK"));
+				b.setOwnerId(rs.getInt("UserFK"));
 				
 				result.addElement(b);
 			}			

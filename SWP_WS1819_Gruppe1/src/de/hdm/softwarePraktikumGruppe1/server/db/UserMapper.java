@@ -4,6 +4,7 @@
 package de.hdm.softwarePraktikumGruppe1.server.db;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -18,6 +19,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 /**
  * @author Gianluca Bernert
  * @author Yesin Soufi
+ * @author SebastianHermann
  * 
  */
 
@@ -75,15 +77,16 @@ public class UserMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("SELECT User_ID, FirstName, LastName, Nickname " + "WHERE User_ID=" + id + "ORDED BY LastName");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM user " + "WHERE UserID= " + id + "ORDED BY UserID");
 			
 			if(rs.next()) {
 				User u = new User();
-				u.setId(rs.getInt("User_ID"));
+				u.setId(rs.getInt("UserID"));
+				u.setNickname(rs.getString("Nickname"));
 				u.setFirstName(rs.getString("FirstName"));
 				u.setLastName(rs.getString("Nachname"));
-				u.setNickname(rs.getString("Nickname"));
-				
+				u.setGMail(rs.getString("Gmail"));
+				u.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
 				return u;
 				
 			}
@@ -108,16 +111,18 @@ public class UserMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("SELECT User_ID, FirstName, LastName, Nickname" + "FROM User " + "ORDED BY LastName");
+			ResultSet rs = stmt.executeQuery("SELECT *" + "FROM user " + "ORDED BY UserID");
 			
 			while(rs.next()) {
-				User user = new User();
-				user.setId(rs.getInt("User_ID"));
-				user.setFirstName(rs.getString("FirstName"));
-				user.setLastName(rs.getString("LastName"));
-				user.setNickname(rs.getString("Nickname"));
+				User u = new User();
+				u.setId(rs.getInt("UserID"));
+				u.setNickname(rs.getString("Nickname"));
+				u.setFirstName(rs.getString("FirstName"));
+				u.setLastName(rs.getString("Nachname"));
+				u.setGMail(rs.getString("Gmail"));
+				u.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
 				
-				v.addElement(user);
+				v.add(u);
 			}}catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -133,17 +138,19 @@ public class UserMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery("SELECT User_ID, firstName, lastName " + "FROM User "
-					+ "WHERE lastName" + name + "' ORDER BY lastName");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM user WHERE lastName= '" + name +"'"+ " ORDER BY lastName");
 
 			
 			while (rs.next()) {
-				User user = new User();
-				user.setId(rs.getInt("User_ID"));
-				user.setFirstName(rs.getString("firstName"));
-				user.setLastName(rs.getString("lastName"));
-
-			}
+				User u = new User();
+				u.setId(rs.getInt("UserID"));
+				u.setNickname(rs.getString("Nickname"));
+				u.setFirstName(rs.getString("FirstName"));
+				u.setLastName(rs.getString("Nachname"));
+				u.setGMail(rs.getString("Gmail"));
+				u.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
+				result.add(u);
+				}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -153,22 +160,25 @@ public class UserMapper {
    public User findUserByNickname(String nickname) {
 		
 		Connection con =DBConnection.connection();
-		
+		Vector<User> result = new Vector<User>();
 		
 	try {
 		
 		Statement stmt=con.createStatement();
-		ResultSet rs =stmt.executeQuery("SELECT User_ID, Firstname, Lastname" + "WHERE Nickname=" + nickname);
+		ResultSet rs =stmt.executeQuery("SELECT * FROM user WHERE Nickname=" + "'"+nickname+"'");
 		
 		while (rs.next()) {
 			
-			User user = new User();
-			user.setId(rs.getInt("User_ID"));
-			user.setFirstName(rs.getString("Firstname"));
-			user.setLastName(rs.getString("Lastname"));
-			user.setNickname(rs.getString("Nickname"));
+			User u = new User();
+			u.setId(rs.getInt("UserID"));
+			u.setNickname(rs.getString("Nickname"));
+			u.setFirstName(rs.getString("FirstName"));
+			u.setLastName(rs.getString("Nachname"));
+			u.setGMail(rs.getString("Gmail"));
+			u.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
 			
-			return user;
+			result.add(u);
+			
 		}
 	
 	} catch (SQLException e) {
@@ -184,94 +194,86 @@ public class UserMapper {
 	 * @return �bergebene Objekt <code>User_ID</code>.
 	 */
 		
-		public User insert(User user) {
-		Connection con = DBConnection.connection();
+		public void insert(User u) {
+			Connection con = DBConnection.connection();
 
-		try {
-			Statement stmt = con.createStatement();
+			try {
+				PreparedStatement statement = con.prepareStatement(
+						"INSERT INTO user (Nickname, Firstname, Lastname, Gmail) VALUES (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 
-			ResultSet rs = stmt.executeQuery("SELECT MAX(UserID) AS maxid " + "FROM User ");
+				statement.setString(1, u.getNickname());
+				statement.setString(2, u.getFirstName());
+				statement.setString(3, u.getLastName());
+				statement.setString(4, u.getGMail());
 
-			if (rs.next()) {
-				
-				user.setId(rs.getInt("maxid") + 1);
-
-				stmt = con.createStatement();
-				
-				stmt.executeUpdate("INSERT INTO user (FirstName, LastName, Nickname) " + "VALUES (" + 
-						"'" + user.getFirstName() + "'," + 
-						"'" + user.getLastName() + "'," + 
-						"'" + user.getNickname() + "'" +
-						");"
-						);
+				statement.executeUpdate();
+				ResultSet rs = statement.getGeneratedKeys();
+				if (rs.next()) {
+					u.setId(rs.getInt(1));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+	
+		
 		}
-		
-		return user;
-		
-	}
 		
 		/**
 		 * Wiederholtes Schreiben eines Objekts in die Datenbank.
 		 */
 		
 
-			public User update(User user) {
+			public void update(User u) {
 				Connection con = DBConnection.connection();
 
 				try {
 					Statement stmt = con.createStatement();
 
-					stmt.executeUpdate("UPDATE User " + "SET Firstname=\"" + user.getFirstName() + "\", " + "Lastname=\""
-							+ user.getLastName() + "\" " + user.getNickname() + "WHERE User_ID=" + user.getId());
+					stmt.executeUpdate("UPDATE user SET Nickname='"+ u.getNickname()+"', Firstname='"+u.getFirstName()+"', Lastname='"+ u.getLastName()+"', Gmail='"+ u.getGMail()+"' Where UserID="+ u.getUserId());
 
 
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
 
-				
-				return user;
 			}
 			
 	/**
 	 * L�schen der Daten eines User-Objekts aus der Datenbank.
 	 */
 			
-			public void deleteUser(int userId) {
+			public void deleteUser(User u) {
 				Connection con = DBConnection.connection();
 
 				try {
 					Statement stmt = con.createStatement();
-					stmt.executeUpdate("DELETE FROM User " + "WHERE User_ID=" + userId);
+					stmt.executeUpdate("DELETE FROM user " + "WHERE UserID=" + u.getUserId());
           
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
 			}
 			
-	//Methode zum Aufruf aller Beiträge eines bestimmten Users
-			public Vector<Beitrag> getAllBeitraegeOfUser(int userId){
-				Connection con = DBConnection.connection();	
-				Vector <Beitrag> v= new Vector<Beitrag>();
-				try {
-					Statement stmt = con.createStatement();
-					ResultSet rs = stmt.executeQuery("Select * FROM Beitrag WHERE User_UserID = "+ userId);
-					
-					while(rs.next()) {
-						Beitrag b =new Beitrag();
-//						b.setId(rs.getInt(""));
-//						b.setText(rs.getString(""));
-//						b.setTimeStamp(rs.getTimestamp(""));
-//						v.add(b);
-					}
-					
-				} catch (SQLException e) {
-				e.printStackTrace();
-			}
-				return v;
-			}
+//	//Methode zum Aufruf aller Beiträge eines bestimmten Users
+//			public Vector<Beitrag> getAllBeitraegeOfUser(int userId){
+//				Connection con = DBConnection.connection();	
+//				Vector <Beitrag> v= new Vector<Beitrag>();
+//				try {
+//					Statement stmt = con.createStatement();
+//					ResultSet rs = stmt.executeQuery("Select * FROM Beitrag WHERE User_UserID = "+ userId);
+//					
+//					while(rs.next()) {
+//						Beitrag b =new Beitrag();
+////						b.setId(rs.getInt(""));
+////						b.setText(rs.getString(""));
+////						b.setTimeStamp(rs.getTimestamp(""));
+////						v.add(b);
+//					}
+//					
+//				} catch (SQLException e) {
+//				e.printStackTrace();
+//			}
+//				return v;
+//			}
 
 }

@@ -17,6 +17,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 /**
  * @author GianlucaBerner
  * @author Yesin Soufi
+ * @author SebastianHermann
  * 
  */
 public class AbonnementMapper {
@@ -42,62 +43,62 @@ public class AbonnementMapper {
 		return abonnementMapper;
 	}
 	
-public Abonnement findById(int AbonnementID) {
+	public Abonnement findById(int abonnementId) {
 		
 		Connection con = DBConnection.connection();
 		
 		
-	try {
-		Statement stmt = con.createStatement();
+		try {
+			Statement stmt = con.createStatement();
 		
-		ResultSet rs = stmt.executeQuery ("SELECT Abonnement_ID,  FROM Abonnement " + "WHERE Abonnement_id=" + AbonnementID + " ORDER BY Abonnement_ID");
+			ResultSet rs = stmt.executeQuery ("SELECT*  FROM abonnement WHERE AbonnementID=" + abonnementId + " ORDER BY Abonnement_ID");
 	
-		if(rs.next()) {
-			Abonnement a = new Abonnement();
-			a.setOwnerId(rs.getInt("AbonnementID"));
-			
-			
-			return a;
-		
-			
-		}
+				if(rs.next()) {
+				Abonnement a = new Abonnement();
+				a.setOwnerId(rs.getInt("AbonnementID"));
+				a.setOwnerId(rs.getInt("UserFK"));
+				a.setPinnwandId(rs.getInt("PinnwandFK"));
+				
+				return a;
+				}
 		}catch(SQLException e){
 			e.printStackTrace();
 			
 			}
-	return null;
+			return null;
 		}
 		
-		public Vector<Abonnement> findAll(Vector<Abonnement> result){
-			Connection con = DBConnection.connection();
+	public Vector<Abonnement> findAll(Vector<Abonnement> result){
+		Connection con = DBConnection.connection();
 			
-			try {
-				Statement stmt = con.createStatement();
+		try {
+			Statement stmt = con.createStatement();
 				
-				ResultSet rs = stmt.executeQuery("SELECT AbonnementID" + "FROM Abonnement" + "ORDED BY AbonnementID");
+			ResultSet rs = stmt.executeQuery("SELECT *" + "FROM Abonnement" + "ORDER BY AbonnementID");
 				
-				while(rs.next()) {
-					Abonnement a = new Abonnement();
-					a.setOwnerId(rs.getInt("AbonnementID"));
-					
-					
-					result.addElement(a);
+			while(rs.next()) {
+				Abonnement a = new Abonnement();
+				a.setAbonnementId(rs.getInt("AbonnementID"));
+				a.setOwnerId(rs.getInt("UserFK"));
+				a.setPinnwandId(rs.getInt("PinnwandFK"));
+				
+				result.addElement(a);
 				}
-				}catch (SQLException e) {
-					e.printStackTrace();
-				}
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
 				
-				return result;
+			return result;
 					
 				}
 			
-			public Abonnement insert(Abonnement a) {
+	public Abonnement insert(Abonnement a) {
 				Connection con = DBConnection.connection();
 
 				try {
 					Statement stmt = con.createStatement();
 
-					ResultSet rs = stmt.executeQuery("SELECT MAX(AbonnementID) AS maxid " + "FROM User ");
+					ResultSet rs = stmt.executeQuery("SELECT MAX(AbonnementID) AS maxid " + "FROM abonnement ");
 
 					if (rs.next()) {
 						
@@ -105,7 +106,7 @@ public Abonnement findById(int AbonnementID) {
 
 						stmt = con.createStatement();
 						
-						stmt.executeUpdate("INSERT INTO user (AbonnementID, Pinnwand_PinnwandID, User_UserID) " + "VALUES (" + 
+						stmt.executeUpdate("INSERT INTO abonnement (AbonnementID, PinnwandFK, UserFK) " + "VALUES (" + 
 								"'" + a.getAbonnementId() + "'," + 
 								"'" + a.getPinnwandId() + "'," + 
 								"'" + a.getOwnerId() + "'");
@@ -128,7 +129,7 @@ public Abonnement findById(int AbonnementID) {
 				try {
 					Statement stmt = con.createStatement();
 
-					stmt.executeUpdate("UPDATE User " + "SET AbonnementID=\"" + a.getAbonnementId()  + "WHERE id=" + a.getOwnerId());
+					stmt.executeUpdate("UPDATE User SET AbonnementID=\"" + a.getAbonnementId() + "WHERE id=" + a.getOwnerId());
 
 				} catch (SQLException e) {
 					e.printStackTrace();
@@ -144,7 +145,7 @@ public Abonnement findById(int AbonnementID) {
 				try {
 					Statement stmt = con.createStatement();
 
-					stmt.executeUpdate("DELETE FROM Abonnement " + "WHERE AbonnementID=" + a.getAbonnementId());
+					stmt.executeUpdate("DELETE FROM abonnement " + "WHERE AbonnementID=" + a.getAbonnementId());
 				} catch (SQLException e) {
 					e.printStackTrace();
 					} 
@@ -158,15 +159,16 @@ public Abonnement findById(int AbonnementID) {
 			try {
 				
 				Statement stmt = con.createStatement();
-				ResultSet rs = stmt.executeQuery("SELECT (AbonnementID, Pinnwand_PinnwandID, User_UserID) FROM abonnement" + "WHERE User_UserID=" + userId);
+				ResultSet rs = stmt.executeQuery("SELECT * FROM abonnement " + "WHERE UserFK=" + userId);
 						
 						while(rs.next()) {
 							
 							Abonnement a = new Abonnement();
 							
 							a.setAbonnementId(rs.getInt("AbonnementID"));
-							a.setPinnwandId(rs.getInt("Pinnwand_PinnwandID"));
-							a.setOwnerId(rs.getInt("User_UserID"));
+							a.setPinnwandId(rs.getInt("PinnwandFK"));
+							a.setOwnerId(rs.getInt("UserFK"));
+							
 							result.addElement(a);
 						}
 						
@@ -188,14 +190,14 @@ public Abonnement findById(int AbonnementID) {
 			try {
 				
 				Statement stmt = con.createStatement();
-				ResultSet rs = stmt.executeQuery("SELECT (PinnwandID, Pinnwand_PinnwandID, User_UserID) FROM pinnwand" + "WHERE Pinnwand_PinnwandID=" + pinnwandId);
+				ResultSet rs = stmt.executeQuery("SELECT * FROM abonnement" + "WHERE PinnwandFK=" + pinnwandId);
 						
 						while(rs.next()) {
 							
 							Abonnement a = new Abonnement();
-							
-							a.setPinnwandId(rs.getInt("PinnwandID"));
-							a.setOwnerId(rs.getInt("User_UserID"));
+							a.setAbonnementId(rs.getInt("AbonnementID"));
+							a.setPinnwandId(rs.getInt("PinnwandFK"));
+							a.setOwnerId(rs.getInt("UserFK"));
 							result.addElement(a);
 						}
 						
@@ -205,7 +207,7 @@ public Abonnement findById(int AbonnementID) {
 			
 			return result;
 			
-}
+			}
 
 			
 				

@@ -13,6 +13,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
  * @author GianlucaBernert 
  * @author Ulus Serhat
  * @author Yesin Soufi
+ * @author SebastianHermann
  */
 	public class PinnwandMapper {
 		
@@ -51,8 +52,8 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 			 Statement stmt = con.createStatement();
 			 
 			        // Jetzt erst erfolgt die tats�chliche Einf�geoperation
-			        stmt.executeUpdate("INSERT INTO pinnwand (User_UserID) "
-			            + "VALUES (" + p.getOwnerId());
+			        stmt.executeUpdate("INSERT INTO pinnwand (UserFk) "
+			            + "VALUES (" + p.getOwnerId()+")");
 		      	
 		    }
 			
@@ -74,9 +75,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 			 
 			//leeres SQL-Statement anlegen
 			 Statement stmt = con.createStatement();
-			 
-			 
-			 stmt.executeUpdate("DELETE FROM pinnwand WHERE  PinnwandID=" +p.getId());
+			 stmt.executeUpdate("DELETE FROM pinnwand WHERE PinnwandID=" +p.getPinnwandId());
 		 }
 		 
 		 catch (SQLException e) {
@@ -87,7 +86,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 		}
 		 
 		//Methode die Tupels -> Objekte umwandelt
-		 public Pinnwand findPinnwandByUserID(User u) {
+		 public Pinnwand findPinnwandByUser(int userId) {
 				
 			
 				Connection con = DBConnection.connection();
@@ -99,14 +98,15 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 					Statement stmt = con.createStatement();
 					
 					//Suche alle Felder der Pinnwandtabelle anhand von ID
-					ResultSet rs = stmt.executeQuery("SELECT * FROM pinnwand WHERE User_UserID=" + u.getId());
+					ResultSet rs = stmt.executeQuery("SELECT * FROM pinnwand WHERE UserFK=" + userId);
 
 					 
 					if (rs.next()) {
 						// Ergebnis in Pinnwandobjekt umwandeln
 						Pinnwand p = new Pinnwand();	
 						p.setPinnwandId(rs.getInt("PinnwandID"));
-						p.setOwnerId(rs.getInt("User_UserID"));
+						p.setOwnerId(rs.getInt("UserFK"));
+						p.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
 						
 						return p;
 
@@ -122,44 +122,12 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
 
 
-		public void deletePinnwandOfUser(User u) {
-			// TODO Auto-generated method stub
-			
-		}
-	
+//		public void deletePinnwandOfUser(User u) {
+//			// TODO Auto-generated method stub
+//			
+//		}
+//	
 		 
-		 public Pinnwand findPinnwandByUser (int PinnwandID) {
-			 Connection con = DBConnection.connection();
-			 
-			 try {
-				 
-				 Statement stmt = con.createStatement();
-				 
-				 ResultSet rs = stmt.executeQuery("SELECT * FROM pinnwand" + "WHERE User_UserID = " + "'" + PinnwandID + "'");
-				 
-				 if(rs.next()) {
-					 Pinnwand p = new Pinnwand();
-					 p.setId(rs.getInt("PinnwandID"));
-					 p.setOwnerId(rs.getInt("User_UserID"));
-					 p.setCreationTimeStamp(rs.getTimestamp("creationTimeStamp"));
-					 return p;
-					 
-				 }
-				 }catch(SQLException e1) {
-					 e1.printStackTrace();
-					 return null;
-				 
-				 
-			 }
-			 
-			 return null;
-			 
-		 }
-		 
-	    public Pinnwand findPinnwandByUser(User u) {
-	    	return findPinnwandByUser(u.getId());
-	    }
-	    
 	    public Vector<Pinnwand> findAllPinnwaende(){
 	    	Connection con = DBConnection.connection();
 	    	
@@ -173,7 +141,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 	    		while(rs.next()) {
 	    			Pinnwand p = new Pinnwand();
 	    			p.setId(rs.getInt("PinnwandID"));
-	    			p.setOwnerId(rs.getInt("User_UserID"));
+	    			p.setOwnerId(rs.getInt("UserFk"));
 	    			p.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
 	    			
 	    			result.addElement(p);
