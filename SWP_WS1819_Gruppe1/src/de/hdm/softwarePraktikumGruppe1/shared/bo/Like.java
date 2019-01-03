@@ -20,9 +20,9 @@ public class Like extends BusinessObject{
 	 * @param beitrag
 	 * @param owner
 	 */
-	public Like(Beitrag beitrag, User owner) {
-		this.beitrag = beitrag;
-		this.owner = owner;
+	public Like(int beitrag, int owner) {
+		this.beitragId = beitrag;
+		this.ownerId = owner;
 	}
 	
 	/*

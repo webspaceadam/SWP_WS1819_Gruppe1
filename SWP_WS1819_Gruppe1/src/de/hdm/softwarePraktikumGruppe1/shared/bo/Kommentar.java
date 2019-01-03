@@ -26,9 +26,9 @@ public class Kommentar extends Textbeitrag{
 	 * @param beitrag
 	 * @param inhalt
 	 */
-	public Kommentar(User owner, Beitrag beitrag, String inhalt) {
-		this.owner = owner;
-		this.beitrag = beitrag;
+	public Kommentar(int owner, int beitrag, String inhalt) {
+		this.ownerId = owner;
+		this.beitragId = beitrag;
 		this.inhalt = inhalt;
 	}
 	

@@ -77,14 +77,15 @@ public class UserMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("SELECT * FROM user " + "WHERE UserID= " + id + "ORDED BY UserID");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM user " + "WHERE UserID= " + id);
+			//"ORDED BY UserID"
 			
 			if(rs.next()) {
 				User u = new User();
-				u.setId(rs.getInt("UserID"));
+				u.setUserId(rs.getInt("UserID"));
 				u.setNickname(rs.getString("Nickname"));
 				u.setFirstName(rs.getString("FirstName"));
-				u.setLastName(rs.getString("Nachname"));
+				u.setLastName(rs.getString("Lastname"));
 				u.setGMail(rs.getString("Gmail"));
 				u.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
 				return u;
@@ -229,8 +230,7 @@ public class UserMapper {
 				try {
 					Statement stmt = con.createStatement();
 
-					stmt.executeUpdate("UPDATE user SET Nickname='"+ u.getNickname()+"', Firstname='"+u.getFirstName()+"', Lastname='"+ u.getLastName()+"', Gmail='"+ u.getGMail()+"' Where UserID="+ u.getUserId());
-
+					stmt.executeUpdate("UPDATE user SET Nickname='"+ u.getNickname()+"', Firstname='"+u.getFirstName()+"', Lastname='"+ u.getLastName()+"', Gmail='"+ u.getGMail()+"' WHERE UserID="+ u.getUserId());
 
 				} catch (SQLException e) {
 					e.printStackTrace();

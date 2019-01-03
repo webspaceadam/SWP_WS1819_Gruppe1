@@ -37,9 +37,9 @@ public class Beitrag extends Textbeitrag{
 	 * @param pinnwand
 	 * @param inhalt
 	 */
-	public Beitrag(int ownerId, Pinnwand pinnwand, String inhalt) {
+	public Beitrag(int ownerId, int pinnwand, String inhalt) {
 		this.ownerId = ownerId;
-		this.pinnwand = pinnwand;
+		this.pinnwandId = pinnwand;
 		this.inhalt = inhalt;
 	}
 	
