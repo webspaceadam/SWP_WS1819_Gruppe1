@@ -70,14 +70,14 @@ public class Kommentar extends Textbeitrag{
 	/**
 	 * Methode die den Text eines Kommentars zurück gibt
 	 */
-	public String getText() {
+	public String getInhalt() {
 		return inhalt;
 	}
 	
 	/**
 	 * Methode die den Text eines Kommentars setzt
 	 */
-	public void setText(String inhalt) {
+	public void setInhalt(String inhalt) {
 		this.inhalt = inhalt;
 	}
 	
