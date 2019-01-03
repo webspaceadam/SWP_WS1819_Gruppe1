@@ -95,7 +95,7 @@ public interface Pinnwandverwaltung extends RemoteService {
 	/**
 	 * Methode um ein neues Abonnement zu erzeugen
 	 */
-	public void createAbonnement(User u, Pinnwand p);
+	public void createAbonnement(User u, Pinnwand p, Timestamp timestamp);
 	
 	/**
 	 * Methode um ein bestehendes Abonnement zu Loeschen
@@ -125,7 +125,7 @@ public interface Pinnwandverwaltung extends RemoteService {
 	/**
 	 * Methode zum erzeugen eines Likes
 	 */
-	public void createLike(User u, Beitrag b);
+	public void createLike(User u, Beitrag b, Timestamp timestamp);
 	
 	/**
 	 * Methode zur Ueberpruefung ob der Beitrag bereits geliket ist

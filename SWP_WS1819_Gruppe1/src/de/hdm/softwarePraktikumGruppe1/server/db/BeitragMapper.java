@@ -120,41 +120,38 @@ public class BeitragMapper {
 //	}
 //	
 	
-//	/**
-//	 * Methode zum suchen eines Beitrags anhand der Beitrags ID
-//	 */
-//	public Beitrag getBeitragByBeitragtId(int BeitragID) {
-//    
-//		Connection con = DBConnection.connection();
-//		
-//		try {
-//			Statement stmt= con.createStatement();
-//			ResultSet rs = stmt.executeQuery("SELECT BeitragID, Inhalt, creationTimeStamp" + "WHERE BeitragID =" + BeitragID);
-//			
-//			if (rs.next()) {
-//				Beitrag b = new Beitrag();
-//				b.setId(rs.getInt("BeitragID"));
-//				b.setText(rs.getString("Inhalt"));
-//				b.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
-//				
-//				return b;
-//			}
-//			
-//		}	
-//		catch (SQLException e) {
-//			e.printStackTrace();
-//			
-//			return null;
-//		}
-//		
-//		return null;
-//				
-//		
-//	}
-	
 	/**
-	 * Die Methode <code> findAll </code> erm�glicht das auslesen s�mtlicher User-Objekte durch einen Vektor.
+	 * Methode zum suchen eines Beitrags anhand der Beitrags ID
 	 */
+	public Beitrag getBeitragByBeitragtId(int beitragID) {
+    
+		Connection con = DBConnection.connection();
+		
+		try {
+			Statement stmt= con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM beitrag WHERE BeitragID =" + beitragID);
+			
+			if (rs.next()) {
+				Beitrag b = new Beitrag();
+				b.setId(rs.getInt("BeitragID"));
+				b.setText(rs.getString("Inhalt"));
+				b.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
+				
+				return b;
+			}
+			
+		}	
+		catch (SQLException e) {
+			e.printStackTrace();
+			
+			return null;
+		}
+		
+		return null;
+				
+		
+	}
+	
 	
 	public Vector<Beitrag> getAllBeitraege() {
 		Connection con = DBConnection.connection();
@@ -163,19 +160,19 @@ public class BeitragMapper {
 		
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM beitrag"
-			+ "ORDER BY BeitragID");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM beitrag ORDER BY BeitragID");
 			
 			while (rs.next());{
 				Beitrag b = new Beitrag();
-				b.setId(rs.getInt("BeitragID"));
-				b.setText(rs.getString("Inhalt"));
+				b.setBeitragId(rs.getInt("BeitragID"));
+				b.setInhalt(rs.getString("Inhalt"));
 				b.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
 				result.addElement(b);
 			}
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
+			return null;
 		} 
 		return result;
 		}

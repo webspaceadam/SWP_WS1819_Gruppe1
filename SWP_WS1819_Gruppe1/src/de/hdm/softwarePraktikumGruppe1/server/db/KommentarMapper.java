@@ -55,9 +55,7 @@ public class KommentarMapper {
 				Statement stmt = con.createStatement();
 				
 		        // Jetzt erst erfolgt die tatsächliche Einfügeoperation
-		        stmt.executeUpdate("INSERT INTO kommentar (Inhalt,BeitragFK, UserFK) "
-		            + "VALUES (" + k.getText() + "','" + k.getBeitragId() + "','" + k.getOwnerId()
-		        	 +"')");			                 
+		        stmt.executeUpdate("INSERT INTO kommentar (Inhalt,BeitragFK, UserFK) VALUES ('" + k.getInhalt() + "', " + k.getBeitragId() + "," + k.getOwnerId()+")");			                 
 		       
 	      }
 		

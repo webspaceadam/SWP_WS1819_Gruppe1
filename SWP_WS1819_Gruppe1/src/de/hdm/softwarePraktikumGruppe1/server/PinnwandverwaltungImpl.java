@@ -162,6 +162,10 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 		this.uMapper.deleteUser(u);
 	}
 	
+	public Pinnwand getPinnwandOfUser(int userId) {
+		return this.pMapper.findPinnwandByUser(userId);
+	}
+	
 	/**
 	 * Methode zur Ueberpruefung der Zugangsberechtigung 
 	 */
@@ -196,10 +200,15 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	 */
 	public void createBeitrag(String text, User u, Timestamp timeStamp) {
 		Beitrag b = new Beitrag();
-		b.setText(text);
+		b.setInhalt(text);
 		b.setOwnerId(u.getUserId());
+		b.setPinnwandId(this.getPinnwandOfUser(u.getUserId()).getPinnwandId());
 		b.setCreationTimeStamp(timeStamp);
 		this.bMapper.insertBeitrag(b);
+	}
+	
+	public Beitrag getBeitragByBeitragID(int beitragId) {
+		return this.bMapper.getBeitragByBeitragtId(beitragId);
 	}
 	
 	/**
@@ -207,6 +216,15 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	 */
 	public Vector<Beitrag> findAllBeitraegeOfUser(User u){
 		return this.bMapper.getAllBeitraege();
+	}
+	
+	/*
+	 * Methode die die Anzahl der Beitraege zurück gibt
+	 */
+	
+	public int getBeitragAmountOfUser(User u) {
+		int i = this.findAllBeitraegeOfUser(u).size();
+		return i;
 	}
 	
 	/**
@@ -248,7 +266,7 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	/**
 	 * Methode um ein neues Abonnement zu erzeugen
 	 */
-	public void createAbonnement(User u, Pinnwand p) {
+	public void createAbonnement(User u, Pinnwand p, Timestamp timeStamp) {
 		Abonnement a = new Abonnement();
 		a.setOwnerId(u.getUserId());
 		a.setPinnwandId(p.getPinnwandId());
@@ -270,7 +288,7 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	public void createKommentar(String text, int userId, int beitragId, Timestamp timeStamp) {
 		Kommentar k = new Kommentar();
 		
-		k.setText(text);
+		k.setInhalt(text);
 		k.setOwnerId(userId);
 		k.setBeitragId(beitragId);
 		k.setCreationTimeStamp(timeStamp);
@@ -303,7 +321,7 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	/**
 	 * Methode zum erzeugen eines Likes
 	 */
-	public void createLike(User u, Beitrag b) {
+	public void createLike(User u, Beitrag b, Timestamp timestamp) {
 		if(this.likeCheck(u, b)==null) {
 			Like l = new Like();
 			l.setOwnerId(u.getUserId());
@@ -422,5 +440,7 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 		return null;
 	}
 
+
+	
 
 }
