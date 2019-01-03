@@ -77,7 +77,7 @@ public class Beitrag extends Textbeitrag{
 		return pinnwandId;
 	}
 
-	public void setPinnwand(int pinnwandId) {
+	public void setPinnwandId(int pinnwandId) {
 		this.pinnwandId = pinnwandId;
 	}
 	public Vector<Kommentar> getKommentare() {
@@ -89,7 +89,7 @@ public class Beitrag extends Textbeitrag{
 	public String getInhalt() {
 		return inhalt;
 	}
-	public void setText(String inhalt) {
+	public void setInhalt(String inhalt) {
 		this.inhalt = inhalt;
 	}
 
