@@ -13,20 +13,9 @@ public class testDB {
 		PinnwandverwaltungImpl impl = new  PinnwandverwaltungImpl();
 		impl.init();
 		
-		//impl.createUser("Adam", "Gniady", "geilerDude", "a@hot,de", timestamp);
 		
-		User u1 = impl.searchUserById(1);
-		
-		System.out.println(u1.getGMail());
-	
-		
-		u1.setGMail("adam1995@gmail.com");
-		
-		
-		impl.editUser(u1);
-		
-		
-		}
+		impl.createKommentar("kommentar", 1, 3, timestamp);
+	}
 
 }
 

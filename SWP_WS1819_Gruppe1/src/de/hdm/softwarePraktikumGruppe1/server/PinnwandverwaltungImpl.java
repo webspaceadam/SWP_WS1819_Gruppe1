@@ -270,11 +270,12 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	public void createKommentar(String text, int userId, int beitragId, Timestamp timeStamp) {
 		Kommentar k = new Kommentar();
 		
-		k.setText(text);
+		k.setInhalt(text);
 		k.setOwnerId(userId);
 		k.setBeitragId(beitragId);
 		k.setCreationTimeStamp(timeStamp);
 		
+		System.out.println(k.toString());
 		this.kMapper.insertKommentar(k);
 	}
 	
@@ -411,13 +412,14 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 
 // ??
 	@Override
-	public User updateUser(User u) {
+	public Like searchLike(Like l) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-// ??
+
+
 	@Override
-	public Like searchLike(Like l) {
+	public User updateUser(User u) {
 		// TODO Auto-generated method stub
 		return null;
 	}
