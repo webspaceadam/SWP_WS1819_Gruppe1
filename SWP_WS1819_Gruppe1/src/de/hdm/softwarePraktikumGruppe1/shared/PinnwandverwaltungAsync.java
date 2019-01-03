@@ -92,7 +92,7 @@ public interface PinnwandverwaltungAsync {
 	/**
 	 * Methode um einen neues Kommentar zu erzeugen
 	 */
-	public void createKommentar(String text, User user, Beitrag b, Timestamp timeStamp, AsyncCallback callback);
+	public void createKommentar(String text, int userId, int beitragId, Timestamp timeStamp, AsyncCallback callback);
 	
 	/**
 	 * Methode zum Loeschen eines Kommentars
@@ -102,7 +102,7 @@ public interface PinnwandverwaltungAsync {
 	/**
 	 * Methode zum anzeigen aller Kommentare
 	 */
-	public void findAllKommentare(Beitrag b, AsyncCallback callback);
+	public void findAllKommentareOfBeitrag(Beitrag b, AsyncCallback callback);
 	
 	/**
 	 * Methode zum Bearbeiten eines Kommentars

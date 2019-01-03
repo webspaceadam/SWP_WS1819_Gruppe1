@@ -267,12 +267,12 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	/**
 	 * Methode um einen neues Kommentar zu erzeugen
 	 */
-	public void createKommentar(String text, int userId, Beitrag b, Timestamp timeStamp) {
+	public void createKommentar(String text, int userId, int beitragId, Timestamp timeStamp) {
 		Kommentar k = new Kommentar();
 		
 		k.setText(text);
 		k.setOwnerId(userId);
-		k.setBeitragId(b.getBeitragId());
+		k.setBeitragId(beitragId);
 		k.setCreationTimeStamp(timeStamp);
 		
 		this.kMapper.insertKommentar(k);
@@ -304,18 +304,23 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	 * Methode zum erzeugen eines Likes
 	 */
 	public void createLike(User u, Beitrag b) {
-		Like l1 = new Like();
-		l1.setOwnerId(u.getUserId());
-		l1.setBeitragId(b.getBeitragId());
-		this.lMapper.insertLike(l1);
-		
+		if(this.likeCheck(u, b)==null) {
+			Like l = new Like();
+			l.setOwnerId(u.getUserId());
+			l.setBeitragId(b.getBeitragId());
+			this.lMapper.insertLike(l);
+		}
 	}
 	
 	/**
 	 * Methode zur Ueberpruefung ob der Beitrag bereits geliket ist
 	 */
-	public boolean likeCheck(User u, Beitrag b) {
-		return this.lMapper.likeCheck(u, b);	
+	public Like likeCheck(User u, Beitrag b) {
+		if (this.lMapper.likeCheck(u, b)!=null) {
+			return this.lMapper.likeCheck(u, b);
+		}else {
+			return null;
+		}
 	}
 	
 	/**
@@ -346,7 +351,12 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	 * Methode um Likes eines Beitrags zu entfernen
 	 */
 	public void deleteLikesOfBeitrag(Beitrag b) {
-		this.lMapper.deleteAllLikesFromBeitrag(b);
+		Vector<Like> likesOfBeitrag = this.lMapper.getLikesOfBeitrag(b.getBeitragId());
+		if(likesOfBeitrag!=null) {
+			for(Like l : likesOfBeitrag) {
+				this.lMapper.deleteLike(l);
+			}
+		}
 	}
 	
 	/*
@@ -405,21 +415,6 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-
-	@Override
-	public void createKommentar(String text, User user, Beitrag b, Timestamp timeStamp) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public Vector<Kommentar> findAllKommentare(Beitrag b) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 
 	@Override
 	public Like searchLike(Like l) {
