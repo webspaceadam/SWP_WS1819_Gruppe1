@@ -14,8 +14,9 @@ public class Beitrag extends Textbeitrag{
 	private static final long serialVersionUID = 1L;
 	
 	// Eigenschaften der Klasse
-	private User owner;
-	private Pinnwand pinnwand;
+	private int beitragId;
+	private int ownerId;
+	private int pinnwandId;
 	private String inhalt;
 	
 	
@@ -36,8 +37,8 @@ public class Beitrag extends Textbeitrag{
 	 * @param pinnwand
 	 * @param inhalt
 	 */
-	public Beitrag(User owner, Pinnwand pinnwand, String inhalt) {
-		this.owner = owner;
+	public Beitrag(int ownerId, Pinnwand pinnwand, String inhalt) {
+		this.ownerId = ownerId;
 		this.pinnwand = pinnwand;
 		this.inhalt = inhalt;
 	}
@@ -50,11 +51,11 @@ public class Beitrag extends Textbeitrag{
 	}
 
 	//Getter- und Setter-Methoden
-	public User getOwner() {
-		return owner;
+	public int getOwnerId() {
+		return ownerId;
 	}
-	public void setOwner(User user) {
-		this.owner = user;
+	public void setOwnerId(int userId) {
+		this.ownerId = userId;
 	}
 
 	public int getLikeAmount() {
@@ -72,12 +73,12 @@ public class Beitrag extends Textbeitrag{
 		this.commentAmount = commentAmount;
 	}
 	
-	public Pinnwand getPinnwand() {
-		return pinnwand;
+	public int getPinnwandId() {
+		return pinnwandId;
 	}
 
-	public void setPinnwand(Pinnwand pinnwand) {
-		this.pinnwand = pinnwand;
+	public void setPinnwand(int pinnwandId) {
+		this.pinnwandId = pinnwandId;
 	}
 	public Vector<Kommentar> getKommentare() {
 		return kommentare;
@@ -92,19 +93,27 @@ public class Beitrag extends Textbeitrag{
 		this.inhalt = inhalt;
 	}
 
-	public void setBeitragID(int beitragID) {
-		beitragID = beitragID;
+	public void setBeitragID(int beitragId) {
+		this.setBeitragId(beitragId);
 	}
 	
 	/**
 	 * Methode um eine textuelle Dastellung der jeweiligen Instanz zu erzeugen
 	 */
 	public String toString() {
-		return super.toString() + " User ID #" + this.owner.getId();
+		return super.toString() + " User ID #" + this.getOwnerId();
 	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public int getBeitragId() {
+		return beitragId;
+	}
+
+	public void setBeitragId(int beitragId) {
+		this.beitragId = beitragId;
 	}
 }
 

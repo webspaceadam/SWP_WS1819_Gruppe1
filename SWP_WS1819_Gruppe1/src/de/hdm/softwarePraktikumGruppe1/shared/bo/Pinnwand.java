@@ -12,7 +12,8 @@ import java.util.Vector;
 public class Pinnwand extends BusinessObject {
 	
 	private static final long serialVersionUID = 1L;
-	private User owner;
+	private int pinnwandId;
+	private int ownerId;
 	
 	/**
 	 * Der Konstruktor nimmt einen Parameter des Typs User entgegen, um ihn so als <em>owner</em>
@@ -20,8 +21,8 @@ public class Pinnwand extends BusinessObject {
 	 * 
 	 * @param owner
 	 */
-	public Pinnwand(User owner) {
-		this.owner = owner;
+	public Pinnwand(int userId) {
+		this.ownerId = userId;
 	}
 	
 	/*
@@ -34,11 +35,11 @@ public class Pinnwand extends BusinessObject {
 	private Vector<Beitrag> alleBeitraege;
 	private Vector<Abonnement> alleAbonnements;
 
-	public User getOwner() {
-		return owner;
+	public int getOwnerId() {
+		return ownerId;
 	}
-	public void setOwner(User owner) {
-		this.owner = owner;
+	public void setOwnerId(int ownerId) {
+		this.ownerId = ownerId;
 	}
 	public Vector<Beitrag> getAlleBeitraege() {
 		return alleBeitraege;
@@ -54,6 +55,14 @@ public class Pinnwand extends BusinessObject {
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public int getPinnwandId() {
+		return pinnwandId;
+	}
+
+	public void setPinnwandId(int pinnwandId) {
+		this.pinnwandId = pinnwandId;
 	}
 	
 	

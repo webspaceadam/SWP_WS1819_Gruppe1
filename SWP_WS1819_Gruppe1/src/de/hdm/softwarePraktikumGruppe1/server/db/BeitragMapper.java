@@ -67,14 +67,12 @@ public class BeitragMapper {
 
 			try {
 				PreparedStatement statement = con.prepareStatement(
-						"INSERT INTO textbeitrag (BeitragID, inhalt, creationTimeStamp) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
-<<<<<<< HEAD
-				statement.setInt(1, b.getId());
-=======
-				statement.setInt(1, b.getOwnerId());
->>>>>>> refs/heads/master
-				statement.setString(2, b.getText());
-				statement.setDate(3, (Date) b.getCreationTimeStamp());
+						"INSERT INTO textbeitrag (BeitragID, OwnerID, inhalt, creationTimeStamp) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+
+				statement.setInt(1, b.getBeitragId());
+				statement.setInt(2, b.getOwnerId());
+				statement.setString(3, b.getText());
+				statement.setTimestamp(4, b.getCreationTimeStamp());
 
 				statement.executeUpdate();
 				ResultSet rs = statement.getGeneratedKeys();
@@ -106,13 +104,13 @@ public class BeitragMapper {
 	 * L�schen der Daten eines Beitrag-Objekts von einem bestimmten User aus der Datenbank.
 	 */
 			
-			public void deleteBeitraegeOfUser(User user) {
+			public void deleteBeitraegeOfUser(int userId) {
 				Connection con =DBConnection.connection();
 				
 				try {
 					Statement stmt = con.createStatement();
 				
-					stmt.executeUpdate("DELETE FROM beitrag" + "WHERE User_User_ID=" + user.getUserId(user));
+					stmt.executeUpdate("DELETE FROM beitrag" + "WHERE User_User_ID=" + userId);
 				}
 				
 				catch(SQLException e) {
@@ -137,7 +135,7 @@ public class BeitragMapper {
 				Beitrag b = new Beitrag();
 				b.setId(rs.getInt("BeitragID"));
 				b.setText(rs.getString("Inhalt"));
-				b.setCreationTimeStamp(rs.getDate("CreationTimeStamp"));
+				b.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
 				
 				return b;
 			}
@@ -172,7 +170,7 @@ public class BeitragMapper {
 				Beitrag b = new Beitrag();
 				b.setId(rs.getInt("BeitragID"));
 				b.setText(rs.getString("Inhalt"));
-				b.setCreationTimeStamp(rs.getDate("CreationTimeStamp"));
+				b.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
 				result.addElement(b);
 			}
 		}
@@ -191,7 +189,7 @@ public class BeitragMapper {
 		
 	}
 
-	public Vector <Beitrag> getAllBeitraegeOfPinnwand(int Pinnwand_PinnwandID){
+	public Vector <Beitrag> getBeitraegeOfPinnwand(int Pinnwand_PinnwandID){
 		Connection con = DBConnection.connection();
 		Vector<Beitrag> result = new Vector<Beitrag>();
 		
@@ -205,7 +203,7 @@ public class BeitragMapper {
 				Beitrag b = new Beitrag();
 				b.setId(rs.getInt("BeitragID"));
 				b.setText(rs.getString("Inhalt"));
-				b.setCreationTimeStamp(rs.getDate("CreationTimeStamp"));
+				b.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
 				
 				result.addElement(b);
 			}			

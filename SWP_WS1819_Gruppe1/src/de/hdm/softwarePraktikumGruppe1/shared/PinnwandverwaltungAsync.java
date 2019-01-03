@@ -19,7 +19,7 @@ public interface PinnwandverwaltungAsync {
 	/**
 	 * Methode die alle User als Vector zurueck gibt
 	 */
-	public Vector<User> showAllUser(AsyncCallback callback);
+	public void showAllUser(AsyncCallback callback);
 	
 	/**
 	 * Methode um einen User zu erzeugen
@@ -39,21 +39,21 @@ public interface PinnwandverwaltungAsync {
 	/**
 	 * Methode zur Ueberpruefung der Zugangsberechtigung 
 	 */
-	public User loginCheck(String nickname, String password, AsyncCallback callback);
+	public void loginCheck(String nickname, String password, AsyncCallback callback);
 	
 	/**
 	 * Methode um einen User anhand seiner ID zu suchen
 	 */
-	public User searchUserById(int userId, AsyncCallback callback);
+	public void searchUserById(int userId, AsyncCallback callback);
 	/**
 	 * Methode um einen User upzudaten
 	 */
-	public User updateUser(User u, AsyncCallback callback);
+	public void updateUser(User u, AsyncCallback callback);
 	
 	/**
 	 * Methode um einen User anhand seines Nicknamens zu suchen
 	 */
-	public User searchUserByNickname(String nickname, AsyncCallback callback);
+	public void searchUserByNickname(String nickname, AsyncCallback callback);
 	
 	/**
 	 * Methode um einen Beitrag zu erzeugen
@@ -63,7 +63,7 @@ public interface PinnwandverwaltungAsync {
 	/**
 	 * Methode um alle Beiträge eines Users auszugeben
 	 */
-	public Vector<Beitrag> findAllBeitraegeOfUser(User u, AsyncCallback callback);
+	public void findAllBeitraegeOfUser(User u, AsyncCallback callback);
 	/**
 	 * Methode um einen Beitrag zu Loeschen
 	 */
@@ -72,17 +72,17 @@ public interface PinnwandverwaltungAsync {
 	/**
 	 * Methode um einen Beitrag zu Bearbeiten
 	 */
-	public Beitrag editBeitrag(Beitrag b, AsyncCallback callback);
+	public void editBeitrag(Beitrag b, AsyncCallback callback);
 	
 	/**
 	 * Methode um alle Abonnements eines Users anzuzeigen
 	 */
-	public Vector<Abonnement> showAllAbonnementsByUser(User u, AsyncCallback callback);
+	public void showAllAbonnementsByUser(User u, AsyncCallback callback);
 	
 	/**
 	 * Methode um ein neues Abonnement zu erzeugen
 	 */
-	public void creatAbonnement(User u1, User u2, AsyncCallback callback);
+	public void createAbonnement(User u, Pinnwand p, AsyncCallback callback);
 	
 	/**
 	 * Methode um ein bestehendes Abonnement zu Loeschen
@@ -92,7 +92,7 @@ public interface PinnwandverwaltungAsync {
 	/**
 	 * Methode um einen neues Kommentar zu erzeugen
 	 */
-	public void createKommentar(String text, User user, Timestamp timeStamp, AsyncCallback callback);
+	public void createKommentar(String text, User user, Beitrag b, Timestamp timeStamp, AsyncCallback callback);
 	
 	/**
 	 * Methode zum Loeschen eines Kommentars
@@ -102,12 +102,12 @@ public interface PinnwandverwaltungAsync {
 	/**
 	 * Methode zum anzeigen aller Kommentare
 	 */
-	public Vector<Kommentar> findAllKommentare(Beitrag b, AsyncCallback callback);
+	public void findAllKommentare(Beitrag b, AsyncCallback callback);
 	
 	/**
 	 * Methode zum Bearbeiten eines Kommentars
 	 */
-	public Kommentar editKommentar(Kommentar k, AsyncCallback callback);
+	public void editKommentar(Kommentar k, AsyncCallback callback);
 	
 	/**
 	 * Methode zum erzeugen eines Likes
@@ -117,7 +117,7 @@ public interface PinnwandverwaltungAsync {
 	/**
 	 * Methode zur Ueberpruefung ob der Beitrag bereits geliket ist
 	 */
-	public boolean likeCheck(User u, Beitrag b, AsyncCallback callback);
+	public void likeCheck(User u, Beitrag b, AsyncCallback callback);
 	
 	/**
 	 * Methode um einen Beitrag zu entliken
@@ -127,12 +127,12 @@ public interface PinnwandverwaltungAsync {
 	/**
 	 * Methode um ein Like zu suchen
 	 */
-	public Like searchLike(Like l, AsyncCallback callback);
+	public void searchLike(Like l, AsyncCallback callback);
 	
 	/**
 	 * Methode um alle Likes eines Beitrags zu zaehlen
 	 */
-	public int countLikes(Beitrag b, AsyncCallback callback);
+	public void countLikes(Beitrag b, AsyncCallback callback);
 	
 	/**
 	 * Methode um Likes eines Beitrags zu entfernen

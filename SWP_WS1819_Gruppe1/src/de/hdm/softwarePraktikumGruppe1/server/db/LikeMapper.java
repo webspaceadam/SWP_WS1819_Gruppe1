@@ -152,7 +152,7 @@ public class LikeMapper {
 		return counter;
 				
 	}
-			}
+			
 	
 	/**
 	 * Methode zum suchen eines Beitrags anhand der User ID
@@ -195,6 +195,13 @@ public class LikeMapper {
 		
 	}
 	
+	//Methode, die alle Likes eines Beitrags zurückgibt
+	public Vector<Like> getLikesOfBeitrag(int beitragId){
+		Vector<Like> likesOfBeitrag = new Vector<Like>();
+		
+		return likesOfBeitrag;
+	}
+	
 		// Methode, die eine LikeBeziehung zwischen Nutzer und Beitrag prüft
 	
 	public boolean likeCheck(User u, Beitrag b) {
@@ -204,7 +211,7 @@ public class LikeMapper {
 				Statement stmt = con.createStatement();
 				
 				// Statement ausfuellen und als Query an die DB schicken
-				ResultSet rs = stmt.executeQuery("SELECT * FROM like WHERE UserID=" + u.getUserId() + " & Beitrag_BeitragID=" + b.getBeitragID());
+				ResultSet rs = stmt.executeQuery("SELECT * FROM like WHERE UserID=" + u.getUserId() + " & Beitrag_BeitragID=" + b.getBeitragId());
 				
 				if (rs.next()) {
 					return true;

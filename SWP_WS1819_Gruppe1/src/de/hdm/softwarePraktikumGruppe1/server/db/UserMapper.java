@@ -240,12 +240,12 @@ public class UserMapper {
 	 * L�schen der Daten eines User-Objekts aus der Datenbank.
 	 */
 			
-			public void delete(User user) {
+			public void deleteUser(int userId) {
 				Connection con = DBConnection.connection();
 
 				try {
 					Statement stmt = con.createStatement();
-					stmt.executeUpdate("DELETE FROM User " + "WHERE User_ID=" + user.getId());
+					stmt.executeUpdate("DELETE FROM User " + "WHERE User_ID=" + userId);
           
 				} catch (SQLException e) {
 					e.printStackTrace();
@@ -253,12 +253,12 @@ public class UserMapper {
 			}
 			
 	//Methode zum Aufruf aller Beiträge eines bestimmten Users
-			public Vector<Beitrag> getAllBeitraegeOfUser(User user){
+			public Vector<Beitrag> getAllBeitraegeOfUser(int userId){
 				Connection con = DBConnection.connection();	
 				Vector <Beitrag> v= new Vector<Beitrag>();
 				try {
 					Statement stmt = con.createStatement();
-					ResultSet rs = stmt.executeQuery("Select * FROM Beitrag WHERE User_UserID = "+ user.getId());
+					ResultSet rs = stmt.executeQuery("Select * FROM Beitrag WHERE User_UserID = "+ userId);
 					
 					while(rs.next()) {
 						Beitrag b =new Beitrag();
