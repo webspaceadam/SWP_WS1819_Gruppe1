@@ -73,10 +73,9 @@ public class LikeMapper {
 		Connection con = DBConnection.connection();
 		
 		try {
-			//leeres SQL-Statement anlegen
+				//leeres SQL-Statement anlegen
 				Statement stmt = con.createStatement();
-
-		      stmt.executeUpdate("DELETE FROM like " + "WHERE LikeID=" + l.getId());
+				stmt.executeUpdate("DELETE FROM like WHERE LikeID=" + l.getLikeID());
 		    }
 		    catch (SQLException e) {
 		      e.printStackTrace();
