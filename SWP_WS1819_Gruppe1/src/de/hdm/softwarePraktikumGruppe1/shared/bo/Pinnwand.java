@@ -23,6 +23,7 @@ public class Pinnwand extends BusinessObject {
 	 */
 	public Pinnwand(int userId) {
 		this.ownerId = userId;
+		
 	}
 	
 	/*

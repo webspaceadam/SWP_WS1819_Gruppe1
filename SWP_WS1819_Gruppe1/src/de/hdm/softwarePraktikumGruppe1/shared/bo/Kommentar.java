@@ -30,6 +30,8 @@ public class Kommentar extends Textbeitrag{
 		this.ownerId = owner;
 		this.beitragId = beitrag;
 		this.inhalt = inhalt;
+		
+		kommentarId += 1;
 	}
 	
 	/*
@@ -85,7 +87,7 @@ public class Kommentar extends Textbeitrag{
 	 * Methode die das Ibjekt Kommentar als String zurück gibt
 	 */
 	public String toString() {
-		String infoAboutKommentar = "Inhalt: " + this.getInhalt() + ". UserId " + this.getOwnerId();
+		String infoAboutKommentar = "Kommentar ID '" + this.getId() + "/ Inhalt: " + this.getInhalt() + "/ ID des Verfassers #" + this.getOwnerId();
 		return infoAboutKommentar;
 	}
 

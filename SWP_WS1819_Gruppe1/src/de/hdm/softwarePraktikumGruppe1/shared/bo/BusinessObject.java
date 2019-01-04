@@ -15,9 +15,15 @@ import java.sql.Timestamp;
 public abstract class BusinessObject implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
-	private int id = 0;
+	private int id = 1;
 	private Timestamp creationTimeStamp;
 	
+//	/**
+//	 * Konstruktor der Klasse BusinessObject der die ID bei bei jeder Erzeugung einer Instanz dieser Klasse um eins erhöht
+//	 */
+//	public BusinessObject() {
+//		id += 1;
+//	}
 	
 	/**
 	 * Methode um die ID des BusinessObjects zurueck zu bekommen
@@ -51,7 +57,7 @@ public abstract class BusinessObject implements Serializable{
 	 * Methode um den Klassennamen + die ID des Objekts zurueck zu geben
 	 */
 	public String toString() {
-		return this.getClass().getName() + " BO ID #" + this.id;
+		return this.getClass().getName();
 	}
 	
 	/**

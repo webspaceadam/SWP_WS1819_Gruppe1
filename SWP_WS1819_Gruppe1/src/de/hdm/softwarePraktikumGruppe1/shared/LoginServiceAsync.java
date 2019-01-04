@@ -11,6 +11,6 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
  */
 public interface LoginServiceAsync {
 
-	public LoginInfo login(String requestURL, AsyncCallback<LoginInfo> async);
+	public void login(String requestURL, AsyncCallback<LoginInfo> async);
 	
 }
