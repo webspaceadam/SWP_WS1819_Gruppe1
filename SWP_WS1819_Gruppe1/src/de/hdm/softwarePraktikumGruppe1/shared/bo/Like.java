@@ -24,6 +24,8 @@ public class Like extends BusinessObject{
 	public Like(int beitrag, int owner) {
 		this.beitragId = beitrag;
 		this.ownerId = owner;
+		
+		likeID += 1;
 	}
 	
 	/*
@@ -59,9 +61,7 @@ public class Like extends BusinessObject{
 	}
 	
 	public String toString() {
-		
-		
-		return "Like of ID: " + this.getLikeID() + " references to Beitrag: " + this.getBeitragId();
+		return "Like ID: " + this.getLikeID() + " references Beitrag: #" + this.getBeitragId();
 	}
 	
 	

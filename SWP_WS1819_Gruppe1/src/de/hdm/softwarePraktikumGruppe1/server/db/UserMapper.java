@@ -112,14 +112,14 @@ public class UserMapper {
 		try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("SELECT *" + "FROM user " + "ORDED BY UserID");
+			ResultSet rs = stmt.executeQuery("SELECT *" + "FROM user " + "ORDER BY UserID");
 			
 			while(rs.next()) {
 				User u = new User();
 				u.setId(rs.getInt("UserID"));
 				u.setNickname(rs.getString("Nickname"));
 				u.setFirstName(rs.getString("FirstName"));
-				u.setLastName(rs.getString("Nachname"));
+				u.setLastName(rs.getString("LastName"));
 				u.setGMail(rs.getString("Gmail"));
 				u.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
 				
@@ -174,7 +174,7 @@ public class UserMapper {
 			u.setId(rs.getInt("UserID"));
 			u.setNickname(rs.getString("Nickname"));
 			u.setFirstName(rs.getString("FirstName"));
-			u.setLastName(rs.getString("Nachname"));
+			u.setLastName(rs.getString("LastName"));
 			u.setGMail(rs.getString("Gmail"));
 			u.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
 			

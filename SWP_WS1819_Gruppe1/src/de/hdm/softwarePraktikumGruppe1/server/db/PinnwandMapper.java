@@ -86,7 +86,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 		}
 		 
 		//Methode die Tupels -> Objekte umwandelt
-		 public Pinnwand findPinnwandByUser(int userId) {
+		 public Pinnwand findPinnwandByUserId(int userId) {
 				
 			
 				Connection con = DBConnection.connection();

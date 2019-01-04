@@ -34,6 +34,8 @@ public class User extends BusinessObject{
 		this.firstName = first;
 		this.lastName = last;
 		this.gMail = gMail;
+		
+		userID += 1;
 	}
 	
 	/*
@@ -132,7 +134,7 @@ public class User extends BusinessObject{
 	 * Methode um eine textuelle Dastellung der jeweiligen Instanz zu erzeugen
 	 */
 	public String toString() {
-		return super.toString() + " " + this.firstName + " " + this.lastName;
+		return super.toString() + " UserID #" + this.getUserId() + " " + this.firstName + " " + this.lastName;
 	}
 	
 	/**

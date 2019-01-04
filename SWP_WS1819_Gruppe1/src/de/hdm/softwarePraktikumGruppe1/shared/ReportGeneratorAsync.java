@@ -13,15 +13,13 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.*;
  */
 public interface ReportGeneratorAsync {
 	
-	public void init();
-	
-	public void getBeitragFromUser(User u, Date d, AsyncCallback<ArrayList<Beitrag>> a);
+	public void getBeitraegeFromUser(User u, Date d, AsyncCallback<ArrayList<Beitrag>> a);
 	
 	public void getLikesFromUser(User u, Date d, AsyncCallback<ArrayList<Like>> a);
 	
 	public void getAbonnementFromPinnwand(Pinnwand p, Date d, AsyncCallback<ArrayList<User>> a);
 	
-	public void getKommentareFromBeitrag(Beitrag b, Date d, AsyncCallback<ArrayList<Kommentar>> a);
+	public void getKommentarFromBeitrag(Beitrag b, Date d, AsyncCallback<ArrayList<Kommentar>> a);
 	
 	public void getLikesFromBeitrag(Beitrag b, Date d, AsyncCallback<ArrayList<Like>> a);
 

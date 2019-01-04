@@ -2,11 +2,9 @@ package de.hdm.softwarePraktikumGruppe1.server;
 
 import java.sql.Timestamp;
 import java.util.Vector;
-import java.util.Vector;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-import de.hdm.softwarePraktikumGruppe1.client.service.Pinnwand.PinnwandService;
 import de.hdm.softwarePraktikumGruppe1.server.db.AbonnementMapper;
 import de.hdm.softwarePraktikumGruppe1.server.db.BeitragMapper;
 import de.hdm.softwarePraktikumGruppe1.server.db.KommentarMapper;
@@ -156,7 +154,7 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 //			}
 //		}
 		//Delete Pinnwand
-		deletePinnwand(this.pMapper.findPinnwandByUser(u.getUserId()));
+		deletePinnwand(this.pMapper.findPinnwandByUserId(u.getUserId()));
 		
 		//User löschen
 		this.uMapper.deleteUser(u);
@@ -365,12 +363,25 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	 */
 	
 	public void createPinnwand(User u, Timestamp timestamp) {
-		if (this.pMapper.findPinnwandByUser(u.getUserId())==null) {
+		if (this.pMapper.findPinnwandByUserId(u.getUserId()) == null) {
 			Pinnwand p = new Pinnwand();
 			p.setId(1);
 			p.setOwnerId(u.getUserId());
 			p.setCreationTimeStamp(timestamp);
 			this.pMapper.insertPinnwand(p);
+		}
+	}
+	
+	/**
+	 * Methode um eine Pinnwand auszugeben
+	 * @param User
+	 */
+	
+	public void findPinnwandByUserId(User u) {
+		if(this.pMapper.findPinnwandByUserId(u.getUserId()) == null) {
+			System.out.println("Keine Pinnwand von diesem User vorhanden.");
+		}else {
+			this.pMapper.findPinnwandByUserId(u.getUserId());
 		}
 	}
 	

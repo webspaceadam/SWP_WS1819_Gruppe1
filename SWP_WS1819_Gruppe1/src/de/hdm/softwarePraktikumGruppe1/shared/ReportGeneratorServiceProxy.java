@@ -21,7 +21,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 public class ReportGeneratorServiceProxy implements ReportGeneratorAsync, ServiceDefTarget{
 
 	@Override
-	public void getBeitragFromUser(User u, Date d, AsyncCallback<ArrayList<Beitrag>> a) {
+	public void getBeitraegeFromUser(User u, Date d, AsyncCallback<ArrayList<Beitrag>> a) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -39,13 +39,19 @@ public class ReportGeneratorServiceProxy implements ReportGeneratorAsync, Servic
 	}
 
 	@Override
-	public void getKommentareFromBeitrag(Beitrag b, Date d, AsyncCallback<ArrayList<Kommentar>> a) {
+	public void getKommentarFromBeitrag(Beitrag b, Date d, AsyncCallback<ArrayList<Kommentar>> a) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void getLikesFromBeitrag(Beitrag b, Date d, AsyncCallback<ArrayList<Like>> a) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void init(AsyncCallback<Void> initReportGeneratorCallback) {
 		// TODO Auto-generated method stub
 		
 	}

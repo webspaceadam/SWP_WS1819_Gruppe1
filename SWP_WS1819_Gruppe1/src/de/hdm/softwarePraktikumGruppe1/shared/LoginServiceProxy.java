@@ -12,9 +12,9 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 public class LoginServiceProxy implements ServiceDefTarget, LoginServiceAsync{
 
 	@Override
-	public LoginInfo login(String requestURL, AsyncCallback<LoginInfo> async) {
+	public void login(String requestURL, AsyncCallback<LoginInfo> async) {
 		// TODO Auto-generated method stub
-		return null;
+		return;
 	}
 
 }

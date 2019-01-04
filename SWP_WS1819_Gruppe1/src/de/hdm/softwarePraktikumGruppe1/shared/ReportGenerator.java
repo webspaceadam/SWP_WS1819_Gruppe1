@@ -6,6 +6,9 @@ package de.hdm.softwarePraktikumGruppe1.shared;
 import java.util.ArrayList;
 import java.util.Date;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.rpc.RemoteService;
+
 import de.hdm.softwarePraktikumGruppe1.shared.bo.*;
 
 /**
@@ -38,5 +41,8 @@ public interface ReportGenerator extends RemoteService{
 	 * Methode die die Likes eines Beitrags zurück gibt
 	 */
 	public ArrayList<Like> getLikesFromBeitrag(Beitrag b, Date d);
+	
+	public void init();
+
 
 }
