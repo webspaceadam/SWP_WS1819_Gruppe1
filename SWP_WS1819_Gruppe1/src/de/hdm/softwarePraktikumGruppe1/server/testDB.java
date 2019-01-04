@@ -2,6 +2,10 @@ package de.hdm.softwarePraktikumGruppe1.server;
 
 import java.sql.Timestamp;
 
+import de.hdm.softwarePraktikumGruppe1.shared.bo.Abonnement;
+import de.hdm.softwarePraktikumGruppe1.shared.bo.Beitrag;
+import de.hdm.softwarePraktikumGruppe1.shared.bo.Kommentar;
+import de.hdm.softwarePraktikumGruppe1.shared.bo.Like;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
 public class testDB {
@@ -13,8 +17,19 @@ public class testDB {
 		PinnwandverwaltungImpl impl = new  PinnwandverwaltungImpl();
 		impl.init();
 		
+		Beitrag b1 = new Beitrag();
 		
-		impl.createKommentar("kommentar", 1, 3, timestamp);
+		b1.setBeitragID(3);
+		
+		
+		Like l1 = new Like();
+		l1.setLikeID(2);
+		l1.setBeitragId(3);
+		l1.setOwnerId(2);
+		
+		System.out.println(l1.toString());
+		
+		impl.deleteLike(l1);
 	}
 
 }
