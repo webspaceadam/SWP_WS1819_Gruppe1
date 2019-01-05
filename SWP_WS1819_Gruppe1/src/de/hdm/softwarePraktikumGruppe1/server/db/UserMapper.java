@@ -265,7 +265,41 @@ public class UserMapper {
 				return null;  
 		}
 	
-	/* Ende:  Spezifische Methoden des Business Object Pinnwand
+	/*
+	 * Methode, die einen User anhand der Gmail zurueck gibt	
+	 */
+
+		public User findUserByGmail(String gMail) {
+			
+			Connection con =DBConnection.connection();
+			Vector<User> result = new Vector<User>();
+			
+			try {
+				
+			Statement stmt=con.createStatement();
+			ResultSet rs =stmt.executeQuery("SELECT * FROM user WHERE Gmail=" + "'"+ gMail+"'");
+					
+			while (rs.next()) {
+					
+				User u = new User();
+				u.setUserId(rs.getInt("UserID"));
+				u.setNickname(rs.getString("Nickname"));
+				u.setFirstName(rs.getString("FirstName"));
+				u.setLastName(rs.getString("LastName"));
+				u.setGMail(rs.getString("Gmail"));
+				u.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
+						
+				result.add(u);
+						
+				}
+				
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				return null;  
+		}		
+		
+	/* Ende:  Spezifische Methoden des Business Objects Pinnwand
 	 * ================================================================================================
 	 */
 	 
