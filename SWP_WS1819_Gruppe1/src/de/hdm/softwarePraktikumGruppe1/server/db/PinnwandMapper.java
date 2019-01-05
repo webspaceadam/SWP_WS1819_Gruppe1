@@ -5,6 +5,7 @@ import java.sql.*;
 import java.util.Vector;
 
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Beitrag;
+import de.hdm.softwarePraktikumGruppe1.shared.bo.Kommentar;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Like;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Pinnwand;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
@@ -39,66 +40,29 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 			 return pinnwandMapper;
 			}
 		 
+		 /*
+		  * =============================================================================================
+		  * Beginn: Standard-Mapper-Methoden. Innerhalb dieses Bereichs werden alle Methoden aufgezählt, die
+		  * in allen Mapper-Klassen existieren.
+		  */
 		 
-		//Objekt -> Tupel
-		 public void insertPinnwand (Pinnwand p) {
-			 
-			//leeres SQL-Statement anlegen
-			 Connection con = DBConnection.connection();
 		 
-		 try{
-			 
-				//leeres SQL-Statement anlegen
-			 Statement stmt = con.createStatement();
-			 
-			        // Jetzt erst erfolgt die tats�chliche Einf�geoperation
-			        stmt.executeUpdate("INSERT INTO pinnwand (UserFk) "
-			            + "VALUES (" + p.getOwnerId()+")");
-		      	
-		    }
-			
-		    catch (SQLException e) {
-		      e.printStackTrace();
-		    }
-			 
-
-		 }
-
-
-		 //Objekt -> Tupel
-		public void deletePinnwand(Pinnwand p) {
-			
-			
-			 Connection con = DBConnection.connection();
-			 
-		 try {
-			 
-			//leeres SQL-Statement anlegen
-			 Statement stmt = con.createStatement();
-			 stmt.executeUpdate("DELETE FROM pinnwand WHERE PinnwandID=" +p.getPinnwandId());
-		 }
+		 /*
+		  * Methode, die eine Pinnwand anhand einer ID zurueckgibt
+		  */
 		 
-		 catch (SQLException e) {
-		      e.printStackTrace();
-		    }
-			 
-
-		}
-		 
-		//Methode die Tupels -> Objekte umwandelt
-		 public Pinnwand findPinnwandByUserId(int userId) {
+		 public Pinnwand findPinnwandById(int pinnwandId) {
 				
-			
+				
 				Connection con = DBConnection.connection();
-						
-				//Versuch der Abfrage
+				
 				try{
 					
 					//leeres SQL-Statement anlegen
 					Statement stmt = con.createStatement();
 					
 					//Suche alle Felder der Pinnwandtabelle anhand von ID
-					ResultSet rs = stmt.executeQuery("SELECT * FROM pinnwand WHERE UserFK=" + userId);
+					ResultSet rs = stmt.executeQuery("SELECT * FROM pinnwand WHERE PinnwandID=" + pinnwandId);
 
 					 
 					if (rs.next()) {
@@ -119,40 +83,145 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 					  }
 				return null;
 		 }
-
-
-
-//		public void deletePinnwandOfUser(User u) {
-//			// TODO Auto-generated method stub
-//			
-//		}
-//	
 		 
-	    public Vector<Pinnwand> findAllPinnwaende(){
-	    	Connection con = DBConnection.connection();
-	    	
-	    	Vector<Pinnwand> result = new Vector<Pinnwand>();
-	    	
-	    	try {
-	    		
-	    		Statement stmt = con.createStatement();
-	    		ResultSet rs = stmt.executeQuery("SELECT * FROM pinnwand" + "ORDED BY PinnwandID");
-	    		
-	    		while(rs.next()) {
-	    			Pinnwand p = new Pinnwand();
-	    			p.setId(rs.getInt("PinnwandID"));
-	    			p.setOwnerId(rs.getInt("UserFk"));
-	    			p.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
-	    			
-	    			result.addElement(p);
-	    			
-	    		}
-	    		
-	    	}catch (SQLException e1) {
-	    		e1.printStackTrace();
-	    			
-	    			
-	    		}
-	    	return result;
-	    	
-	    }}
+		 /*
+		  * Methode, die ein Pinnwand-Objekt in die Datenbank lädt.
+		  */
+		 public void insertPinnwand (Pinnwand p) {
+			 
+			//leeres SQL-Statement anlegen
+			 Connection con = DBConnection.connection();
+		 
+		 try{
+			
+			//leeres SQL-Statement anlegen
+			Statement stmt = con.createStatement();
+			 
+			//Ausführen eines Insert-Statements um das Objekt in die Datenbank zu laden.
+			stmt.executeUpdate("INSERT INTO pinnwand (UserFk) VALUES (" + p.getOwnerId()+")");
+		    }
+			catch (SQLException e) {
+		      e.printStackTrace();
+		    } 
+		 }
+		 
+		 /*
+		  * Methode, die ein bestehendes Pinnwand-Objekt in der Datenbank updated.
+		  */
+		 public void updatePinnwand (Pinnwand p) {
+			 
+			//Aufbau der DBVerbindung
+			Connection con = DBConnection.connection();
+					
+			//Versuch der Abfrage
+			try {
+					    	
+				//leeres SQL-Statement anlegen	
+				Statement stmt = con.createStatement();
+					      
+				//Aktualisieren des Inhalts
+				stmt.executeUpdate("UPDATE pinnwand SET UserFK=\"" + p.getOwnerId() + "\" WHERE PinnwandID=" + p.getPinnwandId());
+					      						
+			}
+			catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+		 }
+		 
+		 /*
+		  * Methode, die ein bestehendes Pinnwand-Objekt in der Datenbank löscht.
+		  */
+
+		 public void deletePinnwand(Pinnwand p) {
+			
+			//Aufbau der DBVerbindung
+			Connection con = DBConnection.connection();
+						
+			//Versuch der Abfrage
+			try {
+						    	
+				//leeres SQL-Statement anlegen	
+				Statement stmt = con.createStatement();
+			
+			 stmt.executeUpdate("DELETE FROM pinnwand WHERE PinnwandID=" +p.getPinnwandId());
+		 }
+		 
+		 catch (SQLException e) {
+		      e.printStackTrace();
+		    }
+		}
+		/* Ende: Standard-Mapper-Methoden
+		 * ================================================================================================
+		 * Beginn: Foreign Key-Mapper-Methoden
+		 */
+		 
+		 /*
+		  * Methode, die die Pinnwand eines Users anhand der UserId zurückgibt.
+		  */
+		 public Pinnwand findPinnwandByUserId(int userId) {
+				
+			Connection con = DBConnection.connection();
+						
+			//Versuch der Abfrage
+			try{
+					
+				//leeres SQL-Statement anlegen
+				Statement stmt = con.createStatement();
+		
+				//Suche alle Felder der Pinnwandtabelle anhand von ID
+				ResultSet rs = stmt.executeQuery("SELECT * FROM pinnwand WHERE UserFK=" + userId);
+ 
+					if (rs.next()) {
+						// Ergebnis in Pinnwandobjekt umwandeln
+						Pinnwand p = new Pinnwand();	
+						p.setPinnwandId(rs.getInt("PinnwandID"));
+						p.setOwnerId(rs.getInt("UserFK"));
+						p.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
+						
+						return p;
+
+						}
+					}
+						
+					catch (SQLException e) {
+					   e.printStackTrace();
+					   
+					  }
+				return null;
+		 }
+		 }
+
+
+		 /* Ende: Foreign Key-Mapper-Methoden
+			 * ================================================================================================
+			 * Beginn: Spezifische Methoden des Business Object Pinnwand
+			 */		 
+//	    public Vector<Pinnwand> findAllPinnwaende(){
+//	    	Connection con = DBConnection.connection();
+//	    	
+//	    	Vector<Pinnwand> result = new Vector<Pinnwand>();
+//	    	
+//	    	try {
+//	    		
+//	    		Statement stmt = con.createStatement();
+//	    		ResultSet rs = stmt.executeQuery("SELECT * FROM pinnwand" + "ORDED BY PinnwandID");
+//	    		
+//	    		while(rs.next()) {
+//	    			Pinnwand p = new Pinnwand();
+//	    			p.setId(rs.getInt("PinnwandID"));
+//	    			p.setOwnerId(rs.getInt("UserFk"));
+//	    			p.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
+//	    			
+//	    			result.addElement(p);
+//	    			
+//	    		}
+//	    		
+//	    	}catch (SQLException e1) {
+//	    		e1.printStackTrace();
+//	    			
+//	    			
+//	    		}
+//	    	return result;
+//	    	
+//	    }}
