@@ -5,6 +5,7 @@ import java.util.Vector;
 import java.sql.*;
 
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Beitrag;
+import de.hdm.softwarePraktikumGruppe1.shared.bo.Kommentar;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Like;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
@@ -14,7 +15,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
  * @author GianlucaBernert
  * @autor Ulus Serhat
  * @author Yesin Soufi
- *
+ * @autor SebastianHermann
  */
 public class LikeMapper {
 	
@@ -40,220 +41,204 @@ public class LikeMapper {
 		return likeMapper;
 	}
 	
+	/*
+	 * =============================================================================================
+	 * Beginn: Standard-Mapper-Methoden. Innerhalb dieses Bereichs werden alle Methoden aufgezählt, die
+	 * in allen Mapper-Klassen existieren.
+	 */	
 	
-	/**
-	 * Methode zum speichern eines Likes
+	/*
+	 * Methode, die einen Like anhand einer Id zurueck gibt
 	 */
-	//Objekt -> Tupel
-	public void insertLike(Like l) {
-		 Connection con = DBConnection.connection();
-
-		    try {
-				//leeres SQL-Statement anlegen
-		      Statement stmt = con.createStatement();
-
-		        // Jetzt erst erfolgt die tats�chliche Einf�geoperation
-		        stmt.executeUpdate("INSERT INTO like (BeitragFK, UserFK) "
-		            + "VALUES (" + l.getBeitragId()+ ", " + l.getOwnerId()+")");
-		      }
-		    
-		    catch (SQLException e) {
-		      e.printStackTrace();
-		    }
-		
-
-		    
-	}
-	
-	/**
-	 * Methode zum loeschen eines Likes
-	 */
-	//Objekt -> Tupel
-	public void deleteLike(Like l) {
+		public Like findLikeById(int likeId) {
+		//Aufbau der DBVerbindung
 		Connection con = DBConnection.connection();
-		
-		try {
-				//leeres SQL-Statement anlegen
-				Statement stmt = con.createStatement();
-				stmt.executeUpdate("DELETE FROM like WHERE LikeID=" + l.getLikeID());
-		    }
-		    catch (SQLException e) {
-		      e.printStackTrace();
-		    }
-		  }
-	
-	
-	/**
-	 * Methode zum suchen eines Beitrags anhand der User ID
-	 */
-	public Vector<Like> getLikesOfUser(int userID){
-		
-	
-		Connection con = DBConnection.connection();
-		Vector <Like> vector= new Vector<Like>();
-
-		try {
+			
+		//Versuch der Abfrage
+		try{
+				
 			//leeres SQL-Statement anlegen
 			Statement stmt = con.createStatement();
-			
-			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT * FROM like WHERE UserID=" + userID);
-
-			while (rs.next()) {
-
-		        Like l = new Like();	        
-		        l.setOwnerId(rs.getInt("UserFK"));
-		        l.setBeitragId(rs.getInt("BeitragFK"));
-		        l.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
-		        vector.add(l);
-
-		      }
-			return vector;
-		}
-
-	    catch (SQLException e) {
-	    		e.printStackTrace();
-	    }
-		return null;
-	 }
-	/**
-	 * Methode zum zählen aller Likes eines Beitrags
-	 */
-//	public int countAllLikesFromBeitrag(Beitrag b) {
-//		
-//
-//		int counter = 0;
-//		
-//
-//		//DB-Verbindung holen
-//		Connection con = DBConnection.connection();
-//		
-//		try {
-//			//leeres SQL-Statement anlegen
-//			Statement stmt  = con.createStatement();
-//			
-//			// Statement ausfuellen und als Query an die DB schicken
-//			ResultSet rs = stmt.executeQuery("SELECT * FROM like WHERE BeitragID=" + b.getId());
-//					
-//					
-//					while (rs.next()) {
-//				        counter++;
-//				      }
-//					
-//					return counter;
-//					
-//				}
-//
-//			    catch (SQLException e) {
-//			    		e.printStackTrace();
-//			    		
-//
-//			    }
-//		return counter;
-//				
-//	}
-//			
-	
-//	/**
-//	 * Methode zum suchen eines Beitrags anhand der User ID
-//	 */
-//	public Vector<Like> getLikeByUserId(int userID){
-//		
-//	
-//		Connection con = DBConnection.connection();
-//		Vector <Like> vector= new Vector<Like>();
-//
-//		try {
-//			//leeres SQL-Statement anlegen
-//			Statement stmt = con.createStatement();
-//			
-//			// Statement ausfuellen und als Query an die DB schicken
-//			ResultSet rs = stmt.executeQuery("SELECT * FROM like WHERE UserID=" + userID);
-//
-//			while (rs.next()) {
-//
-//		        Like l = new Like();	        
-//		        l.setOwnerId(rs.getInt("User_UserID"));
-//		        l.setBeitragId(rs.getInt("Beitrag_BeitragID"));
-//		        vector.add(l);
-//
-//		      }
-//			return vector;
-//		}
-//
-//	    catch (SQLException e) {
-//	    		e.printStackTrace();
-//	    }
-//		return null;
-//	 }
-
-
-//		// Methode, die alle Likes eines Beitrags löscht
-//
-//	public void deleteAllLikesFromBeitrag(Beitrag b) {
-//		
-//		
-//	}
-//	
-	//Methode, die alle Likes eines Beitrags zurückgibt
-	public Vector<Like> getLikesOfBeitrag(int beitragId){
-		Connection con = DBConnection.connection();
-		Vector<Like> likesOfBeitrag = new Vector<Like>();
-		
-		try {
-			//leeres SQL-Statement anlegen
-			Statement stmt = con.createStatement();
-			
-			// Statement ausfuellen und als Query an die DB schicken
-			ResultSet rs = stmt.executeQuery("SELECT * FROM like WHERE BeitragFK=" + beitragId);
-
-			while (rs.next()) {
-		        Like l = new Like();	        
-		        l.setOwnerId(rs.getInt("UserFK"));
-		        l.setBeitragId(rs.getInt("BeitragFK"));
-		        l.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
-		        likesOfBeitrag.add(l);
-		        }
-		}catch(SQLException e) {
-				e.printStackTrace();
-				return null;
+				
+			//Suche alle Felder der Kommentartabelle anhand von ID
+			ResultSet rs = stmt.executeQuery("SELECT * FROM 'like' WHERE LikeID=" + likeId );
+							
+			if (rs.next()) {		
+				// Ergebnis in Beitragobjekt umwandeln
+				Like l = new Like();
+				l.setLikeId(rs.getInt("LikeID"));
+				l.setOwnerId(rs.getInt("UserFK"));
+				l.setBeitragId(rs.getInt("BeitragFK"));
+				        
+				//Kommentarobjekt zurückgeben
+				return l;
+				}
 			}
-		
-		return likesOfBeitrag;
-	}
+		    catch (SQLException e) {
+		      e.printStackTrace();
+		    }
+			return null;
+		} 
 	
-		// Methode, die eine LikeBeziehung zwischen Nutzer und Beitrag prüft
+	/*
+	 * Methode, die das Anlegen eines Like-Objekts ermöglicht
+	 */
+		public void insertLike(Like l) {
+			 Connection con = DBConnection.connection();
 	
-	public Like likeCheck(User u, Beitrag b) {
-		
-		Connection con = DBConnection.connection();
-		
-		
 			try {
+				
+			Statement stmt = con.createStatement();
+			stmt.executeUpdate("INSERT INTO 'like' (BeitragFK, UserFK) VALUES (" + l.getBeitragId()+ ", " + l.getOwnerId()+")");
+			}
+			    
+			catch (SQLException e) {
+			e.printStackTrace();
+			}
+		}
+		
+	/*
+	 * Methode, die das Updaten eines Like-Objekts in der Datenbank ermöglicht	
+	 */
+		public void updateLike(Like l){
+			//Aufbau der DBVerbindung
+			Connection con = DBConnection.connection();
+				
+			//Versuch der Abfrage
+			try {
+			//leeres SQL-Statement anlegen	
+			Statement stmt = con.createStatement();
+			//statement befuellen
+			stmt.executeUpdate("UPDATE 'like' SET BeitragFK=\"" + l.getBeitragId() + ", UserFK=\""+ l.getOwnerId() + "\" WHERE LikeID=" + l.getLikeId());
+				      						
+			}	
+			catch (SQLException e) {
+				e.printStackTrace();
+			} 
+		}
+	
+	/*
+	 * Methode, die das Loeschen eines Like-Objekts aus der Datenbank ermöglicht
+	 */
+		public void deleteLike(Like l) {
+			//Aufbau der DBVerbindung
+			Connection con = DBConnection.connection();
+			
+			//Versuch der Abfrage
+			try {
+			//leeres SQL-Statement anlegen
+			Statement stmt = con.createStatement();
+			//statement befuellen
+			stmt.executeUpdate("DELETE FROM 'like' WHERE LikeID=" + l.getLikeId());
+			}
+			catch (SQLException e) {
+			e.printStackTrace();
+			}
+		}
+	
+		
+	/* Ende: Standard-Mapper-Methoden
+	 * ================================================================================================
+	 * Beginn: Foreign Key-Mapper-Methoden
+	 */
+	
+	/*
+	 * Methode, die alle Likes eines Users zurueck gibt
+	 */
+		public Vector<Like> findLikesOfUser(int userId){
+			
+			Connection con = DBConnection.connection();
+			Vector <Like> vector= new Vector<Like>();
+	
+			try {
+				//leeres SQL-Statement anlegen
 				Statement stmt = con.createStatement();
 				
 				// Statement ausfuellen und als Query an die DB schicken
-				ResultSet rs = stmt.executeQuery("SELECT * FROM like WHERE UserFK=" + u.getUserId() + " & BeitragFK=" + b.getBeitragId());
-				
-					if (rs.next()) {
-						Like l = new Like();
-						l.setBeitragId(rs.getInt("BeitragFK"));
-						l.setOwnerId(rs.getInt("UserFK"));		
-						return l;
-					}
-					else {
-						return null;
-					}
-				}
-			catch(SQLException e) {
-				e.printStackTrace();
-				return null;
+				ResultSet rs = stmt.executeQuery("SELECT * FROM 'like' WHERE UserID=" + userId);
+	
+				while (rs.next()) {
+	
+			        Like l = new Like();	        
+			        l.setOwnerId(rs.getInt("User_UserID"));
+			        l.setBeitragId(rs.getInt("Beitrag_BeitragID"));
+			        vector.add(l);
+	
+			      }
+				return vector;
 			}
+	
+		    catch (SQLException e) {
+		    		e.printStackTrace();
+		    }
+			return null;
+		 }
+	
+	/*
+	 * Methode, die alle Likes eines Beitrags zurueck gibt
+	 */
+		public Vector<Like> findLikesOfBeitrag(int beitragId){
+			Connection con = DBConnection.connection();
+			Vector<Like> result = new Vector<Like>();
 			
-	}
-//
-//	public void deleteAllLikesFromUser(User u) {
-//		// TODO Auto-generated method stub
-//		
-//	}
+			try {
+				//leeres SQL-Statement anlegen
+				Statement stmt = con.createStatement();
+				
+				// Statement ausfuellen und als Query an die DB schicken
+				ResultSet rs = stmt.executeQuery("SELECT * FROM 'like' WHERE BeitragFK=" + beitragId);
+	
+				while (rs.next()) {
+			        Like l = new Like();	        
+			        l.setOwnerId(rs.getInt("UserFK"));
+			        l.setBeitragId(rs.getInt("BeitragFK"));
+			        l.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
+			        result.add(l);
+			        }
+			}catch(SQLException e) {
+					e.printStackTrace();
+					return null;
+				}
+			
+			return result;
+		}
+		
+	/*
+	 *  Methode, die den Like eines Users von einem bestimmten Beitrag zurueck gibt
+	 */
+		public Like findLikeOfUserAndBeitrag(int userId, int beitragId) {
+			
+			Connection con = DBConnection.connection();
+			
+				try {
+				Statement stmt = con.createStatement();
+					
+				// Statement ausfuellen und als Query an die DB schicken
+				ResultSet rs = stmt.executeQuery("SELECT * FROM like WHERE UserFK=" + userId + " & BeitragFK=" + beitragId);
+					
+				if (rs.next()) {
+					Like l = new Like();
+					l.setBeitragId(rs.getInt("BeitragFK"));
+					l.setOwnerId(rs.getInt("UserFK"));		
+					return l;
+				}
+				else {
+					return null;
+				}
+				}
+				catch(SQLException e) {
+					e.printStackTrace();
+					return null;
+				}
+				
+		}
+	/* Ende:  Foreign Key-Mapper-Methoden
+	 * ================================================================================================
+	 * Beginn: Spezifische Business Object Methoden
+	 */	
+		
+	/* Ende:  Spezifische Methoden des Business Object Pinnwand
+	 * ================================================================================================
+	 */	
+
 }

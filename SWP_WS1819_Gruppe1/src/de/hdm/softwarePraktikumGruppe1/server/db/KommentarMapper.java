@@ -108,7 +108,7 @@ public class KommentarMapper {
 	 	}
 	 	
 	 /*
-	  * Methode, die das Update eines Kommentarobjekts in der Datenbank ermöglicht.
+	  * Methode, die das Updaten eines Kommentarobjekts in der Datenbank ermöglicht.
 	  */
 	 	 public void updateKommentar(Kommentar k){
 			//Aufbau der DBVerbindung
@@ -212,5 +212,9 @@ public class KommentarMapper {
 	/* Ende:  Foreign Key-Mapper-Methoden
 	 * ================================================================================================
 	 * Beginn: Spezifische Business Object Methoden
+	 */	
+	
+	/* Ende:  Spezifische Methoden des Business Object Pinnwand
+	 * ================================================================================================
 	 */	
 }

@@ -161,7 +161,7 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	}
 	
 	public Pinnwand getPinnwandOfUser(int userId) {
-		return this.pMapper.findPinnwandByUser(userId);
+		return this.pMapper.findPinnwandByUserId(userId);
 	}
 	
 	/**
@@ -174,7 +174,7 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	/**
 	 * Methode um einen User anhand seiner ID zu suchen
 	 */
-	public User searchUserById(int userId) {
+	public User getUserById(int userId) {
 		return this.uMapper.findByUserID(userId);
 	}
 	
@@ -189,7 +189,7 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	/**
 	 * Methode um einen User anhand seines Nicknamens zu suchen
 	 */
-	public User searchUserByNickname(String nickname) {
+	public User getUserByNickname(String nickname) {
 		return uMapper.findUserByNickname(nickname);
 	}
 	
@@ -205,8 +205,8 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 		this.bMapper.insertBeitrag(b);
 	}
 	
-	public Beitrag getBeitragByBeitragID(int beitragId) {
-		return this.bMapper.getBeitragByBeitragtId(beitragId);
+	public Beitrag getBeitragByID(int beitragId) {
+		return this.bMapper.findBeitragByBeitragtId(beitragId);
 	}
 	
 	/**
@@ -383,7 +383,7 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	public void createPinnwand(User u, Timestamp timestamp) {
 		if (this.pMapper.findPinnwandByUserId(u.getUserId()) == null) {
 			Pinnwand p = new Pinnwand();
-			p.setId(1);
+			p.setPinnwandId(1);
 			p.setOwnerId(u.getUserId());
 			p.setCreationTimeStamp(timestamp);
 			this.pMapper.insertPinnwand(p);

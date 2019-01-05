@@ -190,14 +190,20 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 					  }
 				return null;
 		 }
-		 }
+		 
+	}
 
 
-		 /* Ende: Foreign Key-Mapper-Methoden
-			 * ================================================================================================
-			 * Beginn: Spezifische Methoden des Business Object Pinnwand
-			 */		 
-//	    public Vector<Pinnwand> findAllPinnwaende(){
+	/* Ende: Foreign Key-Mapper-Methoden
+	 * ================================================================================================
+	 * Beginn: Spezifische Methoden des Business Object Pinnwand
+	 */		 
+
+	/* Ende:  Spezifische Methoden des Business Object Pinnwand
+	 * ================================================================================================
+	 */	
+//		Methode überflüsslig
+//		public Vector<Pinnwand> findAllPinnwaende(){
 //	    	Connection con = DBConnection.connection();
 //	    	
 //	    	Vector<Pinnwand> result = new Vector<Pinnwand>();

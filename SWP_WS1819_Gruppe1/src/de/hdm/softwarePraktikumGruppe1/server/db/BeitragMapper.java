@@ -54,10 +54,10 @@ public class BeitragMapper {
 	}
 	
 	/*
-	  * =============================================================================================
-	  * Beginn: Standard-Mapper-Methoden. Innerhalb dieses Bereichs werden alle Methoden aufgezählt, die
-	  * in allen Mapper-Klassen existieren.
-	  */
+	 * =============================================================================================
+	 * Beginn: Standard-Mapper-Methoden. Innerhalb dieses Bereichs werden alle Methoden aufgezählt, die
+	 * in allen Mapper-Klassen existieren.
+	 */
 	
 	/*
 	 * Methode, die einen Beitrag ahnand einer Id zurueckgibt
@@ -222,6 +222,10 @@ public class BeitragMapper {
 	/* Ende:  Foreign Key-Mapper-Methoden
 	 * ================================================================================================
 	 * Beginn: Spezifische Business Object Methoden
-	 */		
+	 */	
+	
+	/* Ende:  Spezifische Methoden des Business Object Pinnwand
+	 * ================================================================================================
+	 */	
 	
 }
