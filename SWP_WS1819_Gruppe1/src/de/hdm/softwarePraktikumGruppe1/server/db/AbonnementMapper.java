@@ -111,7 +111,7 @@ public class AbonnementMapper {
 			try {
 				Statement stmt = con.createStatement();
 
-				stmt.executeUpdate("UPDATE Abonnement SET UserFK=\""+ a.getOwnerId() + ", PinnwandFK=\""+ a.getPinnwandId() + "WHERE id=" + a.getAbonnementId() );
+				stmt.executeUpdate("UPDATE Abonnement SET UserFK=\""+ a.getOwnerId() + ", PinnwandFK=\""+ a.getPinnwandId() + "WHERE AbonnementID=" + a.getAbonnementId() );
 
 			} catch (SQLException e) {
 				e.printStackTrace();
