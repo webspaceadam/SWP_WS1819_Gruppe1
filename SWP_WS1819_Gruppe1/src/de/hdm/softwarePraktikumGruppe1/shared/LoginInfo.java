@@ -3,11 +3,13 @@
  */
 package de.hdm.softwarePraktikumGruppe1.shared;
 
+import java.io.Serializable;
+
 /**
  * @author GianlucaBernert
  *
  */
-public class LoginInfo {
+public class LoginInfo implements Serializable{
 	
 	private boolean loggedIn;
 	private String loginURL;

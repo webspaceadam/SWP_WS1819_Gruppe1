@@ -3,11 +3,13 @@
  */
 package de.hdm.softwarePraktikumGruppe1.shared.bo;
 
+import java.io.Serializable;
+
 /**
  * @author GianlucaBernert, AdamGniady
  * Klasse eines Abonnement Objekts das BusinessObject als Superklasse besitzt
  */
-public class Abonnement {
+public class Abonnement extends BusinessObject{
 	
 	private static final long serialVersionUID = 1L;
 	private int abonnementId;
@@ -24,13 +26,14 @@ public class Abonnement {
 	public Abonnement(int ownerId, int pinnwandId) {
 		this.ownerId = ownerId;
 		this.pinnwandId = pinnwandId;
+		
+		abonnementId +=1;
 	}
 	
 	/*
 	 * Leerer Konstruktor. Die Zuweisung der Attribute wird über die Setter-Methoden realisiert.
 	 */
 	public Abonnement() {
-		
 	}
 	
 	/*

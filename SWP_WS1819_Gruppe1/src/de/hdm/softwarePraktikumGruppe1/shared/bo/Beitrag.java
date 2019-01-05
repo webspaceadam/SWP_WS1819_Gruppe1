@@ -9,7 +9,7 @@ import java.util.*;
  * @author SebastianHermann, GianlucaBernert, AdamGniady
  * Klasse eines Beitrag Objekts das Textbeitrag als Superklasse besitzt
  */
-public class Beitrag extends Textbeitrag{
+public class Beitrag extends Textbeitrag {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -41,6 +41,8 @@ public class Beitrag extends Textbeitrag{
 		this.ownerId = ownerId;
 		this.pinnwandId = pinnwand;
 		this.inhalt = inhalt;
+		
+		beitragId += 1;
 	}
 	
 	/*
@@ -101,7 +103,7 @@ public class Beitrag extends Textbeitrag{
 	 * Methode um eine textuelle Dastellung der jeweiligen Instanz zu erzeugen
 	 */
 	public String toString() {
-		return super.toString() + " User ID #" + this.getOwnerId();
+		return super.toString() + " Beitrag ID #" + this.getBeitragId();
 	}
 
 	public static long getSerialversionuid() {
