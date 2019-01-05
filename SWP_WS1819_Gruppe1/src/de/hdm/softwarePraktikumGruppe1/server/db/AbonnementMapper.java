@@ -43,7 +43,16 @@ public class AbonnementMapper {
 		return abonnementMapper;
 	}
 	
-	public Abonnement findById(int abonnementId) {
+	/*
+	 * =============================================================================================
+	 * Beginn: Standard-Mapper-Methoden. Innerhalb dieses Bereichs werden alle Methoden aufgezählt, die
+	 * in allen Mapper-Klassen existieren.
+	 */	
+		
+	/*
+	 * Methode, die einen Abonnement anhand einer Id zurueck gibt
+	 */
+		public Abonnement findById(int abonnementId) {
 		
 		Connection con = DBConnection.connection();
 		
@@ -51,11 +60,11 @@ public class AbonnementMapper {
 		try {
 			Statement stmt = con.createStatement();
 		
-			ResultSet rs = stmt.executeQuery ("SELECT*  FROM abonnement WHERE AbonnementID=" + abonnementId + " ORDER BY Abonnement_ID");
+			ResultSet rs = stmt.executeQuery ("SELECT*  FROM abonnement WHERE AbonnementID=" + abonnementId + " ORDER BY AbonnementID");
 	
 				if(rs.next()) {
 				Abonnement a = new Abonnement();
-				a.setOwnerId(rs.getInt("AbonnementID"));
+				a.setAbonnementId(rs.getInt("AbonnementID"));
 				a.setOwnerId(rs.getInt("UserFK"));
 				a.setPinnwandId(rs.getInt("PinnwandFK"));
 				
@@ -67,148 +76,139 @@ public class AbonnementMapper {
 			}
 			return null;
 		}
+	
+	
+	/*
+	 * Methode, die das Anlegen eines Abonnement-Objekts ermöglicht
+	 */
 		
-	public Vector<Abonnement> findAll(Vector<Abonnement> result){
+	public Abonnement insert(Abonnement a) {
 		Connection con = DBConnection.connection();
+			try {
+			Statement stmt = con.createStatement();
+				ResultSet rs = stmt.executeQuery("SELECT MAX(AbonnementID) AS maxid " + "FROM abonnement ");
+				if (rs.next()) {
+				
+				a.setOwnerId(rs.getInt("maxid") + 1);
+				stmt = con.createStatement();
+				
+				stmt.executeUpdate("INSERT INTO abonnement (PinnwandFK, UserFK) " + "VALUES (" +
+						"'" + a.getPinnwandId() + "'," + 
+						"'" + a.getOwnerId() + "'");	
+			}
+			} catch (SQLException e) {
+			e.printStackTrace();
+			}
+		return a;			
+	}
+
+	/*
+	 * Methode, die das Updaten eines Abonnement-Objekts in der Datenbank ermöglicht	
+	 */
+		public Abonnement update(Abonnement a) {
+			Connection con = DBConnection.connection();
+
+			try {
+				Statement stmt = con.createStatement();
+
+				stmt.executeUpdate("UPDATE Abonnement SET UserFK=\""+ a.getOwnerId() + ", PinnwandFK=\""+ a.getPinnwandId() + "WHERE AbonnementID=" + a.getAbonnementId() );
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+			
+			return a; 
+		}
+	/*
+	 * Methode, die das Loeschen eines Abonnement-Objekts aus der Datenbank ermöglicht
+	 */
+		public void deleteAbonnement(Abonnement a) {
+			Connection con = DBConnection.connection();
+
+			try {
+				Statement stmt = con.createStatement();
+
+				stmt.executeUpdate("DELETE FROM abonnement " + "WHERE AbonnementID=" + a.getAbonnementId());
+			} catch (SQLException e) {
+				e.printStackTrace();
+				} 
+			}
+		
+	/* Ende: Standard-Mapper-Methoden
+	 * ================================================================================================
+	 * Beginn: Foreign Key-Mapper-Methoden
+	 */
+		
+	/*
+	 * Methode, die alle Abonnements eines Users zurueck gibt
+	 */
+		public Vector<Abonnement> getAbonnementsOfUser(int userId){
+			
+			Connection con= DBConnection.connection();
+			Vector <Abonnement> result = new Vector <Abonnement>();
 			
 		try {
+			
 			Statement stmt = con.createStatement();
-				
-			ResultSet rs = stmt.executeQuery("SELECT *" + "FROM Abonnement" + "ORDER BY AbonnementID");
-				
-			while(rs.next()) {
-				Abonnement a = new Abonnement();
-				a.setAbonnementId(rs.getInt("AbonnementID"));
-				a.setOwnerId(rs.getInt("UserFK"));
-				a.setPinnwandId(rs.getInt("PinnwandFK"));
-				
-				result.addElement(a);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM abonnement " + "WHERE UserFK=" + userId);
+					
+				while(rs.next()) {
+					
+					Abonnement a = new Abonnement();
+					
+					a.setAbonnementId(rs.getInt("AbonnementID"));
+					a.setPinnwandId(rs.getInt("PinnwandFK"));
+					a.setOwnerId(rs.getInt("UserFK"));
+						
+					result.addElement(a);
 				}
-		}catch (SQLException e) {
+					
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-				
-			return result;
-					
-				}
+		
+		return result;
 			
-	public Abonnement insert(Abonnement a) {
-				Connection con = DBConnection.connection();
+		}
 
-				try {
-					Statement stmt = con.createStatement();
-
-					ResultSet rs = stmt.executeQuery("SELECT MAX(AbonnementID) AS maxid " + "FROM abonnement ");
-
-					if (rs.next()) {
-						
-						a.setOwnerId(rs.getInt("maxid") + 1);
-
-						stmt = con.createStatement();
-						
-						stmt.executeUpdate("INSERT INTO abonnement (AbonnementID, PinnwandFK, UserFK) " + "VALUES (" + 
-								"'" + a.getAbonnementId() + "'," + 
-								"'" + a.getPinnwandId() + "'," + 
-								"'" + a.getOwnerId() + "'");
-						
-								
+	/*
+	 * Methode, die alle Abonnements einer Pinnwand zurueck gibt
+	 */
+	
+		public Vector<Abonnement> getAbonnementsOfPinnwand(int pinnwandId){
+			
+			Connection con= DBConnection.connection();
+			Vector <Abonnement> result = new Vector <Abonnement>();
+			
+			try {
+			
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM abonnement" + "WHERE PinnwandFK=" + pinnwandId);
 					
+					while(rs.next()) {
+						
+						Abonnement a = new Abonnement();
+						a.setAbonnementId(rs.getInt("AbonnementID"));
+						a.setPinnwandId(rs.getInt("PinnwandFK"));
+						a.setOwnerId(rs.getInt("UserFK"));
+						result.addElement(a);
 					}
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-				
-				return a;
-				
-			}
-			
-			//?????????
-			public Abonnement update(Abonnement a) {
-				Connection con = DBConnection.connection();
-
-				try {
-					Statement stmt = con.createStatement();
-
-					stmt.executeUpdate("UPDATE User SET AbonnementID=\"" + a.getAbonnementId() + "WHERE id=" + a.getOwnerId());
-
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-
-				
-				return a; 
-			}
-			
-			public void deleteAbonnement(Abonnement a) {
-				Connection con = DBConnection.connection();
-
-				try {
-					Statement stmt = con.createStatement();
-
-					stmt.executeUpdate("DELETE FROM abonnement " + "WHERE AbonnementID=" + a.getAbonnementId());
-				} catch (SQLException e) {
-					e.printStackTrace();
-					} 
-				}
-			
-			public Vector<Abonnement> getAbonnementsOfUser(int userId){
-				
-				Connection con= DBConnection.connection();
-				Vector <Abonnement> result = new Vector <Abonnement>();
-				
-			try {
-				
-				Statement stmt = con.createStatement();
-				ResultSet rs = stmt.executeQuery("SELECT * FROM abonnement " + "WHERE UserFK=" + userId);
-						
-						while(rs.next()) {
-							
-							Abonnement a = new Abonnement();
-							
-							a.setAbonnementId(rs.getInt("AbonnementID"));
-							a.setPinnwandId(rs.getInt("PinnwandFK"));
-							a.setOwnerId(rs.getInt("UserFK"));
-							
-							result.addElement(a);
-						}
-						
+					
 			} catch (SQLException e) {
-				e.printStackTrace();
+			e.printStackTrace();
 			}
-			
+		
 			return result;
-			
-				
-			
-			}
-			
-			public Vector<Abonnement> getAbonnementsOfPinnwand(int pinnwandId){
-				
-				Connection con= DBConnection.connection();
-				Vector <Abonnement> result = new Vector <Abonnement>();
-				
-			try {
-				
-				Statement stmt = con.createStatement();
-				ResultSet rs = stmt.executeQuery("SELECT * FROM abonnement" + "WHERE PinnwandFK=" + pinnwandId);
-						
-						while(rs.next()) {
-							
-							Abonnement a = new Abonnement();
-							a.setAbonnementId(rs.getInt("AbonnementID"));
-							a.setPinnwandId(rs.getInt("PinnwandFK"));
-							a.setOwnerId(rs.getInt("UserFK"));
-							result.addElement(a);
-						}
-						
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			
-			return result;
-			
-			}
+		}
 
-			
+	/* Ende:  Foreign Key-Mapper-Methoden
+	 * ================================================================================================
+	 * Beginn: Spezifische Business Object Methoden
+	 */	
+		
+	/* Ende:  Spezifische Methoden des Business Object Pinnwand
+	 * ================================================================================================
+	 */
 				
 }

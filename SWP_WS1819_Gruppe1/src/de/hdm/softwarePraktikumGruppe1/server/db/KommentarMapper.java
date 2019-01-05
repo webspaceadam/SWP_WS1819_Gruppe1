@@ -2,10 +2,8 @@
 package de.hdm.softwarePraktikumGruppe1.server.db;
 import java.sql.*;
 import java.util.Vector;
-
-import de.hdm.softwarePraktikumGruppe1.shared.bo.Beitrag;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Kommentar;
-import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
+
 
 
 
@@ -43,98 +41,38 @@ public class KommentarMapper {
 		 return kommentarMapper;
 	 }
 	 
-	//Objekt -> Tupel
-	 public void insertKommentar(Kommentar k){
-		 
-			//Aufbau der DBVerbindung
-			Connection con = DBConnection.connection();
+	 /*
+	  * =============================================================================================
+	  * Beginn: Standard-Mapper-Methoden. Innerhalb dieses Bereichs werden alle Methoden aufgezählt, die
+	  * in allen Mapper-Klassen existieren.
+	  */
+	 
+	 /*
+	  * Methode, die einen Kommentar ahnand einer Id zurueckgibt
+	  */
+	 	public Kommentar findKommentarById(int kommentarID){
 			
-			try{
+		 	//Aufbau der DBVerbindung
+			Connection con = DBConnection.connection();
 				
+			//Versuch der Abfrage
+			try{
+					
 				//leeres SQL-Statement anlegen
 				Statement stmt = con.createStatement();
-				
-		        // Jetzt erst erfolgt die tatsächliche Einfügeoperation
-		        stmt.executeUpdate("INSERT INTO kommentar (Inhalt, BeitragFK, UserFK) "
-		            + "VALUES ('" + k.getInhalt() + "','" + k.getBeitragId() + "','" + k.getOwnerId()
-		        	 +"')");			                 
-		       
-	      }
-		
-	    catch (SQLException e) {
-	      e.printStackTrace();
-	      
-	    }
-	 }
-	 	//Objekt -> Tupel
-	    public void deleteKommentar(Kommentar k){
-			//Aufbau der DBVerbindung
-			Connection con = DBConnection.connection();
-			
-			//Versuch der Abfrage
-		    try {
-		    	
-				//leeres SQL-Statement anlegen	
-		      Statement stmt = con.createStatement();
-		      
-		      //Lösche Beitrag mit gleicher ID aus Tabelle
-		      stmt.executeUpdate("DELETE FROM kommentar WHERE KommentarID=" + k.getKommentarId());
-		    }																
-		    catch (SQLException e) {	
-		      e.printStackTrace();
-		    } 
-		 }
-	    
-	    //Objekt -> Tupel
-		 public void updateKommentar(Kommentar k){
-				//Aufbau der DBVerbindung
-				Connection con = DBConnection.connection();
-				
-					//Versuch der Abfrage
-				    try {
-				    	
-						//leeres SQL-Statement anlegen	
-				      Statement stmt = con.createStatement();
-				      
-				      //Aktualisieren des Inhalts
-				      stmt.executeUpdate("UPDATE kommentar SET Inhalt=\"" + k.getInhalt() + "\" WHERE KommentarID=" + k.getKommentarId());
-				      						
-				    }	
-				    catch (SQLException e) {
-				      e.printStackTrace();
-				    }
-
-			 
-				 
-			 }
-		 
-			//Methode die Tupels in Objekte umwandelt
-		 	public Kommentar findKommentarByKommentarID(int kommentarID){
-				
-		 		//Aufbau der DBVerbindung
-				Connection con = DBConnection.connection();
-				
-				//Versuch der Abfrage
-				try{
 					
-					//leeres SQL-Statement anlegen
-					Statement stmt = con.createStatement();
-					
-					//Suche alle Felder der Kommentartabelle anhand von ID
-					ResultSet rs = stmt.executeQuery("SELECT * FROM kommentar WHERE KommentarID=" + kommentarID );
-					
-					
-					if (rs.next()) {
-						
-				        // Ergebnis in Beitragobjekt umwandeln
-				        Kommentar k = new Kommentar();
-				        k.setText(rs.getString("Inhalt"));
-				        k.setOwnerId(rs.getInt("UserFK"));
-				        k.setBeitragId(rs.getInt("BeitragFK"));
+				//Suche alle Felder der Kommentartabelle anhand von ID
+				ResultSet rs = stmt.executeQuery("SELECT * FROM kommentar WHERE KommentarID=" + kommentarID );
+								
+				if (rs.next()) {		
+				// Ergebnis in Beitragobjekt umwandeln
+				Kommentar k = new Kommentar();
+				k.setInhalt(rs.getString("Inhalt"));
+				k.setOwnerId(rs.getInt("UserFK"));
+				k.setBeitragId(rs.getInt("BeitragFK"));
 				        
-				        
-				        //Kommentarobjekt zurückgeben
-				        return k;
+				//Kommentarobjekt zurückgeben
+				return k;
 					}
 				}
 			    catch (SQLException e) {
@@ -143,85 +81,83 @@ public class KommentarMapper {
 		 }
 				// falls keine gefundene Liste, dann gibst du nichts zurück
 				return null;
+		 } 
+	
+	 /*
+	  * Methode, die das Anlegen eines Kommentarobjekts in der Datenbank ermöglicht.
+	  */
+	 	public void insertKommentar(Kommentar k){
+	
+			//Aufbau der DBVerbindung
+			Connection con = DBConnection.connection();
+			
+			try{
+				
+				//leeres SQL-Statement anlegen
+				Statement stmt = con.createStatement();
+		        stmt.executeUpdate("INSERT INTO kommentar (Inhalt,BeitragFK, UserFK) VALUES ('" + k.getInhalt() + "', " + k.getBeitragId() + "," + k.getOwnerId()+")");			                 
+ 
+			}
+		
+			catch (SQLException e) {
+				e.printStackTrace();
+	      
+			}
+	 	}
+	 	
+	 /*
+	  * Methode, die das Updaten eines Kommentarobjekts in der Datenbank ermöglicht.
+	  */
+	 	 public void updateKommentar(Kommentar k){
+			//Aufbau der DBVerbindung
+			Connection con = DBConnection.connection();
+				
+			//Versuch der Abfrage
+			try {
+				//leeres SQL-Statement anlegen	
+				Statement stmt = con.createStatement();
+				stmt.executeUpdate("UPDATE kommentar SET Inhalt=\"" + k.getInhalt() + "\" WHERE KommentarID=" + k.getKommentarId());
+				      						
+				    }	
+				    catch (SQLException e) {
+				      e.printStackTrace();
+				    } 
+			 }
+	 	
+	 /*
+	  * Methode, die das Löschen eines Beitragobjekts aus der Datenbank ermöglicht.
+	  */		 	
+	 	public void deleteKommentar(Kommentar k){
+			//Aufbau der DBVerbindung
+			Connection con = DBConnection.connection();
+			
+		    try {	
+		      Statement stmt = con.createStatement();
+		      stmt.executeUpdate("DELETE FROM kommentar WHERE KommentarID=" + k.getKommentarId());
+		    }																
+		    catch (SQLException e) {	
+		      e.printStackTrace();
+		    } 
 		 }
-		 
 	    
-//				 public int countAllKommentareFromBeitrag(Beitrag beitrag){
-//					 int counter = 0; //Zähler
-//					 
-//					//Aufbau der DBVerbindung
-//					Connection con = DBConnection.connection();
-//					
-//					//Versuch der Abfrage
-//					try{
-//						
-//						//leeres SQL-Statement anlegen
-//						Statement stmt = con.createStatement();
-//						
-//						//Suche alle Beiträge
-//						ResultSet rs = stmt.executeQuery("SELECT * FROM Kommentar WHERE Beitrag_BeitragID=" +beitrag.getId());
-//
-//					    
-//						while (rs.next()) {
-//					        counter++;
-//					      }
-//						
-//					}
-//					
-//				    catch (SQLException e) {
-//				    		e.printStackTrace();
-//				    }
-//	    
-//					return counter;
-//					
-//				 }
-//	 
-//		 
-//		 public int countKommentareFromUser(User user){
-//			 
-//			 int counter = 0; //Zähler
-//			 
-//			//Aufbau der DBVerbindung
-//			Connection con = DBConnection.connection();
-//			
-//			//Versuch der Abfrage
-//			try{
-//				
-//				//leeres SQL-Statement anlegen
-//				Statement stmt = con.createStatement();
-//				
-//				//Suche alle Beiträge
-//				ResultSet rs = stmt.executeQuery("SELECT * FROM kommentar WHERE User_UserID=" +user.getId());
-//													
-//			    		
-//				while (rs.next()) {
-//			        counter++;
-//			      }
-//				
-//			}
-//			
-//		    catch (SQLException e) {
-//		    		e.printStackTrace();
-//		    }
-//
-//			return counter;
-//			
-//		 }
+	 /* Ende: Standard-Mapper-Methoden
+	 * ================================================================================================
+	 * Beginn: Foreign Key-Mapper-Methoden
+	 */	    
 		 
-		 /*
-		  * Methode, die einen Vector mit allen Kommentaren eines Users zurückgibt.
-		  */
-		 public Vector<Kommentar> getKommentareOfUser(int userId){
+	 	/*
+		 * Methode, die einen Vector mit allen Kommentaren eines Users zurückgibt.
+		 */
+		 public Vector<Kommentar> findKommentareOfUser(int userId){
 			//Aufbau der DBVerbindung
 			Connection con = DBConnection.connection();
 			// Initialisierung eines leeren Vectors welcher Kommentar-Objekte enthalten kann
-			Vector<Kommentar> kommentareOfUser = new Vector<Kommentar>();
+			Vector<Kommentar> result = new Vector<Kommentar>();
 			
 			try {
 				Statement stmt = con.createStatement();
 				
-				ResultSet rs = stmt.executeQuery("SELECT * FROM kommentar"
-				+"WHERE UserFK=" +"'"+ userId+ "'" + "ORDER BY KommentarID");
+				ResultSet rs = stmt.executeQuery("SELECT * FROM kommentar WHERE UserFK=" +"'"+ userId+ "'" + "ORDER BY KommentarID");
 				
 				while (rs.next()) {
 					Kommentar k = new Kommentar();
@@ -230,31 +166,29 @@ public class KommentarMapper {
 					k.setText(rs.getString("Inhalt"));
 					k.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
 					
-					kommentareOfUser.add(k);
+					result.add(k);
 				}
 				
 			}catch (SQLException e) {
 	    		e.printStackTrace();
 			}
 
-			return kommentareOfUser;
-		
-			 
+			return result;
+	 
 		 }
-		 
-		 
-		 //To be defined: getAllKommentarOfBeitrag
-		 public Vector<Kommentar> getKommentareOfBeitrag(int beitragId){
+		 /*
+		  * Methode, die einen Vector mit allen Kommentaren eines Users zurückgibt.
+		 */ 
+		 public Vector<Kommentar> findKommentareOfBeitrag(int beitragId){
 			//Aufbau der DBVerbindung
-				Connection con = DBConnection.connection();
-				// Initialisierung eines leeren Vectors welcher Kommentar-Objekte enthalten kann
-				Vector<Kommentar> kommentareOfBeitrag = new Vector<Kommentar>();
+			Connection con = DBConnection.connection();
+			// Initialisierung eines leeren Vectors welcher Kommentar-Objekte enthalten kann
+			Vector<Kommentar> result = new Vector<Kommentar>();
 				
 				try {
 					Statement stmt = con.createStatement();
 					
-					ResultSet rs = stmt.executeQuery("SELECT * FROM kommentar"
-					+"WHERE BeitragFK=" +"'"+ beitragId+ "'" + "ORDER BY KommentarID");
+					ResultSet rs = stmt.executeQuery("SELECT * FROM kommentar WHERE BeitragFK=" +"'"+ beitragId+ "'" + "ORDER BY KommentarID");
 					
 					while (rs.next()) {
 						Kommentar k = new Kommentar();
@@ -263,22 +197,22 @@ public class KommentarMapper {
 						k.setText(rs.getString("Inhalt"));
 						k.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
 						
-						kommentareOfBeitrag.add(k);
+						result.add(k);
 					}
 					
 				}catch (SQLException e) {
 		    		e.printStackTrace();
 				}
 
-				return kommentareOfBeitrag;
-			
-				 
+				return result;
 		 }
-
-
-//		public void deleteAllKommentareOfUser(User u) {
-//			// TODO Auto-generated method stub
-//			
-//		}
-
+		 
+	/* Ende:  Foreign Key-Mapper-Methoden
+	 * ================================================================================================
+	 * Beginn: Spezifische Business Object Methoden
+	 */	
+	
+	/* Ende:  Spezifische Methoden des Business Object Pinnwand
+	 * ================================================================================================
+	 */	
 }

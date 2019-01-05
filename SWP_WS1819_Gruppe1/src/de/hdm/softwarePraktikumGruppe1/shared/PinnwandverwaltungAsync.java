@@ -82,7 +82,7 @@ public interface PinnwandverwaltungAsync {
 	/**
 	 * Methode um ein neues Abonnement zu erzeugen
 	 */
-	public void createAbonnement(User u, Pinnwand p, AsyncCallback callback);
+	public void createAbonnement(User u, Pinnwand p, Timestamp timestamp, AsyncCallback callback);
 	
 	/**
 	 * Methode um ein bestehendes Abonnement zu Loeschen
@@ -112,7 +112,7 @@ public interface PinnwandverwaltungAsync {
 	/**
 	 * Methode zum erzeugen eines Likes
 	 */
-	public void createLike(User u, Beitrag b, AsyncCallback callback);
+	public void createLike(User u, Beitrag b, Timestamp timestamp, AsyncCallback callback);
 	
 	/**
 	 * Methode zur Ueberpruefung ob der Beitrag bereits geliket ist

@@ -9,10 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
-
-import de.hdm.softwarePraktikumGruppe1.shared.bo.Beitrag;
-import de.hdm.softwarePraktikumGruppe1.shared.bo.Like;
-import de.hdm.softwarePraktikumGruppe1.shared.bo.Pinnwand;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
 
@@ -68,17 +64,25 @@ public class UserMapper {
 	 * @return Kunden-Objekt, das dem �bergebenen Schl�ssel entspricht, null bei
 	 *         nicht vorhandenem DB
 	 */
-	 
 	
-	public User findByUserID(int id) {
+	/*
+	 * =============================================================================================
+	 * Beginn: Standard-Mapper-Methoden. Innerhalb dieses Bereichs werden alle Methoden aufgezählt, die
+	 * in allen Mapper-Klassen existieren.
+	 */	
+		
+	/*
+	 * Methode, die einen User anhand einer Id zurueck gibt
+	 */
+
+	public User findByUserID(int userId) {
 		
 		Connection con = DBConnection.connection();
 		
 		try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("SELECT * FROM user " + "WHERE UserID= " + id);
-			//"ORDED BY UserID"
+			ResultSet rs = stmt.executeQuery("SELECT * FROM user " + "WHERE UserID= " + userId);
 			
 			if(rs.next()) {
 				User u = new User();
@@ -93,187 +97,210 @@ public class UserMapper {
 			}
 			
 		}catch(SQLException e) {
-				e.printStackTrace();
-			
-			}
-		return null ;
-
-			
-	}
+			e.printStackTrace();
+		}
+		return null ;	
+	}	
 	
-	/**
-	 * Die Methode <code> findAll </code> erm�glicht das auslesen s�mtlicher User-Objekte durch einen Vektor.
+	/*
+	 * Methode, die das Anlegen eines User-Objekts ermöglicht
 	 */
-	
-	public Vector<User> findAll(){
-		Vector v = new Vector();
+	public void insert(User u) {
 		Connection con = DBConnection.connection();
-		
+
+		try {
+			PreparedStatement statement = con.prepareStatement(
+					"INSERT INTO user (Nickname, Firstname, Lastname, Gmail) VALUES (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+
+			statement.setString(1, u.getNickname());
+			statement.setString(2, u.getFirstName());
+			statement.setString(3, u.getLastName());
+			statement.setString(4, u.getGMail());
+
+			statement.executeUpdate();
+			ResultSet rs = statement.getGeneratedKeys();
+			if (rs.next()) {
+				u.setId(rs.getInt(1));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	
+	}
+
+	/*
+	 * Methode, die das Updaten eines User-Objekts in der Datenbank ermöglicht	
+	 */
+	public void update(User u) {
+		Connection con = DBConnection.connection();
+
 		try {
 			Statement stmt = con.createStatement();
+
+			stmt.executeUpdate("UPDATE user SET Nickname='"+ u.getNickname()+"', Firstname='"+u.getFirstName()+"', Lastname='"+ u.getLastName()+"', Gmail='"+ u.getGMail()+"' WHERE UserID="+ u.getUserId());
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	/*
+	 * Methode, die das Loeschen eines User-Objekts aus der Datenbank ermöglicht
+	 */
+	public void deleteUser(User u) {
+		Connection con = DBConnection.connection();
+
+		try {
+			Statement stmt = con.createStatement();
+			stmt.executeUpdate("DELETE FROM user " + "WHERE UserID=" + u.getUserId());
+  
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/* Ende: Standard-Mapper-Methoden
+	 * ================================================================================================
+	 * Beginn: Foreign Key-Mapper-Methoden
+	 */
+
+	/* Ende:  Foreign Key-Mapper-Methoden
+	 * ================================================================================================
+	 * Beginn: Spezifische Business Object Methoden
+	 */	
+	
+	/*
+	 * Methode, die einen User anhand des Nachnamen zurueck gibt
+	 */		
+		public Vector<User> findByLastName(String lName) {
+			Connection con = DBConnection.connection();
+			Vector<User> result = new Vector<User>();
+	
+			try {
+				Statement stmt = con.createStatement();
+	
+				ResultSet rs = stmt.executeQuery("SELECT * FROM user WHERE lastName= '" + lName +"'"+ " ORDER BY lastName");
+	
+				
+				while (rs.next()) {
+					User u = new User();
+					u.setUserId(rs.getInt("UserID"));
+					u.setNickname(rs.getString("Nickname"));
+					u.setFirstName(rs.getString("Firstname"));
+					u.setLastName(rs.getString("Nachname"));
+					u.setGMail(rs.getString("Gmail"));
+					u.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
+					result.add(u);
+					}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return result;
+		}
+	/*
+	 * Methode, die einen User anhand des Nicknames zurueck gibt
+	 */
+		 public User findUserByNickname(String nickname) {
+				
+			Connection con =DBConnection.connection();
+			Vector<User> result = new Vector<User>();
 			
-			ResultSet rs = stmt.executeQuery("SELECT *" + "FROM user " + "ORDER BY UserID");
-			
-			while(rs.next()) {
+			try {
+				
+			Statement stmt=con.createStatement();
+			ResultSet rs =stmt.executeQuery("SELECT * FROM user WHERE Nickname=" + "'"+nickname+"'");
+				
+			while (rs.next()) {
+					
 				User u = new User();
-				u.setId(rs.getInt("UserID"));
+				u.setUserId(rs.getInt("UserID"));
 				u.setNickname(rs.getString("Nickname"));
 				u.setFirstName(rs.getString("FirstName"));
 				u.setLastName(rs.getString("LastName"));
 				u.setGMail(rs.getString("Gmail"));
 				u.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
-				
-				v.add(u);
-			}}catch (SQLException e) {
-				e.printStackTrace();
-			}
-			
-			return v;
-			
-	}
-	
-	public Vector<User> findByLastName(String name) {
-		Connection con = DBConnection.connection();
-		Vector<User> result = new Vector<User>();
-
-		try {
-			Statement stmt = con.createStatement();
-
-			ResultSet rs = stmt.executeQuery("SELECT * FROM user WHERE lastName= '" + name +"'"+ " ORDER BY lastName");
-
-			
-			while (rs.next()) {
-				User u = new User();
-				u.setId(rs.getInt("UserID"));
-				u.setNickname(rs.getString("Nickname"));
-				u.setFirstName(rs.getString("FirstName"));
-				u.setLastName(rs.getString("Nachname"));
-				u.setGMail(rs.getString("Gmail"));
-				u.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
+					
 				result.add(u);
+					
 				}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return result;
-	}
-	
-   public User findUserByNickname(String nickname) {
-		
-		Connection con =DBConnection.connection();
-		Vector<User> result = new Vector<User>();
-		
-	try {
-		
-		Statement stmt=con.createStatement();
-		ResultSet rs =stmt.executeQuery("SELECT * FROM user WHERE Nickname=" + "'"+nickname+"'");
-		
-		while (rs.next()) {
 			
-			User u = new User();
-			u.setId(rs.getInt("UserID"));
-			u.setNickname(rs.getString("Nickname"));
-			u.setFirstName(rs.getString("FirstName"));
-			u.setLastName(rs.getString("LastName"));
-			u.setGMail(rs.getString("Gmail"));
-			u.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
-			
-			result.add(u);
-			
-		}
-	
-	} catch (SQLException e) {
-		e.printStackTrace();
-	}
-	return null;
-	
-   
-   }
-   /**
-    * Die Methode <code> insert </> erm�glicht das einf�gen eines User-Objekts in die Datebbank
-	 * @param user
-	 * @return �bergebene Objekt <code>User_ID</code>.
-	 */
-		
-		public void insert(User u) {
-			Connection con = DBConnection.connection();
-
-			try {
-				PreparedStatement statement = con.prepareStatement(
-						"INSERT INTO user (Nickname, Firstname, Lastname, Gmail) VALUES (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
-
-				statement.setString(1, u.getNickname());
-				statement.setString(2, u.getFirstName());
-				statement.setString(3, u.getLastName());
-				statement.setString(4, u.getGMail());
-
-				statement.executeUpdate();
-				ResultSet rs = statement.getGeneratedKeys();
-				if (rs.next()) {
-					u.setId(rs.getInt(1));
-				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-	
-		
-		}
-		
-		/**
-		 * Wiederholtes Schreiben eines Objekts in die Datenbank.
-		 */
-		
+			return null;  
+		   }
 
-			public void update(User u) {
-				Connection con = DBConnection.connection();
-
-				try {
-					Statement stmt = con.createStatement();
-
-					stmt.executeUpdate("UPDATE user SET Nickname='"+ u.getNickname()+"', Firstname='"+u.getFirstName()+"', Lastname='"+ u.getLastName()+"', Gmail='"+ u.getGMail()+"' WHERE UserID="+ u.getUserId());
-
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-
-			}
-			
-	/**
-	 * L�schen der Daten eines User-Objekts aus der Datenbank.
+	/*
+	 * Methode, die einen User anhand des Vornamens zurueck gibt
 	 */
+		public User findUserByFirstName(String fName) {
+				
+			Connection con =DBConnection.connection();
+			Vector<User> result = new Vector<User>();
 			
-			public void deleteUser(User u) {
-				Connection con = DBConnection.connection();
-
-				try {
-					Statement stmt = con.createStatement();
-					stmt.executeUpdate("DELETE FROM user " + "WHERE UserID=" + u.getUserId());
-          
+			try {
+				
+			Statement stmt=con.createStatement();
+			ResultSet rs =stmt.executeQuery("SELECT * FROM user WHERE Firstname=" + "'"+ fName+"'");
+					
+			while (rs.next()) {
+					
+				User u = new User();
+				u.setUserId(rs.getInt("UserID"));
+				u.setNickname(rs.getString("Nickname"));
+				u.setFirstName(rs.getString("FirstName"));
+				u.setLastName(rs.getString("LastName"));
+				u.setGMail(rs.getString("Gmail"));
+				u.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
+						
+				result.add(u);
+						
+				}
+				
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
-			}
-			
-//	//Methode zum Aufruf aller Beiträge eines bestimmten Users
-//			public Vector<Beitrag> getAllBeitraegeOfUser(int userId){
-//				Connection con = DBConnection.connection();	
-//				Vector <Beitrag> v= new Vector<Beitrag>();
-//				try {
-//					Statement stmt = con.createStatement();
-//					ResultSet rs = stmt.executeQuery("Select * FROM Beitrag WHERE User_UserID = "+ userId);
-//					
-//					while(rs.next()) {
-//						Beitrag b =new Beitrag();
-////						b.setId(rs.getInt(""));
-////						b.setText(rs.getString(""));
-////						b.setTimeStamp(rs.getTimestamp(""));
-////						v.add(b);
-//					}
-//					
-//				} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//				return v;
-//			}
+				return null;  
+		}
+	
+	/*
+	 * Methode, die einen User anhand der Gmail zurueck gibt	
+	 */
 
+		public User findUserByGmail(String gMail) {
+			
+			Connection con =DBConnection.connection();
+			Vector<User> result = new Vector<User>();
+			
+			try {
+				
+			Statement stmt=con.createStatement();
+			ResultSet rs =stmt.executeQuery("SELECT * FROM user WHERE Gmail=" + "'"+ gMail+"'");
+					
+			while (rs.next()) {
+					
+				User u = new User();
+				u.setUserId(rs.getInt("UserID"));
+				u.setNickname(rs.getString("Nickname"));
+				u.setFirstName(rs.getString("FirstName"));
+				u.setLastName(rs.getString("LastName"));
+				u.setGMail(rs.getString("Gmail"));
+				u.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
+						
+				result.add(u);
+						
+				}
+				
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				return null;  
+		}		
+		
+	/* Ende:  Spezifische Methoden des Business Objects Pinnwand
+	 * ================================================================================================
+	 */
+	 
 }

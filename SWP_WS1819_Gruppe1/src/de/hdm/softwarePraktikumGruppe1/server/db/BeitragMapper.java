@@ -4,18 +4,13 @@
 package de.hdm.softwarePraktikumGruppe1.server.db;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.Vector;
-
-import de.hdm.softwarePraktikumGruppe1.shared.bo.Abonnement;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Beitrag;
-import de.hdm.softwarePraktikumGruppe1.shared.bo.Pinnwand;
-import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
+
 
 /**
  * @author GianlucaBernert
@@ -53,15 +48,49 @@ public class BeitragMapper {
 		return beitragMapper;
 	}
 	
+	/*
+	 * =============================================================================================
+	 * Beginn: Standard-Mapper-Methoden. Innerhalb dieses Bereichs werden alle Methoden aufgezählt, die
+	 * in allen Mapper-Klassen existieren.
+	 */
+	
+	/*
+	 * Methode, die einen Beitrag ahnand einer Id zurueckgibt
+	 */
+	
+		public Beitrag findBeitragById(int beitragID) {
+		    
+			Connection con = DBConnection.connection();
+			
+			try {
+				Statement stmt= con.createStatement();
+				ResultSet rs = stmt.executeQuery("SELECT * FROM beitrag WHERE BeitragID =" + beitragID);
+				
+				if (rs.next()) {
+					Beitrag b = new Beitrag();
+					b.setId(rs.getInt("BeitragID"));
+					b.setText(rs.getString("Inhalt"));
+					b.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
+					
+					return b;
+				}
+				
+			}	
+			catch (SQLException e) {
+				e.printStackTrace();
+				
+				return null;
+			}
+			
+			return null;
+			}
 	
 	
-	 /**
-	    * Die Methode <code> insert </> erm�glicht das einf�gen eines Beitrag-Objekts in die Datebbank
-		 * @param user
-		 * @return �bergebene Objekt <code>BeitragID</code>.
-		 */
+	/*
+	 * Methode, die das Anlegen eines Beitragsobjekts in der Datenbank ermöglicht.
+	 */
 	
-	public void insertBeitrag(Beitrag b) {
+		public void insertBeitrag(Beitrag b) {
 		
 			Connection con = DBConnection.connection();
 
@@ -77,18 +106,35 @@ public class BeitragMapper {
 				ResultSet rs = statement.getGeneratedKeys();
 				if (rs.next()) {
 					b.setId(rs.getInt(1));
+					
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-	
-	}
-	
-	/**
-	 * L�schen der Daten eines Beitrag-Objekts aus der Datenbank.
+			}
+	/*
+	 * Methode, die das Update eines Beitragobjekts in der Datenbank ermöglicht.
 	 */
+		public Beitrag updateBeitrag(Beitrag b) {
+			
+			Connection con = DBConnection.connection();
+
+			try {
+				Statement stmt = con.createStatement();
+
+				stmt.executeUpdate("UPDATE beitrag SET Inhalt= '"+ b.getInhalt() + "' " + "WHERE BeitragID=" + b.getBeitragId());
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return b;
+		}
 	
-	public void deleteBeitrag(Beitrag b) {
+
+	/*
+	 * Methode, die das Löschen eines Beitragobjekts aus der Datenbank ermöglicht.
+	 */		
+		public void deleteBeitrag(Beitrag b) {
 		
 			Connection con = DBConnection.connection();
 			
@@ -98,139 +144,83 @@ public class BeitragMapper {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-	}
-	
-	/**
-	 * L�schen der Daten eines Beitrag-Objekts von einem bestimmten User aus der Datenbank.
-	 */
-			
-//	public void deleteBeitragOfUser(int userId) {
-//			Connection con =DBConnection.connection();
-//				
-//			try {
-//				Statement stmt = con.createStatement();
-//				
-//				stmt.executeUpdate("DELETE FROM beitrag" + "WHERE User_User_ID=" + userId);
-//				}
-//				
-//				catch(SQLException e) {
-//					e.printStackTrace();
-//				}
-//
-//	}
-//	
-	
-//	/**
-//	 * Methode zum suchen eines Beitrags anhand der Beitrags ID
-//	 */
-//	public Beitrag getBeitragByBeitragtId(int BeitragID) {
-//    
-//		Connection con = DBConnection.connection();
-//		
-//		try {
-//			Statement stmt= con.createStatement();
-//			ResultSet rs = stmt.executeQuery("SELECT BeitragID, Inhalt, creationTimeStamp" + "WHERE BeitragID =" + BeitragID);
-//			
-//			if (rs.next()) {
-//				Beitrag b = new Beitrag();
-//				b.setId(rs.getInt("BeitragID"));
-//				b.setText(rs.getString("Inhalt"));
-//				b.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
-//				
-//				return b;
-//			}
-//			
-//		}	
-//		catch (SQLException e) {
-//			e.printStackTrace();
-//			
-//			return null;
-//		}
-//		
-//		return null;
-//				
-//		
-//	}
-	
-	/**
-	 * Die Methode <code> findAll </code> erm�glicht das auslesen s�mtlicher User-Objekte durch einen Vektor.
+		}
+
+	/* Ende: Standard-Mapper-Methoden
+	 * ================================================================================================
+	 * Beginn: Foreign Key-Mapper-Methoden
 	 */
 	
-	public Vector<Beitrag> getAllBeitraege() {
-		Connection con = DBConnection.connection();
-		
-		Vector<Beitrag> result = new Vector<Beitrag>();
-		
-		try {
-			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM beitrag"
-			+ "ORDER BY BeitragID");
-			
-			while (rs.next());{
-				Beitrag b = new Beitrag();
-				b.setId(rs.getInt("BeitragID"));
-				b.setText(rs.getString("Inhalt"));
-				b.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
-				result.addElement(b);
-			}
-		}
-		catch (SQLException e) {
-			e.printStackTrace();
-		} 
-		return result;
-		}
+	/*
+	 * Methode, die alle Beitraege einer Pinnwand anhand der Pinnwand FKs aus der Datenbank ausliest und zurueck gibt	
+	 */
 	
-	
-
-	//To be defined: Methode updateBeitrag;
-	public Beitrag updateBeitrag(Beitrag b) {
-		
-		Connection con = DBConnection.connection();
-
-		try {
-			Statement stmt = con.createStatement();
-
-			stmt.executeUpdate("UPDATE beitrag SET Inhalt= '"+ b.getInhalt() + "' " + "WHERE BeitragID=" + b.getBeitragId());
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		
-		return b;
-	}
-
-	public Vector <Beitrag> getBeitraegeOfPinnwand(int pinnwandFK){
-		Connection con = DBConnection.connection();
-		Vector<Beitrag> result = new Vector<Beitrag>();
-		
-		try {
-			Statement stmt = con.createStatement();
+		public Vector <Beitrag> findBeitraegeOfPinnwand(int pinnwandFK){
+			Connection con = DBConnection.connection();
+			Vector<Beitrag> result = new Vector<Beitrag>();
 			
-			ResultSet rs = stmt.executeQuery("SELECT * FROM beitrag"
-			+"WHERE = PinnwandFK= '" + pinnwandFK  +"' "+ "ORDER BY BeitragID");
-			
-			while (rs.next()) {
-				Beitrag b = new Beitrag();
-				b.setBeitragId(rs.getInt("BeitragID"));
-				b.setText(rs.getString("Inhalt"));
-				b.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
-				b.setPinnwandId(rs.getInt("PinnwandFK"));
-				b.setOwnerId(rs.getInt("UserFK"));
+			try {
+				Statement stmt = con.createStatement();
 				
-				result.addElement(b);
-			}			
+				ResultSet rs = stmt.executeQuery("SELECT * FROM beitrag"
+				+"WHERE = PinnwandFK= '" + pinnwandFK  +"' "+ "ORDER BY BeitragID");
+				
+				while (rs.next()) {
+					Beitrag b = new Beitrag();
+					b.setBeitragId(rs.getInt("BeitragID"));
+					b.setText(rs.getString("Inhalt"));
+					b.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
+					b.setPinnwandId(rs.getInt("PinnwandFK"));
+					b.setOwnerId(rs.getInt("UserFK"));
+					
+					result.addElement(b);
+				}			
+			}
+			catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return result;
 		}
-		catch (SQLException e) {
-			e.printStackTrace();
+
+	/*
+	 * Methode, die alle Beitraege eines Users anhand des User-FKs aus der Datenbank ausliest und zurueck gibt	
+	 */		
+		public Vector <Beitrag> findBeitraegeOfUser(int userFK){
+			Connection con = DBConnection.connection();
+			Vector<Beitrag> result = new Vector<Beitrag>();
+			
+			try {
+				Statement stmt = con.createStatement();
+				
+				ResultSet rs = stmt.executeQuery("SELECT * FROM beitrag"
+				+"WHERE = UserFK= '" + userFK  +"' "+ "ORDER BY BeitragID");
+				
+				while (rs.next()) {
+					Beitrag b = new Beitrag();
+					b.setBeitragId(rs.getInt("BeitragID"));
+					b.setInhalt(rs.getString("Inhalt"));
+					b.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
+					b.setPinnwandId(rs.getInt("PinnwandFK"));
+					b.setOwnerId(rs.getInt("UserFK"));
+					
+					result.addElement(b);
+				}			
+			}
+			catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return result;
 		}
-		return result;
 
 		
-		
-		
-	}
 
-
-
+	/* Ende:  Foreign Key-Mapper-Methoden
+	 * ================================================================================================
+	 * Beginn: Spezifische Business Object Methoden
+	 */	
+	
+	/* Ende:  Spezifische Methoden des Business Object Pinnwand
+	 * ================================================================================================
+	 */	
+	
 }

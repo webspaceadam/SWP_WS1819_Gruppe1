@@ -10,7 +10,7 @@ package de.hdm.softwarePraktikumGruppe1.shared.bo;
 public class Like extends BusinessObject{
 	
 	private static final long serialVersionUID = 1L;
-	private int likeID;
+	private int likeId;
 	private int beitragId;
 	private int ownerId;
 	
@@ -24,8 +24,6 @@ public class Like extends BusinessObject{
 	public Like(int beitrag, int owner) {
 		this.beitragId = beitrag;
 		this.ownerId = owner;
-		
-		likeID += 1;
 	}
 	
 	/*
@@ -52,16 +50,16 @@ public class Like extends BusinessObject{
 		return serialVersionUID;
 	}
 
-	public int getLikeID() {
-		return likeID;
+	public int getLikeId() {
+		return likeId;
 	}
 
-	public void setLikeID(int likeID) {
-		this.likeID = likeID;
+	public void setLikeId(int likeId) {
+		this.likeId = likeId;
 	}
 	
 	public String toString() {
-		return "Like ID: " + this.getLikeID() + " references Beitrag: #" + this.getBeitragId();
+		return "Like ID: " + this.getLikeId() + " references Beitrag: #" + this.getBeitragId();
 	}
 	
 	
