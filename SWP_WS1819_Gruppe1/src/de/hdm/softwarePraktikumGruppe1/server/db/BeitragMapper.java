@@ -4,18 +4,13 @@
 package de.hdm.softwarePraktikumGruppe1.server.db;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.Vector;
-
-import de.hdm.softwarePraktikumGruppe1.shared.bo.Abonnement;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Beitrag;
-import de.hdm.softwarePraktikumGruppe1.shared.bo.Pinnwand;
-import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
+
 
 /**
  * @author GianlucaBernert

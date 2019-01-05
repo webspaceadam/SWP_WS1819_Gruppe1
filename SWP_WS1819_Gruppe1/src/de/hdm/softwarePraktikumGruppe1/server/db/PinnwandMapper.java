@@ -2,13 +2,8 @@
 package de.hdm.softwarePraktikumGruppe1.server.db;
 
 import java.sql.*;
-import java.util.Vector;
-
-import de.hdm.softwarePraktikumGruppe1.shared.bo.Beitrag;
-import de.hdm.softwarePraktikumGruppe1.shared.bo.Kommentar;
-import de.hdm.softwarePraktikumGruppe1.shared.bo.Like;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Pinnwand;
-import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
+
 
 /**
  * @author GianlucaBernert 
