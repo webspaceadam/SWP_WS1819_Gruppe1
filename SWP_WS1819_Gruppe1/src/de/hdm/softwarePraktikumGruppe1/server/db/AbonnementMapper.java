@@ -7,12 +7,10 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.Vector;
 
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Abonnement;
-import de.hdm.softwarePraktikumGruppe1.shared.bo.Pinnwand;
-import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
+
 
 /**
  * @author GianlucaBerner
@@ -143,7 +141,7 @@ public class AbonnementMapper {
 	/*
 	 * Methode, die alle Abonnements eines Users zurueck gibt
 	 */
-		public Vector<Abonnement> getAbonnementsOfUser(int userId){
+		public Vector<Abonnement> findAbonnementsOfUser(int userId){
 			
 			Connection con= DBConnection.connection();
 			Vector <Abonnement> result = new Vector <Abonnement>();
@@ -176,7 +174,7 @@ public class AbonnementMapper {
 	 * Methode, die alle Abonnements einer Pinnwand zurueck gibt
 	 */
 	
-		public Vector<Abonnement> getAbonnementsOfPinnwand(int pinnwandId){
+		public Vector<Abonnement> findAbonnementsOfPinnwand(int pinnwandId){
 			
 			Connection con= DBConnection.connection();
 			Vector <Abonnement> result = new Vector <Abonnement>();
