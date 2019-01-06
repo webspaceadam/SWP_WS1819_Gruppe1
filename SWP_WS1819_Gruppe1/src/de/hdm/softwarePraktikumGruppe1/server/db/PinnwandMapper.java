@@ -197,32 +197,4 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.Pinnwand;
 	/* Ende:  Spezifische Methoden des Business Object Pinnwand
 	 * ================================================================================================
 	 */	
-//		Methode überflüsslig
-//		public Vector<Pinnwand> findAllPinnwaende(){
-//	    	Connection con = DBConnection.connection();
-//	    	
-//	    	Vector<Pinnwand> result = new Vector<Pinnwand>();
-//	    	
-//	    	try {
-//	    		
-//	    		Statement stmt = con.createStatement();
-//	    		ResultSet rs = stmt.executeQuery("SELECT * FROM pinnwand" + "ORDED BY PinnwandID");
-//	    		
-//	    		while(rs.next()) {
-//	    			Pinnwand p = new Pinnwand();
-//	    			p.setId(rs.getInt("PinnwandID"));
-//	    			p.setOwnerId(rs.getInt("UserFk"));
-//	    			p.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
-//	    			
-//	    			result.addElement(p);
-//	    			
-//	    		}
-//	    		
-//	    	}catch (SQLException e1) {
-//	    		e1.printStackTrace();
-//	    			
-//	    			
-//	    		}
-//	    	return result;
-//	    	
-//	    }}
+

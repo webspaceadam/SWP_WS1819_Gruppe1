@@ -75,7 +75,7 @@ public class UserMapper {
 	 * Methode, die einen User anhand einer Id zurueck gibt
 	 */
 
-	public User findByUserID(int userId) {
+	public User findUserById(int userId) {
 		
 		Connection con = DBConnection.connection();
 		
@@ -174,7 +174,7 @@ public class UserMapper {
 	/*
 	 * Methode, die einen User anhand des Nachnamen zurueck gibt
 	 */		
-		public Vector<User> findByLastName(String lName) {
+		public Vector<User> findUserByLastName(String lName) {
 			Connection con = DBConnection.connection();
 			Vector<User> result = new Vector<User>();
 	
@@ -202,7 +202,7 @@ public class UserMapper {
 	/*
 	 * Methode, die einen User anhand des Nicknames zurueck gibt
 	 */
-		 public User findUserByNickname(String nickname) {
+		 public Vector<User> findUserByNickname(String nickname) {
 				
 			Connection con =DBConnection.connection();
 			Vector<User> result = new Vector<User>();
@@ -229,13 +229,13 @@ public class UserMapper {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			return null;  
+			return result;  
 		   }
 
 	/*
 	 * Methode, die einen User anhand des Vornamens zurueck gibt
 	 */
-		public User findUserByFirstName(String fName) {
+		public Vector<User> findUserByFirstName(String fName) {
 				
 			Connection con =DBConnection.connection();
 			Vector<User> result = new Vector<User>();
@@ -262,7 +262,7 @@ public class UserMapper {
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
-				return null;  
+				return result;  
 		}
 	
 	/*
@@ -272,14 +272,13 @@ public class UserMapper {
 		public User findUserByGmail(String gMail) {
 			
 			Connection con =DBConnection.connection();
-			Vector<User> result = new Vector<User>();
 			
 			try {
 				
 			Statement stmt=con.createStatement();
 			ResultSet rs =stmt.executeQuery("SELECT * FROM user WHERE Gmail=" + "'"+ gMail+"'");
 					
-			while (rs.next()) {
+			if (rs.next()) {
 					
 				User u = new User();
 				u.setUserId(rs.getInt("UserID"));
@@ -288,15 +287,14 @@ public class UserMapper {
 				u.setLastName(rs.getString("LastName"));
 				u.setGMail(rs.getString("Gmail"));
 				u.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
-						
-				result.add(u);
+				return u;
 						
 				}
 				
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
-				return null;  
+			return null;  
 		}		
 		
 	/* Ende:  Spezifische Methoden des Business Objects Pinnwand
