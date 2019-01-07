@@ -22,7 +22,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
  *
  */
 
-@RemoteServiceRelativePath("PinnwandVerwaltungsServlet")
+@RemoteServiceRelativePath("PinnwandverwaltungImpl")
 public interface Pinnwandverwaltung extends RemoteService {
 	
 	/**

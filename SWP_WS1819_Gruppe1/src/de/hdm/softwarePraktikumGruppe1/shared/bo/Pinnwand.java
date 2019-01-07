@@ -14,24 +14,22 @@ public class Pinnwand extends BusinessObject {
 	private static final long serialVersionUID = 1L;
 	private int pinnwandId;
 	private int ownerId;
-	
-	/**
-	 * Der Konstruktor nimmt einen Parameter des Typs User entgegen, um ihn so als <em>owner</em>
-	 * der Klasse zu setzen. 
-	 * 
-	 * @param owner
-	 */
-	public Pinnwand(int userId) {
-		this.ownerId = userId;
-		
-	}
+//	
+//	/**
+//	 * Der Konstruktor nimmt einen Parameter des Typs User entgegen, um ihn so als <em>owner</em>
+//	 * der Klasse zu setzen. 
+//	 * 
+//	 * @param owner
+//	 */
+//	public Pinnwand(int userId) {
+//		
+//	}
 	
 	/*
 	 * Leerer Konstruktor. Die Zuweisung der Attribute wird über die Setter-Methoden realisiert.
 	 */
-	public Pinnwand() {
-		
-	}
+//	public Pinnwand() {
+//	}
 
 	private Vector<Beitrag> alleBeitraege;
 	private Vector<Abonnement> alleAbonnements;
