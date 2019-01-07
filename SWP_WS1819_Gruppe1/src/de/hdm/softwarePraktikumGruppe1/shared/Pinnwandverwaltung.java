@@ -7,15 +7,6 @@ import java.sql.Timestamp;
 import java.util.Vector;
 
 import com.google.gwt.user.client.rpc.RemoteService;
-
-import java.util.Vector;
-
-import de.hdm.softwarePraktikumGruppe1.server.db.AbonnementMapper;
-import de.hdm.softwarePraktikumGruppe1.server.db.BeitragMapper;
-import de.hdm.softwarePraktikumGruppe1.server.db.KommentarMapper;
-import de.hdm.softwarePraktikumGruppe1.server.db.LikeMapper;
-import de.hdm.softwarePraktikumGruppe1.server.db.PinnwandMapper;
-import de.hdm.softwarePraktikumGruppe1.server.db.UserMapper;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Abonnement;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Beitrag;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Kommentar;
@@ -28,16 +19,11 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
  *
  */
 public interface Pinnwandverwaltung extends RemoteService {
-
-	/**
-	 * Methode die alle User als Vector zurueck gibt
-	 */
-	public Vector<User> showAllUser();
 	
 	/**
 	 * Methode um einen User zu erzeugen
 	 */
-	public void createUser(String firstName, String lastName, String nickName, String gMail, Timestamp timestamp);
+	public User createUser(String firstName, String lastName, String nickName, String gMail, Timestamp timestamp);
 	
 	/**
 	 * Methode um einen User zu Bearbeiten
@@ -57,29 +43,45 @@ public interface Pinnwandverwaltung extends RemoteService {
 	/**
 	 * Methode um einen User anhand seiner ID zu suchen
 	 */
-	public User searchUserById(int userId);
-	/**
-	 * Methode um einen User upzudaten
-	 */
-	public User updateUser(User u);
+	public User getUserById(int userId);
 	
 	/**
 	 * Methode um einen User anhand seines Nicknamens zu suchen
 	 */
-	public User searchUserByNickname(String nickname);
+	public Vector<User> getUserByNickname(String nickname);
+	
+	/**
+	 * Methode um einen User anhand seines Vornamens zu suchen
+	 */
+	
+	public Vector<User> getUserByFirstName(String fName);
+	
+	/**
+	 * Methode um einen User anhand seines Nachnamens zu suchen
+	 */
+	public Vector<User> getUserByLastName(String lName);
+	
+	/**
+	 * Methode um einen User anhand seiner Gmail zu suchen
+	 */
+	public User getUserByGmail(String gMail);
+	
 	
 	/**
 	 * Methode um einen Beitrag zu erzeugen
 	 */
-	public void createBeitrag(String text, User user, Timestamp timeStamp);
+	public Beitrag createBeitrag(String text, User user, Timestamp timeStamp);
 	
 	/**
 	 * Methode um alle Beiträge eines Users auszugeben
 	 */
-	public Vector<Beitrag> findAllBeitraegeOfUser(User u);
+	public Vector<Beitrag> getAllBeitraegeOfUser(User u);
 	/**
 	 * Methode um einen Beitrag zu Loeschen
 	 */
+	
+	public int getBeitragAmountOfUser(User u);
+	
 	public void deleteBeitrag(Beitrag b);
 	
 	/**
@@ -95,7 +97,7 @@ public interface Pinnwandverwaltung extends RemoteService {
 	/**
 	 * Methode um ein neues Abonnement zu erzeugen
 	 */
-	public void createAbonnement(User u, Pinnwand p, Timestamp timestamp);
+	public Abonnement createAbonnement(User u, Pinnwand p, Timestamp timestamp);
 	
 	/**
 	 * Methode um ein bestehendes Abonnement zu Loeschen
@@ -105,7 +107,7 @@ public interface Pinnwandverwaltung extends RemoteService {
 	/**
 	 * Methode um einen neues Kommentar zu erzeugen
 	 */
-	public void createKommentar(String text, int userId, int beitragId, Timestamp timeStamp);
+	public Kommentar createKommentar(String text, int userId, int beitragId, Timestamp timeStamp);
 	
 	/**
 	 * Methode zum Loeschen eines Kommentars
@@ -115,7 +117,7 @@ public interface Pinnwandverwaltung extends RemoteService {
 	/**
 	 * Methode zum anzeigen aller Kommentare
 	 */
-	public Vector<Kommentar> findAllKommentareOfBeitrag(Beitrag b);
+	public Vector<Kommentar> getAllKommentareOfBeitrag(Beitrag b);
 	
 	/**
 	 * Methode zum Bearbeiten eines Kommentars
@@ -125,7 +127,7 @@ public interface Pinnwandverwaltung extends RemoteService {
 	/**
 	 * Methode zum erzeugen eines Likes
 	 */
-	public void createLike(User u, Beitrag b, Timestamp timestamp);
+	public Like createLike(User u, Beitrag b, Timestamp timestamp);
 	
 	/**
 	 * Methode zur Ueberpruefung ob der Beitrag bereits geliket ist
@@ -138,11 +140,6 @@ public interface Pinnwandverwaltung extends RemoteService {
 	public void deleteLike(Like l);
 	
 	/**
-	 * Methode um ein Like zu suchen
-	 */
-	public Like searchLike(Like l);
-	
-	/**
 	 * Methode um alle Likes eines Beitrags zu zaehlen
 	 */
 	public int countLikes(Beitrag b);
@@ -151,6 +148,16 @@ public interface Pinnwandverwaltung extends RemoteService {
 	 * Methode um Likes eines Beitrags zu entfernen
 	 */
 	public void deleteLikesOfBeitrag(Beitrag b);
+	
+	public Pinnwand createPinnwand(User u, Timestamp timestamp);
+	
+	public Pinnwand getPinnwandByUserId(int userId);
+	
+	public void deletePinnwand(Pinnwand p);
+	
+	
+	
+	
 	
 	
 
