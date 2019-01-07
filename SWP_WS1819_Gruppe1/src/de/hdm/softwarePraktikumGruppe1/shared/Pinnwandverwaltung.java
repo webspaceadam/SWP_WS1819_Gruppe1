@@ -7,6 +7,8 @@ import java.sql.Timestamp;
 import java.util.Vector;
 
 import com.google.gwt.user.client.rpc.RemoteService;
+import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
+
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Abonnement;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Beitrag;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Kommentar;
@@ -16,8 +18,11 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
 /**
  * @author GianlucaBernert
+ * @autor SebastianHermann
  *
  */
+
+@RemoteServiceRelativePath("PinnwandVerwaltungsServlet")
 public interface Pinnwandverwaltung extends RemoteService {
 	
 	/**

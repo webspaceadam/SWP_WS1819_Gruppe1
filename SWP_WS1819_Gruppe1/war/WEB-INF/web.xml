@@ -9,5 +9,16 @@
   <welcome-file-list>
     <welcome-file>SWP_WS1819_Gruppe1.html</welcome-file>
   </welcome-file-list>
+  
+  <!-- Servlets -->
+  <servlet>
+    <servlet-name>PinnwandverwaltungImpl</servlet-name>
+    <servlet-class>de.hdm.softwarePraktikumGruppe1.server.PinnwandverwaltungImpl</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>PinnwandverwaltungImpl</servlet-name>
+    <url-pattern>/SWP_WS1819_Gruppe1/PinnwandVerwaltungsServlet</url-pattern>
+  </servlet-mapping>
 
 </web-app>

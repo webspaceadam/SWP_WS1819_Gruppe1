@@ -12,6 +12,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.*;
 
 /**
  * @author GianlucaBernert
+ * @author SebastianHermann
  * Interface der Pinnwandverwaltung
  */
 public interface PinnwandverwaltungAsync{
