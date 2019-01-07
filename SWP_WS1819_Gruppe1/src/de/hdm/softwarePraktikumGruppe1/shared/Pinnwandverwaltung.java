@@ -16,6 +16,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
 /**
  * @author GianlucaBernert
+ * @autor SebastianHermann
  *
  */
 public interface Pinnwandverwaltung extends RemoteService {
