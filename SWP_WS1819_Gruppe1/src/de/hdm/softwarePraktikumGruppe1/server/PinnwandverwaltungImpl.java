@@ -91,7 +91,7 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	/**
 	 * Methode um einen User zu erstellen.
 	 */
-	public void createUser(String firstName, String lastName, String nickName, String gMail, Timestamp timestamp ) throws IllegalArgumentException {
+	public User createUser(String firstName, String lastName, String nickName, String gMail, Timestamp timestamp ) throws IllegalArgumentException {
 		User u = new User();
 		u.setFirstName(firstName);
 		u.setLastName(lastName);
@@ -99,6 +99,7 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 		u.setGMail(gMail);
 		u.setCreationTimeStamp(timestamp);
 		this.uMapper.insert(u);
+		return u;
 	
 	}
 	
@@ -217,13 +218,14 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	/**
 	 * Methode um einen Beitrag zu erzeugen
 	 */
-	public void createBeitrag(String text, User u, Timestamp timeStamp) {
+	public Beitrag createBeitrag(String text, User u, Timestamp timeStamp) {
 		Beitrag b = new Beitrag();
 		b.setInhalt(text);
 		b.setOwnerId(u.getUserId());
 		b.setPinnwandId(this.pMapper.findPinnwandByUserId(u.getUserId()).getPinnwandId());
 		b.setCreationTimeStamp(timeStamp);
 		this.bMapper.insertBeitrag(b);
+		return b;
 	}
 	
 	public Beitrag getBeitragById(int beitragId) {
@@ -285,12 +287,13 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	/**
 	 * Methode um ein neues Abonnement zu erzeugen
 	 */
-	public void createAbonnement(User u, Pinnwand p, Timestamp timeStamp) {
+	public Abonnement createAbonnement(User u, Pinnwand p, Timestamp timeStamp) {
 		Abonnement a = new Abonnement();
 		a.setOwnerId(u.getUserId());
 		a.setPinnwandId(p.getPinnwandId());
 		
 		this.aMapper.insert(a);
+		return a;
 		
 	}
 	
@@ -304,16 +307,17 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	/**
 	 * Methode um einen neues Kommentar zu erzeugen
 	 */
-	public void createKommentar(String inhalt, User u, Beitrag b, Timestamp timeStamp) {
+	public Kommentar createKommentar(String inhalt, int userId, int beitragId, Timestamp timeStamp) {
 		Kommentar k = new Kommentar();
 		
 		k.setInhalt(inhalt);
-		k.setOwnerId(u.getUserId());
-		k.setBeitragId(b.getBeitragId());
+		k.setOwnerId(userId);
+		k.setBeitragId(beitragId);
 		k.setCreationTimeStamp(timeStamp);
 		
 		System.out.println(k.toString());
 		this.kMapper.insertKommentar(k);
+		return k;
 	}
 	
 	/**
@@ -326,7 +330,7 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	/**
 	 * Methode zum anzeigen aller Kommentare
 	 */
-	public Vector<Kommentar> findAllKommentareOfBeitrag(Beitrag b){
+	public Vector<Kommentar> getAllKommentareOfBeitrag(Beitrag b){
 		return this.kMapper.findKommentareOfBeitrag(b.getBeitragId());
 		
 	}
@@ -341,13 +345,15 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	/**
 	 * Methode zum erzeugen eines Likes
 	 */
-	public void createLike(User u, Beitrag b, Timestamp timestamp) {
+	public Like createLike(User u, Beitrag b, Timestamp timestamp) {
 		if(this.likeCheck(u, b)==null) {
 			Like l = new Like();
 			l.setOwnerId(u.getUserId());
 			l.setBeitragId(b.getBeitragId());
 			this.lMapper.insertLike(l);
+			return l;
 		}
+		return null;
 	}
 	
 	/**
@@ -394,14 +400,16 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	 * Methode um eine Pinnwand zu erstellen
 	 */
 	
-	public void createPinnwand(User u, Timestamp timestamp) {
+	public Pinnwand createPinnwand(User u, Timestamp timestamp) {
 		if (this.pMapper.findPinnwandByUserId(u.getUserId()) == null) {
 			Pinnwand p = new Pinnwand();
 			p.setPinnwandId(1);
 			p.setOwnerId(u.getUserId());
 			p.setCreationTimeStamp(timestamp);
 			this.pMapper.insertPinnwand(p);
+			return p;
 		}
+		return null;
 	}
 	
 	/**
@@ -409,11 +417,13 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	 * @param User
 	 */
 	
-	public void findPinnwandByUserId(User u) {
-		if(this.pMapper.findPinnwandByUserId(u.getUserId()) == null) {
+	public Pinnwand getPinnwandByUserId(int userId) {
+		if(this.pMapper.findPinnwandByUserId(userId) == null) {
 			System.out.println("Keine Pinnwand von diesem User vorhanden.");
+			return null;
 		}else {
-			this.pMapper.findPinnwandByUserId(u.getUserId());
+			Pinnwand p = this.pMapper.findPinnwandByUserId(userId);
+			return p;
 		}
 	}
 	
