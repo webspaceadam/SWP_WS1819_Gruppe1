@@ -3,16 +3,18 @@
  */
 package de.hdm.softwarePraktikumGruppe1.shared.bo;
 
-import java.io.Serializable;
 import java.util.*;
-import java.sql.Date;
+import java.io.Serializable;
 import java.sql.Timestamp;
+
+import com.google.gwt.user.client.rpc.IsSerializable;
+
 
 /**
  * @author GianlucaBernert
  * BusinessObject Klasse als Superklasse für Abonnement, Like, Pinnwand, Textbeitrag und User
  */
-public abstract class BusinessObject implements Serializable{
+public abstract class BusinessObject implements IsSerializable{
 	
 	private static final long serialVersionUID = 1L;
 	private int id = 1;
