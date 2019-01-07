@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.7.23, for Win64 (x86_64)
 --
--- Host: localhost    Database: pinners2.0
+-- Host: localhost    Database: pinners
 -- ------------------------------------------------------
 -- Server version	5.7.23-log
 
@@ -53,7 +53,7 @@ DROP TABLE IF EXISTS `beitrag`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `beitrag` (
   `BeitragID` int(11) NOT NULL AUTO_INCREMENT,
-  `Inhalt` varchar(45) DEFAULT NULL,
+  `Inhalt` text,
   `CreationTimeStamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `PinnwandFK` int(11) NOT NULL,
   `UserFK` int(11) NOT NULL,
@@ -83,7 +83,7 @@ DROP TABLE IF EXISTS `kommentar`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `kommentar` (
   `KommentarID` int(11) NOT NULL AUTO_INCREMENT,
-  `Inhalt` varchar(45) DEFAULT NULL,
+  `Inhalt` text,
   `CreationTimeStamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `BeitragFK` int(11) NOT NULL,
   `UserFK` int(11) NOT NULL,
@@ -195,4 +195,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-12-21 17:35:25
+-- Dump completed on 2019-01-06 17:23:00
