@@ -1,5 +1,7 @@
 package de.hdm.softwarePraktikumGruppe1.client;
 
+import java.sql.Timestamp;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -30,7 +32,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
  */
 public class SWP_WS1819_Gruppe1 implements EntryPoint {
 	PinnwandverwaltungAsync pinnwandVerwaltung = ClientsideSettings.getPinnwandverwaltung();
-	User u1 = null;
+	User u1 = new User();
 	
 	ProfileBox pB = new ProfileBox();
 	
@@ -51,8 +53,10 @@ public class SWP_WS1819_Gruppe1 implements EntryPoint {
 		mittlereVier.addStyleName("mittlereVier");
 		
 		Button testBtn = new Button("Cool");
+		Button testBtn2 = new Button("Create");
 		
 		testBtn.addClickHandler(new TestClickHandler());
+		testBtn.addClickHandler(new TestZwei());
 		
 		
 		// GUI Elements
@@ -61,6 +65,7 @@ public class SWP_WS1819_Gruppe1 implements EntryPoint {
 		
 		linkeSeite.add(pB);
 		linkeSeite.add(testBtn);
+		linkeSeite.add(testBtn2);
 		
 		rootPanelHeader.add(h1);
 		rootPanelContainer.add(linkeSeite);
@@ -74,6 +79,28 @@ public class SWP_WS1819_Gruppe1 implements EntryPoint {
 			pinnwandVerwaltung.getUserById(1, new GetUserCallback());
 		}
 		
+	}
+	
+	public class TestZwei implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			pinnwandVerwaltung.createUser("Seb", "Hermi", "derHermi", "hermi@gmail.com", new Timestamp(System.currentTimeMillis()), new CreateUserCallback());
+		}
+		
+	}
+	
+	public class CreateUserCallback implements AsyncCallback<User> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert("Fail!");
+		}
+
+		@Override
+		public void onSuccess(User result) {
+			Window.alert("Worked! Neuer User: " + result.toString());
+		}
 	}
 	
 	public class GetUserCallback implements AsyncCallback<User> {
