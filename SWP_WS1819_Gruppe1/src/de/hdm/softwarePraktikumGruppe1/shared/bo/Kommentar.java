@@ -3,36 +3,22 @@
  */
 package de.hdm.softwarePraktikumGruppe1.shared.bo;
 
+import java.sql.Timestamp;
+
 /**
  * @author GianlucaBernert
  * @author SebastianHermann
  * Klasse eines Kommentar Objekts das Textbeitrag als Superklasse besitzt
  */
-public class Kommentar extends Textbeitrag{
+public class Kommentar {
 	
 	private static final long serialVersionUID = 1L;
 	private int kommentarId;
 	private int ownerId;
 	private int beitragId;
 	private String inhalt;
+	private Timestamp creationTimeStamp;
 	
-	/**
-	 * Der Konstruktor nimmt drei Parameter entgegen. Einen vom Typ User um so die 
-	 * Verbindung zum dazugehörigen User zu setzen. Einen Parameter des Typs Beitrag um so den dazugehörigen
-	 * Beitrag zu setzen. Als letzten Parameter nimmt der Konstruktor einen String entgegen der den Inhalt
-	 * des Kommentars darstellt. 
-	 * 
-	 * @param owner
-	 * @param beitrag
-	 * @param inhalt
-	 */
-	public Kommentar(int owner, int beitrag, String inhalt) {
-		this.ownerId = owner;
-		this.beitragId = beitrag;
-		this.inhalt = inhalt;
-		
-		kommentarId += 1;
-	}
 	
 	/*
 	 * Leerer Konstruktor. Die Zuweisung der Attribute wird über die Setter-Methoden realisiert.
@@ -87,7 +73,7 @@ public class Kommentar extends Textbeitrag{
 	 * Methode die das Ibjekt Kommentar als String zurück gibt
 	 */
 	public String toString() {
-		String infoAboutKommentar = "Kommentar ID '" + this.getId() + "/ Inhalt: " + this.getInhalt() + "/ ID des Verfassers #" + this.getOwnerId();
+		String infoAboutKommentar = "Kommentar ID '" + this.getKommentarId() + "/ Inhalt: " + this.getInhalt() + "/ ID des Verfassers #" + this.getOwnerId();
 		return infoAboutKommentar;
 	}
 
@@ -104,5 +90,14 @@ public class Kommentar extends Textbeitrag{
 	public void setKommentarId(int kommentarId) {
 		this.kommentarId = kommentarId;
 	}
+	
+	public Timestamp getCreationTimeStamp() {
+		return creationTimeStamp;
+	}
+
+	public void setCreationTimeStamp(Timestamp creationTimeStamp) {
+		this.creationTimeStamp = creationTimeStamp;
+	}
+
 
 }

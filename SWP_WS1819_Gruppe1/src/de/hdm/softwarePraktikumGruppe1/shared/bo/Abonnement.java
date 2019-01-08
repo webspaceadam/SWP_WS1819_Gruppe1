@@ -4,6 +4,7 @@
 package de.hdm.softwarePraktikumGruppe1.shared.bo;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 /**
  * @author GianlucaBernert, AdamGniady
@@ -15,20 +16,8 @@ public class Abonnement extends BusinessObject{
 	private int abonnementId;
 	private int ownerId;
 	private int pinnwandId;
+	private Timestamp creationTimeStamp;
 
-	/**
-	 * Der Konstruktor nimmt zwei Parameter entgegen. Zum einen den Owner des
-	 * Abonnements und zum anderen die zu abonnierende Pinnwand. 
-	 * 
-	 * @param owner
-	 * @param pinnwand
-	 */
-	public Abonnement(int ownerId, int pinnwandId) {
-		this.ownerId = ownerId;
-		this.pinnwandId = pinnwandId;
-		
-		abonnementId +=1;
-	}
 	
 	/*
 	 * Leerer Konstruktor. Die Zuweisung der Attribute wird über die Setter-Methoden realisiert.
@@ -78,10 +67,12 @@ public class Abonnement extends BusinessObject{
 		this.pinnwandId = pinnwandId;
 	}
 	
-	/*
-	 * Methode die den PinnwandUserString abbildet
-	 */
-	public String pinnwandUserString() {
-		return null;
+	public Timestamp getCreationTimeStamp() {
+		return creationTimeStamp;
 	}
+
+	public void setCreationTimeStamp(Timestamp creationTimeStamp) {
+		this.creationTimeStamp = creationTimeStamp;
+	}
+	
 }

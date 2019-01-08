@@ -50,7 +50,7 @@ public class KommentarMapper {
 	 /*
 	  * Methode, die einen Kommentar ahnand einer Id zurueckgibt
 	  */
-	 	public Kommentar findKommentarById(int kommentarID){
+	 	public Kommentar findKommentarById(int kommentarId){
 			
 		 	//Aufbau der DBVerbindung
 			Connection con = DBConnection.connection();
@@ -62,11 +62,14 @@ public class KommentarMapper {
 				Statement stmt = con.createStatement();
 					
 				//Suche alle Felder der Kommentartabelle anhand von ID
-				ResultSet rs = stmt.executeQuery("SELECT * FROM kommentar WHERE KommentarID=" + kommentarID );
+				ResultSet rs = stmt.executeQuery("SELECT * FROM `kommentar` WHERE KommentarID=" + kommentarId );
+				System.out.println("SELECT * FROM `kommentar` WHERE KommentarID=" + kommentarId );
 								
 				if (rs.next()) {		
 				// Ergebnis in Beitragobjekt umwandeln
 				Kommentar k = new Kommentar();
+				
+				k.setKommentarId(rs.getInt("KommentarID"));
 				k.setInhalt(rs.getString("Inhalt"));
 				k.setOwnerId(rs.getInt("UserFK"));
 				k.setBeitragId(rs.getInt("BeitragFK"));
@@ -95,7 +98,7 @@ public class KommentarMapper {
 				
 				//leeres SQL-Statement anlegen
 				Statement stmt = con.createStatement();
-		        stmt.executeUpdate("INSERT INTO kommentar (Inhalt,BeitragFK, UserFK) VALUES ('" + k.getInhalt() + "', " + k.getBeitragId() + "," + k.getOwnerId()+")");			                 
+		        stmt.executeUpdate("INSERT INTO `kommentar` (Inhalt,BeitragFK, UserFK) VALUES ('" + k.getInhalt() + "', " + k.getBeitragId() + "," + k.getOwnerId()+")");			                 
  
 			}
 		
@@ -116,7 +119,7 @@ public class KommentarMapper {
 			try {
 				//leeres SQL-Statement anlegen	
 				Statement stmt = con.createStatement();
-				stmt.executeUpdate("UPDATE kommentar SET Inhalt=\"" + k.getInhalt() + "\" WHERE KommentarID=" + k.getKommentarId());
+				stmt.executeUpdate("UPDATE `kommentar` SET Inhalt=\"" + k.getInhalt() + "\" WHERE KommentarID=" + k.getKommentarId());
 				      						
 				    }	
 				    catch (SQLException e) {
@@ -133,7 +136,7 @@ public class KommentarMapper {
 			
 		    try {	
 		      Statement stmt = con.createStatement();
-		      stmt.executeUpdate("DELETE FROM kommentar WHERE KommentarID=" + k.getKommentarId());
+		      stmt.executeUpdate("DELETE FROM `kommentar` WHERE KommentarID=" + k.getKommentarId());
 		    }																
 		    catch (SQLException e) {	
 		      e.printStackTrace();
@@ -157,13 +160,13 @@ public class KommentarMapper {
 			try {
 				Statement stmt = con.createStatement();
 				
-				ResultSet rs = stmt.executeQuery("SELECT * FROM kommentar WHERE UserFK=" +"'"+ userId+ "'" + "ORDER BY KommentarID");
+				ResultSet rs = stmt.executeQuery("SELECT * FROM `kommentar` WHERE UserFK=" +"'"+ userId+ "'" + "ORDER BY KommentarID");
 				
 				while (rs.next()) {
 					Kommentar k = new Kommentar();
 					k.setBeitragId(rs.getInt("BeitragFK"));
 					k.setOwnerId(rs.getInt("UserFK"));
-					k.setText(rs.getString("Inhalt"));
+					k.setInhalt(rs.getString("Inhalt"));
 					k.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
 					
 					result.add(k);
@@ -188,13 +191,15 @@ public class KommentarMapper {
 				try {
 					Statement stmt = con.createStatement();
 					
-					ResultSet rs = stmt.executeQuery("SELECT * FROM kommentar WHERE BeitragFK=" +"'"+ beitragId+ "'" + "ORDER BY KommentarID");
+					ResultSet rs = stmt.executeQuery("SELECT * FROM `kommentar` WHERE BeitragFK="+ beitragId );
+					
 					
 					while (rs.next()) {
 						Kommentar k = new Kommentar();
+						k.setKommentarId(rs.getInt("KommentarID"));
 						k.setBeitragId(rs.getInt("BeitragFK"));
 						k.setOwnerId(rs.getInt("UserFK"));
-						k.setText(rs.getString("Inhalt"));
+						k.setInhalt(rs.getString("Inhalt"));
 						k.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
 						
 						result.add(k);

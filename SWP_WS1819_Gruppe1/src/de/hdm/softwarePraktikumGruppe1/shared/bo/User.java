@@ -3,6 +3,8 @@
  */
 package de.hdm.softwarePraktikumGruppe1.shared.bo;
 
+import java.sql.Timestamp;
+
 /**
  * @author GianlucaBernert
  * @author Yesin Soufi
@@ -12,32 +14,13 @@ package de.hdm.softwarePraktikumGruppe1.shared.bo;
 public class User extends BusinessObject{
 	
 	private static final long serialVersionUID = 1L;
+	private int userId;
 	private String nickname;
 	private String firstName;
 	private String lastName;
 	private String gMail;
-	private int likeAmount;
-	private int commentAmount;
-	private int userID;
-	
-	/**
-	 * Der Konstruktor nimmt vier String Parameter entgegen um so die vollständige instanzierung 
-	 * eines User-Objekts zu ermöglichen. 
-	 * 
-	 * @param nickname
-	 * @param first
-	 * @param last
-	 * @param gMail
-	 */
-	public User(String nickname, String first, String last, String gMail) {
-		this.nickname = nickname;
-		this.firstName = first;
-		this.lastName = last;
-		this.gMail = gMail;
-		
-		userID += 1;
-	}
-	
+	private Timestamp creationTimeStamp;
+
 	/*
 	 * Leerer Konstruktor. Die Zuweisung der Attribute wird über die Setter-Methoden realisiert.
 	 */
@@ -102,33 +85,6 @@ public class User extends BusinessObject{
 		this.gMail = gMail;
 	}
 	
-	/**
-	 * Methode die die Anzahl der Likes eines Useres zurück gibt
-	 */
-	public int getLikeAmount() {
-		return likeAmount;
-	}
-	
-	/**
-	 * Methode die die Anzahl der Likes eines Users setzt
-	 */
-	public void setLikeAmount(int likeAmount) {
-		this.likeAmount = likeAmount;
-	}
-	
-	/**
-	 * Methode die die Anzhal der Kommentare eines Users zurück gibt
-	 */
-	public int getCommentAmount() {
-		return commentAmount;
-	}
-	
-	/**
-	 * Methode die die Anzahl der Kommentare eines Users setzt
-	 */
-	public void setCommentAmount(int commentAmount) {
-		this.commentAmount = commentAmount;
-	}
 	
 	/**
 	 * Methode um eine textuelle Dastellung der jeweiligen Instanz zu erzeugen
@@ -141,20 +97,23 @@ public class User extends BusinessObject{
 	 * Methode die die User ID zurueck gibt
 	 */
 	public int getUserId() {
-		return userID;
+		return userId;
 	}
 	
 	/**
 	 * Methode die die User ID setzt
 	 */
 	public void setUserId(int userId) {
-		this.userID = userId;
+		this.userId
+		= userId;
 	}
 
+	public Timestamp getCreationTimeStamp() {
+		return creationTimeStamp;
+	}
 
-	
-	
-
-
+	public void setCreationTimeStamp(Timestamp creationTimeStamp) {
+		this.creationTimeStamp = creationTimeStamp;
+	}
 
 }

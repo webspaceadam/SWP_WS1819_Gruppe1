@@ -59,7 +59,7 @@ public class LikeMapper {
 			Statement stmt = con.createStatement();
 				
 			//Suche alle Felder der Kommentartabelle anhand von ID
-			ResultSet rs = stmt.executeQuery("SELECT * FROM 'like' WHERE LikeID=" + likeId );
+			ResultSet rs = stmt.executeQuery("SELECT * FROM `like` WHERE LikeID=" + likeId );
 							
 			if (rs.next()) {		
 				// Ergebnis in Beitragobjekt umwandeln
@@ -87,7 +87,7 @@ public class LikeMapper {
 			try {
 				
 			Statement stmt = con.createStatement();
-			stmt.executeUpdate("INSERT INTO 'like' (BeitragFK, UserFK) VALUES (" + l.getBeitragId()+ ", " + l.getOwnerId()+")");
+			stmt.executeUpdate("INSERT INTO `like`(BeitragFK, UserFK) VALUES (" + l.getBeitragId()+ ", " + l.getOwnerId()+")");
 			}
 			    
 			catch (SQLException e) {
@@ -107,7 +107,7 @@ public class LikeMapper {
 			//leeres SQL-Statement anlegen	
 			Statement stmt = con.createStatement();
 			//statement befuellen
-			stmt.executeUpdate("UPDATE 'like' SET BeitragFK=\"" + l.getBeitragId() + ", UserFK=\""+ l.getOwnerId() + "\" WHERE LikeID=" + l.getLikeId());
+			stmt.executeUpdate("UPDATE `like` SET BeitragFK=\"" + l.getBeitragId() + ", UserFK=\""+ l.getOwnerId() + "\" WHERE LikeID=" + l.getLikeId());
 				      						
 			}	
 			catch (SQLException e) {
@@ -127,7 +127,7 @@ public class LikeMapper {
 			//leeres SQL-Statement anlegen
 			Statement stmt = con.createStatement();
 			//statement befuellen
-			stmt.executeUpdate("DELETE FROM 'like' WHERE LikeID=" + l.getLikeId());
+			stmt.executeUpdate("DELETE FROM `like` WHERE LikeID=" + l.getLikeId());
 			}
 			catch (SQLException e) {
 			e.printStackTrace();
@@ -153,13 +153,13 @@ public class LikeMapper {
 				Statement stmt = con.createStatement();
 				
 				// Statement ausfuellen und als Query an die DB schicken
-				ResultSet rs = stmt.executeQuery("SELECT * FROM 'like' WHERE UserID=" + userId);
+				ResultSet rs = stmt.executeQuery("SELECT * FROM `like` WHERE UserID=" + userId);
 	
 				while (rs.next()) {
 	
 			        Like l = new Like();	        
-			        l.setOwnerId(rs.getInt("User_UserID"));
-			        l.setBeitragId(rs.getInt("Beitrag_BeitragID"));
+			        l.setOwnerId(rs.getInt("UserId"));
+			        l.setBeitragId(rs.getInt("BeitragId"));
 			        vector.add(l);
 	
 			      }
@@ -184,10 +184,11 @@ public class LikeMapper {
 				Statement stmt = con.createStatement();
 				
 				// Statement ausfuellen und als Query an die DB schicken
-				ResultSet rs = stmt.executeQuery("SELECT * FROM 'like' WHERE BeitragFK=" + beitragId);
+				ResultSet rs = stmt.executeQuery("SELECT * FROM `like` WHERE BeitragFK=" + beitragId);
 	
 				while (rs.next()) {
-			        Like l = new Like();	        
+			        Like l = new Like();
+			        l.setLikeId(rs.getInt("LikeID"));
 			        l.setOwnerId(rs.getInt("UserFK"));
 			        l.setBeitragId(rs.getInt("BeitragFK"));
 			        l.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
@@ -212,10 +213,11 @@ public class LikeMapper {
 				Statement stmt = con.createStatement();
 					
 				// Statement ausfuellen und als Query an die DB schicken
-				ResultSet rs = stmt.executeQuery("SELECT * FROM 'like' WHERE UserFK=" + userId + " & BeitragFK=" + beitragId);
+				ResultSet rs = stmt.executeQuery("SELECT * FROM `like` WHERE UserFK=" + userId + " & BeitragFK=" + beitragId);
 					
 				if (rs.next()) {
 					Like l = new Like();
+					l.setLikeId(rs.getInt("LikeID"));
 					l.setBeitragId(rs.getInt("BeitragFK"));
 					l.setOwnerId(rs.getInt("UserFK"));		
 					return l;

@@ -257,14 +257,16 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 		Vector<Like> likesOfBeitrag = this.lMapper.findLikesOfBeitrag(b.getBeitragId());
 		if (likesOfBeitrag != null) {
 			for (Like l : likesOfBeitrag) {
-				this.lMapper.deleteLike(l);
+				this.deleteLike(l);
+				
 			}
 		}
 		//Alle Kommentare löschen
 		Vector<Kommentar> kommentareOfBeitrag = this.kMapper.findKommentareOfBeitrag(b.getBeitragId());
 		if (kommentareOfBeitrag != null) {
 			for (Kommentar k : kommentareOfBeitrag) {
-				this.kMapper.deleteKommentar(k);
+				System.out.println(k.getKommentarId());
+				this.deleteKommentar(k);	
 			}
 		}
 		//Beitrag löschen
@@ -305,6 +307,9 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 		this.aMapper.deleteAbonnement(a);
 	}
 	
+	public Kommentar getKommentarById(int kommentarId) {
+		return this.kMapper.findKommentarById(kommentarId);
+	}
 	/**
 	 * Methode um einen neues Kommentar zu erzeugen
 	 */
@@ -315,8 +320,7 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 		k.setOwnerId(userId);
 		k.setBeitragId(beitragId);
 		k.setCreationTimeStamp(timeStamp);
-		
-		System.out.println(k.toString());
+
 		this.kMapper.insertKommentar(k);
 		return k;
 	}
@@ -341,6 +345,10 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	 */
 	public void editKommentar(Kommentar k) {
 		 this.kMapper.updateKommentar(k);
+	}
+	
+	public Like getLikeById(int likeId) {
+		return this.lMapper.findLikeById(likeId);
 	}
 	
 	/**
@@ -401,6 +409,10 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	 * Methode um eine Pinnwand zu erstellen
 	 */
 	
+	public Pinnwand getPinnwandById(int pinnwandId) {
+		return this.pMapper.findPinnwandById(pinnwandId);
+	}
+	
 	public Pinnwand createPinnwand(User u, Timestamp timestamp) {
 		if (this.pMapper.findPinnwandByUserId(u.getUserId()) == null) {
 			Pinnwand p = new Pinnwand();
@@ -420,7 +432,6 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	
 	public Pinnwand getPinnwandByUserId(int userId) {
 		if(this.pMapper.findPinnwandByUserId(userId) == null) {
-			System.out.println("Keine Pinnwand von diesem User vorhanden.");
 			return null;
 		}else {
 			Pinnwand p = this.pMapper.findPinnwandByUserId(userId);
@@ -452,12 +463,12 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 //					}
 //				}
 //				bMapper.deleteBeitrag(b);
-				deleteBeitrag(b);
+				this.deleteBeitrag(b);
 			}
 		}
 		if(abonnementsOfPinnwand!=null) {
 			for (Abonnement a: abonnementsOfPinnwand) {
-				this.aMapper.deleteAbonnement(a);
+				this.deleteAbonnement(a);
 			}
 		}
 		this.pMapper.deletePinnwand(p);
