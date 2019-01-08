@@ -58,13 +58,13 @@ public class BeitragMapper {
 	 * Methode, die einen Beitrag ahnand einer Id zurueckgibt
 	 */
 	
-		public Beitrag findBeitragById(int beitragID) {
+		public Beitrag findBeitragById(int beitragId) {
 		    
 			Connection con = DBConnection.connection();
 			
 			try {
 				Statement stmt= con.createStatement();
-				ResultSet rs = stmt.executeQuery("SELECT * FROM beitrag WHERE BeitragID =" + beitragID);
+				ResultSet rs = stmt.executeQuery("SELECT * FROM beitrag WHERE BeitragID =" + beitragId);
 				
 				if (rs.next()) {
 					Beitrag b = new Beitrag();
@@ -122,7 +122,7 @@ public class BeitragMapper {
 			try {
 				Statement stmt = con.createStatement();
 
-				stmt.executeUpdate("UPDATE beitrag SET Inhalt= '"+ b.getInhalt() + "' " + "WHERE BeitragID=" + b.getBeitragId());
+				stmt.executeUpdate("UPDATE beitrag SET Inhalt= '"+ b.getInhalt() + "' WHERE BeitragID=" + b.getBeitragId());
 
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -140,7 +140,8 @@ public class BeitragMapper {
 			
 			try {
 				Statement stmt = con.createStatement();
-				stmt.executeUpdate("DELETE FROM beitrag " + "WHERE BeitragID = '" + b.getBeitragId()+"'");
+				stmt.executeUpdate("DELETE FROM beitrag WHERE BeitragID=" + b.getBeitragId());
+				System.out.println("DELETE FROM beitrag WHERE BeitragID=" + b.getBeitragId());
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -162,8 +163,7 @@ public class BeitragMapper {
 			try {
 				Statement stmt = con.createStatement();
 				
-				ResultSet rs = stmt.executeQuery("SELECT * FROM beitrag"
-				+"WHERE = PinnwandFK= '" + pinnwandFK  +"' "+ "ORDER BY BeitragID");
+				ResultSet rs = stmt.executeQuery("SELECT * FROM beitrag WHERE PinnwandFK=" + pinnwandFK );
 				
 				while (rs.next()) {
 					Beitrag b = new Beitrag();
@@ -192,8 +192,7 @@ public class BeitragMapper {
 			try {
 				Statement stmt = con.createStatement();
 				
-				ResultSet rs = stmt.executeQuery("SELECT * FROM beitrag"
-				+"WHERE = UserFK= '" + userFK  +"' "+ "ORDER BY BeitragID");
+				ResultSet rs = stmt.executeQuery("SELECT * FROM beitrag WHERE UserFK= " + userFK);
 				
 				while (rs.next()) {
 					Beitrag b = new Beitrag();

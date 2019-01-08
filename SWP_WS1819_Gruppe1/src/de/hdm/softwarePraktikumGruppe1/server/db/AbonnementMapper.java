@@ -59,7 +59,7 @@ public class AbonnementMapper {
 		try {
 			Statement stmt = con.createStatement();
 		
-			ResultSet rs = stmt.executeQuery ("SELECT*  FROM abonnement WHERE AbonnementID=" + abonnementId + " ORDER BY AbonnementID");
+			ResultSet rs = stmt.executeQuery ("SELECT*  FROM abonnement WHERE AbonnementID=" + abonnementId );
 	
 				if(rs.next()) {
 				Abonnement a = new Abonnement();
@@ -185,7 +185,7 @@ public class AbonnementMapper {
 			try {
 			
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM abonnement" + "WHERE PinnwandFK=" + pinnwandId);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM abonnement WHERE PinnwandFK=" + pinnwandId);
 					
 					while(rs.next()) {
 						
@@ -195,12 +195,13 @@ public class AbonnementMapper {
 						a.setOwnerId(rs.getInt("UserFK"));
 						result.addElement(a);
 					}
+			return result;
 					
 			} catch (SQLException e) {
 			e.printStackTrace();
 			}
-		
-			return result;
+		return null;
+			
 		}
 
 	/* Ende:  Foreign Key-Mapper-Methoden

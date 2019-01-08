@@ -17,19 +17,6 @@ public class Like extends BusinessObject{
 	private int ownerId;
 	private Timestamp creationTimeStamp;
 	
-	
-	/**
-	 * Der Konstruktor nimmt zwei Parameter entgegen. Einen vom Typ Beitrag um so die 
-	 * Verbindung zum dazugehörigen Beitrag zu setzen. Und einen weiteren Parameter des Typs
-	 * User um so den Besitzer des Likes zu identifizieren. 
-	 * @param beitrag
-	 * @param owner
-	 */
-	public Like(int beitrag, int owner) {
-		this.beitragId = beitrag;
-		this.ownerId = owner;
-	}
-	
 	/*
 	 * Leerer Konstruktor. Die Zuweisung der Attribute wird über die Setter-Methoden realisiert.
 	 */

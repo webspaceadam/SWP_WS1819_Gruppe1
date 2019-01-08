@@ -116,10 +116,4 @@ public class User extends BusinessObject{
 		this.creationTimeStamp = creationTimeStamp;
 	}
 
-
-	
-	
-
-
-
 }
