@@ -3,6 +3,8 @@
  */
 package de.hdm.softwarePraktikumGruppe1.shared.bo;
 
+import java.sql.Timestamp;
+
 /**
  * @author GianlucaBernert
  * Klasse eines Like Objekts das BusinessObject als Superklasse besitzt
@@ -13,6 +15,8 @@ public class Like extends BusinessObject{
 	private int likeId;
 	private int beitragId;
 	private int ownerId;
+	private Timestamp creationTimeStamp;
+	
 	
 	/**
 	 * Der Konstruktor nimmt zwei Parameter entgegen. Einen vom Typ Beitrag um so die 
@@ -61,6 +65,15 @@ public class Like extends BusinessObject{
 	public String toString() {
 		return "Like ID: " + this.getLikeId() + " references Beitrag: #" + this.getBeitragId();
 	}
+	
+	public Timestamp getCreationTimeStamp() {
+		return creationTimeStamp;
+	}
+
+	public void setCreationTimeStamp(Timestamp creationTimeStamp) {
+		this.creationTimeStamp = creationTimeStamp;
+	}
+
 	
 	
 

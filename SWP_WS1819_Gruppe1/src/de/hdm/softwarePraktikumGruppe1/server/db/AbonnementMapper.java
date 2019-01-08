@@ -4,6 +4,7 @@
 package de.hdm.softwarePraktikumGruppe1.server.db;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -82,22 +83,24 @@ public class AbonnementMapper {
 		
 	public Abonnement insert(Abonnement a) {
 		Connection con = DBConnection.connection();
-			try {
-			Statement stmt = con.createStatement();
-				ResultSet rs = stmt.executeQuery("SELECT MAX(AbonnementID) AS maxid " + "FROM abonnement ");
-				if (rs.next()) {
-				
-				a.setOwnerId(rs.getInt("maxid") + 1);
-				stmt = con.createStatement();
-				
-				stmt.executeUpdate("INSERT INTO abonnement (PinnwandFK, UserFK) " + "VALUES (" +
-						"'" + a.getPinnwandId() + "'," + 
-						"'" + a.getOwnerId() + "'");	
+
+		try {
+			PreparedStatement statement = con.prepareStatement(
+					"INSERT INTO abonnement (PinnwandFK, UserFK) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS);
+
+			statement.setInt(1, a.getPinnwandId());
+			statement.setInt(2, a.getOwnerId());
+
+			statement.executeUpdate();
+			ResultSet rs = statement.getGeneratedKeys();
+			if (rs.next()) {
+				a.setAbonnementId(rs.getInt(1));
+				return a;
 			}
-			} catch (SQLException e) {
+		}catch (SQLException e) {
 			e.printStackTrace();
-			}
-		return a;			
+		}
+		return null;
 	}
 
 	/*

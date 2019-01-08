@@ -4,6 +4,7 @@
 package de.hdm.softwarePraktikumGruppe1.shared.bo;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 /**
  * @author GianlucaBernert, AdamGniady
@@ -15,6 +16,7 @@ public class Abonnement extends BusinessObject{
 	private int abonnementId;
 	private int ownerId;
 	private int pinnwandId;
+	private Timestamp creationTimeStamp;
 
 	/**
 	 * Der Konstruktor nimmt zwei Parameter entgegen. Zum einen den Owner des
@@ -84,4 +86,13 @@ public class Abonnement extends BusinessObject{
 	public String pinnwandUserString() {
 		return null;
 	}
+	
+	public Timestamp getCreationTimeStamp() {
+		return creationTimeStamp;
+	}
+
+	public void setCreationTimeStamp(Timestamp creationTimeStamp) {
+		this.creationTimeStamp = creationTimeStamp;
+	}
+	
 }

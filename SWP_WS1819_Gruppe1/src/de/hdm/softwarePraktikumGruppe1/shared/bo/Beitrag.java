@@ -3,13 +3,14 @@
  */
 package de.hdm.softwarePraktikumGruppe1.shared.bo;
 
+import java.sql.Timestamp;
 import java.util.*;
 
 /**
  * @author SebastianHermann, GianlucaBernert, AdamGniady
  * Klasse eines Beitrag Objekts das Textbeitrag als Superklasse besitzt
  */
-public class Beitrag extends Textbeitrag {
+public class Beitrag {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -18,32 +19,10 @@ public class Beitrag extends Textbeitrag {
 	private int ownerId;
 	private int pinnwandId;
 	private String inhalt;
-	
-	
-	// Applikationslogikseitig erstellte Eigenschaften der Klasse
-	private Vector<Kommentar> kommentare;
-	private Vector<Like> likes;
-	
+	private Timestamp creationTimeStamp;
 	private int likeAmount;
 	private int commentAmount;
-
-	/**
-	 * Der Konstruktor nimmt drei Parameter entgegen. Einen vom Typ User um so die 
-	 * Verbindung zum dazugehörigen User zu setzen. Einen Parameter des Typs Pinnwand um so die dazugehörige
-	 * Pinnwand zu setzen. Als letzten Parameter nimmt der Konstruktor einen String entgegen der den Inhalt
-	 * des Beitrags darstellt. 
-	 * 
-	 * @param owner
-	 * @param pinnwand
-	 * @param inhalt
-	 */
-	public Beitrag(int ownerId, int pinnwand, String inhalt) {
-		this.ownerId = ownerId;
-		this.pinnwandId = pinnwand;
-		this.inhalt = inhalt;
-		
-		beitragId += 1;
-	}
+	
 	
 	/*
 	 * Leerer Konstruktor. Die Zuweisung der Attribute wird über die Setter-Methoden realisiert.
@@ -82,12 +61,7 @@ public class Beitrag extends Textbeitrag {
 	public void setPinnwandId(int pinnwandId) {
 		this.pinnwandId = pinnwandId;
 	}
-	public Vector<Kommentar> getKommentare() {
-		return kommentare;
-	}
-	public void setKommentare(Vector<Kommentar> kommentare) {
-		this.kommentare = kommentare;
-	}
+	
 	public String getInhalt() {
 		return inhalt;
 	}
@@ -116,6 +90,14 @@ public class Beitrag extends Textbeitrag {
 
 	public void setBeitragId(int beitragId) {
 		this.beitragId = beitragId;
+	}
+	
+	public Timestamp getCreationTimeStamp() {
+		return creationTimeStamp;
+	}
+
+	public void setCreationTimeStamp(Timestamp creationTimeStamp) {
+		this.creationTimeStamp = creationTimeStamp;
 	}
 }
 

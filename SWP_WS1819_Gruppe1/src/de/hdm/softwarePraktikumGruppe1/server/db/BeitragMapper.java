@@ -68,8 +68,8 @@ public class BeitragMapper {
 				
 				if (rs.next()) {
 					Beitrag b = new Beitrag();
-					b.setId(rs.getInt("BeitragID"));
-					b.setText(rs.getString("Inhalt"));
+					b.setBeitragId(rs.getInt("BeitragID"));
+					b.setInhalt(rs.getString("Inhalt"));
 					b.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
 					
 					return b;
@@ -105,13 +105,13 @@ public class BeitragMapper {
 				statement.executeUpdate();
 				ResultSet rs = statement.getGeneratedKeys();
 				if (rs.next()) {
-					b.setId(rs.getInt(1));
+					b.setBeitragId(rs.getInt(1));
 					
 				}
-			} catch (SQLException e) {
+			}catch (SQLException e) {
 				e.printStackTrace();
 			}
-			}
+		}
 	/*
 	 * Methode, die das Update eines Beitragobjekts in der Datenbank ermöglicht.
 	 */
@@ -168,7 +168,7 @@ public class BeitragMapper {
 				while (rs.next()) {
 					Beitrag b = new Beitrag();
 					b.setBeitragId(rs.getInt("BeitragID"));
-					b.setText(rs.getString("Inhalt"));
+					b.setInhalt(rs.getString("Inhalt"));
 					b.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
 					b.setPinnwandId(rs.getInt("PinnwandFK"));
 					b.setOwnerId(rs.getInt("UserFK"));
