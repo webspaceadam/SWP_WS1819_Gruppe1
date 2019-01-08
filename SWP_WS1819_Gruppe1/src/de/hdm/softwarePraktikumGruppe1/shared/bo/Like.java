@@ -5,11 +5,13 @@ package de.hdm.softwarePraktikumGruppe1.shared.bo;
 
 import java.sql.Timestamp;
 
+import com.google.gwt.user.client.rpc.IsSerializable;
+
 /**
  * @author GianlucaBernert
  * Klasse eines Like Objekts das BusinessObject als Superklasse besitzt
  */
-public class Like extends BusinessObject{
+public class Like implements IsSerializable{
 	
 	private static final long serialVersionUID = 1L;
 	private int likeId;
@@ -49,8 +51,11 @@ public class Like extends BusinessObject{
 		this.likeId = likeId;
 	}
 	
+	/**
+	 * Methode um eine textuelle Dastellung der jeweiligen Instanz zu erzeugen
+	 */
 	public String toString() {
-		return "Like ID: " + this.getLikeId() + " references Beitrag: #" + this.getBeitragId();
+		return super.toString() + " LikeID #L" + this.getLikeId() + " Referenzbeitrag " + this.getBeitragId();
 	}
 	
 	public Timestamp getCreationTimeStamp() {

@@ -5,13 +5,15 @@ package de.hdm.softwarePraktikumGruppe1.shared.bo;
 
 import java.sql.Timestamp;
 
+import com.google.gwt.user.client.rpc.IsSerializable;
+
 /**
  * @author GianlucaBernert
  * @author Yesin Soufi
  * @autor SebastianHermann
  * Klasse eines User Objekts das BusinessObject als Superklasse besitzt
  */
-public class User extends BusinessObject{
+public class User implements IsSerializable{
 	
 	private static final long serialVersionUID = 1L;
 	private int userId;
@@ -90,7 +92,7 @@ public class User extends BusinessObject{
 	 * Methode um eine textuelle Dastellung der jeweiligen Instanz zu erzeugen
 	 */
 	public String toString() {
-		return super.toString() + " UserID #" + this.getUserId() + " " + this.firstName + " " + this.lastName;
+		return "UserID #U" + this.getUserId() + " " + this.firstName + " " + this.lastName;
 	}
 	
 	/**
