@@ -5,12 +5,14 @@ package de.hdm.softwarePraktikumGruppe1.shared.bo;
 
 import java.sql.Timestamp;
 
+import com.google.gwt.user.client.rpc.IsSerializable;
+
 /**
  * @author GianlucaBernert
  * @author SebastianHermann
  * Klasse eines Kommentar Objekts das Textbeitrag als Superklasse besitzt
  */
-public class Kommentar {
+public class Kommentar implements IsSerializable{
 	
 	private static final long serialVersionUID = 1L;
 	private int kommentarId;
@@ -73,8 +75,7 @@ public class Kommentar {
 	 * Methode die das Ibjekt Kommentar als String zurück gibt
 	 */
 	public String toString() {
-		String infoAboutKommentar = "Kommentar ID '" + this.getKommentarId() + "/ Inhalt: " + this.getInhalt() + "/ ID des Verfassers #" + this.getOwnerId();
-		return infoAboutKommentar;
+		return "KommentarID #K" + this.getKommentarId() + " von User mit der ID #U" + this.getOwnerId();
 	}
 
 	/*

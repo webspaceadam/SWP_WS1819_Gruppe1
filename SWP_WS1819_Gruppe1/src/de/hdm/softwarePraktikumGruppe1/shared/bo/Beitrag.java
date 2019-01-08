@@ -4,13 +4,14 @@
 package de.hdm.softwarePraktikumGruppe1.shared.bo;
 
 import java.sql.Timestamp;
-import java.util.*;
+
+import com.google.gwt.user.client.rpc.IsSerializable;
 
 /**
  * @author SebastianHermann, GianlucaBernert, AdamGniady
  * Klasse eines Beitrag Objekts das Textbeitrag als Superklasse besitzt
  */
-public class Beitrag {
+public class Beitrag implements IsSerializable{
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -68,15 +69,11 @@ public class Beitrag {
 	public void setInhalt(String inhalt) {
 		this.inhalt = inhalt;
 	}
-
-	public void setBeitragID(int beitragId) {
-		this.setBeitragId(beitragId);
-	}
 	
 	/**
 	 * Methode um eine textuelle Dastellung der jeweiligen Instanz zu erzeugen
 	 */
-	public String toString() {
+	public  String toString() {
 		return super.toString() + " Beitrag ID #" + this.getBeitragId();
 	}
 

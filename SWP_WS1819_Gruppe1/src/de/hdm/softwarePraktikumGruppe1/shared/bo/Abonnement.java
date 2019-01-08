@@ -6,11 +6,13 @@ package de.hdm.softwarePraktikumGruppe1.shared.bo;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+import com.google.gwt.user.client.rpc.IsSerializable;
+
 /**
  * @author GianlucaBernert, AdamGniady
  * Klasse eines Abonnement Objekts das BusinessObject als Superklasse besitzt
  */
-public class Abonnement extends BusinessObject{
+public class Abonnement implements IsSerializable{
 	
 	private static final long serialVersionUID = 1L;
 	private int abonnementId;
@@ -73,6 +75,13 @@ public class Abonnement extends BusinessObject{
 
 	public void setCreationTimeStamp(Timestamp creationTimeStamp) {
 		this.creationTimeStamp = creationTimeStamp;
+	}
+	
+	/**
+	 * Methode um eine textuelle Dastellung der jeweiligen Instanz zu erzeugen
+	 */
+	public String toString() {
+		return super.toString() + " AbonnementID #A" + this.getAbonnementId();
 	}
 	
 }

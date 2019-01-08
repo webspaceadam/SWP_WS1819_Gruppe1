@@ -5,12 +5,14 @@ package de.hdm.softwarePraktikumGruppe1.shared.bo;
 
 import java.sql.Timestamp;
 
+import com.google.gwt.user.client.rpc.IsSerializable;
+
 /**
  * @author GianlucaBernert
  * @autor SebastianHermann
  * Klasse eines Pinnwand Objekts das BusinessObject als SuperKlasse besitzt
  */
-public class Pinnwand extends BusinessObject {
+public class Pinnwand implements IsSerializable{
 	
 	private static final long serialVersionUID = 1L;
 	private int pinnwandId;
@@ -43,6 +45,11 @@ public class Pinnwand extends BusinessObject {
 		this.creationTimeStamp = creationTimeStamp;
 	}
 	
-	
+	/**
+	 * Methode um eine textuelle Dastellung der jeweiligen Instanz zu erzeugen
+	 */
+	public String toString() {
+		return super.toString() + " PinnwandID #P" + this.getPinnwandId();
+	}
 
 }
