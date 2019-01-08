@@ -10,7 +10,7 @@ import java.sql.Timestamp;
  * @author SebastianHermann
  * Klasse eines Kommentar Objekts das Textbeitrag als Superklasse besitzt
  */
-public class Kommentar {
+public class Kommentar extends BusinessObject {
 	
 	private static final long serialVersionUID = 1L;
 	private int kommentarId;

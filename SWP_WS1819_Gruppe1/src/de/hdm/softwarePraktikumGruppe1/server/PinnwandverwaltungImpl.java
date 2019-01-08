@@ -315,7 +315,6 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	 */
 	public Kommentar createKommentar(String inhalt, int userId, int beitragId, Timestamp timeStamp) {
 		Kommentar k = new Kommentar();
-		
 		k.setInhalt(inhalt);
 		k.setOwnerId(userId);
 		k.setBeitragId(beitragId);

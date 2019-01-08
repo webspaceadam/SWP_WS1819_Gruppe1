@@ -10,7 +10,7 @@ import java.util.*;
  * @author SebastianHermann, GianlucaBernert, AdamGniady
  * Klasse eines Beitrag Objekts das Textbeitrag als Superklasse besitzt
  */
-public class Beitrag {
+public class Beitrag extends BusinessObject{
 	
 	private static final long serialVersionUID = 1L;
 	
