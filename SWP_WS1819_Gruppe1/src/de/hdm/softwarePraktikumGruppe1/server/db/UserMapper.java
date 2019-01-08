@@ -120,7 +120,7 @@ public class UserMapper {
 			statement.executeUpdate();
 			ResultSet rs = statement.getGeneratedKeys();
 			if (rs.next()) {
-				u.setId(rs.getInt(1));
+				u.setUserId(rs.getInt(1));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
