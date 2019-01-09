@@ -153,7 +153,7 @@ public class LikeMapper {
 				Statement stmt = con.createStatement();
 				
 				// Statement ausfuellen und als Query an die DB schicken
-				ResultSet rs = stmt.executeQuery("SELECT * FROM `like` WHERE UserID=" + userId);
+				ResultSet rs = stmt.executeQuery("SELECT * FROM `like` WHERE UserFK=" + userId);
 	
 				while (rs.next()) {
 	
