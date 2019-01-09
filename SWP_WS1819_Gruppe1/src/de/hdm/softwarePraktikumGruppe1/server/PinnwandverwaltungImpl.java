@@ -162,10 +162,6 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 		this.uMapper.deleteUser(u);
 	}
 	
-	public Pinnwand getPinnwandOfUser(int userId) {
-		return this.pMapper.findPinnwandByUserId(userId);
-	}
-	
 	/**
 	 * Methode zur Ueberpruefung der Zugangsberechtigung 
 	 */
