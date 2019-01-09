@@ -376,11 +376,11 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	 * @param User
 	 */
 	
-	public Pinnwand getPinnwandByUserId(int userId) {
-		if(this.pMapper.findPinnwandByUserId(userId) == null) {
+	public Pinnwand getPinnwandOfUser(User u) {
+		if(this.pMapper.findPinnwandByUserId(u.getUserId()) == null) {
 			return null;
 		}else {
-			Pinnwand p = this.pMapper.findPinnwandByUserId(userId);
+			Pinnwand p = this.pMapper.findPinnwandByUserId(u.getUserId());
 			return p;
 		}
 	}

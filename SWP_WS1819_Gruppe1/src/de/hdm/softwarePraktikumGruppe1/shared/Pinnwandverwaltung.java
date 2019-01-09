@@ -156,7 +156,7 @@ public interface Pinnwandverwaltung extends RemoteService {
 	
 	public Pinnwand createPinnwand(User u, Timestamp timestamp);
 	
-	public Pinnwand getPinnwandByUserId(int userId);
+	public Pinnwand getPinnwandOfUser(User u);
 	
 	public void deletePinnwand(Pinnwand p);
 	
