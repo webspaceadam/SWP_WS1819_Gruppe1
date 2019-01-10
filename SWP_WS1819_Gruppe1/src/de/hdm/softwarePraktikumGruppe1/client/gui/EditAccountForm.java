@@ -4,9 +4,13 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 
+import de.hdm.softwarePraktikumGruppe1.client.ClientsideSettings;
 import de.hdm.softwarePraktikumGruppe1.client.gui.ProfileBox.EditProfileBoxDialogBox;
+import de.hdm.softwarePraktikumGruppe1.shared.PinnwandverwaltungAsync;
+import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
 /**
  * Die Klasse <code>EditAccountForm</code> wird für die Änderung der Account-Daten
@@ -14,6 +18,10 @@ import de.hdm.softwarePraktikumGruppe1.client.gui.ProfileBox.EditProfileBoxDialo
  * @author AdamGniady
  */
 public class EditAccountForm extends FlowPanel {
+	// User und Verwaltung des Systems
+	User user = null;
+	PinnwandverwaltungAsync pinnwandVerwaltung = ClientsideSettings.getPinnwandverwaltung();
+	
 	// Whole Wrappers
 	private FlowPanel nickWrapper = new FlowPanel();
 	private FlowPanel nameWrapper = new FlowPanel();
@@ -99,6 +107,8 @@ public class EditAccountForm extends FlowPanel {
 	private class SafeNewNames implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
+			pinnwandVerwaltung.getUserById(1, new GetUserByIdCallback());
+			
 			String newNickname = nickInput.getValue();
 			String newVorname = firstInput.getValue();
 			String newNachname = lastInput.getValue();
@@ -108,6 +118,7 @@ public class EditAccountForm extends FlowPanel {
 				Window.alert("'Nickname' is empty!");
 			} else {
 				parentPB.setNickname(newNickname);
+				user.setNickname(newNickname);
 			}
 			
 			// Check if Input for Vorname is empty
@@ -115,6 +126,7 @@ public class EditAccountForm extends FlowPanel {
 				Window.alert("'Vorname' is empty!");
 			} else {
 				parentPB.setVorname(newVorname);
+				user.setFirstName(newVorname);
 			}
 			
 			// Check if Input for Nickname is empty
@@ -122,10 +134,44 @@ public class EditAccountForm extends FlowPanel {
 				Window.alert("'Nachname' is empty!");
 			} else {
 				parentPB.setNachname(newNachname);
+				user.setLastName(newNachname);
 			}
+			
+			pinnwandVerwaltung.editUser(user, new EditUserCallback());
 			
 			parentDialogBox.hide();
 			
+		}
+		
+	}
+	
+	public class GetUserByIdCallback implements AsyncCallback<User> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert("Problem with the Callback!");
+			
+		}
+
+		@Override
+		public void onSuccess(User result) {
+			user = result;
+		}
+		
+	}
+	
+	public class EditUserCallback implements AsyncCallback<Void> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert("Failed EditUserCallback");
+			
+		}
+
+		@Override
+		public void onSuccess(Void result) {
+			// TODO Auto-generated method stub
+			Window.alert("EditUserCallback erfolgreich durchgeführt!");
 		}
 		
 	}

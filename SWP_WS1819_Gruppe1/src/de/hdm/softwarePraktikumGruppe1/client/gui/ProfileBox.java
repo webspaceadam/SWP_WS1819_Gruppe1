@@ -2,7 +2,13 @@ package de.hdm.softwarePraktikumGruppe1.client.gui;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
+
+import de.hdm.softwarePraktikumGruppe1.client.ClientsideSettings;
+import de.hdm.softwarePraktikumGruppe1.shared.PinnwandverwaltungAsync;
+import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
 
 
@@ -17,7 +23,9 @@ import com.google.gwt.user.client.ui.*;
 
 public class ProfileBox extends FlowPanel {
 		// Oberer Teil
-	
+		User user = null;
+		PinnwandverwaltungAsync pinnwandVerwaltung = ClientsideSettings.getPinnwandverwaltung();
+
 		// dazugeh�rige Label
 		private Label vorName = new Label("Sebastian");
 		private Label nachName = new Label("Hermann");
@@ -48,6 +56,9 @@ public class ProfileBox extends FlowPanel {
 	
 	
 		public ProfileBox() {
+//			this.vorName.setText(u.getFirstName());
+//			this.nachName.setText(u.getLastName());
+//			this.nickName.setText("@" + u.getNickname());
 		}
 		
 		public ProfileBox(String newVorname, String newNachname, String newNickname) {
@@ -58,6 +69,9 @@ public class ProfileBox extends FlowPanel {
 
 		
 		public void onLoad() {
+			pinnwandVerwaltung.getUserById(1, new GetUserByIdCallback());
+			
+			
 			// Adding Styling for ProfileBox
 			this.addStyleName("box radiusless");
 			
@@ -201,5 +215,23 @@ public class ProfileBox extends FlowPanel {
 		
 		public String getNachname() {
 			return this.nachName.getText();
+		}
+		
+		public class GetUserByIdCallback implements AsyncCallback<User> {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Problem with the Callback!");
+				
+			}
+
+			@Override
+			public void onSuccess(User result) {
+				user = result;
+				vorName.setText(user.getFirstName());
+				nachName.setText(user.getLastName());
+				nickName.setText(user.getNickname());
+			}
+			
 		}
 }

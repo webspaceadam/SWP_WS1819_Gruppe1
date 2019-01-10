@@ -5,7 +5,16 @@ import java.util.Vector;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.shared.GwtEvent;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
+
+import de.hdm.softwarePraktikumGruppe1.client.ClientsideSettings;
+import de.hdm.softwarePraktikumGruppe1.shared.PinnwandverwaltungAsync;
+import de.hdm.softwarePraktikumGruppe1.shared.bo.Abonnement;
+import de.hdm.softwarePraktikumGruppe1.shared.bo.Pinnwand;
+import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
 /**
  * Die <code>Header</code>-Klasse ist eine Custom-Widget-Class die daf�r verwendet wird, 
@@ -16,7 +25,14 @@ import com.google.gwt.user.client.ui.*;
  */
 
 public class Header extends FlowPanel {
-
+		PinnwandverwaltungAsync pinnwandVerwaltung = null;
+		User user = null;
+		
+		Vector<Abonnement> userAbonnements = null;
+		Vector<Pinnwand> aboPinnwaende = null;
+		Vector<User> pinnwandOwner = null;
+	
+		
 		// Create Header Divs 
 		private FlowPanel headerLogo = new FlowPanel();
 		private FlowPanel headerLinkList = new FlowPanel();
@@ -58,7 +74,8 @@ public class Header extends FlowPanel {
 		 * des Kontaktverwaltungstools hinzugef�gt. 
 		 */
 		public void onLoad() {
-			
+			pinnwandVerwaltung = ClientsideSettings.getPinnwandverwaltung();
+			pinnwandVerwaltung.getUserById(1, new GetUserByIdCallback());
 			
 			// Add Styling to this Element
 			this.addStyleName("header bg-primary");
@@ -137,13 +154,16 @@ public class Header extends FlowPanel {
 		private class ShowAbosDialogBox extends DialogBox implements ClickHandler {
 			private Vector<AbonnementBox> userAbos = new Vector<AbonnementBox>();
 			
+			
 			private ScrollPanel parentScrolling = new ScrollPanel();
 			private FlowPanel aboParentPanel = new FlowPanel();
 			
 			public ShowAbosDialogBox() {
 				
 				for(int i = 0; i < 20; i++) {
-					AbonnementBox tempAboBox = new AbonnementBox(i);
+					AbonnementBox tempAboBox = new AbonnementBox();
+					
+					
 					userAbos.add(i, tempAboBox);
 				}
 				
@@ -239,5 +259,39 @@ public class Header extends FlowPanel {
 			public void onClick(ClickEvent event) {
 				hide();
 			}
+		}
+		
+		public class GetUserByIdCallback implements AsyncCallback<User> {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Problem with the Callback!");
+				
+			}
+
+			@Override
+			public void onSuccess(User result) {
+				user = result;
+				pinnwandVerwaltung.showAllAbonnementsByUser(user, new ShowAllAbonnementsByUserCallback());
+			}
+			
+		}
+		
+		public class ShowAllAbonnementsByUserCallback implements AsyncCallback<Vector<Abonnement>> {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Problem with the ShowAllAboCallback()");
+				
+			}
+
+			@Override
+			public void onSuccess(Vector<Abonnement> result) {
+				// TODO Auto-generated method stub
+				userAbonnements = result;
+			}
+
+		
+			
 		}
 }
