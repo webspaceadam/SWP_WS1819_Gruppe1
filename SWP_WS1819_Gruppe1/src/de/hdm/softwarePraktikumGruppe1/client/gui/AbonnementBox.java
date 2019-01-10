@@ -4,9 +4,10 @@ import java.util.Vector;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.ui.*;
-
-import de.hdm.softwarePraktikumGruppe1.shared.bo.Abonnement;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootPanel;
 
 /**
  * Die Klasse <code>AbonnementBox</code> ist zuständig für die Anzeige der Abonnements
@@ -20,6 +21,8 @@ public class AbonnementBox extends FlowPanel {
 	private Label nickName = new Label("@aboNickname");
 	private Button pinnwandBtn = new Button("Pinnwand");
 	private Button deaboBtn = new Button("Deabbonieren");
+	
+	private int pinnwandId;
 	
 	private FlowPanel accountWrapper = new FlowPanel();
 	private FlowPanel nickWrapper = new FlowPanel();
@@ -41,13 +44,12 @@ public class AbonnementBox extends FlowPanel {
 	 * 
 	 * @author AdamGniady
 	 */
-	public AbonnementBox(String aboAccountName, String aboNickname) {
+	public AbonnementBox(String aboAccountName, String aboNickname, int pinnwandId) {
 		this.accountName.setText(aboAccountName);
 		this.nickName.setText(aboNickname);
-	}
-	
-	public AbonnementBox(int aboCount) {
-		this.accountName.setText("Abonnement" + aboCount);
+		this.pinnwandId = pinnwandId;
+		
+		this.pinnwandBtn.setTitle("PinnwandId: " + this.pinnwandId);
 	}
 	
 	public void onLoad() {

@@ -34,7 +34,7 @@ public class EditAccountForm extends FlowPanel {
 	private TextBox nickInput = new TextBox();
 	private TextBox lastInput = new TextBox();
 	private TextBox firstInput = new TextBox();
-	private Button safeButton = new Button("Speichere den Edit");
+	private Button safeButton = new Button("Speichern");
 	
 	private ProfileBox parentPB;
 	private EditProfileBoxDialogBox parentDialogBox;

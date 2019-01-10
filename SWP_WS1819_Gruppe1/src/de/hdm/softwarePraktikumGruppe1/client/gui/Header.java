@@ -28,9 +28,9 @@ public class Header extends FlowPanel {
 		PinnwandverwaltungAsync pinnwandVerwaltung = null;
 		User user = null;
 		
-		Vector<Abonnement> userAbonnements = null;
-		Vector<Pinnwand> aboPinnwaende = null;
-		Vector<User> pinnwandOwner = null;
+		Vector<Abonnement> userAbonnements = new Vector<Abonnement>();
+		Vector<Pinnwand> aboPinnwaende = new Vector<Pinnwand>();
+		Vector<User> pinnwandOwner = new Vector<User>();
 	
 		
 		// Create Header Divs 
@@ -133,7 +133,7 @@ public class Header extends FlowPanel {
 			
 			
 			searchButton.addClickHandler(new SearchUserClickHandler(this));
-			meineAbos.addClickHandler(new ShowAbosClickHandler());
+			meineAbos.addClickHandler(new ShowAbosClickHandler(this));
 			
 			
 			this.add(headerLogo);
@@ -142,28 +142,41 @@ public class Header extends FlowPanel {
 		}
 		
 		private class ShowAbosClickHandler implements ClickHandler {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				ShowAbosDialogBox dlg = new ShowAbosDialogBox();
-				dlg.center();
+			public ShowAbosClickHandler(Header pH) {
+				this.parentHeader = pH;
 			}
 			
+			Header parentHeader;
+			@Override
+			public void onClick(ClickEvent event) {
+				ShowAbosDialogBox dlg = new ShowAbosDialogBox(this.parentHeader);
+				dlg.center();
+			}
 		}
 		
 		private class ShowAbosDialogBox extends DialogBox implements ClickHandler {
+			Header parentHeader;
+						
 			private Vector<AbonnementBox> userAbos = new Vector<AbonnementBox>();
-			
-			
+									
 			private ScrollPanel parentScrolling = new ScrollPanel();
 			private FlowPanel aboParentPanel = new FlowPanel();
 			
-			public ShowAbosDialogBox() {
+			public ShowAbosDialogBox(Header parentHeader) {
+				this.parentHeader = parentHeader;
 				
-				for(int i = 0; i < 20; i++) {
-					AbonnementBox tempAboBox = new AbonnementBox();
+				GWT.log("Gak");
+				GWT.log(parentHeader.userAbonnements.toString());
+				GWT.log(parentHeader.aboPinnwaende.toString());
+				GWT.log(parentHeader.pinnwandOwner.toString());
+				
+				for(int i = 0; i < parentHeader.userAbonnements.size(); i++) {
+					String aboUserName = parentHeader.pinnwandOwner.elementAt(i).getFirstName() 
+							+ " " + parentHeader.pinnwandOwner.elementAt(i).getLastName() ;
+					String aboNickName = parentHeader.pinnwandOwner.elementAt(i).getNickname();
+					int pinnwandId = parentHeader.aboPinnwaende.elementAt(i).getPinnwandId();
 					
-					
+					AbonnementBox tempAboBox = new AbonnementBox(aboUserName, aboNickName, pinnwandId);	
 					userAbos.add(i, tempAboBox);
 				}
 				
@@ -272,6 +285,7 @@ public class Header extends FlowPanel {
 			@Override
 			public void onSuccess(User result) {
 				user = result;
+				GWT.log("ID is: " + user.getUserId());
 				pinnwandVerwaltung.showAllAbonnementsByUser(user, new ShowAllAbonnementsByUserCallback());
 			}
 			
@@ -287,11 +301,45 @@ public class Header extends FlowPanel {
 
 			@Override
 			public void onSuccess(Vector<Abonnement> result) {
-				// TODO Auto-generated method stub
 				userAbonnements = result;
+				for (Abonnement abonnement : userAbonnements) {
+					GWT.log(abonnement.toString());
+					pinnwandVerwaltung.getPinnwandById(abonnement.getPinnwandId(), new GetPinnwandByIdCallback());
+				}
+			}
+			
+		}
+		
+		public class GetPinnwandByIdCallback implements AsyncCallback<Pinnwand> {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				Window.alert("Problem with Pinnwand");
 			}
 
-		
+			@Override
+			public void onSuccess(Pinnwand result) {
+				Pinnwand tempPinnwand = result;
+				GWT.log("Current Pinnwand "  +tempPinnwand.getPinnwandId());
+				aboPinnwaende.add(tempPinnwand);
+				pinnwandVerwaltung.getUserById(tempPinnwand.getOwnerId(), new GetOwnerOfAbonniertePinnwand());
+			}
 			
+		}
+		
+		public class GetOwnerOfAbonniertePinnwand implements AsyncCallback<User> {
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Problem with Owner");
+			}
+
+			@Override
+			public void onSuccess(User result) {
+				User tempUser = result;
+				
+				GWT.log(tempUser.toString());
+				pinnwandOwner.add(tempUser);
+			}
 		}
 }
