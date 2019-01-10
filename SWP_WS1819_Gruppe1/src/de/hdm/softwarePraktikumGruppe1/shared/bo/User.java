@@ -106,8 +106,7 @@ public class User implements IsSerializable{
 	 * Methode die die User ID setzt
 	 */
 	public void setUserId(int userId) {
-		this.userId
-		= userId;
+		this.userId= userId;
 	}
 
 	public Timestamp getCreationTimeStamp() {

@@ -131,13 +131,15 @@ public interface PinnwandverwaltungAsync{
 
 	void getBeitragAmountOfUser(User u, AsyncCallback<Integer> callback);
 
-	void getPinnwandByUserId(int userId, AsyncCallback<Pinnwand> callback);
+	void getPinnwandOfUser(User u, AsyncCallback<Pinnwand> callback);
 
 	void getUserByFirstName(String fName, AsyncCallback<Vector<User>> callback);
 
 	void getUserByGmail(String gMail, AsyncCallback<User> callback);
 
 	void getUserByLastName(String lName, AsyncCallback<Vector<User>> callback);
+
+	void getPinnwandById(int pinnwandId, AsyncCallback<Pinnwand> callback);
 	
 		
 

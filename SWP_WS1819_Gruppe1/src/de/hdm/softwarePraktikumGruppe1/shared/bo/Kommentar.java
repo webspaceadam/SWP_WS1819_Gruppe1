@@ -5,8 +5,6 @@ package de.hdm.softwarePraktikumGruppe1.shared.bo;
 
 import java.sql.Timestamp;
 
-import com.google.gwt.user.client.rpc.IsSerializable;
-
 /**
  * @author GianlucaBernert
  * @author SebastianHermann
