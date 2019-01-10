@@ -7,6 +7,8 @@ import java.sql.Timestamp;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 
+import com.google.gwt.user.client.rpc.IsSerializable;
+
 /**
  * @author SebastianHermann, GianlucaBernert, AdamGniady
  * Klasse eines Beitrag Objekts das Textbeitrag als Superklasse besitzt
