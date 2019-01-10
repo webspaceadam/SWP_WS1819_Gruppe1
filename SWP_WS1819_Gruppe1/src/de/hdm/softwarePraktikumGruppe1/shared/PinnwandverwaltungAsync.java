@@ -138,6 +138,8 @@ public interface PinnwandverwaltungAsync{
 	void getUserByGmail(String gMail, AsyncCallback<User> callback);
 
 	void getUserByLastName(String lName, AsyncCallback<Vector<User>> callback);
+
+	void getPinnwandById(int pinnwandId, AsyncCallback<Pinnwand> callback);
 	
 		
 

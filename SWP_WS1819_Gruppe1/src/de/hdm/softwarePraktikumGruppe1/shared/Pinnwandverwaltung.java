@@ -152,6 +152,8 @@ public interface Pinnwandverwaltung extends RemoteService {
 	/**
 	 * Methode um Likes eines Beitrags zu entfernen
 	 */
+	public Pinnwand getPinnwandById(int pinnwandId);
+	
 	public void deleteLikesOfBeitrag(Beitrag b);
 	
 	public Pinnwand createPinnwand(User u, Timestamp timestamp);
@@ -159,11 +161,6 @@ public interface Pinnwandverwaltung extends RemoteService {
 	public Pinnwand getPinnwandOfUser(User u);
 	
 	public void deletePinnwand(Pinnwand p);
-	
-	
-	
-	
-	
 	
 
 }
