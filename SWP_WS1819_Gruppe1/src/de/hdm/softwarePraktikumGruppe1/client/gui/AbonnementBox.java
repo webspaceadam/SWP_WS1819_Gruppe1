@@ -6,6 +6,8 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.*;
 
+import de.hdm.softwarePraktikumGruppe1.shared.bo.Abonnement;
+
 /**
  * Die Klasse <code>AbonnementBox</code> ist zuständig für die Anzeige der Abonnements
  * die einem User zugeordnet sind. Diese Box hat über zwei Buttons die Möglichkeit 
@@ -27,6 +29,8 @@ public class AbonnementBox extends FlowPanel {
 	public AbonnementBox() {
 		
 	}
+	
+	
 	
 	/**
 	 * Der Konstruktor der Klasse ermöglicht die Übergabe von zwei Parametern um die richtigen 

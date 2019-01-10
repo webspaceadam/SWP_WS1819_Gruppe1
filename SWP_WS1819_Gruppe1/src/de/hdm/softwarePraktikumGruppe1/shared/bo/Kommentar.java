@@ -10,7 +10,7 @@ import java.sql.Timestamp;
  * @author SebastianHermann
  * Klasse eines Kommentar Objekts das Textbeitrag als Superklasse besitzt
  */
-public class Kommentar extends BusinessObject {
+public class Kommentar implements IsSerializable{
 	
 	private static final long serialVersionUID = 1L;
 	private int kommentarId;
@@ -73,8 +73,7 @@ public class Kommentar extends BusinessObject {
 	 * Methode die das Ibjekt Kommentar als String zurück gibt
 	 */
 	public String toString() {
-		String infoAboutKommentar = "Kommentar ID '" + this.getKommentarId() + "/ Inhalt: " + this.getInhalt() + "/ ID des Verfassers #" + this.getOwnerId();
-		return infoAboutKommentar;
+		return "KommentarID #K" + this.getKommentarId() + " von User mit der ID #U" + this.getOwnerId();
 	}
 
 	/*

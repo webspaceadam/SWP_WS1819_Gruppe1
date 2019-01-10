@@ -1,0 +1,21 @@
+@FinalFields, false
+com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException, true, true, true, true, com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException/3936916533, 3936916533
+com.google.gwt.user.client.rpc.RpcTokenException, true, true, false, false, com.google.gwt.user.client.rpc.RpcTokenException/2345075298, 2345075298
+com.google.gwt.user.client.rpc.XsrfToken, false, false, true, true, com.google.gwt.user.client.rpc.XsrfToken/4254043109, 4254043109
+de.hdm.softwarePraktikumGruppe1.shared.Pinnwandverwaltung, false, false, false, false, _, 3878586493
+de.hdm.softwarePraktikumGruppe1.shared.bo.Abonnement, true, true, true, true, de.hdm.softwarePraktikumGruppe1.shared.bo.Abonnement/77410685, 77410685
+de.hdm.softwarePraktikumGruppe1.shared.bo.Beitrag, true, true, true, true, de.hdm.softwarePraktikumGruppe1.shared.bo.Beitrag/2104399638, 2104399638
+de.hdm.softwarePraktikumGruppe1.shared.bo.BusinessObject, true, false, true, false, de.hdm.softwarePraktikumGruppe1.shared.bo.BusinessObject/3696234453, 3696234453
+de.hdm.softwarePraktikumGruppe1.shared.bo.Kommentar, true, true, true, true, de.hdm.softwarePraktikumGruppe1.shared.bo.Kommentar/754913014, 754913014
+de.hdm.softwarePraktikumGruppe1.shared.bo.Like, true, true, true, true, de.hdm.softwarePraktikumGruppe1.shared.bo.Like/3095986852, 3095986852
+de.hdm.softwarePraktikumGruppe1.shared.bo.Pinnwand, false, false, true, true, de.hdm.softwarePraktikumGruppe1.shared.bo.Pinnwand/3614688281, 3614688281
+de.hdm.softwarePraktikumGruppe1.shared.bo.Textbeitrag, true, false, true, false, de.hdm.softwarePraktikumGruppe1.shared.bo.Textbeitrag/20663367, 20663367
+de.hdm.softwarePraktikumGruppe1.shared.bo.User, true, true, true, true, de.hdm.softwarePraktikumGruppe1.shared.bo.User/1303180549, 1303180549
+java.lang.Exception, true, false, true, false, java.lang.Exception/1920171873, 1920171873
+java.lang.RuntimeException, true, false, true, false, java.lang.RuntimeException/515124647, 515124647
+java.lang.String, true, true, true, true, java.lang.String/2004016611, 2004016611
+java.lang.Throwable, true, false, true, false, java.lang.Throwable/2953622131, 2953622131
+java.sql.Timestamp, true, true, true, true, java.sql.Timestamp/3040052672, 3040052672
+java.util.Date, true, false, true, false, java.util.Date/3385151746, 3385151746
+java.util.Stack, true, true, true, true, java.util.Stack/1346942793, 1346942793
+java.util.Vector, true, true, true, true, java.util.Vector/3057315478, 3057315478

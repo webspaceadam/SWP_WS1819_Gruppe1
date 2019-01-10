@@ -34,10 +34,10 @@ public class SWP_WS1819_Gruppe1 implements EntryPoint {
 	PinnwandverwaltungAsync pinnwandVerwaltung = ClientsideSettings.getPinnwandverwaltung();
 	User u1 = new User();
 	
-	ProfileBox pB = new ProfileBox();
-	
 	
 	public void onModuleLoad() {
+		pinnwandVerwaltung.getUserById(1, new GetUserCallback());
+
 		// RootPanels
 		RootPanel rootPanelHeader = RootPanel.get("header");
 		RootPanel rootPanelContainer = RootPanel.get("container");
@@ -62,10 +62,13 @@ public class SWP_WS1819_Gruppe1 implements EntryPoint {
 		// GUI Elements
 		Header h1 = new Header();
 		
+		// Creating ProfileBox
+		ProfileBox pB = new ProfileBox();
 		
 		linkeSeite.add(pB);
-		linkeSeite.add(testBtn);
-		linkeSeite.add(testBtn2);
+		//linkeSeite.add(testBtn);
+		//linkeSeite.add(testBtn2);
+		
 		
 		rootPanelHeader.add(h1);
 		rootPanelContainer.add(linkeSeite);
@@ -114,9 +117,8 @@ public class SWP_WS1819_Gruppe1 implements EntryPoint {
 		@Override
 		public void onSuccess(User result) {
 			// TODO Auto-generated method stub
-			pB.setVorname(result.getFirstName());
-			pB.setNachname(result.getLastName());
-			pB.setNickname(result.getNickname());
+			u1 = result;
+			Window.alert("U1 is corrected: " + u1.toString());
 		}
 		
 	}
