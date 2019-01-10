@@ -6,6 +6,8 @@ package de.hdm.softwarePraktikumGruppe1.shared.bo;
 import java.sql.Timestamp;
 import java.util.*;
 
+import com.google.gwt.user.client.rpc.IsSerializable;
+
 /**
  * @author SebastianHermann, GianlucaBernert, AdamGniady
  * Klasse eines Beitrag Objekts das Textbeitrag als Superklasse besitzt
