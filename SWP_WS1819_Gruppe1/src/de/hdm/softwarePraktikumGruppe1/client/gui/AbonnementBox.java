@@ -4,10 +4,16 @@ import java.util.Vector;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
+
+import de.hdm.softwarePraktikumGruppe1.client.ClientsideSettings;
+import de.hdm.softwarePraktikumGruppe1.shared.PinnwandverwaltungAsync;
+import de.hdm.softwarePraktikumGruppe1.shared.bo.Abonnement;
+import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
 /**
  * Die Klasse <code>AbonnementBox</code> ist zuständig für die Anzeige der Abonnements
@@ -23,6 +29,8 @@ public class AbonnementBox extends FlowPanel {
 	private Button deaboBtn = new Button("Deabbonieren");
 	
 	private int pinnwandId;
+	
+	public Abonnement abo;
 	
 	private FlowPanel accountWrapper = new FlowPanel();
 	private FlowPanel nickWrapper = new FlowPanel();
@@ -52,7 +60,15 @@ public class AbonnementBox extends FlowPanel {
 		this.pinnwandBtn.setTitle("PinnwandId: " + this.pinnwandId);
 	}
 	
+	public AbonnementBox(Abonnement a) {
+		this.abo = a;
+	}
+	
 	public void onLoad() {
+		PinnwandverwaltungAsync pinnwandVerwaltung = ClientsideSettings.getPinnwandverwaltung();
+		
+		pinnwandVerwaltung.getUserById(this.abo.getPinnwandId(), new GetUserByPinnwandIdCallback());
+		
 		this.addStyleName("box grid_box radiusless");
 		accountWrapper.addStyleName("box-item-ein-viertel");
 		nickWrapper.addStyleName("box-item-ein-viertel");
@@ -76,6 +92,24 @@ public class AbonnementBox extends FlowPanel {
 		this.add(nickWrapper);
 		this.add(pinnwandWrapper);
 		this.add(deaboWrapper);
+	}
+	
+	public class GetUserByPinnwandIdCallback implements AsyncCallback<User> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onSuccess(User result) {
+			accountName.setText(result.getFirstName() + " " + result.getLastName());
+			nickName.setText(result.getNickname());
+			//pinnwandBtn.setText("Pinnwand: " + abo.getPinnwandId());
+			pinnwandBtn.setTitle("Pinnwand: " + abo.getPinnwandId());
+		}
+		
 	}
 	
 	/**

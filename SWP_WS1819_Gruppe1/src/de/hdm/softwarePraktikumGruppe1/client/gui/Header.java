@@ -157,7 +157,7 @@ public class Header extends FlowPanel {
 		private class ShowAbosDialogBox extends DialogBox implements ClickHandler {
 			Header parentHeader;
 						
-			private Vector<AbonnementBox> userAbos = new Vector<AbonnementBox>();
+			private Vector<AbonnementBox> userAboBoxes = new Vector<AbonnementBox>();
 									
 			private ScrollPanel parentScrolling = new ScrollPanel();
 			private FlowPanel aboParentPanel = new FlowPanel();
@@ -170,18 +170,23 @@ public class Header extends FlowPanel {
 				GWT.log(parentHeader.aboPinnwaende.toString());
 				GWT.log(parentHeader.pinnwandOwner.toString());
 				
-				for(int i = 0; i < parentHeader.userAbonnements.size(); i++) {
-					String aboUserName = parentHeader.pinnwandOwner.elementAt(i).getFirstName() 
-							+ " " + parentHeader.pinnwandOwner.elementAt(i).getLastName() ;
-					String aboNickName = parentHeader.pinnwandOwner.elementAt(i).getNickname();
-					int pinnwandId = parentHeader.aboPinnwaende.elementAt(i).getPinnwandId();
-					
-					AbonnementBox tempAboBox = new AbonnementBox(aboUserName, aboNickName, pinnwandId);	
-					userAbos.add(i, tempAboBox);
-				}
 				
-				for(int i = 0; i < userAbos.size(); i++) {
-					aboParentPanel.add(userAbos.elementAt(i));
+				for(int i = 0; i < parentHeader.userAbonnements.size(); i++) {
+					AbonnementBox tempAboBox = new AbonnementBox(parentHeader.userAbonnements.elementAt(i));
+					userAboBoxes.add(tempAboBox);
+				}
+//				for(int i = 0; i < parentHeader.userAbonnements.size(); i++) {
+//					String aboUserName = parentHeader.pinnwandOwner.elementAt(i).getFirstName() 
+//							+ " " + parentHeader.pinnwandOwner.elementAt(i).getLastName() ;
+//					String aboNickName = parentHeader.pinnwandOwner.elementAt(i).getNickname();
+//					int pinnwandId = parentHeader.aboPinnwaende.elementAt(i).getPinnwandId();
+//					
+//					AbonnementBox tempAboBox = new AbonnementBox(aboUserName, aboNickName, pinnwandId);	
+//					userAbos.add(i, tempAboBox);
+//				}
+				
+				for(int i = 0; i < userAboBoxes.size(); i++) {
+					aboParentPanel.add(userAboBoxes.elementAt(i));
 				}
 				
 				parentScrolling.add(aboParentPanel);
