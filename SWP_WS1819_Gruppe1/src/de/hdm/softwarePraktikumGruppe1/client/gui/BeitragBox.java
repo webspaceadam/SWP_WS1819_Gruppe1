@@ -399,8 +399,25 @@ public class BeitragBox extends FlowPanel {
 		
 		@Override
 		public void onClick(ClickEvent event) {
+			Beitrag tempBeitrag = new Beitrag();
+			tempBeitrag.setBeitragID(beitragId);
+			pinnwandVerwaltung.deleteBeitrag(tempBeitrag, new DeleteBeitragCallback());
 			parentPinnwandBox.deleteBeitrag(thisBeitragBox);
 			parentDialogBox.hideElement();
+		}
+		
+	}
+	
+	private class DeleteBeitragCallback implements AsyncCallback<Void> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert("Problems with DeleteBeitragCallback");
+		}
+
+		@Override
+		public void onSuccess(Void result) {
+			Window.alert("Beitrag wurde deleted");
 		}
 		
 	}
