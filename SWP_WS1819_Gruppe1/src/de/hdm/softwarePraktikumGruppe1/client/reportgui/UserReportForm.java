@@ -1,5 +1,7 @@
 package de.hdm.softwarePraktikumGruppe1.client.reportgui;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
@@ -28,8 +30,11 @@ public class UserReportForm extends FlowPanel {
 	private FlowPanel wrapper1 = new FlowPanel();
 	private FlowPanel wrapper1_el_links = new FlowPanel();
 	private FlowPanel wrapper1_el_rechts = new FlowPanel();
-	
-	
+	//Eingabemöglichkeiten
+	SearchBox searchBox = new SearchBox();
+	DatePickerBox datePickerBox1 = new DatePickerBox();
+	DatePickerBox datePickerBox2 = new DatePickerBox();
+	GeneratorBox generatorBox = new GeneratorBox();
 
 
 	public UserReportForm() {
@@ -59,15 +64,44 @@ public class UserReportForm extends FlowPanel {
 		this.add(hrElement);
 
 		
+		//Adding User Input Stuff
+		this.add(searchBox);
+		this.add(datePickerBox1);
+		this.add(datePickerBox2);
+		this.add(generatorBox);
 		
-		this.add(new SearchBox());
-		this.add(new DatePickerBox());
-		this.add(new DatePickerBox());
-		this.add(new GeneratorBox());
 	}
 
 	
 
 	public void onLoad() {
 	}
+	
+	
+	
+	//getGeneratorBox Method necessary in order to add clickHanlder in @see ReportGenerator
+	public GeneratorBox getGeneratorBox() {
+		return generatorBox;
+	}
+
+
+
+	public SearchBox getSearchBox() {
+		return searchBox;
+	}
+
+
+
+	public DatePickerBox getDatePickerBox1() {
+		return datePickerBox1;
+	}
+
+
+
+	public DatePickerBox getDatePickerBox2() {
+		return datePickerBox2;
+	}
+	
+	
+	
 }

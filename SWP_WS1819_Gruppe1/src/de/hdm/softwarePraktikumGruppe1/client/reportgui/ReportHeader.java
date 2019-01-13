@@ -43,12 +43,9 @@ public class ReportHeader extends FlowPanel {
 	//Create Label
 	Label reportLabel = new Label("Report Generator");
 	
-	
-	//Create DockLayoutPanel to be able to update content in clickhandler
-	private DockLayoutPanel dockPanel = null;
 
-	public ReportHeader(DockLayoutPanel dockPanel) {
-		this.dockPanel = dockPanel;
+
+	public ReportHeader() {
 		// Add styling to this element
 		this.addStyleName("header bg-primary");
 		headerLeft.addStyleName("header_left");
@@ -88,11 +85,7 @@ public class ReportHeader extends FlowPanel {
 		this.add(headerLogo);
 		this.add(headerLeft);
 		this.add(headerRight);
-		
-		
-		//Add ClickHandler
-		beitraegeButton.addClickHandler(new beitraegeButtonClickHandler());
-		userButton.addClickHandler(new userButtonClickHandler());
+	
 		
 	}
 
@@ -104,31 +97,14 @@ public class ReportHeader extends FlowPanel {
 	public void onLoad() {
 	}
 	
-	
-	
-	//Clickhandler für beitraegeButton
-	//Remove existing ReportForm then add beitragReportForm
-	private class beitraegeButtonClickHandler implements ClickHandler{
-		@Override
-		public void onClick(ClickEvent event) {
-			
-			dockPanel.clear();
-			dockPanel.addNorth(ReportHeader.this, 4);
-			dockPanel.addWest(new BeitragReportForm(), 25);
-			
-		}		
-	}
-	
-	
-	//Clickhandler für userButton
-	//Remove existing ReportForm then add userReportForm
-		private class userButtonClickHandler implements ClickHandler{
-			@Override
-			public void onClick(ClickEvent event) {
-				dockPanel.clear();
-				dockPanel.addNorth(ReportHeader.this, 4);
-				dockPanel.addWest(new UserReportForm(), 25);
-			}			
+
+		
+		public Button getBeitraegeButton() {
+			return beitraegeButton;
+		}
+
+		public Button getUserButton() {
+			return userButton;
 		}
 	
 }
