@@ -1,5 +1,7 @@
 package de.hdm.softwarePraktikumGruppe1.client.reportgui;
 
+import java.sql.Date;
+
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.datepicker.client.DateBox;
@@ -19,16 +21,13 @@ public class DatePickerBox extends FlowPanel {
 	
 	
 	DatePicker datePicker = new DatePicker();
+	DateBox dateBox = new DateBox();
 	
 	public DatePickerBox() {
 		this.addStyleName("grid_box box radiusless");
 
-
-	
-		
 			//Add Styling to Date Box and DatePicker
 		   	DateTimeFormat dateFormat = DateTimeFormat.getFormat("dd.MM.yyyy");
-		    DateBox dateBox = new DateBox();
 		    dateBox.addStyleName("input radiusless");
 		    dateBox.getElement().setPropertyString("placeholder", "Wähle ein Datum aus");
 		    dateBox.setFormat(new DateBox.DefaultFormat(dateFormat));
@@ -44,6 +43,11 @@ public class DatePickerBox extends FlowPanel {
 	
 	public void onLoad() {
 		
+	}
+	
+	
+	public String getDate() {
+		return dateBox.getTextBox().getText();
 	}
 
 }

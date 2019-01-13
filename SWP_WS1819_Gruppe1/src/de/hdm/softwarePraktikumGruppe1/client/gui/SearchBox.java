@@ -34,5 +34,10 @@ public class SearchBox extends FlowPanel {
 	public void onLoad() {
 		
 	}
+	
+	
+	public String getUser() {
+		return searchUserInput.getText();
+	}
 
 }

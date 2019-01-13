@@ -31,5 +31,10 @@ public class GeneratorBox extends FlowPanel {
 	public void onLoad() {
 		
 	}
+	
+	
+	public Button getButton() {
+		return searchBtn;
+	}
 
 }

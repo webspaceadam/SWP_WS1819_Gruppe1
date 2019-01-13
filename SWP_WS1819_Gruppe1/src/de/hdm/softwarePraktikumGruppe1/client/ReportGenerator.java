@@ -2,13 +2,14 @@ package de.hdm.softwarePraktikumGruppe1.client;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 
+import de.hdm.softwarePraktikumGruppe1.client.reportgui.BeitragReportForm;
 import de.hdm.softwarePraktikumGruppe1.client.reportgui.ReportHeader;
 import de.hdm.softwarePraktikumGruppe1.client.reportgui.UserReportForm;
 
@@ -22,19 +23,110 @@ import de.hdm.softwarePraktikumGruppe1.client.reportgui.UserReportForm;
  */
 
 public class ReportGenerator  implements EntryPoint {
+	
+	private DockLayoutPanel dockPanel = new DockLayoutPanel(Unit.EM);
+	private ReportHeader header = new ReportHeader();
+	private UserReportForm userReportForm = new UserReportForm();
+	private BeitragReportForm beitragReportForm = new BeitragReportForm();
+
+	
 	public void onModuleLoad() {
 
-		DockLayoutPanel dockPanel = new DockLayoutPanel(Unit.EM);
+		
 		
 
-		dockPanel.addNorth(new ReportHeader(dockPanel), 4);
-		dockPanel.addWest(new UserReportForm(), 25);
+		dockPanel.addNorth(header, 4);
+		dockPanel.addWest(userReportForm, 25);
 		dockPanel.add(new Label("Hier wird der Report eingeblendet werden"));
 		
 		
 		LayoutPanel panel = new LayoutPanel();
 		panel.add(dockPanel);
-		
 		RootPanel.get().add(dockPanel);
+		
+		
+		//Adding Custom ClickHandlers
+		header.getBeitraegeButton().addClickHandler(new beitraegeButtonClickHandler());
+		header.getUserButton().addClickHandler(new userButtonClickHandler());
+		userReportForm.getGeneratorBox().getButton().addClickHandler(new generateUserReportClickHandler());
+		beitragReportForm.getGeneratorBox().getButton().addClickHandler(new generateBeitragReportClickHandler());
 	}
-}
+	
+	
+	
+	
+	
+	
+	
+	/*
+	 * Clickhandler for userButton @see ReportHeader
+	 * Remove existing ReportForm then add userReportForm
+	 */
+		private class userButtonClickHandler implements ClickHandler{
+			@Override
+			public void onClick(ClickEvent event) {
+				
+				
+				
+				dockPanel.clear();
+				dockPanel.addNorth(header, 4);
+				dockPanel.addWest(userReportForm, 25);
+				
+			}			
+		}	
+	
+		
+	/*
+	 * Clickhandler for beitraegeButton @see ReportHeader
+	 * Remove existing ReportForm then add userReportForm
+	 */
+	private class beitraegeButtonClickHandler implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			
+			dockPanel.clear();
+			dockPanel.addNorth(header, 4);
+			dockPanel.addWest(beitragReportForm, 25);
+		}		
+	}
+		
+			
+	/*
+	 * ClickHandler for generateUserReport
+	 * @see UserReportForm
+	 * @see GeneratorBox
+	 * 
+	*/
+		private class generateUserReportClickHandler implements ClickHandler{
+
+			@Override
+			public void onClick(ClickEvent event) {
+				
+				System.out.println(userReportForm.getSearchBox().getUser());
+				System.out.println(userReportForm.getDatePickerBox1().getDate());
+				System.out.println(userReportForm.getDatePickerBox2().getDate());
+				
+			}	
+		}	
+
+		
+		
+		/*
+		 * ClickHandler for generateBeitragReport
+		 * @see BeitragReportForm
+		 * @see GeneratorBox
+		 * 
+		*/				
+		private class generateBeitragReportClickHandler implements ClickHandler{
+
+			@Override
+			public void onClick(ClickEvent event) {
+					
+				System.out.println(beitragReportForm.getSearchBeitragBox().getBeitrag());
+				System.out.println(beitragReportForm.getDatePickerBox1().getDate());
+				System.out.println(beitragReportForm.getDatePickerBox2().getDate());
+			}		
+		}	
+			
+}	
+
