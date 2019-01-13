@@ -14,8 +14,7 @@ import java.io.Serializable;
  */
 
 
-public class BeitragReport extends CompositeReport 
-implements Serializable {
+public class BeitragReport extends CompositeReport implements Serializable {
 
 	/**
 	 * 
