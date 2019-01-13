@@ -32,7 +32,8 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 	@Override
 	public UserReport createUserReport() throws IllegalArgumentException {
 		// TODO Auto-generated method stub
-		return null;
+		System.out.println("iser");
+		return new UserReport();
 	}
 
 	
