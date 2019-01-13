@@ -318,10 +318,33 @@ public class BeitragBox extends FlowPanel {
 			@Override
 			public void onClick(ClickEvent event) {
 				GWT.log(newContent.getValue());
+				Beitrag tempBeitrag = new Beitrag();
+				tempBeitrag.setBeitragID(beitragId);
+				tempBeitrag.setInhalt(newContent.getValue());
+				pinnwandVerwaltung.editBeitrag(tempBeitrag, new EditBeitragCallback());
 				parentBB.beitragContent.setText(newContent.getValue());
 			}
+		}
+	}
+	
+	/**
+	 * Private Klasse, die das AsyncCallback-Interface implementiert und so die 
+	 * Möglichkeit bietet die Editierung eines Beitrages zu ermöglichen. 
+	 * @author AdamGniady
+	 *
+	 */
+	private class EditBeitragCallback implements AsyncCallback<Beitrag> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert("Problems with the EditBeitragCallback");
+		}
+
+		@Override
+		public void onSuccess(Beitrag result) {
 			
 		}
+		
 	}
 	
 	/**
@@ -421,5 +444,52 @@ public class BeitragBox extends FlowPanel {
 		}
 		
 	}
+
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+
+	public Label getAccountName() {
+		return accountName;
+	}
+
+	public void setAccountName(String firstName, String lastName) {
+		this.accountName.setText(firstName + " " + lastName);
+	}
+
+	public Label getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(String creationDate) {
+		this.creationDate.setText(creationDate);;
+	}
+
+	public Label getBeitragContent() {
+		return beitragContent;
+	}
+
+	public void setBeitragContent(String beitragContent) {
+		this.beitragContent.setText(beitragContent);
+	}
+
+	public int getBeitragId() {
+		return beitragId;
+	}
+
+	public void setBeitragId(int beitragId) {
+		this.beitragId = beitragId;
+	}
+	
+	public void setNickName(String nickName) {
+		this.nickName.setText(nickName);
+	}
+	
+	
 	
 }
