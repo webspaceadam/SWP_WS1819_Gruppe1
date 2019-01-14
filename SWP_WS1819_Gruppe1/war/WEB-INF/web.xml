@@ -20,5 +20,17 @@
     	<servlet-name>PinnwandverwaltungImpl</servlet-name>
     	<url-pattern>PinnwandverwaltungImpl</url-pattern>
 	</servlet-mapping>
+	
+	
+	
+  <servlet>
+    <servlet-name>reportGenerator</servlet-name>
+    <servlet-class>de.hdm.softwarePraktikumGruppe1.server.ReportGeneratorServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>reportGenerator</servlet-name>
+    <url-pattern>/ReportGenerator/reportgenerator</url-pattern>
+  </servlet-mapping>
 
 </web-app>

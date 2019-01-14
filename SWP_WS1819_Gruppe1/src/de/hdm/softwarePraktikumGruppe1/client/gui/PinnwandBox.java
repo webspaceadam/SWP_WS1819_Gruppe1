@@ -1,10 +1,19 @@
 package de.hdm.softwarePraktikumGruppe1.client.gui;
 
+import java.sql.Timestamp;
 import java.util.Vector;
 
+import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
+
+import de.hdm.softwarePraktikumGruppe1.client.ClientsideSettings;
+import de.hdm.softwarePraktikumGruppe1.shared.PinnwandverwaltungAsync;
+import de.hdm.softwarePraktikumGruppe1.shared.bo.Beitrag;
+import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
 /**
  * The <code>PinnwandBox</code> is a class to display the 
@@ -14,9 +23,12 @@ import com.google.gwt.user.client.ui.*;
  *
  */
 public class PinnwandBox extends FlowPanel {
-	private Vector<BeitragBox> allBeitragBoxesOfPinnwand = new Vector<BeitragBox>();
-	private FlowPanel createBeitragBox = new FlowPanel();
+	// Pinnwandverwaltung
+	PinnwandverwaltungAsync pinnwandVerwaltung = ClientsideSettings.getPinnwandverwaltung();
 	
+	private Vector<BeitragBox> allBeitragBoxesOfPinnwand = new Vector<BeitragBox>();
+	private Vector<Beitrag> allBeitraegeOfPinnwand = new Vector<Beitrag>();
+	private FlowPanel createBeitragBox = new FlowPanel();
 	
 	// Elements to create a Beitrag
 	private FlowPanel parentWrapper = new FlowPanel();
@@ -28,6 +40,8 @@ public class PinnwandBox extends FlowPanel {
 	private TextArea textArea = new TextArea();
 	private Button submitBtn = new Button("Beitrag erstellen");
 	
+	// Additional Information
+	private User user;
 	
 	public PinnwandBox() {
 		
@@ -42,6 +56,8 @@ public class PinnwandBox extends FlowPanel {
 	}
 	
 	public void onLoad() {
+		pinnwandVerwaltung.getUserById(1, new GetUserByIdCallback());
+		
 		this.addStyleName("rechteSeite");
 		
 		// Creating the create box
@@ -75,7 +91,7 @@ public class PinnwandBox extends FlowPanel {
 	}
 	
 	public BeitragBox createBeitrag(String content) {
-		BeitragBox newBeitragBox = new BeitragBox(content, this);
+		BeitragBox newBeitragBox = new BeitragBox(content, this, this.user);
 		allBeitragBoxesOfPinnwand.add(newBeitragBox);
 		this.add(allBeitragBoxesOfPinnwand.lastElement());
 		
@@ -96,5 +112,55 @@ public class PinnwandBox extends FlowPanel {
 	public void deleteBeitrag(BeitragBox deletableBB) {
 		deletableBB.removeFromParent();
 		allBeitragBoxesOfPinnwand.removeElement(deletableBB);
+	}
+	
+	public class GetUserByIdCallback implements AsyncCallback<User> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert("Problem with the Callback!");
+			
+		}
+
+		@Override
+		public void onSuccess(User result) {
+			user = result;
+			getOldBeitraege();
+		}
+		
+	}
+	
+	private void getOldBeitraege() {
+		pinnwandVerwaltung.getAllBeitraegeOfUser(this.user, new GetAllBeitraegeOfUser());
+	}
+	
+	private class GetAllBeitraegeOfUser implements AsyncCallback<Vector<Beitrag>> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert(caught.toString());
+		}
+
+		@Override
+		public void onSuccess(Vector<Beitrag> result) {
+			allBeitraegeOfPinnwand = result;
+			Window.alert("We hava all Beiträge now");
+			addOldBeitraegeToPinnwand();
+		}
+	}
+	
+	/**
+	 * Methode die alle Beiträge eines Users auf die jeweilige Pinnwand anheftet
+	 */
+	private void addOldBeitraegeToPinnwand() {
+		for(Beitrag b : this.allBeitraegeOfPinnwand) {
+			BeitragBox tempBeitragBox = new BeitragBox();
+			tempBeitragBox.setAccountName(user.getFirstName(), user.getLastName());
+			tempBeitragBox.setBeitragId(b.getBeitragId());
+			GWT.log(b.getCreationTimeStamp().toString());
+			tempBeitragBox.setCreationDate(b.getCreationTimeStamp().toString());
+			tempBeitragBox.setBeitragContent(b.getInhalt());
+			this.add(tempBeitragBox);
+		}
 	}
 }

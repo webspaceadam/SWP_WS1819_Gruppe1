@@ -1,5 +1,6 @@
 package de.hdm.softwarePraktikumGruppe1.client.gui;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Vector;
 
@@ -7,7 +8,23 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
-import com.google.gwt.user.client.ui.*;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.DockPanel;
+import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TextArea;
+import com.google.gwt.user.client.ui.VerticalPanel;
+
+import de.hdm.softwarePraktikumGruppe1.client.ClientsideSettings;
+import de.hdm.softwarePraktikumGruppe1.shared.PinnwandverwaltungAsync;
+import de.hdm.softwarePraktikumGruppe1.shared.bo.Beitrag;
+import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
 /**
  * Die <code>Beitrag</code>-Klasse ist eine Custom-Widget-Class die daf�r verwendet wird, 
@@ -18,6 +35,8 @@ import com.google.gwt.user.client.ui.*;
  */
 
 public class BeitragBox extends FlowPanel {
+	PinnwandverwaltungAsync pinnwandVerwaltung = ClientsideSettings.getPinnwandverwaltung();
+
 	private Vector<KommentarBox> kommentarsOfBeitrag = new Vector<KommentarBox>();
 	
 	// Panels for the Element
@@ -30,8 +49,8 @@ public class BeitragBox extends FlowPanel {
 	private HTML hrElement = new HTML("<hr/>");
 	
 	// Labels
-	private Label accountName = new Label("Sebastian Hermann");
-	private Label nickName = new Label("@sebmeister");
+	private Label accountName = new Label();
+	private Label nickName = new Label();
 	private Label creationDate = new Label();
 	private Label likeCountText = new Label();
 	private int likeCount = 0;
@@ -56,11 +75,40 @@ public class BeitragBox extends FlowPanel {
 	private TextArea kommentarTextArea = new TextArea();
 	private Button addKommentarBtn = new Button("Poste Kommentar");
 	
+	// Additional Information for interacting with a Beitrag
+	private int beitragId;
+	private int userId;
+	private Timestamp timestamp;
+	private User user;
+	
 	// Constructor for the creation of Beitrag
-	public BeitragBox(String content, PinnwandBox pb) {
+	public BeitragBox(String content, PinnwandBox pb, User user) {
+		timestamp = new Timestamp(System.currentTimeMillis());
 		this.parentPinnwandBox = pb;
 		this.beitragContent.setText(content);
+		this.user = user;
+		pinnwandVerwaltung.createBeitrag(content, user, timestamp, new CreateBeitragCallback());
 	}
+	
+	public class CreateBeitragCallback implements AsyncCallback<Beitrag> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert("Problem with CreateBeitragCallback");
+		}
+
+		@Override
+		public void onSuccess(Beitrag result) {
+			beitragId = result.getBeitragId();
+			userId = result.getOwnerId();
+			accountName.setText(user.getFirstName() + " " + user.getLastName());
+			nickName.setText("@" + user.getNickname());
+			creationDate.setText("Erstellzeitpunkt: " + result.getCreationTimeStamp().toString());
+		}
+		
+	}
+	
+	
 	
 	public BeitragBox() {
 		
@@ -270,10 +318,33 @@ public class BeitragBox extends FlowPanel {
 			@Override
 			public void onClick(ClickEvent event) {
 				GWT.log(newContent.getValue());
+				Beitrag tempBeitrag = new Beitrag();
+				tempBeitrag.setBeitragID(beitragId);
+				tempBeitrag.setInhalt(newContent.getValue());
+				pinnwandVerwaltung.editBeitrag(tempBeitrag, new EditBeitragCallback());
 				parentBB.beitragContent.setText(newContent.getValue());
 			}
+		}
+	}
+	
+	/**
+	 * Private Klasse, die das AsyncCallback-Interface implementiert und so die 
+	 * Möglichkeit bietet die Editierung eines Beitrages zu ermöglichen. 
+	 * @author AdamGniady
+	 *
+	 */
+	private class EditBeitragCallback implements AsyncCallback<Beitrag> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert("Problems with the EditBeitragCallback");
+		}
+
+		@Override
+		public void onSuccess(Beitrag result) {
 			
 		}
+		
 	}
 	
 	/**
@@ -351,10 +422,74 @@ public class BeitragBox extends FlowPanel {
 		
 		@Override
 		public void onClick(ClickEvent event) {
+			Beitrag tempBeitrag = new Beitrag();
+			tempBeitrag.setBeitragID(beitragId);
+			pinnwandVerwaltung.deleteBeitrag(tempBeitrag, new DeleteBeitragCallback());
 			parentPinnwandBox.deleteBeitrag(thisBeitragBox);
 			parentDialogBox.hideElement();
 		}
 		
 	}
+	
+	private class DeleteBeitragCallback implements AsyncCallback<Void> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert("Problems with DeleteBeitragCallback");
+		}
+
+		@Override
+		public void onSuccess(Void result) {
+			Window.alert("Beitrag wurde deleted");
+		}
+		
+	}
+
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+
+	public Label getAccountName() {
+		return accountName;
+	}
+
+	public void setAccountName(String firstName, String lastName) {
+		this.accountName.setText(firstName + " " + lastName);
+	}
+
+	public Label getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(String creationDate) {
+		this.creationDate.setText(creationDate);;
+	}
+
+	public Label getBeitragContent() {
+		return beitragContent;
+	}
+
+	public void setBeitragContent(String beitragContent) {
+		this.beitragContent.setText(beitragContent);
+	}
+
+	public int getBeitragId() {
+		return beitragId;
+	}
+
+	public void setBeitragId(int beitragId) {
+		this.beitragId = beitragId;
+	}
+	
+	public void setNickName(String nickName) {
+		this.nickName.setText(nickName);
+	}
+	
+	
 	
 }

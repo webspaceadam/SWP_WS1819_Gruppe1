@@ -10,7 +10,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.LoginService;
 import de.hdm.softwarePraktikumGruppe1.shared.LoginServiceAsync;
 import de.hdm.softwarePraktikumGruppe1.shared.Pinnwandverwaltung;
 import de.hdm.softwarePraktikumGruppe1.shared.PinnwandverwaltungAsync;
-import de.hdm.softwarePraktikumGruppe1.shared.ReportGeneratorAsync;
+import de.hdm.softwarePraktikumGruppe1.shared.ReportGeneratorServiceAsync;
 
 /**
  * Klasse mit Eigenschaften und Diensten, die für alle Client-seitigen Klassen
@@ -32,7 +32,7 @@ public class ClientsideSettings extends CommonSettings {
    * Remote Service Proxy zur Verbindungsaufnahme mit dem Server-seitgen Dienst
    * namens <code>ReportGenerator</code>.
    */
-  private static ReportGeneratorAsync reportGenerator = null;
+  private static ReportGeneratorServiceAsync reportGenerator = null;
   
   /**
 	 * Remote Service Proxy zur Verbindungsaufnahme mit den serverseitigen Dienst
@@ -86,11 +86,11 @@ public class ClientsideSettings extends CommonSettings {
 	/**
 	 * Anlegen und Auslesen des ReportGenerators
 	 */
-	public static ReportGeneratorAsync getReportGenerator() {
+	public static ReportGeneratorServiceAsync getReportGenerator() {
 	    // Gab es bislang noch keine ReportGenerator-Instanz, dann...
 		if (reportGenerator == null) {
 		  // Zunächst instantiieren wir ReportGenerator
-		  reportGenerator = GWT.create(ReportGenerator.class);
+		  reportGenerator = (ReportGeneratorServiceAsync) GWT.create(ReportGenerator.class);
 		
 		  final AsyncCallback<Void> initReportGeneratorCallback = new AsyncCallback<Void>() {
 		    @Override
