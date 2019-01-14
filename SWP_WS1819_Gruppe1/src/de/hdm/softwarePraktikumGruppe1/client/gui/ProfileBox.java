@@ -46,11 +46,11 @@ public class ProfileBox extends FlowPanel {
 		// unterer Teil
 		private Label aboHeader = new Label("ABBONIERT");
 		private Label beitragHeader = new Label("BEITRÄGE");
-		private Label likeHeader = new Label("LIKES");
+		//private Label likeHeader = new Label("LIKES");
 		
 		private Label aboCount = new Label("0");
 		private Label beitragCount = new Label("0");
-		private Label likeCount = new Label("0");
+		//private Label likeCount = new Label("0");
 		
 		// dazugeh�rige wrapper 2
 		private FlowPanel wrapper2 = new FlowPanel();
@@ -106,11 +106,11 @@ public class ProfileBox extends FlowPanel {
 			
 			aboHeader.addStyleName("heading");
 			beitragHeader.addStyleName("heading");
-			likeHeader.addStyleName("heading");
+			//likeHeader.addStyleName("heading");
 			
 			aboCount.addStyleName("title");
 			beitragCount.addStyleName("title");
-			likeCount.addStyleName("title");
+			//likeCount.addStyleName("title");
 			
 			// Adding Elements to Wrapper 1
 			wrapper1_el_links.add(accountNameWrapper);
@@ -125,8 +125,8 @@ public class ProfileBox extends FlowPanel {
 			wrapper2_el_2.add(beitragHeader);
 			wrapper2_el_2.add(beitragCount);
 			
-			wrapper2_el_3.add(likeHeader);
-			wrapper2_el_3.add(likeCount);
+			//wrapper2_el_3.add(likeHeader);
+			//wrapper2_el_3.add(likeCount);
 			
 			wrapper2.add(wrapper2_el_1);
 			wrapper2.add(wrapper2_el_2);

@@ -114,7 +114,7 @@ public class SWP_WS1819_Gruppe1 implements EntryPoint {
 		public void onSuccess(User result) {
 			// TODO Auto-generated method stub
 			u1 = result;
-			Window.alert("U1 is corrected: " + u1.toString());
+			//Window.alert("U1 is corrected: " + u1.toString());
 		}
 		
 	}
