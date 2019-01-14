@@ -90,7 +90,7 @@ public class ClientsideSettings extends CommonSettings {
 	    // Gab es bislang noch keine ReportGenerator-Instanz, dann...
 		if (reportGenerator == null) {
 		  // Zunächst instantiieren wir ReportGenerator
-		  reportGenerator = GWT.create(ReportGenerator.class);
+		  reportGenerator = (ReportGeneratorServiceAsync) GWT.create(ReportGenerator.class);
 		
 		  final AsyncCallback<Void> initReportGeneratorCallback = new AsyncCallback<Void>() {
 		    @Override

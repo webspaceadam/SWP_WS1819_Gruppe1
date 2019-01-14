@@ -1,5 +1,9 @@
 package de.hdm.softwarePraktikumGruppe1.shared.report;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+
 public class reportTest {
 	
 	
@@ -66,6 +70,17 @@ public class reportTest {
 		likesReport.addRow(ersterLike);
 		//Füge die Abonnenteninformationen dem userReport hinzu
 		userReport.addSubReport(likesReport);
+		
+		
+		Date d = new Date();
+		
+		SimpleDateFormat ft = new SimpleDateFormat ("dd.MM.yyyy");
+		
+		System.out.println(d.toString() + "|| " + ft.format(d));
+		
+		
+		
+				
 		
 	}
 

@@ -1,6 +1,8 @@
 package de.hdm.softwarePraktikumGruppe1.client.reportgui;
 
-import java.sql.Date;
+
+
+import java.util.Date;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -46,8 +48,8 @@ public class DatePickerBox extends FlowPanel {
 	}
 	
 	
-	public String getDate() {
-		return dateBox.getTextBox().getText();
+	public Date getDate() {
+		return dateBox.getValue();
 	}
 
 }
