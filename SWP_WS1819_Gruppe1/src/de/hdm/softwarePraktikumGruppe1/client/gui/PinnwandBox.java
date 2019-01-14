@@ -42,9 +42,10 @@ public class PinnwandBox extends FlowPanel {
 	
 	// Additional Information
 	private User user;
+	private int userId;
 	
-	public PinnwandBox() {
-		
+	public PinnwandBox(int userId) {
+		this.userId = userId;
 	}
 	
 	public PinnwandBox(Vector<BeitragBox> pinnwandBeitragBoxes) {
@@ -56,8 +57,9 @@ public class PinnwandBox extends FlowPanel {
 	}
 	
 	public void onLoad() {
-		pinnwandVerwaltung.getUserById(1, new GetUserByIdCallback());
-		
+		pinnwandVerwaltung.getUserById(userId, new GetUserByIdCallback());
+
+		getOldBeitraege();
 		this.addStyleName("rechteSeite");
 		
 		// Creating the create box
