@@ -8,7 +8,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Vector;
+
+import de.hdm.softwarePraktikumGruppe1.server.ReportGeneratorServiceImpl;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Beitrag;
 
 
@@ -28,7 +32,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.Beitrag;
 public class BeitragMapper {
 	
 	private static BeitragMapper beitragMapper;
-	
+
 	/**
 	 * Ein gesch�tzter Konstruktor der weitere Instanzierungen von BeitragMapper Objekten verhindert.
 	 */
@@ -211,6 +215,38 @@ public class BeitragMapper {
 			return result;
 		}
 
+		
+		/*
+		 * Methode, die alle Beitraege eines Users innerhalb eines Datums
+		 * anhand des User-FKs aus der Datenbank ausliest und zurueck gibt	
+		 */		
+			public Vector <Beitrag> findBeitraegeOfUserBetweenDates(int userFK, Date start, Date end){
+				Connection con = DBConnection.connection();
+				Vector<Beitrag> result = new Vector<Beitrag>();
+				
+				try {
+					Statement stmt = con.createStatement();
+					
+					ResultSet rs = stmt.executeQuery("SELECT * FROM beitrag WHERE UserFK = " + userFK +
+							" AND CreationTimeStamp >= '" + ReportGeneratorServiceImpl.yearMonthDayFormat.format(start).toString() +
+							"' AND CreationTimeStamp <= '" + ReportGeneratorServiceImpl.yearMonthDayFormat.format(end).toString() + "'");
+					
+					while (rs.next()) {
+						Beitrag b = new Beitrag();
+						b.setBeitragId(rs.getInt("BeitragID"));
+						b.setInhalt(rs.getString("Inhalt"));
+						b.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
+						b.setPinnwandId(rs.getInt("PinnwandFK"));
+						b.setOwnerId(rs.getInt("UserFK"));
+						
+						result.addElement(b);
+					}			
+				}
+				catch (SQLException e) {
+					e.printStackTrace();
+				}
+				return result;
+			}		
 		
 
 	/* Ende:  Foreign Key-Mapper-Methoden

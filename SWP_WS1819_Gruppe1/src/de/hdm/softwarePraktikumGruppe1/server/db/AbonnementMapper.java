@@ -8,8 +8,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
 import java.util.Vector;
 
+import de.hdm.softwarePraktikumGruppe1.server.ReportGeneratorServiceImpl;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Abonnement;
 
 
@@ -173,6 +175,40 @@ public class AbonnementMapper {
 			
 		}
 
+		
+		/*
+		 * Methode, die alle Abonnements eines Users innerhalb eines Zeitraums zurueck gibt
+		 */
+			public Vector<Abonnement> findAbonnementsOfUserBetweenDates(int userId, Date start, Date end){
+				
+				Connection con= DBConnection.connection();
+				Vector <Abonnement> result = new Vector <Abonnement>();
+				
+			try {
+				
+				Statement stmt = con.createStatement();
+				ResultSet rs = stmt.executeQuery("SELECT * FROM abonnement " + "WHERE UserFK=" + userId +
+						" AND CreationTimeStamp >= '" + ReportGeneratorServiceImpl.yearMonthDayFormat.format(start).toString() +
+						"' AND CreationTimeStamp <= '" + ReportGeneratorServiceImpl.yearMonthDayFormat.format(end).toString() + "'");
+				
+					while(rs.next()) {
+						
+						Abonnement a = new Abonnement();
+						
+						a.setAbonnementId(rs.getInt("AbonnementID"));
+						a.setPinnwandId(rs.getInt("PinnwandFK"));
+						a.setOwnerId(rs.getInt("UserFK"));
+							
+						result.addElement(a);
+					}
+						
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+			return result;
+				
+			}		
 	/*
 	 * Methode, die alle Abonnements einer Pinnwand zurueck gibt
 	 */

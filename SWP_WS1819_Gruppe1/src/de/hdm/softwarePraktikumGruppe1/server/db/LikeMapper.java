@@ -1,9 +1,11 @@
 
 package de.hdm.softwarePraktikumGruppe1.server.db;
 
+import java.util.Date;
 import java.util.Vector;
 import java.sql.*;
 
+import de.hdm.softwarePraktikumGruppe1.server.ReportGeneratorServiceImpl;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Like;
 
 
@@ -171,7 +173,41 @@ public class LikeMapper {
 		    }
 			return null;
 		 }
-	
+
+	/*
+	 * Methode, die alle Likes eines Users innerhalb eines Zeitraums zurueck gibt
+	 */
+		public Vector<Like> findLikesOfUserBetweenDates(int userId, Date start, Date end){
+				
+			Connection con = DBConnection.connection();
+			Vector <Like> vector = new Vector<Like>();
+		
+			try {
+				//leeres SQL-Statement anlegen
+				Statement stmt = con.createStatement();
+					
+				// Statement ausfuellen und als Query an die DB schicken
+				ResultSet rs = stmt.executeQuery("SELECT * FROM like WHERE UserFK=" + userId +
+						" AND CreationTimeStamp >= '" + ReportGeneratorServiceImpl.yearMonthDayFormat.format(start).toString() +
+						"' AND CreationTimeStamp <= '" + ReportGeneratorServiceImpl.yearMonthDayFormat.format(end).toString() + "'");
+		
+				while (rs.next()) {
+		
+			        Like l = new Like();	        
+			        l.setOwnerId(rs.getInt("UserId"));
+			        l.setBeitragId(rs.getInt("BeitragId"));
+			        vector.add(l);
+		
+			      }
+				return vector;
+			}
+		
+		    catch (SQLException e) {
+		    		e.printStackTrace();
+		    }
+			return null;
+		 }		
+
 	/*
 	 * Methode, die alle Likes eines Beitrags zurueck gibt
 	 */
@@ -201,7 +237,39 @@ public class LikeMapper {
 			
 			return result;
 		}
-		
+	
+
+	/*
+	 * Methode, die alle Likes eines Beitrags innerhalb eines Zeitraums zurueck gibt
+	 */
+		public Vector<Like> findLikesOfBeitragBetweenDates(int beitragId, Date start, Date end){
+			Connection con = DBConnection.connection();
+			Vector<Like> result = new Vector<Like>();
+				
+			try {
+				//leeres SQL-Statement anlegen
+				Statement stmt = con.createStatement();
+					
+				// Statement ausfuellen und als Query an die DB schicken
+				ResultSet rs = stmt.executeQuery("SELECT * FROM `like` WHERE BeitragFK=" + beitragId +
+						" AND CreationTimeStamp >= '" + ReportGeneratorServiceImpl.yearMonthDayFormat.format(start).toString() +
+						"' AND CreationTimeStamp <= '" + ReportGeneratorServiceImpl.yearMonthDayFormat.format(end).toString() + "'");
+				
+				while (rs.next()) {
+		   	        Like l = new Like();
+			        l.setLikeId(rs.getInt("LikeID"));
+			        l.setOwnerId(rs.getInt("UserFK"));
+			        l.setBeitragId(rs.getInt("BeitragFK"));
+			        l.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
+				    result.add(l);
+				   }
+			}catch(SQLException e) {
+					e.printStackTrace();
+					return null;
+				}
+				
+			return result;
+		}		
 	/*
 	 *  Methode, die den Like eines Users von einem bestimmten Beitrag zurueck gibt
 	 */

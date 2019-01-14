@@ -1,7 +1,10 @@
 
 package de.hdm.softwarePraktikumGruppe1.server.db;
 import java.sql.*;
+import java.util.Date;
 import java.util.Vector;
+
+import de.hdm.softwarePraktikumGruppe1.server.ReportGeneratorServiceImpl;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Kommentar;
 
 
@@ -179,8 +182,9 @@ public class KommentarMapper {
 			return result;
 	 
 		 }
+		 
 		 /*
-		  * Methode, die einen Vector mit allen Kommentaren eines Users zurückgibt.
+		  * Methode, die einen Vector mit allen Kommentaren eines Beitrags zurückgibt.
 		 */ 
 		 public Vector<Kommentar> findKommentareOfBeitrag(int beitragId){
 			//Aufbau der DBVerbindung
@@ -211,7 +215,42 @@ public class KommentarMapper {
 
 				return result;
 		 }
+
 		 
+		 /*
+		  * Methode, die einen Vector mit Kommentaren in einem Zeitraum eines Beitrags zurückgibt.
+		 */ 
+		 public Vector<Kommentar> findKommentareOfBeitrag(int beitragId, Date start, Date end){
+			//Aufbau der DBVerbindung
+			Connection con = DBConnection.connection();
+			// Initialisierung eines leeren Vectors welcher Kommentar-Objekte enthalten kann
+			Vector<Kommentar> result = new Vector<Kommentar>();
+				
+				try {
+					Statement stmt = con.createStatement();
+					
+					ResultSet rs = stmt.executeQuery("SELECT * FROM kommentar WHERE BeitragFK=" + beitragId +
+							" AND CreationTimeStamp >= '" + ReportGeneratorServiceImpl.yearMonthDayFormat.format(start).toString() +
+							"' AND CreationTimeStamp <= '" + ReportGeneratorServiceImpl.yearMonthDayFormat.format(end).toString() + "'");
+					
+					
+					while (rs.next()) {
+						Kommentar k = new Kommentar();
+						k.setKommentarId(rs.getInt("KommentarID"));
+						k.setBeitragId(rs.getInt("BeitragFK"));
+						k.setOwnerId(rs.getInt("UserFK"));
+						k.setInhalt(rs.getString("Inhalt"));
+						k.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
+						
+						result.add(k);
+					}
+					
+				}catch (SQLException e) {
+		    		e.printStackTrace();
+				}
+
+				return result;
+		 }
 	/* Ende:  Foreign Key-Mapper-Methoden
 	 * ================================================================================================
 	 * Beginn: Spezifische Business Object Methoden
