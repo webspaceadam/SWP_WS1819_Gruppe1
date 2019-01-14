@@ -189,7 +189,7 @@ public class UserMapper {
 					u.setUserId(rs.getInt("UserID"));
 					u.setNickname(rs.getString("Nickname"));
 					u.setFirstName(rs.getString("Firstname"));
-					u.setLastName(rs.getString("Nachname"));
+					u.setLastName(rs.getString("Lastname"));//zuvor Nachname
 					u.setGMail(rs.getString("Gmail"));
 					u.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
 					result.add(u);
