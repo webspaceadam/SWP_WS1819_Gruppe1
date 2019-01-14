@@ -128,7 +128,12 @@ public class AbonnementBox extends FlowPanel {
 			RootPanel rootPinnwandPanel = RootPanel.get("rechteSeite");
 			rootPinnwandPanel.clear();
 			
+			Label pinnwandName = new Label(nickName.getText() + "s" + " Pinnwand");
+			pinnwandName.addStyleName("title is-size-2 text-color-primary content_margin");
+			
 			PinnwandBox aboPinnwand = new PinnwandBox(abo.getPinnwandId());
+			
+			rootPinnwandPanel.add(pinnwandName);
 			rootPinnwandPanel.add(aboPinnwand);
 			
 			/**
