@@ -140,13 +140,13 @@ public class PinnwandBox extends FlowPanel {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Window.alert(caught.toString());
+			//Window.alert(caught.toString());
 		}
 
 		@Override
 		public void onSuccess(Vector<Beitrag> result) {
 			allBeitraegeOfPinnwand = result;
-			Window.alert("We hava all Beiträge now");
+			//Window.alert("We hava all Beiträge now");
 			addOldBeitraegeToPinnwand();
 		}
 	}
