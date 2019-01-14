@@ -3,6 +3,8 @@
  */
 package de.hdm.softwarePraktikumGruppe1.shared;
 
+import java.util.Date;
+
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import de.hdm.softwarePraktikumGruppe1.shared.report.BeitragReport;
@@ -18,7 +20,7 @@ public interface ReportGeneratorServiceAsync {
 
 		void init(AsyncCallback<Void> initReportGeneratorCallback);
 
-		void createUserReport(AsyncCallback<UserReport> callback);
+		void createUserReport(int userID, Date start, Date end, AsyncCallback<UserReport> callback);
 
 		void createBeitragReport(AsyncCallback<BeitragReport> callback);
 

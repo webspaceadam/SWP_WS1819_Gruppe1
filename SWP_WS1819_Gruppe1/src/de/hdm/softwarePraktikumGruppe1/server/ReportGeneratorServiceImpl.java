@@ -11,7 +11,11 @@ import java.util.Vector;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
+import de.hdm.softwarePraktikumGruppe1.server.db.AbonnementMapper;
 import de.hdm.softwarePraktikumGruppe1.server.db.BeitragMapper;
+import de.hdm.softwarePraktikumGruppe1.server.db.KommentarMapper;
+import de.hdm.softwarePraktikumGruppe1.server.db.LikeMapper;
+import de.hdm.softwarePraktikumGruppe1.server.db.PinnwandMapper;
 import de.hdm.softwarePraktikumGruppe1.server.db.UserMapper;
 import de.hdm.softwarePraktikumGruppe1.shared.ReportGeneratorService;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Beitrag;
@@ -28,10 +32,15 @@ import de.hdm.softwarePraktikumGruppe1.shared.report.UserReport;
  */
 public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements ReportGeneratorService{
 
-
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
 	public final static  SimpleDateFormat yearMonthDayFormat = new SimpleDateFormat ("yyyy.MM.dd");
 	public final static SimpleDateFormat dayMonthYearFormat = new SimpleDateFormat ("dd.MM.yyyy");
+
+	Date d = null;
+	Date d2 = null;
 	
 	public void init() throws IllegalArgumentException {
 
@@ -42,7 +51,7 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 	 * Hier wird der UserReport erstellt
 	 */
 	@Override
-	public UserReport createUserReport() throws IllegalArgumentException {
+	public UserReport createUserReport(int userID, Date start, Date end) throws IllegalArgumentException {
 		System.out.println("iser");
 		UserReport userReport = new UserReport();
 
@@ -52,8 +61,7 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 		
 		BeitragMapper beitragMapper = BeitragMapper.beitragMapper();
 		
-		Date d = null;
-		Date d2 = null;
+
 		try {
 			d = dayMonthYearFormat.parse("17.07.1999");
 			d2 = dayMonthYearFormat.parse("17.07.2020");
@@ -65,6 +73,14 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 		Vector <Beitrag> beitraege = beitragMapper.findBeitraegeOfUserBetweenDates(1, d, d2);
 		
 		System.out.println(beitraege.get(0).getInhalt());
+		
+		if (beitraege == null) {
+			
+		}else {
+			for(int i = 0; i < beitraege.size(); i++) {
+				
+			}
+		}
 		
 		
 		return userReport;

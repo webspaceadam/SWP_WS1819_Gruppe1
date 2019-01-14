@@ -3,6 +3,8 @@
  */
 package de.hdm.softwarePraktikumGruppe1.shared;
 
+import java.util.Date;
+
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -26,12 +28,15 @@ public interface ReportGeneratorService extends RemoteService{
 	  /**
 	   * Erstellen eines <code>UserReport</code>-Reports. Dieser
 	   * Report-Typ stellt Informationen über einen User per Zeitraum dar.
+	 * @param userID TODO
+	 * @param start TODO
+	 * @param end TODO
 	   * 
 	   * @return das fertige Reportobjekt
 	   * @throws IllegalArgumentException
 	   * @see UserReport
 	   */
-	  public abstract UserReport createUserReport() throws IllegalArgumentException;
+	  public abstract UserReport createUserReport(int userID, Date start, Date end) throws IllegalArgumentException;
 
 	  /**
 	   * Erstellen eines <code>BeitragReport</code>-Reports.
