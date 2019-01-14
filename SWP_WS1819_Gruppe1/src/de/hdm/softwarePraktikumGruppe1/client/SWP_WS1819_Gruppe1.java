@@ -34,23 +34,20 @@ public class SWP_WS1819_Gruppe1 implements EntryPoint {
 	PinnwandverwaltungAsync pinnwandVerwaltung = ClientsideSettings.getPinnwandverwaltung();
 	User u1 = new User();
 	
-	
 	public void onModuleLoad() {
 		pinnwandVerwaltung.getUserById(1, new GetUserCallback());
 
 		// RootPanels
 		RootPanel rootPanelHeader = RootPanel.get("header");
 		RootPanel rootPanelContainer = RootPanel.get("container");
+		RootPanel rootProfilePanel = RootPanel.get("linkeSeite");
+		RootPanel rootPinnwandPanel = RootPanel.get("rechteSeite");
 		
-		FlowPanel linkeSeite = new FlowPanel();
-		PinnwandBox rechteSeite = new PinnwandBox();
+		PinnwandBox pinnwandBox = new PinnwandBox(1);
 		
 		FlowPanel ganzeSeite = new FlowPanel();
 		FlowPanel mittlereVier = new FlowPanel();
 		
-		linkeSeite.addStyleName("linkeSeite");
-		ganzeSeite.addStyleName("ganzeSeite");
-		mittlereVier.addStyleName("mittlereVier");
 		
 		Button testBtn = new Button("Cool");
 		Button testBtn2 = new Button("Create");
@@ -64,15 +61,14 @@ public class SWP_WS1819_Gruppe1 implements EntryPoint {
 		
 		// Creating ProfileBox
 		ProfileBox pB = new ProfileBox();
-		
-		linkeSeite.add(pB);
+
 		//linkeSeite.add(testBtn);
 		//linkeSeite.add(testBtn2);
 		
 		
 		rootPanelHeader.add(h1);
-		rootPanelContainer.add(linkeSeite);
-		rootPanelContainer.add(rechteSeite);
+		rootProfilePanel.add(pB);
+		rootPinnwandPanel.add(pinnwandBox);
 	}
 	
 	public class TestClickHandler implements ClickHandler {
