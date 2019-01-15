@@ -1,5 +1,7 @@
 package de.hdm.softwarePraktikumGruppe1.client;
 
+import java.util.Date;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -16,6 +18,7 @@ import de.hdm.softwarePraktikumGruppe1.client.reportgui.ReportHeader;
 import de.hdm.softwarePraktikumGruppe1.client.reportgui.UserReportForm;
 import de.hdm.softwarePraktikumGruppe1.shared.ReportGeneratorService;
 import de.hdm.softwarePraktikumGruppe1.shared.ReportGeneratorServiceAsync;
+import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 import de.hdm.softwarePraktikumGruppe1.shared.report.UserReport;
 
 
@@ -135,7 +138,7 @@ public class ReportGenerator  implements EntryPoint {
 					}
 				};
 				
-				proxy.createUserReport(callback);
+				proxy.createUserReport(new User(), new Date(), new Date(), callback);
 				
 								
 

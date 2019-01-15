@@ -2,6 +2,8 @@ package de.hdm.softwarePraktikumGruppe1.shared.report;
 
 import java.util.Vector;
 
+
+
 /**
  * Ein <code>ReportWriter</code>, der Reports mittels HTML formatiert. Das im
  * Zielformat vorliegende Ergebnis wird in der Variable <code>reportText</code>
@@ -41,7 +43,25 @@ public class HTMLReportWriter extends ReportWriter{
 	      return this.paragraph2HTML((SimpleParagraph) p);
 	    }
 	  }
-
+	  
+	  
+	  
+	  /**
+	   * Umwandeln eines <code>GenericReport</code>-Objekts in HTML.
+	   * 
+	   * @param r der Report
+	   * @return HTML-Text
+	   */
+	  public String genericReport2HTML(Report r) {
+		  StringBuffer result = null;
+		  
+		  result.append("<H2>" + r.getTitle() + "</H2>");
+		  
+		  
+		  
+		  return result.toString();
+	  }
+	  
 	  /**
 	   * Umwandeln eines <code>CompositeParagraph</code>-Objekts in HTML.
 	   * 
@@ -113,7 +133,24 @@ public class HTMLReportWriter extends ReportWriter{
 	   */
 	  @Override
 	public void process(UserReport r) {
-		  
+		    // Zunächst löschen wir das Ergebnis vorhergehender Prozessierungen.
+		    this.resetReportText();
+		    
+		    /*
+		     * In diesen Buffer schreiben wir während der Prozessierung sukzessive
+		     * unsere Ergebnisse.
+		     */
+		    StringBuffer result = new StringBuffer();
+		    result.append("<H1>" + r.getTitle() + "</H1>");
+		    result.append("<br>" + r.getHeaderData().toString());
+		    result.append("<br> Report Erstellt am" + r.getCreated());
+		    result.append("<br>" + r.getImprint().toString());
+		    
+		    /*
+		     * Nun werden Schritt für Schritt die einzelnen Bestandteile des Reports
+		     * ausgelesen und in HTML-Form übersetzt.
+		     */
+		    
 		  
 		  
 	  }

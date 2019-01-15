@@ -20,6 +20,7 @@ import de.hdm.softwarePraktikumGruppe1.server.db.UserMapper;
 import de.hdm.softwarePraktikumGruppe1.shared.ReportGeneratorService;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Abonnement;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Beitrag;
+import de.hdm.softwarePraktikumGruppe1.shared.bo.Like;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 import de.hdm.softwarePraktikumGruppe1.shared.report.BeitragReport;
 import de.hdm.softwarePraktikumGruppe1.shared.report.Column;
@@ -48,6 +49,13 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 	Date d = null;
 	Date d2 = null;
 	
+	
+	UserMapper uMapper = UserMapper.userMapper();	
+	BeitragMapper beitragMapper = BeitragMapper.beitragMapper();
+	AbonnementMapper abonnementMapper = AbonnementMapper.abonnementMapper();
+	LikeMapper likeMapper = LikeMapper.likeMapper();
+	
+	
 	public void init() throws IllegalArgumentException {
 
 	  }
@@ -73,13 +81,7 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 		//Fuege den Header zum UserReport Hinzu
 		userReport.setHeaderData(header);
 
-		
-		UserMapper uMapper = UserMapper.userMapper();	
-		BeitragMapper beitragMapper = BeitragMapper.beitragMapper();
-		AbonnementMapper abonnementMapper = AbonnementMapper.abonnementMapper();
-		
-		
-
+	
 		try {
 			d = dayMonthYearFormat.parse("17.07.1999");
 			d2 = dayMonthYearFormat.parse("17.07.2020");
@@ -95,7 +97,7 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 		//Erzeuge einen GenericReport welcher Informationen über Abonnenten speichert
 		GenericReport abonnentenReport = new GenericReport();
 		
-		if (abonnements == null) {
+		if (abonnements.size() == 0) {
 			abonnentenReport.setTitle("Informationen über Abonnenten (0)");
 
 		}else {
@@ -114,9 +116,7 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 			}
 		}
 		
-		
-		
-		
+				
 		//Beiträge
 		Vector<Beitrag> beitraege = beitragMapper.findBeitraegeOfUserBetweenDates(1, d, d2);
 
@@ -125,7 +125,7 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 		
 		System.out.println(beitraege.get(0).getInhalt());
 		
-		if (beitraege == null) {
+		if (beitraege.size() == 0) {
 			beitraegeReport.setTitle("Informationen über Beiträge (0)");
 		}else {
 			beitraegeReport.setTitle("Informationen über Beiträge (" + (beitraege.size() + 1) + ")");
@@ -140,6 +140,31 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 				userReport.addSubReport(beitraegeReport);
 			}
 		}
+		
+		
+		//Likes
+		Vector<Like> likes = likeMapper.findLikesOfBeitragBetweenDates(1, d, d2);
+		//Erzeuge einen GenericReport welcher Informationen über Abonnenten speichert
+		GenericReport likeReport = new GenericReport();
+				
+		if (likes.size() == 0) {
+			likeReport.setTitle("Informationen über Likes (0)");
+
+		}else {
+			likeReport.setTitle("Informationen über Likes(" + (likes.size() + 1) + ")");
+			for(int i = 0; i < likes.size(); i++) {
+				Like like = likes.get(i);
+				//Erzeuge eine Reihe für einen Abonnenten
+				Row row = new Row();
+				Beitrag gelikterBeitrag = beitragMapper.findBeitragById(like.getBeitragId());
+				User gelikterUser = uMapper.findUserById(gelikterBeitrag.getOwnerId());
+				row.addColumn(new Column("Like verteilt am: " + like.getCreationTimeStamp().toString()));
+				row.addColumn(new Column("An Beitrag von: " + gelikterUser.getNickname()));
+				//Füge die Reihe dem abonnentenReport
+				abonnentenReport.addRow(row);
+
+				}
+			}
 		
 		
 		return userReport;
