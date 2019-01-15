@@ -1,4 +1,6 @@
 package de.hdm.softwarePraktikumGruppe1.client.gui;
+import java.util.Vector;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -8,6 +10,8 @@ import com.google.gwt.user.client.ui.*;
 
 import de.hdm.softwarePraktikumGruppe1.client.ClientsideSettings;
 import de.hdm.softwarePraktikumGruppe1.shared.PinnwandverwaltungAsync;
+import de.hdm.softwarePraktikumGruppe1.shared.bo.Abonnement;
+import de.hdm.softwarePraktikumGruppe1.shared.bo.Beitrag;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
 
@@ -42,11 +46,11 @@ public class ProfileBox extends FlowPanel {
 		// unterer Teil
 		private Label aboHeader = new Label("ABBONIERT");
 		private Label beitragHeader = new Label("BEITRÄGE");
-		private Label likeHeader = new Label("LIKES");
+		//private Label likeHeader = new Label("LIKES");
 		
-		private Label aboCount = new Label("22");
-		private Label beitragCount = new Label("123");
-		private Label likeCount = new Label("312");
+		private Label aboCount = new Label("0");
+		private Label beitragCount = new Label("0");
+		//private Label likeCount = new Label("0");
 		
 		// dazugeh�rige wrapper 2
 		private FlowPanel wrapper2 = new FlowPanel();
@@ -102,11 +106,11 @@ public class ProfileBox extends FlowPanel {
 			
 			aboHeader.addStyleName("heading");
 			beitragHeader.addStyleName("heading");
-			likeHeader.addStyleName("heading");
+			//likeHeader.addStyleName("heading");
 			
 			aboCount.addStyleName("title");
 			beitragCount.addStyleName("title");
-			likeCount.addStyleName("title");
+			//likeCount.addStyleName("title");
 			
 			// Adding Elements to Wrapper 1
 			wrapper1_el_links.add(accountNameWrapper);
@@ -121,8 +125,8 @@ public class ProfileBox extends FlowPanel {
 			wrapper2_el_2.add(beitragHeader);
 			wrapper2_el_2.add(beitragCount);
 			
-			wrapper2_el_3.add(likeHeader);
-			wrapper2_el_3.add(likeCount);
+			//wrapper2_el_3.add(likeHeader);
+			//wrapper2_el_3.add(likeCount);
 			
 			wrapper2.add(wrapper2_el_1);
 			wrapper2.add(wrapper2_el_2);
@@ -231,6 +235,35 @@ public class ProfileBox extends FlowPanel {
 				vorName.setText(user.getFirstName());
 				nachName.setText(user.getLastName());
 				nickName.setText(user.getNickname());
+				pinnwandVerwaltung.getAllBeitraegeOfUser(user, new GetAllBeitraegeOfUserCallback());
+				pinnwandVerwaltung.showAllAbonnementsByUser(user, new ShowAllAboCallback());
+			}
+		}
+		
+		private class GetAllBeitraegeOfUserCallback implements AsyncCallback<Vector<Beitrag>> {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				
+			}
+
+			@Override
+			public void onSuccess(Vector<Beitrag> result) {
+				String newBeitragCount = "" + result.size();
+				beitragCount.setText(newBeitragCount);
+			}
+		}
+		
+		private class ShowAllAboCallback implements AsyncCallback<Vector<Abonnement>> {
+			@Override
+			public void onFailure(Throwable caught) {
+
+			}
+			
+			@Override
+			public void onSuccess(Vector<Abonnement> result) {
+				String newAboCount = "" + result.size();
+				aboCount.setText(newAboCount);
 			}
 			
 		}

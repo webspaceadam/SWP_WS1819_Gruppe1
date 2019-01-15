@@ -2,6 +2,7 @@ package de.hdm.softwarePraktikumGruppe1.client.gui;
 
 import java.util.Vector;
 
+import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -13,6 +14,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import de.hdm.softwarePraktikumGruppe1.client.ClientsideSettings;
 import de.hdm.softwarePraktikumGruppe1.shared.PinnwandverwaltungAsync;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Abonnement;
+import de.hdm.softwarePraktikumGruppe1.shared.bo.Pinnwand;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
 /**
@@ -123,13 +125,19 @@ public class AbonnementBox extends FlowPanel {
 	private class ShowPinnwandClickHandler implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
-			RootPanel rootPanelContainerPanel = RootPanel.get("container");
-			rootPanelContainerPanel.clear();
+			RootPanel rootPinnwandPanel = RootPanel.get("rechteSeite");
+			rootPinnwandPanel.clear();
 			
-			FlowPanel linkeSeite = new FlowPanel();
-			ProfileBox newProfile = new ProfileBox("Adam", "Gniady", "javaGod");
+			Label pinnwandName = new Label(nickName.getText() + "s" + " Pinnwand");
+			pinnwandName.addStyleName("title is-size-2 text-color-primary content_margin");
 			
-			// Pinnwand Stuff
+			PinnwandBox aboPinnwand = new PinnwandBox(abo.getPinnwandId());
+			
+			rootPinnwandPanel.add(pinnwandName);
+			rootPinnwandPanel.add(aboPinnwand);
+			
+			/**
+			 * // Pinnwand Stuff
 			Vector<BeitragBox> allBeitragBoxesOfPinnwand = new Vector<BeitragBox>();
 			
 			for(int i = 0; i < 10; i++) {
@@ -139,18 +147,7 @@ public class AbonnementBox extends FlowPanel {
 			}
 			
 			PinnwandBox newPinnwand = new PinnwandBox(allBeitragBoxesOfPinnwand);
-			
-			
-			
-			linkeSeite.addStyleName("linkeSeite");
-			
-			linkeSeite.add(newProfile);
-			
-			rootPanelContainerPanel.add(linkeSeite);
-			rootPanelContainerPanel.add(newPinnwand);
-			
+			 */
 		}
-		
 	}
-
 }
