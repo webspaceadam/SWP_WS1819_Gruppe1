@@ -129,7 +129,7 @@ public class ReportGenerator  implements EntryPoint {
 							public void onFailure(Throwable caught) {
 								
 								dockPanel.clear();
-								dockPanel.add(new Label("RPC Failure. " + caught.getMessage()));
+								dockPanel.add(new Label("RPC Failure. " + caught.toString()));
 							}
 	
 							@Override
@@ -185,8 +185,8 @@ public class ReportGenerator  implements EntryPoint {
 				//Try to make RPC with entered user Data
 					try {
 						//get Dates From DatePicker Boxes
-						Date date1 = userReportForm.getDatePickerBox1().getDate();
-						Date date2 = userReportForm.getDatePickerBox2().getDate();
+						Date date1 = beitragReportForm.getDatePickerBox1().getDate();
+						Date date2 = beitragReportForm.getDatePickerBox2().getDate();
 						
 						int beitragID = Integer.parseInt(beitragReportForm.getSearchBeitragBox().getEnteredText());
 						ReportGeneratorServiceAsync proxy = (ReportGeneratorServiceAsync)GWT.create(ReportGeneratorService.class);
@@ -194,7 +194,7 @@ public class ReportGenerator  implements EntryPoint {
 							public void onFailure(Throwable caught) {
 								
 								dockPanel.clear();
-								dockPanel.add(new Label("RPC Failure. " + caught.getMessage()));
+								dockPanel.add(new Label("RPC Failure. " + caught.toString()));
 							}
 	
 							@Override
@@ -212,8 +212,8 @@ public class ReportGenerator  implements EntryPoint {
 							}
 						};
 						proxy.createBeitragReport(beitragID, date1, date2, callback);
-					}catch(NullPointerException e) {
-						Window.alert("Bitte ein gültiges Datum eintragen!");
+					}catch(NumberFormatException e) {
+						Window.alert("Bitte eine gültige Beitrags ID eingeben!");
 					}
 					catch(Exception e) {
 						Window.alert(e.toString());

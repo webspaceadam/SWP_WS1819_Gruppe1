@@ -77,15 +77,14 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 	
 		//create Report
 		UserReport userReport = new UserReport();
-		userReport.setImprint(new SimpleParagraph("Pinners | Nobelstrasse 10"));
+		userReport.setImprint(new SimpleParagraph("Report über den Zeitraum vom " + dayMonthYearFormat.format(start) + 
+				" bis zum " + dayMonthYearFormat.format(end) + " (0 Uhr jeweils)"));
 		userReport.setTitle("User Report");
 		//Erzeuge einen header
 		CompositeParagraph header = new CompositeParagraph();
 		header.addSubParagraph(new SimpleParagraph("Report Über den User: " + user.getNickname()));
 		header.addSubParagraph(new SimpleParagraph("Vorname: " + user.getFirstName() + "Nachname: " + user.getLastName()));
 		header.addSubParagraph(new SimpleParagraph("eMail Adresse: " + user.getGMail()));
-		header.addSubParagraph(new SimpleParagraph("Report Im Zeitraum vom " + dayMonthYearFormat.format(start) + 
-				" bis " + dayMonthYearFormat.format(end) + " (0 Uhr jeweils)"));
 		//Fuege den Header zum UserReport Hinzu
 		userReport.setHeaderData(header);
 
@@ -167,7 +166,7 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 				Beitrag gelikterBeitrag = beitragMapper.findBeitragById(like.getBeitragId());
 				User gelikterUser = uMapper.findUserById(gelikterBeitrag.getOwnerId());
 				row.addColumn(new Column("Like verteilt am: " + like.getCreationTimeStamp().toString()));
-				if(gelikterBeitrag != null)row.addColumn(new Column("An Beitrag von: " + gelikterUser.getNickname()));
+				//if(gelikterBeitrag != null)row.addColumn(new Column("An Beitrag von: " + gelikterUser.getNickname()));
 				row.addColumn(new Column("Like ID:" + like.getLikeId()));
 				//Füge die Reihe dem abonnentenReport
 				likeReport.addRow(row);
@@ -191,6 +190,9 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 	 */
 	@Override
 	public BeitragReport createBeitragReport(int beitragID, Date date1, Date date2) throws IllegalArgumentException {
+		//create result Report
+		BeitragReport beitragReport = new BeitragReport();
+		beitragReport.setTitle("Beitrag Report");
 		//make sure start date is before end date
 		if(date1.before(date2)) {
 			start = date1;
@@ -200,19 +202,48 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 			end = date1;
 		}
 	
-		//create Report
-		BeitragReport beitragReport = new BeitragReport();
-		beitragReport.setImprint(new SimpleParagraph("Pinners | Nobelstrasse 10"));
-		beitragReport.setTitle("Beitrag Report");
+
+		Beitrag beitrag = null;
+		User inhaber = null;
+		
+		//Make Sure Beitrag with selected ID exists
+		try {
+			beitrag = beitragMapper.findBeitragById(beitragID);
+			inhaber = uMapper.findUserById(beitrag.getOwnerId());
+			
+		//Otherwise return report that indicates the missing beitrag	
+		}catch(Exception e){
+			GenericReport noBeitragFoundReport = new GenericReport();
+			noBeitragFoundReport.setTitle("Keinen Beitrag mit der ID " + beitragID + " gefunden.");
+			Row row = new Row();
+			row.addColumn(new Column("Bitte gebe eine existierende Beitrags ID an"));
+			noBeitragFoundReport.addRow(row);
+			beitragReport.addSubReport(noBeitragFoundReport);
+			return beitragReport;
+		}
+		
+		
+		
+		beitragReport.setImprint(new SimpleParagraph("Report über den Zeitraum vom " + dayMonthYearFormat.format(start) + 
+				" bis zum " + dayMonthYearFormat.format(end)  + " (0 Uhr jeweils)"));
 		//Erzeuge einen header
 		CompositeParagraph header = new CompositeParagraph();
-		header.addSubParagraph(new SimpleParagraph("Report Über den Beitrag: "));
-		header.addSubParagraph(new SimpleParagraph("Erstellt von: "));
-		header.addSubParagraph(new SimpleParagraph("Erstellt am: "));
-		header.addSubParagraph(new SimpleParagraph("Report Im Zeitraum vom " + dayMonthYearFormat.format(start) + 
-				" bis " + dayMonthYearFormat.format(end)  + " (0 Uhr jeweils)"));
+		header.addSubParagraph(new SimpleParagraph("Report Über den Beitrag mit der ID " + beitrag.getBeitragId()));
+		try {
+			header.addSubParagraph(new SimpleParagraph("Beitrag erstellt von: " +  inhaber.getLastName()));
+		}catch(Exception e) {
+			header.addSubParagraph(new SimpleParagraph("Beitrag erstellt von: Zu diesem Beitrag konnte kein Autor gefunden werden"));
+			header.addSubParagraph(new SimpleParagraph("owner ID" + beitrag.getOwnerId()));
+			header.addSubParagraph(new SimpleParagraph("beitragID " + beitrag.getBeitragId()));
+			header.addSubParagraph(new SimpleParagraph("inhalt" + beitrag.getInhalt()));
+		}
+		
+		header.addSubParagraph(new SimpleParagraph("Beitrag erstellt am:  " + beitrag.getCreationTimeStamp().toString()));
 		//Fuege den Header zum UserReport Hinzu
 		beitragReport.setHeaderData(header);
+		
+		
+
 		
 		
 		

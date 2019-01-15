@@ -66,7 +66,8 @@ public class HTMLReportWriter extends ReportWriter{
 			  
 			  	for (int i2 = 0; i2 < columns.size(); i2++) {
 			  		Column column = columns.get(i2);
-			  		result.append(column.getValue());
+			  		if(i2>0)result.append(" | ");
+			  		result.append(column.getValue());			  		
 			  	}
 			  
 			  result.append("</p>");
@@ -134,9 +135,32 @@ public class HTMLReportWriter extends ReportWriter{
 	   */
 	  @Override
 	public void process(BeitragReport r) {
+		    // Zunächst löschen wir das Ergebnis vorhergehender Prozessierungen.
+		    this.resetReportText();
+		    
+		    /*
+		     * In diesen Buffer schreiben wir während der Prozessierung sukzessive
+		     * unsere Ergebnisse.
+		     */
+		    StringBuffer result = new StringBuffer();
+		    result.append("<H2>" + r.getTitle() + "</H2>");
+		    result.append("<br>" + paragraph2HTML(r.getHeaderData()));
+		    result.append("<br> Report Erstellt am" + r.getCreated().toString());
+		    result.append("<br>" + r.getImprint().toString());
+
+		    /*
+		     * Nun werden Schritt für Schritt die einzelnen Bestandteile des Reports
+		     * ausgelesen und in HTML-Form übersetzt.
+		     */
+		    
+		    result.append("<br><br>");
 		  
-		  
-		  
+		    for (int i = 0; i < r.getNumSubReports(); i++) {
+		    	GenericReport genericReport = (GenericReport) r.getSubReportAt(i);
+		    	result.append(genericReport2HTML(genericReport));
+		    }
+		    
+		    reportText = result.toString(); 
 	  }
 
 	  /**
@@ -155,9 +179,9 @@ public class HTMLReportWriter extends ReportWriter{
 		     * unsere Ergebnisse.
 		     */
 		    StringBuffer result = new StringBuffer();
-		    result.append("<H1>" + r.getTitle() + "</H1>");
-		    result.append("<br>" + r.getHeaderData().toString());
-		    result.append("<br> Report Erstellt am" + r.getCreated());
+		    result.append("<H2>" + r.getTitle() + "</H2>");
+		    result.append("<br>" + paragraph2HTML(r.getHeaderData()));
+		    result.append("<br> Report Erstellt am" + r.getCreated().toString());
 		    result.append("<br>" + r.getImprint().toString());
 
 		    /*
@@ -165,12 +189,14 @@ public class HTMLReportWriter extends ReportWriter{
 		     * ausgelesen und in HTML-Form übersetzt.
 		     */
 		    
-		   
+		    result.append("<br><br>");
 		  
 		    for (int i = 0; i < r.getNumSubReports(); i++) {
-		    	GenericReport genericReport = (GenericReport) r.getSubReportAt(0);
+		    	GenericReport genericReport = (GenericReport) r.getSubReportAt(i);
 		    	result.append(genericReport2HTML(genericReport));
 		    }
+		    
+		    reportText = result.toString();
 		  
 	  }
 
