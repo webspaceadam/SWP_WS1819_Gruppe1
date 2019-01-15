@@ -52,11 +52,25 @@ public class HTMLReportWriter extends ReportWriter{
 	   * @param r der Report
 	   * @return HTML-Text
 	   */
-	  public String genericReport2HTML(Report r) {
-		  StringBuffer result = null;
+	  public String genericReport2HTML(SimpleReport r) {
+		  StringBuffer result = new StringBuffer();
 		  
 		  result.append("<H2>" + r.getTitle() + "</H2>");
 		  
+		  Vector<Row> rows = r.getRows();;
+		  
+		  for (int i = 0; i < rows.size(); i++) {
+			  Row row = rows.get(i);
+			  Vector<Column> columns = row.getColumns();
+			  result.append("<p>");
+			  
+			  	for (int i2 = 0; i2 < columns.size(); i2++) {
+			  		Column column = columns.get(i2);
+			  		result.append(column.getValue());
+			  	}
+			  
+			  result.append("</p>");
+		  }
 		  
 		  
 		  return result.toString();
@@ -145,13 +159,18 @@ public class HTMLReportWriter extends ReportWriter{
 		    result.append("<br>" + r.getHeaderData().toString());
 		    result.append("<br> Report Erstellt am" + r.getCreated());
 		    result.append("<br>" + r.getImprint().toString());
-		    
+
 		    /*
 		     * Nun werden Schritt für Schritt die einzelnen Bestandteile des Reports
 		     * ausgelesen und in HTML-Form übersetzt.
 		     */
 		    
+		   
 		  
+		    for (int i = 0; i < r.getNumSubReports(); i++) {
+		    	GenericReport genericReport = (GenericReport) r.getSubReportAt(0);
+		    	result.append(genericReport2HTML(genericReport));
+		    }
 		  
 	  }
 

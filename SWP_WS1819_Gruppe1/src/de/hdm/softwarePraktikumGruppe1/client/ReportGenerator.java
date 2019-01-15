@@ -9,6 +9,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -19,6 +20,7 @@ import de.hdm.softwarePraktikumGruppe1.client.reportgui.UserReportForm;
 import de.hdm.softwarePraktikumGruppe1.shared.ReportGeneratorService;
 import de.hdm.softwarePraktikumGruppe1.shared.ReportGeneratorServiceAsync;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
+import de.hdm.softwarePraktikumGruppe1.shared.report.HTMLReportWriter;
 import de.hdm.softwarePraktikumGruppe1.shared.report.UserReport;
 
 
@@ -133,12 +135,17 @@ public class ReportGenerator  implements EntryPoint {
 					public void onSuccess(UserReport result) {
 						
 						dockPanel.clear();
-						dockPanel.add(new Label("Success"));
+						dockPanel.addNorth(new Label("Success"), 10);
+						HTMLReportWriter htmlWriter = new HTMLReportWriter();
+						htmlWriter.process(result);
+						dockPanel.add(new HTML(htmlWriter.getReportText()));
 						
 					}
 				};
 				
-				proxy.createUserReport(new User(), new Date(), new Date(), callback);
+				proxy.createUserReport(new User(), 
+						userReportForm.getDatePickerBox1().getDate(), 
+						userReportForm.getDatePickerBox2().getDate(), callback);
 				
 								
 
