@@ -7,6 +7,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.HTML;
@@ -20,6 +21,7 @@ import de.hdm.softwarePraktikumGruppe1.client.reportgui.UserReportForm;
 import de.hdm.softwarePraktikumGruppe1.shared.ReportGeneratorService;
 import de.hdm.softwarePraktikumGruppe1.shared.ReportGeneratorServiceAsync;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
+import de.hdm.softwarePraktikumGruppe1.shared.report.BeitragReport;
 import de.hdm.softwarePraktikumGruppe1.shared.report.HTMLReportWriter;
 import de.hdm.softwarePraktikumGruppe1.shared.report.UserReport;
 
@@ -75,9 +77,7 @@ public class ReportGenerator  implements EntryPoint {
 		private class userButtonClickHandler implements ClickHandler{
 			@Override
 			public void onClick(ClickEvent event) {
-				
-				
-				
+
 				dockPanel.clear();
 				dockPanel.addNorth(header, 4);
 				dockPanel.addWest(userReportForm, 25);
@@ -111,44 +111,49 @@ public class ReportGenerator  implements EntryPoint {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				
-				System.out.println(userReportForm.getSearchBox().getUser());
-				System.out.println(userReportForm.getDatePickerBox1().getDate());
-				System.out.println(userReportForm.getDatePickerBox2().getDate());
-				
-				dockPanel.add(new Label("ClickEvent"));
-				
-				
-				ReportGeneratorServiceAsync proxy = (ReportGeneratorServiceAsync)GWT.create(ReportGeneratorService.class);
-				
-				AsyncCallback<UserReport> callback = new AsyncCallback<UserReport>() {
-
-					
-					public void onFailure(Throwable caught) {
-						
-						dockPanel.clear();
-						dockPanel.add(new Label("RPC Failure. " + caught.getMessage()));
-					}
-
-
-					@Override
-					public void onSuccess(UserReport result) {
-						
-						dockPanel.clear();
-						dockPanel.addNorth(new Label("Success"), 10);
-						HTMLReportWriter htmlWriter = new HTMLReportWriter();
-						htmlWriter.process(result);
-						dockPanel.add(new HTML(htmlWriter.getReportText()));
-						
-					}
-				};
-				
-				proxy.createUserReport(new User(), 
-						userReportForm.getDatePickerBox1().getDate(), 
-						userReportForm.getDatePickerBox2().getDate(), callback);
-				
 								
-
+				if (userReportForm.getDatePickerBox1().getDate() == null || userReportForm.getDatePickerBox2().getDate() == null)
+				{
+					Window.alert("Bitte ein gültiges Datum angeben");
+				}else if(userReportForm.getSearchBox().getUser() == null){
+					Window.alert("Bitte einen gültigen User angeben");
+				}else {
+				//Try to make RPC with entered user Data
+					try {
+						//get Dates From DatePicker Boxes
+						Date date1 = userReportForm.getDatePickerBox1().getDate();
+						Date date2 = userReportForm.getDatePickerBox2().getDate();
+						
+						ReportGeneratorServiceAsync proxy = (ReportGeneratorServiceAsync)GWT.create(ReportGeneratorService.class);
+						AsyncCallback<UserReport> callback = new AsyncCallback<UserReport>() {					
+							public void onFailure(Throwable caught) {
+								
+								dockPanel.clear();
+								dockPanel.add(new Label("RPC Failure. " + caught.getMessage()));
+							}
+	
+							@Override
+							public void onSuccess(UserReport result) {
+								
+								HTMLReportWriter htmlWriter = new HTMLReportWriter();
+								htmlWriter.process(result);
+								
+								//display retrieved report
+								dockPanel.clear();
+								dockPanel.addNorth(header, 4);
+								dockPanel.addWest(userReportForm, 25);
+								dockPanel.add(new HTML(htmlWriter.getReportText()));
+								
+							}
+						};
+						proxy.createUserReport(new User(), date1, date2, callback);
+					}catch(NullPointerException e) {
+						Window.alert("Bitte ein gültiges Datum eintragen!");
+					}
+					catch(Exception e) {
+						Window.alert(e.toString());
+					}
+				}
 			}	
 		}	
 
@@ -165,9 +170,60 @@ public class ReportGenerator  implements EntryPoint {
 			@Override
 			public void onClick(ClickEvent event) {
 					
-				System.out.println(beitragReportForm.getSearchBeitragBox().getBeitrag());
+
+				System.out.println(beitragReportForm.getSearchBeitragBox().getEnteredText());
 				System.out.println(beitragReportForm.getDatePickerBox1().getDate());
 				System.out.println(beitragReportForm.getDatePickerBox2().getDate());
+				
+				
+				if (beitragReportForm.getDatePickerBox1().getDate() == null || beitragReportForm.getDatePickerBox2().getDate() == null)
+				{
+					Window.alert("Bitte ein gültiges Datum angeben");
+				}else if(beitragReportForm.getSearchBeitragBox().getEnteredText() == null){
+					Window.alert("Bitte einen gültigen Beitrag angeben");
+				}else {
+				//Try to make RPC with entered user Data
+					try {
+						//get Dates From DatePicker Boxes
+						Date date1 = userReportForm.getDatePickerBox1().getDate();
+						Date date2 = userReportForm.getDatePickerBox2().getDate();
+						
+						int beitragID = Integer.parseInt(beitragReportForm.getSearchBeitragBox().getEnteredText());
+						ReportGeneratorServiceAsync proxy = (ReportGeneratorServiceAsync)GWT.create(ReportGeneratorService.class);
+						AsyncCallback<BeitragReport> callback = new AsyncCallback<BeitragReport>() {					
+							public void onFailure(Throwable caught) {
+								
+								dockPanel.clear();
+								dockPanel.add(new Label("RPC Failure. " + caught.getMessage()));
+							}
+	
+							@Override
+							public void onSuccess(BeitragReport result) {
+								
+								HTMLReportWriter htmlWriter = new HTMLReportWriter();
+								htmlWriter.process(result);
+								
+								//display retrieved report
+								dockPanel.clear();
+								dockPanel.addNorth(header, 4);
+								dockPanel.addWest(beitragReportForm, 25);
+								dockPanel.add(new HTML(htmlWriter.getReportText()));
+								
+							}
+						};
+						proxy.createBeitragReport(beitragID, date1, date2, callback);
+					}catch(NullPointerException e) {
+						Window.alert("Bitte ein gültiges Datum eintragen!");
+					}
+					catch(Exception e) {
+						Window.alert(e.toString());
+					}
+				}
+				
+				
+				
+				
+				
 			}		
 		}	
 			

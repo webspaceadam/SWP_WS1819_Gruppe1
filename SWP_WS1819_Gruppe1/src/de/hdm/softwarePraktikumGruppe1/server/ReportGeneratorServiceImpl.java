@@ -46,8 +46,8 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 	public final static  SimpleDateFormat yearMonthDayFormat = new SimpleDateFormat ("yyyy.MM.dd");
 	public final static SimpleDateFormat dayMonthYearFormat = new SimpleDateFormat ("dd.MM.yyyy");
 
-	Date d = null;
-	Date d2 = null;
+	Date start = null;
+	Date end = null;
 	
 	
 	UserMapper uMapper = UserMapper.userMapper();	
@@ -65,43 +65,44 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 	 * Hier wird der UserReport erstellt
 	 */
 	@Override
-	public UserReport createUserReport(User user, Date start, Date end) throws IllegalArgumentException {
+	public UserReport createUserReport(User user, Date date1, Date date2) throws IllegalArgumentException {
+		//make sure start date is before end date
+		if(date1.before(date2)) {
+			start = date1;
+			end = date2;
+		}else {
+			start = date2;
+			end = date1;
+		}
+	
+		//create Report
 		UserReport userReport = new UserReport();
-		System.out.println("iser");
-		
-		userReport.setImprint(new SimpleParagraph("Hier ist das Impressum | Nobelstrasse 10"));
+		userReport.setImprint(new SimpleParagraph("Pinners | Nobelstrasse 10"));
 		userReport.setTitle("User Report");
 		//Erzeuge einen header
 		CompositeParagraph header = new CompositeParagraph();
-		header.addSubParagraph(new SimpleParagraph("Report Über den User " + user.getNickname()));
+		header.addSubParagraph(new SimpleParagraph("Report Über den User: " + user.getNickname()));
 		header.addSubParagraph(new SimpleParagraph("Vorname: " + user.getFirstName() + "Nachname: " + user.getLastName()));
 		header.addSubParagraph(new SimpleParagraph("eMail Adresse: " + user.getGMail()));
-		header.addSubParagraph(new SimpleParagraph("Im Zeitraum von " + dayMonthYearFormat.format(start) + 
-				"bis " + dayMonthYearFormat.format(end)));
+		header.addSubParagraph(new SimpleParagraph("Report Im Zeitraum vom " + dayMonthYearFormat.format(start) + 
+				" bis " + dayMonthYearFormat.format(end) + " (0 Uhr jeweils)"));
 		//Fuege den Header zum UserReport Hinzu
 		userReport.setHeaderData(header);
 
 	
-		try {
-			d = dayMonthYearFormat.parse("17.07.1999");
-			d2 = dayMonthYearFormat.parse("17.07.2020");
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
 		
 		//Abonnements
-		Vector<Abonnement> abonnements = abonnementMapper.findAbonnementsOfUserBetweenDates(1, d, d2);
+		Vector<Abonnement> abonnements = abonnementMapper.findAbonnementsOfUserBetweenDates(1, start, end);
 		//Erzeuge einen GenericReport welcher Informationen über Abonnenten speichert
 		GenericReport abonnentenReport = new GenericReport();
 		
 		if (abonnements.size() == 0) {
 			abonnentenReport.setTitle("Informationen über Abonnenten (0)");
-
+			Row row = new Row();
+			row.addColumn(new Column("Keine Abonnenten in dem angegebenen Zeitraum gefunden"));
+			abonnentenReport.addRow(row);
 		}else {
-			abonnentenReport.setTitle("Informationen über Abonnenten (" + (abonnements.size() + 1) + ")");
+			abonnentenReport.setTitle("Informationen über Abonnenten (" + abonnements.size() + ")");
 			for(int i = 0; i < abonnements.size(); i++) {
 				Abonnement abonnement = abonnements.get(i);
 				//Erzeuge eine Reihe für einen Abonnenten
@@ -110,49 +111,55 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 				row.addColumn(new Column("Nickname des Users: " + abonnent.getNickname()));
 				row.addColumn(new Column("Vorname: " + abonnent.getFirstName() + "Nachname: " + abonnent.getLastName()));
 				//row.addColumn(new Column("Abonniert Am: " + abonnement.getCreationTimeStamp().toString()));
+				row.addColumn(new Column("Abonnement ID:" + abonnement.getAbonnementId()));
 				//Füge die Reihe dem abonnentenReport
 				abonnentenReport.addRow(row);
-				//Füge die Abonnenteninformationen dem userReport hinzu
-				userReport.addSubReport(abonnentenReport);
 			}
 		}
+		//Füge die Abonnenteninformationen dem userReport hinzu
+		userReport.addSubReport(abonnentenReport);
 		
 				
 		//Beiträge
-		Vector<Beitrag> beitraege = beitragMapper.findBeitraegeOfUserBetweenDates(1, d, d2);
+		Vector<Beitrag> beitraege = beitragMapper.findBeitraegeOfUserBetweenDates(1, start, end);
 
 		//Erzeuge einen GenericReport welcher Informationen über Beiträge speichert
 		GenericReport beitraegeReport = new GenericReport();
 		
-		System.out.println(beitraege.get(0).getInhalt());
 		
 		if (beitraege.size() == 0) {
 			beitraegeReport.setTitle("Informationen über Beiträge (0)");
+			Row row = new Row();
+			row.addColumn(new Column("Keine Beiträge in dem angegebenen Zeitraum gefunden"));
+			beitraegeReport.addRow(row);
 		}else {
-			beitraegeReport.setTitle("Informationen über Beiträge (" + (beitraege.size() + 1) + ")");
+			beitraegeReport.setTitle("Informationen über Beiträge (" + beitraege.size() + ")");
 			for(int i = 0; i < beitraege.size(); i++) {
 				Beitrag beitrag = beitraege.get(i);
 				Row row = new Row();
 				row.addColumn(new Column("Erstelldatum: " + beitrag.getCreationTimeStamp().toString()));
 				row.addColumn(new Column("Inhalt: " + beitrag.getInhalt()));
+				row.addColumn(new Column("Beitrag ID:" + beitrag.getBeitragId()));
 				//Füge die Reihe dem beitraegeReport hinzu
 				beitraegeReport.addRow(row);
-				//Füge die Abonnenteninformationen dem userReport hinzu
-				userReport.addSubReport(beitraegeReport);
 			}
 		}
+		//Füge die Abonnenteninformationen dem userReport hinzu
+		userReport.addSubReport(beitraegeReport);
 		
 		
 		//Likes
-		Vector<Like> likes = likeMapper.findLikesOfBeitragBetweenDates(1, d, d2);
+		Vector<Like> likes = likeMapper.findLikesOfBeitragBetweenDates(1, start, end);
 		//Erzeuge einen GenericReport welcher Informationen über Abonnenten speichert
 		GenericReport likeReport = new GenericReport();
 				
 		if (likes.size() == 0) {
 			likeReport.setTitle("Informationen über Likes (0)");
-
+			Row row = new Row();
+			row.addColumn(new Column("Keine Likes in dem angegebenen Zeitraum gefunden"));
+			likeReport.addRow(row);
 		}else {
-			likeReport.setTitle("Informationen über Likes(" + (likes.size() + 1) + ")");
+			likeReport.setTitle("Informationen über Likes(" + likes.size() + ")");
 			for(int i = 0; i < likes.size(); i++) {
 				Like like = likes.get(i);
 				//Erzeuge eine Reihe für einen Abonnenten
@@ -160,13 +167,14 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 				Beitrag gelikterBeitrag = beitragMapper.findBeitragById(like.getBeitragId());
 				User gelikterUser = uMapper.findUserById(gelikterBeitrag.getOwnerId());
 				row.addColumn(new Column("Like verteilt am: " + like.getCreationTimeStamp().toString()));
-				//row.addColumn(new Column("An Beitrag von: " + gelikterUser.getNickname()));
+				if(gelikterBeitrag != null)row.addColumn(new Column("An Beitrag von: " + gelikterUser.getNickname()));
+				row.addColumn(new Column("Like ID:" + like.getLikeId()));
 				//Füge die Reihe dem abonnentenReport
-				abonnentenReport.addRow(row);
-				//Füge die Likesinformationen dem userReport hinzu
-				userReport.addSubReport(likeReport);
+				likeReport.addRow(row);
 				}
 			}
+		//Füge die Likesinformationen dem userReport hinzu
+		userReport.addSubReport(likeReport);
 		
 		
 		return userReport;
@@ -182,9 +190,33 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 	 * Hier wird der BeitragsReport erstellt
 	 */
 	@Override
-	public BeitragReport createBeitragReport() throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+	public BeitragReport createBeitragReport(int beitragID, Date date1, Date date2) throws IllegalArgumentException {
+		//make sure start date is before end date
+		if(date1.before(date2)) {
+			start = date1;
+			end = date2;
+		}else {
+			start = date2;
+			end = date1;
+		}
+	
+		//create Report
+		BeitragReport beitragReport = new BeitragReport();
+		beitragReport.setImprint(new SimpleParagraph("Pinners | Nobelstrasse 10"));
+		beitragReport.setTitle("Beitrag Report");
+		//Erzeuge einen header
+		CompositeParagraph header = new CompositeParagraph();
+		header.addSubParagraph(new SimpleParagraph("Report Über den Beitrag: "));
+		header.addSubParagraph(new SimpleParagraph("Erstellt von: "));
+		header.addSubParagraph(new SimpleParagraph("Erstellt am: "));
+		header.addSubParagraph(new SimpleParagraph("Report Im Zeitraum vom " + dayMonthYearFormat.format(start) + 
+				" bis " + dayMonthYearFormat.format(end)  + " (0 Uhr jeweils)"));
+		//Fuege den Header zum UserReport Hinzu
+		beitragReport.setHeaderData(header);
+		
+		
+		
+		return beitragReport;
 	}
 
 }

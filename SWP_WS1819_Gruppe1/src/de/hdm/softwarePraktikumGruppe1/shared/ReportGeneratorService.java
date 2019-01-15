@@ -42,12 +42,15 @@ public interface ReportGeneratorService extends RemoteService{
 	  /**
 	   * Erstellen eines <code>BeitragReport</code>-Reports.
 	   * Dieser Report-Typ stellt Informationen über Beiträge per Zeitraum dar.
+	 * @param beitragID TODO
+	 * @param date1 TODO
+	 * @param date2 TODO
 	   * 
 	   * @return das fertige Reportobjekt
 	   * @throws IllegalArgumentException
 	   * @see BeitragReport
 	   */
-	  public abstract BeitragReport createBeitragReport() throws IllegalArgumentException;
+	  public abstract BeitragReport createBeitragReport(int beitragID, Date date1, Date date2) throws IllegalArgumentException;
 	  
 	  
 	}

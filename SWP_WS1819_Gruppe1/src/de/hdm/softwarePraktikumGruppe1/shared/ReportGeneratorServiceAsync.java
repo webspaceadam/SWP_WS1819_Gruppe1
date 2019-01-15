@@ -23,7 +23,7 @@ public interface ReportGeneratorServiceAsync {
 
 		void createUserReport(User user, Date start, Date end, AsyncCallback<UserReport> callback);
 
-		void createBeitragReport(AsyncCallback<BeitragReport> callback);
+		void createBeitragReport(int beitragID, Date date1, Date date2, AsyncCallback<BeitragReport> callback);
 
 		  
 
