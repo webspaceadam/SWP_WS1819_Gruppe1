@@ -109,10 +109,11 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 				User abonnent = uMapper.findUserById(abonnement.getOwnerId());
 				row.addColumn(new Column("Nickname des Users: " + abonnent.getNickname()));
 				row.addColumn(new Column("Vorname: " + abonnent.getFirstName() + "Nachname: " + abonnent.getLastName()));
-				row.addColumn(new Column("Abonniert Am: " + abonnement.getCreationTimeStamp().toString()));
+				//row.addColumn(new Column("Abonniert Am: " + abonnement.getCreationTimeStamp().toString()));
 				//Füge die Reihe dem abonnentenReport
 				abonnentenReport.addRow(row);
-
+				//Füge die Abonnenteninformationen dem userReport hinzu
+				userReport.addSubReport(abonnentenReport);
 			}
 		}
 		
@@ -159,10 +160,11 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 				Beitrag gelikterBeitrag = beitragMapper.findBeitragById(like.getBeitragId());
 				User gelikterUser = uMapper.findUserById(gelikterBeitrag.getOwnerId());
 				row.addColumn(new Column("Like verteilt am: " + like.getCreationTimeStamp().toString()));
-				row.addColumn(new Column("An Beitrag von: " + gelikterUser.getNickname()));
+				//row.addColumn(new Column("An Beitrag von: " + gelikterUser.getNickname()));
 				//Füge die Reihe dem abonnentenReport
 				abonnentenReport.addRow(row);
-
+				//Füge die Likesinformationen dem userReport hinzu
+				userReport.addSubReport(likeReport);
 				}
 			}
 		
