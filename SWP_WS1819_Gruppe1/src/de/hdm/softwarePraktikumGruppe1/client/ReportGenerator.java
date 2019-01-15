@@ -14,6 +14,7 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.ScrollPanel;
 
 import de.hdm.softwarePraktikumGruppe1.client.reportgui.BeitragReportForm;
 import de.hdm.softwarePraktikumGruppe1.client.reportgui.ReportHeader;
@@ -57,7 +58,6 @@ public class ReportGenerator  implements EntryPoint {
 		dockPanel.clear();
 		dockPanel.addNorth(header, 4);
 		//dockPanel.addWest(userReportForm, 25);
-		dockPanel.add(new Label("Hier wird der Report eingeblendet werden"));
 		LayoutPanel panel = new LayoutPanel();
 		panel.add(dockPanel);
 		RootPanel.get().add(dockPanel);
@@ -142,7 +142,10 @@ public class ReportGenerator  implements EntryPoint {
 								dockPanel.clear();
 								dockPanel.addNorth(header, 4);
 								dockPanel.addWest(userReportForm, 25);
-								dockPanel.add(new HTML(htmlWriter.getReportText()));
+								ScrollPanel reportPanel = new ScrollPanel();
+								reportPanel.setStyleName("box");
+								reportPanel.add(new HTML(htmlWriter.getReportText()));
+								dockPanel.add(reportPanel);
 								
 							}
 						};
@@ -207,7 +210,10 @@ public class ReportGenerator  implements EntryPoint {
 								dockPanel.clear();
 								dockPanel.addNorth(header, 4);
 								dockPanel.addWest(beitragReportForm, 25);
-								dockPanel.add(new HTML(htmlWriter.getReportText()));
+								ScrollPanel reportPanel = new ScrollPanel();
+								reportPanel.setStyleName("box");
+								reportPanel.add((new HTML(htmlWriter.getReportText())));
+								dockPanel.add(reportPanel);
 								
 							}
 						};

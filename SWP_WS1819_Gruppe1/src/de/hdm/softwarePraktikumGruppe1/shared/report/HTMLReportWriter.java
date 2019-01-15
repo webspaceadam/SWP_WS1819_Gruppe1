@@ -153,11 +153,12 @@ public class HTMLReportWriter extends ReportWriter{
 		     * ausgelesen und in HTML-Form übersetzt.
 		     */
 		    
-		    result.append("<br><br>");
+		    result.append("<br><hr>");
 		  
 		    for (int i = 0; i < r.getNumSubReports(); i++) {
 		    	GenericReport genericReport = (GenericReport) r.getSubReportAt(i);
 		    	result.append(genericReport2HTML(genericReport));
+		    	result.append("<hr>");
 		    }
 		    
 		    reportText = result.toString(); 
@@ -189,11 +190,12 @@ public class HTMLReportWriter extends ReportWriter{
 		     * ausgelesen und in HTML-Form übersetzt.
 		     */
 		    
-		    result.append("<br><br>");
+		    result.append("<br><hr>");
 		  
 		    for (int i = 0; i < r.getNumSubReports(); i++) {
 		    	GenericReport genericReport = (GenericReport) r.getSubReportAt(i);
 		    	result.append(genericReport2HTML(genericReport));
+		    	result.append("<hr>");
 		    }
 		    
 		    reportText = result.toString();
