@@ -1,13 +1,11 @@
 package de.hdm.softwarePraktikumGruppe1.client.gui;
 
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.Vector;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -24,6 +22,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import de.hdm.softwarePraktikumGruppe1.client.ClientsideSettings;
 import de.hdm.softwarePraktikumGruppe1.shared.PinnwandverwaltungAsync;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Beitrag;
+import de.hdm.softwarePraktikumGruppe1.shared.bo.Like;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
 /**
@@ -80,6 +79,8 @@ public class BeitragBox extends FlowPanel {
 	private int userId;
 	private Timestamp timestamp;
 	private User user;
+	private Beitrag beitrag;
+	private Like likeCheck;
 	
 	// Constructor for the creation of Beitrag
 	public BeitragBox(String content, PinnwandBox pb, User user) {
@@ -103,7 +104,8 @@ public class BeitragBox extends FlowPanel {
 			userId = result.getOwnerId();
 			accountName.setText(user.getFirstName() + " " + user.getLastName());
 			nickName.setText("@" + user.getNickname());
-			creationDate.setText("Erstellzeitpunkt: " + result.getCreationTimeStamp().toString());
+			//String ts = String.format("%1$TD %1$TT", result.getCreationTimeStamp());
+			creationDate.setText("Erstellzeitpunkt: " + result.getCreationTimeStamp());
 		}
 		
 	}
@@ -115,10 +117,11 @@ public class BeitragBox extends FlowPanel {
 	}
 	
 	public void onLoad() {
+		
 		// Date
-		Date now = new Date();
-		DateTimeFormat fmt = DateTimeFormat.getFormat("HH:mm:ss, EEEE, dd MMMM, yyyy");
-		String date = fmt.format(now).toString();
+//		Date now = new Date();
+//		DateTimeFormat fmt = DateTimeFormat.getFormat("HH:mm:ss, EEEE, dd MMMM, yyyy");
+//		String date = fmt.format(now).toString();
 		
 		// Stylingelements for this Widget
 		this.addStyleName("box radiusless");
@@ -152,7 +155,7 @@ public class BeitragBox extends FlowPanel {
 		likeHeartBtn.addClickHandler(new LikeCountClickHandler(this));
 		socialWrapper.add(heartWrapper);
 		socialWrapper.add(replyWrapper);
-		creationDate.setText("Erstellungszeitpunkt: " + date);
+//		creationDate.setText("Erstellungszeitpunkt: " + date);
 		
 		// Likecount info
 		likeHeart.setWidth("1rem");
@@ -194,6 +197,41 @@ public class BeitragBox extends FlowPanel {
 		this.add(hrElement);
 		this.add(socialWrapper);
 		this.add(createKommentarWrapper);
+		
+		// Loading
+		pinnwandVerwaltung.getUserById(userId, new GetUserByIdCallback());
+		
+		this.beitrag = new Beitrag();
+		beitrag.setBeitragId(beitragId);
+		pinnwandVerwaltung.likeCheck(user, beitrag, new LikeCheckCallback());
+	}
+	
+	private class LikeCheckCallback implements AsyncCallback<Like> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			GWT.log(caught.toString());
+		}
+
+		@Override
+		public void onSuccess(Like result) {
+			likeCheck = result;
+			GWT.log(likeCheck.toString() + " ist der LikeCheck");
+		}
+		
+	}
+	
+	private class GetUserByIdCallback implements AsyncCallback<User> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+		}
+
+		@Override
+		public void onSuccess(User result) {
+			user = result;
+		}
+		
 	}
 	
 	/**
