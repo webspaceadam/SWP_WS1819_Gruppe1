@@ -3,7 +3,6 @@
  */
 package de.hdm.softwarePraktikumGruppe1.shared.bo;
 
-import java.io.Serializable;
 import java.sql.Timestamp;
 
 import com.google.gwt.user.client.rpc.IsSerializable;

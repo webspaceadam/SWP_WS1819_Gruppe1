@@ -214,6 +214,7 @@ public class BeitragMapper {
 			}
 			return result;
 		}
+		
 
 		
 		/*
