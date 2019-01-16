@@ -163,7 +163,8 @@ public class AbonnementMapper {
 					a.setAbonnementId(rs.getInt("AbonnementID"));
 					a.setPinnwandId(rs.getInt("PinnwandFK"));
 					a.setOwnerId(rs.getInt("UserFK"));
-						
+					a.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
+					
 					result.addElement(a);
 				}
 					
@@ -198,6 +199,7 @@ public class AbonnementMapper {
 						a.setAbonnementId(rs.getInt("AbonnementID"));
 						a.setPinnwandId(rs.getInt("PinnwandFK"));
 						a.setOwnerId(rs.getInt("UserFK"));
+						a.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
 							
 						result.addElement(a);
 					}
