@@ -1,21 +1,29 @@
 package de.hdm.softwarePraktikumGruppe1.client;
 
+import java.util.Date;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.ScrollPanel;
 
 import de.hdm.softwarePraktikumGruppe1.client.reportgui.BeitragReportForm;
 import de.hdm.softwarePraktikumGruppe1.client.reportgui.ReportHeader;
 import de.hdm.softwarePraktikumGruppe1.client.reportgui.UserReportForm;
 import de.hdm.softwarePraktikumGruppe1.shared.ReportGeneratorService;
 import de.hdm.softwarePraktikumGruppe1.shared.ReportGeneratorServiceAsync;
+import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
+import de.hdm.softwarePraktikumGruppe1.shared.report.BeitragReport;
+import de.hdm.softwarePraktikumGruppe1.shared.report.HTMLReportWriter;
 import de.hdm.softwarePraktikumGruppe1.shared.report.UserReport;
 
 
@@ -50,7 +58,6 @@ public class ReportGenerator  implements EntryPoint {
 		dockPanel.clear();
 		dockPanel.addNorth(header, 4);
 		//dockPanel.addWest(userReportForm, 25);
-		dockPanel.add(new Label("Hier wird der Report eingeblendet werden"));
 		LayoutPanel panel = new LayoutPanel();
 		panel.add(dockPanel);
 		RootPanel.get().add(dockPanel);
@@ -70,9 +77,7 @@ public class ReportGenerator  implements EntryPoint {
 		private class userButtonClickHandler implements ClickHandler{
 			@Override
 			public void onClick(ClickEvent event) {
-				
-				
-				
+
 				dockPanel.clear();
 				dockPanel.addNorth(header, 4);
 				dockPanel.addWest(userReportForm, 25);
@@ -106,39 +111,52 @@ public class ReportGenerator  implements EntryPoint {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				
-				System.out.println(userReportForm.getSearchBox().getUser());
-				System.out.println(userReportForm.getDatePickerBox1().getDate());
-				System.out.println(userReportForm.getDatePickerBox2().getDate());
-				
-				dockPanel.add(new Label("ClickEvent"));
-				
-				
-				ReportGeneratorServiceAsync proxy = (ReportGeneratorServiceAsync)GWT.create(ReportGeneratorService.class);
-				
-				AsyncCallback<UserReport> callback = new AsyncCallback<UserReport>() {
-
-					
-					public void onFailure(Throwable caught) {
-						
-						dockPanel.clear();
-						dockPanel.add(new Label("RPC Failure. " + caught.getMessage()));
-					}
-
-
-					@Override
-					public void onSuccess(UserReport result) {
-						
-						dockPanel.clear();
-						dockPanel.add(new Label("Success"));
-						
-					}
-				};
-				
-				proxy.createUserReport(callback);
-				
 								
-
+				if (userReportForm.getDatePickerBox1().getDate() == null || userReportForm.getDatePickerBox2().getDate() == null)
+				{
+					Window.alert("Bitte ein gültiges Datum angeben");
+				}else if(userReportForm.getSearchBox().getUserString() == null){
+					Window.alert("Bitte eine gültige User eMail angeben");
+				}else {
+				//Try to make RPC with entered user Data
+					try {
+						//get Dates From DatePicker Boxes
+						Date date1 = userReportForm.getDatePickerBox1().getDate();
+						Date date2 = userReportForm.getDatePickerBox2().getDate();
+						
+						ReportGeneratorServiceAsync proxy = (ReportGeneratorServiceAsync)GWT.create(ReportGeneratorService.class);
+						AsyncCallback<UserReport> callback = new AsyncCallback<UserReport>() {					
+							public void onFailure(Throwable caught) {
+								
+								dockPanel.clear();
+								dockPanel.add(new Label("RPC Failure. " + caught.toString()));
+							}
+	
+							@Override
+							public void onSuccess(UserReport result) {
+								
+								HTMLReportWriter htmlWriter = new HTMLReportWriter();
+								htmlWriter.process(result);
+								
+								//display retrieved report
+								dockPanel.clear();
+								dockPanel.addNorth(header, 4);
+								dockPanel.addWest(userReportForm, 25);
+								ScrollPanel reportPanel = new ScrollPanel();
+								reportPanel.setStyleName("box");
+								reportPanel.add(new HTML(htmlWriter.getReportText()));
+								dockPanel.add(reportPanel);
+								
+							}
+						};
+						proxy.createUserReport(userReportForm.getSearchBox().getUserString(), date1, date2, callback);
+					}catch(NullPointerException e) {
+						Window.alert("Bitte ein gültiges Datum eintragen!");
+					}
+					catch(Exception e) {
+						Window.alert(e.toString());
+					}
+				}
 			}	
 		}	
 
@@ -154,10 +172,56 @@ public class ReportGenerator  implements EntryPoint {
 
 			@Override
 			public void onClick(ClickEvent event) {
+								
+				if (beitragReportForm.getDatePickerBox1().getDate() == null || beitragReportForm.getDatePickerBox2().getDate() == null)
+				{
+					Window.alert("Bitte ein gültiges Datum angeben");
+				}else if(beitragReportForm.getSearchBeitragBox().getEnteredText() == null){
+					Window.alert("Bitte einen gültigen Beitrag angeben");
+				}else {
+				//Try to make RPC with entered user Data
+					try {
+						//get Dates From DatePicker Boxes
+						Date date1 = beitragReportForm.getDatePickerBox1().getDate();
+						Date date2 = beitragReportForm.getDatePickerBox2().getDate();
+						
+						int beitragID = Integer.parseInt(beitragReportForm.getSearchBeitragBox().getEnteredText());
+						ReportGeneratorServiceAsync proxy = (ReportGeneratorServiceAsync)GWT.create(ReportGeneratorService.class);
+						AsyncCallback<BeitragReport> callback = new AsyncCallback<BeitragReport>() {					
+							public void onFailure(Throwable caught) {
+								
+								dockPanel.clear();
+								dockPanel.add(new Label("RPC Failure. " + caught.toString()));
+							}
+	
+							@Override
+							public void onSuccess(BeitragReport result) {
+								
+								HTMLReportWriter htmlWriter = new HTMLReportWriter();
+								htmlWriter.process(result);
+								
+								//display retrieved report
+								dockPanel.clear();
+								dockPanel.addNorth(header, 4);
+								dockPanel.addWest(beitragReportForm, 25);
+								ScrollPanel reportPanel = new ScrollPanel();
+								reportPanel.setStyleName("box");
+								reportPanel.add((new HTML(htmlWriter.getReportText())));
+								dockPanel.add(reportPanel);
+								
+							}
+						};
+						proxy.createBeitragReport(beitragID, date1, date2, callback);
+					}catch(NumberFormatException e) {
+						Window.alert("Bitte eine gültige Beitrags ID eingeben!");
+					}
+					catch(Exception e) {
+						Window.alert(e.toString());
+					}
+				}
+				
 					
-				System.out.println(beitragReportForm.getSearchBeitragBox().getBeitrag());
-				System.out.println(beitragReportForm.getDatePickerBox1().getDate());
-				System.out.println(beitragReportForm.getDatePickerBox2().getDate());
+				
 			}		
 		}	
 			

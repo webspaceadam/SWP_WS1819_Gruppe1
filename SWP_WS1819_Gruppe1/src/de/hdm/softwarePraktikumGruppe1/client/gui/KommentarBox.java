@@ -1,12 +1,20 @@
 package de.hdm.softwarePraktikumGruppe1.client.gui;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
+
+import de.hdm.softwarePraktikumGruppe1.client.ClientsideSettings;
+import de.hdm.softwarePraktikumGruppe1.shared.PinnwandverwaltungAsync;
+import de.hdm.softwarePraktikumGruppe1.shared.bo.Kommentar;
+import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
 /**
  * Die Klasse <code>KommentarBox</code> ist zuständig für die Anzeige eines Kommentars unter 
@@ -15,6 +23,8 @@ import com.google.gwt.user.client.ui.*;
  *
  */
 public class KommentarBox extends FlowPanel {
+	PinnwandverwaltungAsync pinnwandVerwaltung = ClientsideSettings.getPinnwandverwaltung();
+	
 	// Panels for the Element
 	private VerticalPanel parentVerticalPanel = new VerticalPanel();
 	private FlowPanel userInfoWrapper = new FlowPanel();
@@ -33,11 +43,16 @@ public class KommentarBox extends FlowPanel {
 	private BeitragBox parentBeitragBox;
 	private Button removeKommentarBtn = new Button("Delete");
 	
+	// 
+	private User owner;
+	private int ownerId;
+	private int kommentarId;
+	
 	public KommentarBox() {
 		// Adding Author relationship
-		accountName.setText("Johny Smith");
-		nickName.setText("@" + "johnnysmith");
-		kommentarContent.setText("Some Kommentarstuff inside a Kommentar");
+		accountName.setText("");
+		nickName.setText("@" + "");
+		kommentarContent.setText("");
 	}
 	
 	/**
@@ -47,13 +62,46 @@ public class KommentarBox extends FlowPanel {
 	 * @param parentBB
 	 */
 	public KommentarBox(String inhalt, BeitragBox parentBB) {
-		// Adding Author relationship
-		accountName.setText("Johny Smith");
-		nickName.setText("@" + "johnnysmith");
-		
+		this.parentBeitragBox = parentBB;
+		this.kommentarContent.setText(inhalt);
 		// Adding the Content
 		kommentarContent.setText(inhalt);
-		this.parentBeitragBox = parentBB;
+		pinnwandVerwaltung.getUserById(1, new GetCurrentUserCallback());
+		//pinnwandVerwaltung.createKommentar(inhalt, owner.getUserId(), parentBB.getBeitragId(), timestamp, new CreateKommentarCallback());
+	}
+	
+	private class GetCurrentUserCallback implements AsyncCallback<User> {
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert("GetCurrentUserCallback failed");
+		}
+
+		@Override
+		public void onSuccess(User result) {
+			Window.alert("We have the User");
+			owner = result;
+			pinnwandVerwaltung.createKommentar(kommentarContent.getText(), owner.getUserId(), parentBeitragBox.getBeitragId(), timestamp, new CreateKommentarCallback());
+		}
+		
+	}
+	
+	private class CreateKommentarCallback implements AsyncCallback<Kommentar> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert("problem with the kommentarcallback" + "\n " + caught.toString());
+		}
+
+		@Override
+		public void onSuccess(Kommentar result) {
+			accountName.setText(owner.getFirstName() + owner.getLastName());
+			nickName.setText("@" + owner.getNickname());
+			ownerId = result.getOwnerId();
+			kommentarId = result.getKommentarId();
+			creationDate.setText("Erstellzeitpunkt: " + result.getCreationTimeStamp().toString());
+		}
+		
 	}
 	
 	public void onLoad() {

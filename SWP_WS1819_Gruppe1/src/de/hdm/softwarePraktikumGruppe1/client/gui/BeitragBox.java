@@ -487,7 +487,7 @@ public class BeitragBox extends FlowPanel {
 		public void onClick(ClickEvent event) {
 			createKommentarWrapper.setVisible(false);
 			String kommentarContent = kommentarTextArea.getValue();
-			createKommentar(kommentarContent);
+			KommentarBox tempKB = createKommentar(kommentarContent);
 			GWT.log(kommentarsOfBeitrag.toString());
 			kommentarTextArea.setText("");
 		}
@@ -501,7 +501,7 @@ public class BeitragBox extends FlowPanel {
 	 * @param commentarContent
 	 * @return newKommentarBox an der BeitragBox
 	 */
-	public KommentarBox createKommentar(String commentarContent) {
+	private KommentarBox createKommentar(String commentarContent) {
 		KommentarBox newKommentarBox = new KommentarBox(commentarContent, this);
 		kommentarsOfBeitrag.addElement(newKommentarBox);
 		this.add(kommentarsOfBeitrag.lastElement());
