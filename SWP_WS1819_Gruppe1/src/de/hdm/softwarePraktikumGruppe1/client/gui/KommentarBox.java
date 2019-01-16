@@ -95,16 +95,19 @@ public class KommentarBox extends FlowPanel {
 
 		@Override
 		public void onSuccess(Kommentar result) {
+			GWT.log(result.toString());
 			accountName.setText(owner.getFirstName() + owner.getLastName());
 			nickName.setText("@" + owner.getNickname());
 			ownerId = result.getOwnerId();
 			kommentarId = result.getKommentarId();
+			GWT.log(result.toString());
 			creationDate.setText("Erstellzeitpunkt: " + result.getCreationTimeStamp().toString());
 		}
 		
 	}
 	
 	public void onLoad() {
+		pinnwandVerwaltung.getUserById(ownerId, new GetUserByIdCallback());
 		// Date Stuff
 		Date now = new Date();
 		DateTimeFormat fmt = DateTimeFormat.getFormat("HH:mm:ss, EEEE, dd MMMM, yyyy");
@@ -235,10 +238,101 @@ public class KommentarBox extends FlowPanel {
 		
 		@Override
 		public void onClick(ClickEvent event) {
+			Kommentar tempKommentar = new Kommentar();
+			tempKommentar.setKommentarId(kommentarId);
+			GWT.log("KommentarId: " + kommentarId);
+			pinnwandVerwaltung.deleteKommentar(tempKommentar, new DeleteKommentarCallback());
 			parentBeitragBox.deleteKommentar(thisKommentarBox);
 			parentDialogBox.hide();
 		}
 		
 	}
+	
+	private class DeleteKommentarCallback implements AsyncCallback<Void> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert("Problems with DeleteKommentarCallback");
+		}
+
+		@Override
+		public void onSuccess(Void result) {
+			Window.alert("Kommentar wurde gelöscht!");
+		}
+		
+	}
+
+	public Label getAccountName() {
+		return accountName;
+	}
+
+	public void setAccountName(Label accountName) {
+		this.accountName = accountName;
+	}
+
+	public Label getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(Label nickName) {
+		this.nickName = nickName;
+	}
+
+	public Label getKommentarContent() {
+		return kommentarContent;
+	}
+
+	public void setKommentarContent(String kommentarContent) {
+		this.kommentarContent.setText(kommentarContent);
+	}
+
+	public BeitragBox getParentBeitragBox() {
+		return parentBeitragBox;
+	}
+
+	public void setParentBeitragBox(BeitragBox parentBeitragBox) {
+		this.parentBeitragBox = parentBeitragBox;
+	}
+
+	public User getOwner() {
+		return owner;
+	}
+
+	public void setOwner(User owner) {
+		this.owner = owner;
+	}
+
+	public int getOwnerId() {
+		return ownerId;
+	}
+
+	public void setOwnerId(int ownerId) {
+		this.ownerId = ownerId;
+	}
+
+	public int getKommentarId() {
+		return kommentarId;
+	}
+
+	public void setKommentarId(int kommentarId) {
+		this.kommentarId = kommentarId;
+	}
+	
+	private class GetUserByIdCallback implements AsyncCallback<User> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			
+		}
+
+		@Override
+		public void onSuccess(User result) {
+			accountName.setText(result.getFirstName() + " " + result.getLastName());
+			nickName.setText(result.getNickname());
+		}
+		
+	}
+	
+	
 	
 }

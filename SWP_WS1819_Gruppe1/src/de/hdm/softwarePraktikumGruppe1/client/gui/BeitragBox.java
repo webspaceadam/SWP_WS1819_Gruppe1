@@ -22,6 +22,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import de.hdm.softwarePraktikumGruppe1.client.ClientsideSettings;
 import de.hdm.softwarePraktikumGruppe1.shared.PinnwandverwaltungAsync;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Beitrag;
+import de.hdm.softwarePraktikumGruppe1.shared.bo.Kommentar;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Like;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
@@ -36,8 +37,9 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 public class BeitragBox extends FlowPanel {
 	PinnwandverwaltungAsync pinnwandVerwaltung = ClientsideSettings.getPinnwandverwaltung();
 
-	private Vector<KommentarBox> kommentarsOfBeitrag = new Vector<KommentarBox>();
+	private Vector<KommentarBox> kommentarBoxesOfBeitrag = new Vector<KommentarBox>();
 	private Vector<Like> likes = new Vector<Like>();
+	private Vector<Kommentar> kommentareOfBeitrag = new Vector<Kommentar>();
 	
 	// Panels for the Element
 	private VerticalPanel parentVerticalPanel = new VerticalPanel();
@@ -102,6 +104,7 @@ public class BeitragBox extends FlowPanel {
 
 		@Override
 		public void onSuccess(Beitrag result) {
+			GWT.log("beitrag Id: " + result.getBeitragId());
 			beitragId = result.getBeitragId();
 			userId = result.getOwnerId();
 			accountName.setText(user.getFirstName() + " " + user.getLastName());
@@ -119,7 +122,9 @@ public class BeitragBox extends FlowPanel {
 	}
 	
 	public void onLoad() {
-		
+		Beitrag thisBeitrag = new Beitrag();
+		thisBeitrag.setBeitragID(beitragId);
+		pinnwandVerwaltung.getAllKommentareOfBeitrag(thisBeitrag, new GetAllKommentareCallback(this));
 		// Date
 //		Date now = new Date();
 //		DateTimeFormat fmt = DateTimeFormat.getFormat("HH:mm:ss, EEEE, dd MMMM, yyyy");
@@ -483,7 +488,7 @@ public class BeitragBox extends FlowPanel {
 			createKommentarWrapper.setVisible(false);
 			String kommentarContent = kommentarTextArea.getValue();
 			KommentarBox tempKB = createKommentar(kommentarContent);
-			GWT.log(kommentarsOfBeitrag.toString());
+			GWT.log(kommentarBoxesOfBeitrag.toString());
 			kommentarTextArea.setText("");
 		}
 		
@@ -498,8 +503,8 @@ public class BeitragBox extends FlowPanel {
 	 */
 	private KommentarBox createKommentar(String commentarContent) {
 		KommentarBox newKommentarBox = new KommentarBox(commentarContent, this);
-		kommentarsOfBeitrag.addElement(newKommentarBox);
-		this.add(kommentarsOfBeitrag.lastElement());
+		kommentarBoxesOfBeitrag.addElement(newKommentarBox);
+		this.add(kommentarBoxesOfBeitrag.lastElement());
 		
 		return newKommentarBox; 
 	}
@@ -515,7 +520,7 @@ public class BeitragBox extends FlowPanel {
 	public void deleteKommentar(KommentarBox deletableKB) {
 		deletableKB.removeFromParent();
 		
-		kommentarsOfBeitrag.removeElement(deletableKB);
+		kommentarBoxesOfBeitrag.removeElement(deletableKB);
 	}
 	
 	/**
@@ -602,6 +607,40 @@ public class BeitragBox extends FlowPanel {
 	
 	public void setNickName(String nickName) {
 		this.nickName.setText(nickName);
+	}
+	
+	private class GetAllKommentareCallback implements AsyncCallback<Vector<Kommentar>> {
+		private BeitragBox pB;
+		
+		public GetAllKommentareCallback(BeitragBox pB) {
+			this.pB = pB;
+		}
+
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert("Problem with GetAllKommentareCallback");
+		}
+
+		@Override
+		public void onSuccess(Vector<Kommentar> result) {
+			kommentareOfBeitrag = result;
+			GWT.log(kommentareOfBeitrag.toString());
+			showOldKommentare();
+		}
+		
+	}
+	
+	private void showOldKommentare() {
+		for (Kommentar k : this.kommentareOfBeitrag) {
+			KommentarBox tempKommentarBox = new KommentarBox();
+			
+			tempKommentarBox.setKommentarContent(k.getInhalt());
+			tempKommentarBox.setParentBeitragBox(this);
+			tempKommentarBox.setKommentarId(k.getKommentarId());
+			tempKommentarBox.setOwnerId(k.getOwnerId());
+			
+			this.add(tempKommentarBox);
+		}
 	}
 	
 	
