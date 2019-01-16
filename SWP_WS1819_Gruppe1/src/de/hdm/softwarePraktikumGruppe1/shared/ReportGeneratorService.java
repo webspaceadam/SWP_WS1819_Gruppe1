@@ -8,7 +8,6 @@ import java.util.Date;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
-import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 import de.hdm.softwarePraktikumGruppe1.shared.report.BeitragReport;
 import de.hdm.softwarePraktikumGruppe1.shared.report.UserReport;
 
@@ -29,7 +28,7 @@ public interface ReportGeneratorService extends RemoteService{
 	  /**
 	   * Erstellen eines <code>UserReport</code>-Reports. Dieser
 	   * Report-Typ stellt Informationen über einen User per Zeitraum dar.
-	 * @param userID TODO
+	 * @param gMail TODO
 	 * @param start TODO
 	 * @param end TODO
 	   * 
@@ -37,7 +36,7 @@ public interface ReportGeneratorService extends RemoteService{
 	   * @throws IllegalArgumentException
 	   * @see UserReport
 	   */
-	  public abstract UserReport createUserReport(User userID, Date start, Date end) throws IllegalArgumentException;
+	  public abstract UserReport createUserReport(String gMail, Date start, Date end) throws IllegalArgumentException;
 
 	  /**
 	   * Erstellen eines <code>BeitragReport</code>-Reports.

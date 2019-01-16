@@ -21,7 +21,7 @@ public interface ReportGeneratorServiceAsync {
 
 		void init(AsyncCallback<Void> initReportGeneratorCallback);
 
-		void createUserReport(User user, Date start, Date end, AsyncCallback<UserReport> callback);
+		void createUserReport(String gMail, Date start, Date end, AsyncCallback<UserReport> callback);
 
 		void createBeitragReport(int beitragID, Date date1, Date date2, AsyncCallback<BeitragReport> callback);
 
