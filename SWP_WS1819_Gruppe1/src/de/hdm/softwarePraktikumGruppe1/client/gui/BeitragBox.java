@@ -217,6 +217,7 @@ public class BeitragBox extends FlowPanel {
 		public void onSuccess(Like result) {
 			likeCheck = result;
 			GWT.log(likeCheck.toString() + " ist der LikeCheck");
+			
 		}
 		
 	}
@@ -251,9 +252,35 @@ public class BeitragBox extends FlowPanel {
 			
 		@Override
 		public void onClick(ClickEvent event) {
+			pinnwandVerwaltung.likeCheck(user, beitrag, new IsLikedCallback());
+			
 			parentBB.likeCount += 1;
 			parentBB.likeCountText.setText(" auf diesem Beitrag: " + parentBB.likeCount);
 			GWT.log("Like Count is: " + parentBB.likeCount);
+		}
+		
+		public class IsLikedCallback implements AsyncCallback<Like> {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Problem with IsLikedCallback");
+				
+			}
+
+			@Override
+			public void onSuccess(Like result) {
+				if(result != null) {
+					parentBB.likeCount -= 1;
+				}else {
+					parentBB.likeCount += 1;
+
+				}
+				parentBB.likeCountText.setText(" auf diesem Beitrag: " + parentBB.likeCount);
+				GWT.log("Like Count is: " + parentBB.likeCount);
+				
+			}
+			
+			
 		}
 	}
 	
