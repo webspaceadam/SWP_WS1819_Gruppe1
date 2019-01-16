@@ -37,6 +37,7 @@ public class BeitragBox extends FlowPanel {
 	PinnwandverwaltungAsync pinnwandVerwaltung = ClientsideSettings.getPinnwandverwaltung();
 
 	private Vector<KommentarBox> kommentarsOfBeitrag = new Vector<KommentarBox>();
+	private Vector<Like> likes = new Vector<Like>();
 	
 	// Panels for the Element
 	private VerticalPanel parentVerticalPanel = new VerticalPanel();
@@ -81,6 +82,7 @@ public class BeitragBox extends FlowPanel {
 	private User user;
 	private Beitrag beitrag;
 	private Like likeCheck;
+	
 	
 	// Constructor for the creation of Beitrag
 	public BeitragBox(String content, PinnwandBox pb, User user) {
@@ -162,6 +164,7 @@ public class BeitragBox extends FlowPanel {
 		likeHeart.addStyleName("small-padding-right");
 		likeCountText.addStyleName("is-size-6 is-italic");
 		likeCountText.setText(" auf diesem Beitrag: " + likeCount);
+		
 		
 		// Adding Elements to the Wrapper
 		likeInfoWrapper.add(likeHeart);
@@ -251,12 +254,9 @@ public class BeitragBox extends FlowPanel {
 		}
 			
 		@Override
-		public void onClick(ClickEvent event) {
+		public void onClick(ClickEvent event) {			
 			pinnwandVerwaltung.likeCheck(user, beitrag, new IsLikedCallback());
 			
-			parentBB.likeCount += 1;
-			parentBB.likeCountText.setText(" auf diesem Beitrag: " + parentBB.likeCount);
-			GWT.log("Like Count is: " + parentBB.likeCount);
 		}
 		
 		public class IsLikedCallback implements AsyncCallback<Like> {
@@ -264,15 +264,15 @@ public class BeitragBox extends FlowPanel {
 			@Override
 			public void onFailure(Throwable caught) {
 				Window.alert("Problem with IsLikedCallback");
-				
 			}
 
 			@Override
 			public void onSuccess(Like result) {
-				if(result != null) {
-					parentBB.likeCount -= 1;
+				likeCheck = result;
+				if(likeCheck != null) {
+					pinnwandVerwaltung.deleteLike(likeCheck, new DeleteLikeCallback());
 				}else {
-					parentBB.likeCount += 1;
+					pinnwandVerwaltung.createLike(user, beitrag, timestamp, new CreateLikeCallback());
 
 				}
 				parentBB.likeCountText.setText(" auf diesem Beitrag: " + parentBB.likeCount);
@@ -280,9 +280,58 @@ public class BeitragBox extends FlowPanel {
 				
 			}
 			
+		public class CountLikesCallback implements AsyncCallback<Integer> {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Problem with CountLikeCallback");
+				
+			}
+
+			@Override
+			public void onSuccess(Integer result) {
+				likeCount = result;
+			
+				}
+				
+			
 			
 		}
+		public class CreateLikeCallback implements AsyncCallback {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Problem with CreateLikeCallback");
+				
+			}
+
+			@Override
+			public void onSuccess(Object result) {
+				Window.alert("Beitrag wurde geliked");
+				}
+				
+			}
+			
+		}
+			
+		public class DeleteLikeCallback implements AsyncCallback {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Problem with DeleteLikeCallback");
+				
+			}
+
+			@Override
+			public void onSuccess(Object result) {
+				Window.alert("Like wurde entfernt");
+			}
+				
+		}
+			
 	}
+		
+	
 	
 	/**
 	 * Die innere Klasse <code>EditBeitragBoxClickHandler</code> ist zuständig für die Editierbarkeit
