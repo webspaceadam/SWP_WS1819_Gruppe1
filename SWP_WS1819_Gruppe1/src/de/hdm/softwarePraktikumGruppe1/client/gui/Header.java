@@ -240,12 +240,18 @@ public class Header extends FlowPanel {
 			private ScrollPanel parentScrolling = new ScrollPanel();
 			private FlowPanel aboParentPanel = new FlowPanel();
 			private String keyword;
+			private String anzeigeText = " Treffer";
+			private int ergebnisCounter;
 			
 			private Vector<SearchAboBox> searchResult = new Vector<SearchAboBox>();
 			
 			public SearchUserDialogBox(String keyword) {
 				this.keyword = keyword;
-				setText("Hier ist das Ergebnis deiner Suche nach: " + keyword);
+				setText("Ergebnis deiner Suche nach: " + keyword);
+				
+				// Vector searchResult befuellen. Es wird die Methode SearchFunction aufgerufen.
+				// Die Methode SearchFunction gibt ein HashSet mit Usern zurueck. Die HashSet Collection 
+				// wird dann in einen Vector konvertiert.
 				
 				for(int i = 0; i < 5; i++) {
 					SearchAboBox tempSAB = new SearchAboBox();

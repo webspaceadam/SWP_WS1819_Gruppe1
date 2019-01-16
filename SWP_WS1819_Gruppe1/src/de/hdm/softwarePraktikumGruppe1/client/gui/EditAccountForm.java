@@ -145,11 +145,18 @@ public class EditAccountForm extends FlowPanel {
 		
 	}
 	
-	public class GetUserByIdCallback implements AsyncCallback<User> {
+	/**
+	 * Die innere Klasse GetUserByIdCallback implementiert das AsyncCallback Interface,
+	 * das nötig ist um einen korrekten RPC-Aufruf zu ermöglichen.
+	 * 
+	 * @author AdamGniady
+	 *
+	 */
+	private class GetUserByIdCallback implements AsyncCallback<User> {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Window.alert("Problem with the Callback!");
+			Window.alert("Problem with the Callback!" + "\n " + caught.toString());
 			
 		}
 
@@ -160,18 +167,16 @@ public class EditAccountForm extends FlowPanel {
 		
 	}
 	
-	public class EditUserCallback implements AsyncCallback<Void> {
+	private class EditUserCallback implements AsyncCallback<Void> {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Window.alert("Failed EditUserCallback");
-			
+			Window.alert("EditUserCallbackFailed" + "\n " + caught.toString());
 		}
 
 		@Override
 		public void onSuccess(Void result) {
-			// TODO Auto-generated method stub
-			Window.alert("EditUserCallback erfolgreich durchgeführt!");
+			GWT.log("User was edited");
 		}
 		
 	}
