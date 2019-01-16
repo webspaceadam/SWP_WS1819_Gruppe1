@@ -160,8 +160,10 @@ public class LikeMapper {
 				while (rs.next()) {
 	
 			        Like l = new Like();	        
-			        l.setOwnerId(rs.getInt("UserId"));
-			        l.setBeitragId(rs.getInt("BeitragId"));
+			        l.setOwnerId(rs.getInt("UserFK"));
+			        l.setBeitragId(rs.getInt("BeitragFK"));
+			        l.setLikeId(rs.getInt("LikeID"));
+			        l.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
 			        vector.add(l);
 	
 			      }
@@ -180,32 +182,32 @@ public class LikeMapper {
 		public Vector<Like> findLikesOfUserBetweenDates(int userId, Date start, Date end){
 				
 			Connection con = DBConnection.connection();
-			Vector <Like> vector = new Vector<Like>();
+			Vector <Like> result = new Vector<Like>();
 		
 			try {
 				//leeres SQL-Statement anlegen
 				Statement stmt = con.createStatement();
 					
 				// Statement ausfuellen und als Query an die DB schicken
-				ResultSet rs = stmt.executeQuery("SELECT * FROM like WHERE UserFK=" + userId +
+				ResultSet rs = stmt.executeQuery("SELECT * FROM `like` WHERE UserFK = " + userId +
 						" AND CreationTimeStamp >= '" + ReportGeneratorServiceImpl.yearMonthDayFormat.format(start).toString() +
 						"' AND CreationTimeStamp <= '" + ReportGeneratorServiceImpl.yearMonthDayFormat.format(end).toString() + "'");
 		
 				while (rs.next()) {
 		
 			        Like l = new Like();	        
-			        l.setOwnerId(rs.getInt("UserId"));
-			        l.setBeitragId(rs.getInt("BeitragId"));
-			        vector.add(l);
+			        l.setOwnerId(rs.getInt("UserFK"));
+			        l.setBeitragId(rs.getInt("BeitragFK"));
+			        l.setLikeId(rs.getInt("LikeID"));
+			        l.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
+			        result.add(l);
 		
 			      }
-				return vector;
 			}
-		
 		    catch (SQLException e) {
 		    		e.printStackTrace();
 		    }
-			return null;
+			return result;
 		 }		
 
 	/*
