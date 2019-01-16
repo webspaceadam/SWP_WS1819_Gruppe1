@@ -31,9 +31,9 @@ public class ProfileBox extends FlowPanel {
 		PinnwandverwaltungAsync pinnwandVerwaltung = ClientsideSettings.getPinnwandverwaltung();
 
 		// dazugeh�rige Label
-		private Label vorName = new Label("Sebastian");
-		private Label nachName = new Label("Hermann");
-		private Label nickName = new Label("sebmeister");
+		private Label vorName = new Label();
+		private Label nachName = new Label();
+		private Label nickName = new Label();
 		private Image editPenBtn = new Image("images/SVG/cog.png");
 		private HTML hrElement = new HTML("<hr/>");
 		
