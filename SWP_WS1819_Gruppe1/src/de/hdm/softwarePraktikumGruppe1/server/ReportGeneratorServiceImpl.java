@@ -67,7 +67,9 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 	 * Hier wird der UserReport erstellt
 	 */
 	@Override
-	public UserReport createUserReport(User user, Date date1, Date date2) throws IllegalArgumentException {
+	public UserReport createUserReport(String gmail, Date date1, Date date2) throws IllegalArgumentException {
+		//create Report
+		UserReport userReport = new UserReport();
 		//make sure start date is before end date
 		if(date1.before(date2)) {
 			start = date1;
@@ -76,12 +78,27 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 			start = date2;
 			end = date1;
 		}
-	
-		//create Report
-		UserReport userReport = new UserReport();
 		userReport.setImprint(new SimpleParagraph("Report über den Zeitraum vom " + dayMonthYearFormat.format(start) + 
 				" bis zum " + dayMonthYearFormat.format(end) + " (0 Uhr jeweils)"));
-		userReport.setTitle("Report Über den User " + user.getNickname());
+		
+		//user of the userReport
+		User user = null;
+		int userID;
+		//Make Sure Beitrag with selected ID exists
+		try {
+			user = uMapper.findUserByGmail(gmail);
+			userReport.setTitle("Report Über den User " + user.getNickname());
+			userID = user.getUserId();
+		//Otherwise return report that indicates the missing beitrag	
+		}catch(Exception e){
+			CompositeParagraph header = new CompositeParagraph();
+			header.addSubParagraph(new SimpleParagraph("Keinen User mit der eMail [ " + gmail + " ] gefunden."));
+			header.addSubParagraph(new SimpleParagraph("Bitte gebe eine existierende User eMail an"));
+			userReport.setHeaderData(header);
+			return userReport;
+		}
+	
+
 		//Erzeuge einen header
 		CompositeParagraph header = new CompositeParagraph();
 		header.addSubParagraph(new SimpleParagraph("Vorname: " + user.getFirstName() + "Nachname: " + user.getLastName()));
@@ -92,7 +109,7 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 	
 		
 		//Abonnements
-		Vector<Abonnement> abonnements = abonnementMapper.findAbonnementsOfUserBetweenDates(1, start, end);
+		Vector<Abonnement> abonnements = abonnementMapper.findAbonnementsOfUserBetweenDates(userID, start, end);
 		//Erzeuge einen GenericReport welcher Informationen über Abonnenten speichert
 		GenericReport abonnentenReport = new GenericReport();
 		
@@ -121,7 +138,7 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 		
 				
 		//Beiträge
-		Vector<Beitrag> beitraege = beitragMapper.findBeitraegeOfUserBetweenDates(1, start, end);
+		Vector<Beitrag> beitraege = beitragMapper.findBeitraegeOfUserBetweenDates(userID, start, end);
 
 		//Erzeuge einen GenericReport welcher Informationen über Beiträge speichert
 		GenericReport beitraegeReport = new GenericReport();
@@ -149,7 +166,7 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 		
 		
 		//Likes
-		Vector<Like> likes = likeMapper.findLikesOfBeitragBetweenDates(1, start, end);
+		Vector<Like> likes = likeMapper.findLikesOfUserBetweenDates(userID, start, end);
 		//Erzeuge einen GenericReport welcher Informationen über Likes speichert
 		GenericReport likeReport = new GenericReport();
 				
@@ -167,7 +184,7 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 				Beitrag gelikterBeitrag = beitragMapper.findBeitragById(like.getBeitragId());
 				User gelikterUser = uMapper.findUserById(gelikterBeitrag.getOwnerId());
 				row.addColumn(new Column("Like verteilt am: " + like.getCreationTimeStamp().toString()));
-				if(gelikterBeitrag != null)row.addColumn(new Column("An Beitrag von: " + gelikterUser.getNickname()));
+				if(gelikterBeitrag != null)row.addColumn(new Column("An Beitrag von: " + gelikterUser.getGMail()));
 				row.addColumn(new Column("Like ID: " + like.getLikeId()));
 				//Füge die Reihe dem abonnentenReport
 				likeReport.addRow(row);
@@ -202,7 +219,8 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 			start = date2;
 			end = date1;
 		}
-	
+		beitragReport.setImprint(new SimpleParagraph("Report über den Zeitraum vom " + dayMonthYearFormat.format(start) + 
+				" bis zum " + dayMonthYearFormat.format(end)  + " (0 Uhr jeweils)"));
 
 		Beitrag beitrag = null;
 		User inhaber = null;
@@ -213,96 +231,85 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 			inhaber = uMapper.findUserById(beitrag.getOwnerId());
 			
 		//Otherwise return report that indicates the missing beitrag	
-		}catch(Exception e){
-			GenericReport noBeitragFoundReport = new GenericReport();
-			noBeitragFoundReport.setTitle("Keinen Beitrag mit der ID " + beitragID + " gefunden.");
-			Row row = new Row();
-			row.addColumn(new Column("Bitte gebe eine existierende Beitrags ID an"));
-			noBeitragFoundReport.addRow(row);
-			beitragReport.addSubReport(noBeitragFoundReport);
+		}catch(Exception e){	
+			CompositeParagraph header = new CompositeParagraph();
+			header.addSubParagraph(new SimpleParagraph("Keinen Beitrag mit der ID [ " + beitragID + " ] gefunden."));
+			header.addSubParagraph(new SimpleParagraph("Bitte gebe eine existierende Beitrags ID an"));
+			beitragReport.setHeaderData(header);
 			return beitragReport;
 		}
 		
 		
 		
-		beitragReport.setImprint(new SimpleParagraph("Report über den Zeitraum vom " + dayMonthYearFormat.format(start) + 
-				" bis zum " + dayMonthYearFormat.format(end)  + " (0 Uhr jeweils)"));
-		//Create header
-		CompositeParagraph header = new CompositeParagraph();
-			try {
-				header.addSubParagraph(new SimpleParagraph("Beitrag erstellt von: " +  inhaber.getLastName()));
-			}catch(Exception e) {
-				header.addSubParagraph(new SimpleParagraph("Beitrag erstellt von: Zu diesem Beitrag konnte kein Autor gefunden werden"));
-			}		
-		header.addSubParagraph(new SimpleParagraph("Beitrag erstellt am:  " + beitrag.getCreationTimeStamp().toString()));
-		header.addSubParagraph(new SimpleParagraph("Inhalt des Beitrags:  " + beitrag.getInhalt()));
-		//Add header to result report
-		beitragReport.setHeaderData(header);
-		
-		
-		
-		//Kommentare
-		Vector<Kommentar> kommentare = kommentarMaper.findKommentareOfBeitrag(beitragID, start, end);
-		//Erzeuge einen GenericReport welcher Informationen über Kommentare speichert
-		GenericReport kommentarReport = new GenericReport();
-				
-		if (kommentare.size() == 0) {
-			kommentarReport.setTitle("Informationen über Likes (0)");
-			Row row = new Row();
-			row.addColumn(new Column("Keine Likes in dem angegebenen Zeitraum gefunden"));
-			kommentarReport.addRow(row);
-		}else {
-			kommentarReport.setTitle("Informationen über Likes(" + kommentare.size() + ")");
-			for(int i = 0; i < kommentare.size(); i++) {
-				Kommentar kommentar = kommentare.get(i);
-				//Erzeuge eine Reihe für einen Abonnenten
+
+			//Create header
+			CompositeParagraph header = new CompositeParagraph();
+				try {
+					header.addSubParagraph(new SimpleParagraph("Beitrag erstellt von: " +  inhaber.getLastName()));
+				}catch(Exception e) {
+					header.addSubParagraph(new SimpleParagraph("Beitrag erstellt von: Zu diesem Beitrag konnte kein Autor gefunden werden"));
+				}		
+			header.addSubParagraph(new SimpleParagraph("Beitrag erstellt am:  " + beitrag.getCreationTimeStamp().toString()));
+			header.addSubParagraph(new SimpleParagraph("Inhalt des Beitrags:  " + beitrag.getInhalt()));
+			//Add header to result report
+			beitragReport.setHeaderData(header);
+			
+			
+			
+			//Kommentare
+			Vector<Kommentar> kommentare = kommentarMaper.findKommentareOfBeitrag(beitragID, start, end);
+			//Erzeuge einen GenericReport welcher Informationen über Kommentare speichert
+			GenericReport kommentarReport = new GenericReport();
+					
+			if (kommentare.size() == 0) {
+				kommentarReport.setTitle("Informationen über Kommentare (0)");
 				Row row = new Row();
-				User autor = uMapper.findUserById(kommentar.getOwnerId()); 
-				row.addColumn(new Column("Autor: " + autor.getNickname()));
-				row.addColumn(new Column("Erstellungsdatum: " + kommentar.getCreationTimeStamp()));
-				row.addColumn(new Column("Inhalt: " + kommentar.getInhalt()));
-				//Füge die Reihe dem abonnentenReport
+				row.addColumn(new Column("Keine Kommentare in dem angegebenen Zeitraum gefunden"));
 				kommentarReport.addRow(row);
+			}else {
+				kommentarReport.setTitle("Informationen über Kommentare(" + kommentare.size() + ")");
+				for(int i = 0; i < kommentare.size(); i++) {
+					Kommentar kommentar = kommentare.get(i);
+					//Erzeuge eine Reihe für einen Abonnenten
+					Row row = new Row();
+					User autor = uMapper.findUserById(kommentar.getOwnerId()); 
+					row.addColumn(new Column("Autor: " + autor.getNickname()));
+					row.addColumn(new Column("Erstellungsdatum: " + kommentar.getCreationTimeStamp()));
+					row.addColumn(new Column("Inhalt: " + kommentar.getInhalt()));
+					//Füge die Reihe dem abonnentenReport
+					kommentarReport.addRow(row);
+					}
 				}
-			}
-		//Füge die Likesinformationen dem userReport hinzu
-		beitragReport.addSubReport(kommentarReport);
-		
-		
-		//Likes
-		Vector<Like> likes = likeMapper.findLikesOfBeitragBetweenDates(beitragID, start, end);
-		//Erzeuge einen GenericReport welcher Informationen über Likes speichert
-		GenericReport likeReport = new GenericReport();
-				
-		if (likes.size() == 0) {
-			likeReport.setTitle("Informationen über Likes (0)");
-			Row row = new Row();
-			row.addColumn(new Column("Keine Likes in dem angegebenen Zeitraum gefunden"));
-			likeReport.addRow(row);
-		}else {
-			likeReport.setTitle("Informationen über Likes(" + likes.size() + ")");
-			for(int i = 0; i < likes.size(); i++) {
-				Like like = likes.get(i);
-				//Erzeuge eine Reihe für einen Abonnenten
+			//Füge die Likesinformationen dem userReport hinzu
+			beitragReport.addSubReport(kommentarReport);
+			
+			
+			//Likes
+			Vector<Like> likes = likeMapper.findLikesOfBeitragBetweenDates(beitragID, start, end);
+			//Erzeuge einen GenericReport welcher Informationen über Likes speichert
+			GenericReport likeReport = new GenericReport();
+					
+			if (likes.size() == 0) {
+				likeReport.setTitle("Informationen über Likes (0)");
 				Row row = new Row();
-				Beitrag gelikterBeitrag = beitragMapper.findBeitragById(like.getBeitragId());
-				User gelikterUser = uMapper.findUserById(gelikterBeitrag.getOwnerId());
-				row.addColumn(new Column("Like verteilt am: " + like.getCreationTimeStamp().toString()));
-				if(gelikterBeitrag != null)row.addColumn(new Column("An Beitrag von: " + gelikterUser.getNickname()));
-				row.addColumn(new Column("Like ID: " + like.getLikeId()));
-				//Füge die Reihe dem abonnentenReport
+				row.addColumn(new Column("Keine Likes in dem angegebenen Zeitraum gefunden"));
 				likeReport.addRow(row);
+			}else {
+				likeReport.setTitle("Informationen über Likes(" + likes.size() + ")");
+				for(int i = 0; i < likes.size(); i++) {
+					Like like = likes.get(i);
+					//Erzeuge eine Reihe für einen Abonnenten
+					Row row = new Row();
+					User likeUser = uMapper.findUserById(like.getOwnerId());
+					row.addColumn(new Column("Like erhalten am: " + like.getCreationTimeStamp().toString()));
+					row.addColumn(new Column("Like erhalten von von: " + likeUser.getNickname()));
+					row.addColumn(new Column("Like ID: " + like.getLikeId()));
+					//Füge die Reihe dem abonnentenReport
+					likeReport.addRow(row);
+					}
 				}
-			}
 		//Füge die Likesinformationen dem userReport hinzu
 		beitragReport.addSubReport(likeReport);
-		
-		
-		
-		
-		
-		
-		
 		
 		
 		//return result report
