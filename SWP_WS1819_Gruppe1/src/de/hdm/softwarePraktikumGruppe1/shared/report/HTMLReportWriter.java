@@ -66,7 +66,7 @@ public class HTMLReportWriter extends ReportWriter{
 			  
 			  	for (int i2 = 0; i2 < columns.size(); i2++) {
 			  		Column column = columns.get(i2);
-			  		if(i2>0)result.append(" | ");
+			  		if(i2>0)result.append("   |   ");
 			  		result.append(column.getValue());			  		
 			  	}
 			  
@@ -143,17 +143,20 @@ public class HTMLReportWriter extends ReportWriter{
 		     * unsere Ergebnisse.
 		     */
 		    StringBuffer result = new StringBuffer();
-		    result.append("<H2>" + r.getTitle() + "</H2>");
-		    result.append("<br>" + paragraph2HTML(r.getHeaderData()));
-		    result.append("<br> Report Erstellt am" + r.getCreated().toString());
-		    result.append("<br>" + r.getImprint().toString());
+		    result.append("<H2 class='is-size-4'>" + r.getTitle() + "</H2>");
+		    result.append("<p> Report Erstellt am " + r.getCreated().toString() + "</p>");
+		    result.append("<p>" + r.getImprint().toString() + "</p>");
+		    result.append("<hr>");
+		    result.append("<p>" + paragraph2HTML(r.getHeaderData()) + "</p>");
+		    
+		    
 
 		    /*
 		     * Nun werden Schritt für Schritt die einzelnen Bestandteile des Reports
 		     * ausgelesen und in HTML-Form übersetzt.
 		     */
 		    
-		    result.append("<br><hr>");
+		    result.append("<hr>");
 		  
 		    for (int i = 0; i < r.getNumSubReports(); i++) {
 		    	GenericReport genericReport = (GenericReport) r.getSubReportAt(i);
@@ -180,17 +183,19 @@ public class HTMLReportWriter extends ReportWriter{
 		     * unsere Ergebnisse.
 		     */
 		    StringBuffer result = new StringBuffer();
-		    result.append("<H2>" + r.getTitle() + "</H2>");
-		    result.append("<br>" + paragraph2HTML(r.getHeaderData()));
-		    result.append("<br> Report Erstellt am" + r.getCreated().toString());
-		    result.append("<br>" + r.getImprint().toString());
+		    result.append("<H2  class='is-size-4'>" + r.getTitle() + "</H2>");
+		    result.append("<p> Report Erstellt am" + r.getCreated().toString() + "</p>");		    
+		    result.append("<p>" + r.getImprint().toString() + "</p>");
+		    result.append("<hr>");
+		    result.append("<p>" + paragraph2HTML(r.getHeaderData()) + "</p>");
 
+		    
 		    /*
 		     * Nun werden Schritt für Schritt die einzelnen Bestandteile des Reports
 		     * ausgelesen und in HTML-Form übersetzt.
 		     */
 		    
-		    result.append("<br><hr>");
+		    result.append("<hr>");
 		  
 		    for (int i = 0; i < r.getNumSubReports(); i++) {
 		    	GenericReport genericReport = (GenericReport) r.getSubReportAt(i);
