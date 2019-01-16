@@ -129,7 +129,7 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 				User abonnent = uMapper.findUserById(abonnement.getOwnerId());
 				row.addColumn(new Column("Nickname des Users: " + abonnent.getNickname()));
 				row.addColumn(new Column("eMail des User" + abonnent.getGMail()));
-				row.addColumn(new Column("Abonniert Am: " + abonnement.getCreationTimeStamp().toString()));
+				row.addColumn(new Column("Abonniert am: " + abonnement.getCreationTimeStamp().toString()));
 				row.addColumn(new Column("Abonnement ID: " + abonnement.getAbonnementId()));
 				//Füge die Reihe dem abonnentenReport
 				abonnentenReport.addRow(row);
@@ -178,7 +178,7 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 			row.addColumn(new Column("Keine Likes in dem angegebenen Zeitraum gefunden"));
 			likeReport.addRow(row);
 		}else {
-			likeReport.setTitle("Informationen über Likes(" + likes.size() + ")");
+			likeReport.setTitle("Informationen über Likes (" + likes.size() + ")");
 			for(int i = 0; i < likes.size(); i++) {
 				Like like = likes.get(i);
 				//Erzeuge eine Reihe für einen Abonnenten
@@ -247,7 +247,7 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 			//Create header
 			CompositeParagraph header = new CompositeParagraph();
 				try {
-					header.addSubParagraph(new SimpleParagraph("Beitrag erstellt von: " +  inhaber.getFirstName() + inhaber.getLastName()));
+					header.addSubParagraph(new SimpleParagraph("Beitrag erstellt von: " +  inhaber.getFirstName() + " " + inhaber.getLastName()));
 					header.addSubParagraph(new SimpleParagraph("Autor Nickname: " + inhaber.getNickname()));
 					header.addSubParagraph(new SimpleParagraph("Autor eMail: " + inhaber.getGMail()));					
 				}catch(Exception e) {
@@ -271,7 +271,7 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 				row.addColumn(new Column("Keine Kommentare in dem angegebenen Zeitraum gefunden"));
 				kommentarReport.addRow(row);
 			}else {
-				kommentarReport.setTitle("Informationen über Kommentare(" + kommentare.size() + ")");
+				kommentarReport.setTitle("Informationen über Kommentare (" + kommentare.size() + ")");
 				for(int i = 0; i < kommentare.size(); i++) {
 					Kommentar kommentar = kommentare.get(i);
 					//Erzeuge eine Reihe für einen Abonnenten
@@ -299,7 +299,7 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 				row.addColumn(new Column("Keine Likes in dem angegebenen Zeitraum gefunden"));
 				likeReport.addRow(row);
 			}else {
-				likeReport.setTitle("Informationen über Likes(" + likes.size() + ")");
+				likeReport.setTitle("Informationen über Likes (" + likes.size() + ")");
 				for(int i = 0; i < likes.size(); i++) {
 					Like like = likes.get(i);
 					//Erzeuge eine Reihe für einen Abonnenten
