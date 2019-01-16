@@ -172,13 +172,7 @@ public class ReportGenerator  implements EntryPoint {
 
 			@Override
 			public void onClick(ClickEvent event) {
-					
-
-				System.out.println(beitragReportForm.getSearchBeitragBox().getEnteredText());
-				System.out.println(beitragReportForm.getDatePickerBox1().getDate());
-				System.out.println(beitragReportForm.getDatePickerBox2().getDate());
-				
-				
+								
 				if (beitragReportForm.getDatePickerBox1().getDate() == null || beitragReportForm.getDatePickerBox2().getDate() == null)
 				{
 					Window.alert("Bitte ein gültiges Datum angeben");
@@ -226,9 +220,7 @@ public class ReportGenerator  implements EntryPoint {
 					}
 				}
 				
-				
-				
-				
+					
 				
 			}		
 		}	
