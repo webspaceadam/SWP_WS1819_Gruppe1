@@ -266,9 +266,13 @@ public class BeitragBox extends FlowPanel {
 				Window.alert("Problem with IsLikedCallback");
 			}
 
+			
 			@Override
 			public void onSuccess(Like result) {
-				likeCheck = result;
+				
+					likeCheck = result;
+				
+				
 				if(likeCheck != null) {
 					pinnwandVerwaltung.deleteLike(likeCheck, new DeleteLikeCallback());
 				}else {
@@ -280,6 +284,7 @@ public class BeitragBox extends FlowPanel {
 				
 			}
 			
+		
 		public class CountLikesCallback implements AsyncCallback<Integer> {
 
 			@Override
@@ -297,7 +302,7 @@ public class BeitragBox extends FlowPanel {
 			
 			
 		}
-		public class CreateLikeCallback implements AsyncCallback {
+		public class CreateLikeCallback implements AsyncCallback{
 
 			@Override
 			public void onFailure(Throwable caught) {
