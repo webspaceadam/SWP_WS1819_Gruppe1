@@ -101,7 +101,7 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 
 		//Erzeuge einen header
 		CompositeParagraph header = new CompositeParagraph();
-		header.addSubParagraph(new SimpleParagraph("Vorname: " + user.getFirstName() + "Nachname: " + user.getLastName()));
+		header.addSubParagraph(new SimpleParagraph("Vorname: " + user.getFirstName() + ", Nachname: " + user.getLastName()));
 		header.addSubParagraph(new SimpleParagraph("eMail Adresse: " + user.getGMail()));
 		//Fuege den Header zum UserReport Hinzu
 		userReport.setHeaderData(header);
