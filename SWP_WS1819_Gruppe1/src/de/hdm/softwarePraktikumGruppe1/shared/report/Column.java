@@ -23,7 +23,7 @@ public class Column implements Serializable {
    * In dieser Realisierung handelt es sich um einen einfachen textuellen Wert.
    */
   private String value = "";
-
+  private String ColumnName = "";
   /**
    * <p>
    * Serialisierbare Klassen, die mittels GWT-RPC transportiert werden sollen,
@@ -63,7 +63,16 @@ public class Column implements Serializable {
   public String getValue() {
     return value;
   }
-
+  
+  /**
+   * Auslesen des Namens der Spalte.
+   * 
+   * @return der Eintrag als String
+   */
+  public String getColumnName() {
+    return ColumnName;
+  }
+  
   /**
    * Überschreiben des aktuellen Spaltenwerts.
    * 
