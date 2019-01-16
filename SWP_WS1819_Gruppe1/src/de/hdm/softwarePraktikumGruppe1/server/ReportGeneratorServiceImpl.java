@@ -101,7 +101,9 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 
 		//Erzeuge einen header
 		CompositeParagraph header = new CompositeParagraph();
-		header.addSubParagraph(new SimpleParagraph("Vorname: " + user.getFirstName() + ", Nachname: " + user.getLastName()));
+		header.addSubParagraph(new SimpleParagraph("Vorname: " + user.getFirstName()));
+		header.addSubParagraph(new SimpleParagraph("Nachname: " + user.getLastName()));
+		header.addSubParagraph(new SimpleParagraph("Nickname: " + user.getNickname()));
 		header.addSubParagraph(new SimpleParagraph("eMail Adresse: " + user.getGMail()));
 		//Fuege den Header zum UserReport Hinzu
 		userReport.setHeaderData(header);
@@ -126,7 +128,7 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 				Row row = new Row();
 				User abonnent = uMapper.findUserById(abonnement.getOwnerId());
 				row.addColumn(new Column("Nickname des Users: " + abonnent.getNickname()));
-				row.addColumn(new Column("Vorname: " + abonnent.getFirstName() + "Nachname: " + abonnent.getLastName()));
+				row.addColumn(new Column("eMail des User" + abonnent.getGMail()));
 				row.addColumn(new Column("Abonniert Am: " + abonnement.getCreationTimeStamp().toString()));
 				row.addColumn(new Column("Abonnement ID: " + abonnement.getAbonnementId()));
 				//Füge die Reihe dem abonnentenReport
@@ -245,7 +247,9 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 			//Create header
 			CompositeParagraph header = new CompositeParagraph();
 				try {
-					header.addSubParagraph(new SimpleParagraph("Beitrag erstellt von: " +  inhaber.getLastName()));
+					header.addSubParagraph(new SimpleParagraph("Beitrag erstellt von: " +  inhaber.getFirstName() + inhaber.getLastName()));
+					header.addSubParagraph(new SimpleParagraph("Autor Nickname: " + inhaber.getNickname()));
+					header.addSubParagraph(new SimpleParagraph("Autor eMail: " + inhaber.getGMail()));					
 				}catch(Exception e) {
 					header.addSubParagraph(new SimpleParagraph("Beitrag erstellt von: Zu diesem Beitrag konnte kein Autor gefunden werden"));
 				}		
