@@ -134,11 +134,26 @@ public class Header extends FlowPanel {
 			
 			searchButton.addClickHandler(new SearchUserClickHandler(this));
 			meineAbos.addClickHandler(new ShowAbosClickHandler(this));
+			meinePinnwand.addClickHandler(new ShowMyPinnwandClickHandler());
 			
 			
 			this.add(headerLogo);
 			this.add(headerLinkList);
 			this.add(headerRight);
+		}
+		
+		private class ShowMyPinnwandClickHandler implements ClickHandler {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				RootPanel rootPinnwandPanel = RootPanel.get("rechteSeite");
+				rootPinnwandPanel.clear();
+				
+				// Go to the Pinnwand of the current User
+				PinnwandBox userPinnwand = new PinnwandBox(1);
+				rootPinnwandPanel.add(userPinnwand);				
+			}
+			
 		}
 		
 		private class ShowAbosClickHandler implements ClickHandler {
@@ -165,25 +180,15 @@ public class Header extends FlowPanel {
 			public ShowAbosDialogBox(Header parentHeader) {
 				this.parentHeader = parentHeader;
 				
-				GWT.log("Gak");
-				GWT.log(parentHeader.userAbonnements.toString());
-				GWT.log(parentHeader.aboPinnwaende.toString());
-				GWT.log(parentHeader.pinnwandOwner.toString());
+//				GWT.log(parentHeader.userAbonnements.toString());
+//				GWT.log(parentHeader.aboPinnwaende.toString());
+//				GWT.log(parentHeader.pinnwandOwner.toString());
 				
 				
 				for(int i = 0; i < parentHeader.userAbonnements.size(); i++) {
 					AbonnementBox tempAboBox = new AbonnementBox(parentHeader.userAbonnements.elementAt(i));
 					userAboBoxes.add(tempAboBox);
 				}
-//				for(int i = 0; i < parentHeader.userAbonnements.size(); i++) {
-//					String aboUserName = parentHeader.pinnwandOwner.elementAt(i).getFirstName() 
-//							+ " " + parentHeader.pinnwandOwner.elementAt(i).getLastName() ;
-//					String aboNickName = parentHeader.pinnwandOwner.elementAt(i).getNickname();
-//					int pinnwandId = parentHeader.aboPinnwaende.elementAt(i).getPinnwandId();
-//					
-//					AbonnementBox tempAboBox = new AbonnementBox(aboUserName, aboNickName, pinnwandId);	
-//					userAbos.add(i, tempAboBox);
-//				}
 				
 				for(int i = 0; i < userAboBoxes.size(); i++) {
 					aboParentPanel.add(userAboBoxes.elementAt(i));
@@ -235,12 +240,18 @@ public class Header extends FlowPanel {
 			private ScrollPanel parentScrolling = new ScrollPanel();
 			private FlowPanel aboParentPanel = new FlowPanel();
 			private String keyword;
+			private String anzeigeText = " Treffer";
+			private int ergebnisCounter;
 			
 			private Vector<SearchAboBox> searchResult = new Vector<SearchAboBox>();
 			
 			public SearchUserDialogBox(String keyword) {
 				this.keyword = keyword;
-				setText("Hier ist das Ergebnis deiner Suche nach: " + keyword);
+				setText("Ergebnis deiner Suche nach: " + keyword);
+				
+				// Vector searchResult befuellen. Es wird die Methode SearchFunction aufgerufen.
+				// Die Methode SearchFunction gibt ein HashSet mit Usern zurueck. Die HashSet Collection 
+				// wird dann in einen Vector konvertiert.
 				
 				for(int i = 0; i < 5; i++) {
 					SearchAboBox tempSAB = new SearchAboBox();
