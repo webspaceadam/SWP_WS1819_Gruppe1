@@ -214,8 +214,27 @@ public class KommentarBox extends FlowPanel {
 			@Override
 			public void onClick(ClickEvent event) {
 				parentKB.kommentarContent.setText(newContent.getValue());
+				
+				Kommentar tempKommentar = new Kommentar();
+				tempKommentar.setKommentarId(kommentarId);
+				tempKommentar.setInhalt(newContent.getValue());
+				pinnwandVerwaltung.editKommentar(tempKommentar, new EditKommentarCallback());
 			}
 			
+		}
+		
+	}
+	
+	private class EditKommentarCallback implements AsyncCallback<Void> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert("EditKommentarCallback failed!");
+		}
+
+		@Override
+		public void onSuccess(Void result) {
+			Window.alert("Kommentar wurde editiert!");
 		}
 		
 	}
