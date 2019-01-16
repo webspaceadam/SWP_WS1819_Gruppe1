@@ -106,9 +106,14 @@ public interface PinnwandverwaltungAsync{
 	public void createLike(User u, Beitrag b, Timestamp timestamp, AsyncCallback<Like> callback);
 	
 	/**
-	 * Methode zur Ueberpruefung ob der Beitrag bereits geliket ist
+	 * Methode zur Ueberpruefung ob der Beitrag bereits geliket ist (like)
 	 */
 	public void likeCheck(User u, Beitrag b, AsyncCallback<Like> callback);
+	
+	/**
+	 * Methode zur Ueberpruefung ob der Beitrag bereits geliket ist (boolean)
+	 */
+	public void isLiked(User u, Beitrag b, AsyncCallback<Boolean> callback);
 	
 	/**
 	 * Methode um einen Beitrag zu entliken

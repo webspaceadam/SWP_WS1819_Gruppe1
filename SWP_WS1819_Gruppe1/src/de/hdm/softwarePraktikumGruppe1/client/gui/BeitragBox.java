@@ -37,7 +37,6 @@ public class BeitragBox extends FlowPanel {
 	PinnwandverwaltungAsync pinnwandVerwaltung = ClientsideSettings.getPinnwandverwaltung();
 
 	private Vector<KommentarBox> kommentarsOfBeitrag = new Vector<KommentarBox>();
-	private Vector<Like> likes = new Vector<Like>();
 	
 	// Panels for the Element
 	private VerticalPanel parentVerticalPanel = new VerticalPanel();
@@ -160,6 +159,7 @@ public class BeitragBox extends FlowPanel {
 //		creationDate.setText("Erstellungszeitpunkt: " + date);
 		
 		// Likecount info
+		pinnwandVerwaltung.countLikes(beitrag, new CountLikeCallback());
 		likeHeart.setWidth("1rem");
 		likeHeart.addStyleName("small-padding-right");
 		likeCountText.addStyleName("is-size-6 is-italic");
@@ -238,6 +238,25 @@ public class BeitragBox extends FlowPanel {
 		
 	}
 	
+	public class CountLikeCallback implements AsyncCallback<Integer> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert("Problem with CountLikeCallback");
+			
+		}
+
+		@Override
+		public void onSuccess(Integer result) {
+			likeCount = result;
+		
+			}
+			
+		
+		
+	}
+	
+	
 	/**
 	 * Die innere Klasse <code>LikeCountClickHandler</code> implementiert das Clickhandler 
 	 * Interface und dessen dazugehörige <code>onClick(ClickEvent event)</code> Methode.
@@ -255,12 +274,12 @@ public class BeitragBox extends FlowPanel {
 			
 		@Override
 		public void onClick(ClickEvent event) {			
-			pinnwandVerwaltung.likeCheck(user, beitrag, new IsLikedCallback());
+			pinnwandVerwaltung.isLiked(user, beitrag, new IsLikedCallback());
 			
 		}
 		
-		public class IsLikedCallback implements AsyncCallback<Like> {
-
+		public class IsLikedCallback implements AsyncCallback<Boolean> {
+			
 			@Override
 			public void onFailure(Throwable caught) {
 				Window.alert("Problem with IsLikedCallback");
@@ -268,12 +287,8 @@ public class BeitragBox extends FlowPanel {
 
 			
 			@Override
-			public void onSuccess(Like result) {
-				
-					likeCheck = result;
-				
-				
-				if(likeCheck != null) {
+			public void onSuccess(Boolean result) {
+				if(result == true) {
 					pinnwandVerwaltung.deleteLike(likeCheck, new DeleteLikeCallback());
 				}else {
 					pinnwandVerwaltung.createLike(user, beitrag, timestamp, new CreateLikeCallback());
@@ -285,23 +300,7 @@ public class BeitragBox extends FlowPanel {
 			}
 			
 		
-		public class CountLikesCallback implements AsyncCallback<Integer> {
-
-			@Override
-			public void onFailure(Throwable caught) {
-				Window.alert("Problem with CountLikeCallback");
-				
-			}
-
-			@Override
-			public void onSuccess(Integer result) {
-				likeCount = result;
-			
-				}
-				
-			
-			
-		}
+		
 		public class CreateLikeCallback implements AsyncCallback{
 
 			@Override
