@@ -135,14 +135,14 @@ public interface Pinnwandverwaltung extends RemoteService {
 	public Like createLike(User u, Beitrag b, Timestamp timestamp);
 	
 	/**
-	 * Methode zur Ueberpruefung ob der Beitrag bereits geliket ist
+	 * Methode zur Ueberpruefung ob der Beitrag bereits geliket ist gibt ein Like zurück
 	 */
 	public Like likeCheck(User u, Beitrag b);
 	
 	/**
 	 * Methode um einen Beitrag zu entliken
 	 */
-	public void deleteLike(Like l);
+	public Boolean deleteLike(Like l);
 	
 	/**
 	 * Methode um alle Likes eines Beitrags zu zaehlen

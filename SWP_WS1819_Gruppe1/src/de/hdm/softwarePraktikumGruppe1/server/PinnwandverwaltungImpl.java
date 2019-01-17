@@ -323,12 +323,14 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 		}
 	}
 	
+	
+	
 	/**
 	 * Methode um einen Beitrag zu entliken
 	 */
-	public void deleteLike(Like l) {
+	public Boolean deleteLike(Like l) {
 		this.lMapper.deleteLike(l);
-		
+		return true;
 	}
 	
 	/**

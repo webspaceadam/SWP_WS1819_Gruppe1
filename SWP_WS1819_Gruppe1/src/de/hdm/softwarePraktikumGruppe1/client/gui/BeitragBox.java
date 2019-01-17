@@ -37,9 +37,13 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 public class BeitragBox extends FlowPanel {
 	PinnwandverwaltungAsync pinnwandVerwaltung = ClientsideSettings.getPinnwandverwaltung();
 
+
+	private Vector<KommentarBox> kommentarsOfBeitrag = new Vector<KommentarBox>();
+
 	private Vector<KommentarBox> kommentarBoxesOfBeitrag = new Vector<KommentarBox>();
 	private Vector<Like> likes = new Vector<Like>();
 	private Vector<Kommentar> kommentareOfBeitrag = new Vector<Kommentar>();
+
 	
 	// Panels for the Element
 	private VerticalPanel parentVerticalPanel = new VerticalPanel();
@@ -165,6 +169,7 @@ public class BeitragBox extends FlowPanel {
 //		creationDate.setText("Erstellungszeitpunkt: " + date);
 		
 		// Likecount info
+		pinnwandVerwaltung.countLikes(thisBeitrag, new CountLikeCallback());
 		likeHeart.setWidth("1rem");
 		likeHeart.addStyleName("small-padding-right");
 		likeCountText.addStyleName("is-size-6 is-italic");
@@ -243,6 +248,29 @@ public class BeitragBox extends FlowPanel {
 		
 	}
 	
+	public class CountLikeCallback implements AsyncCallback<Integer> {
+//		Beitrag currentBeitrag = new Beitrag();
+		
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert("Problem with CountLikeCallback");
+			
+		}
+
+		@Override
+		public void onSuccess(Integer result) {
+			//likeCount = result;
+			GWT.log("LikeCount is: " + result);
+//			likeCount = likeCount + result;
+			likeCountText.setText(" auf diesem Beitrag: " + result);
+
+			}
+			
+		
+		
+	}
+	
+	
 	/**
 	 * Die innere Klasse <code>LikeCountClickHandler</code> implementiert das Clickhandler 
 	 * Interface und dessen dazugehörige <code>onClick(ClickEvent event)</code> Methode.
@@ -253,56 +281,57 @@ public class BeitragBox extends FlowPanel {
 	 */
 	private class LikeCountClickHandler implements ClickHandler {
 		private BeitragBox parentBB;
+		private Beitrag parentBeitrag = new Beitrag();
+		private User likingUser = new User();
 		
 		public LikeCountClickHandler(BeitragBox bb) {
 			parentBB = bb;
+			this.parentBeitrag.setBeitragId(parentBB.beitragId);
+			// COOKIE
+			this.likingUser.setUserId(1);
+			
 		}
 			
 		@Override
 		public void onClick(ClickEvent event) {			
-			pinnwandVerwaltung.likeCheck(user, beitrag, new IsLikedCallback());
+			pinnwandVerwaltung.likeCheck(likingUser, parentBeitrag , new IsLikedCallback());
 			
 		}
 		
 		public class IsLikedCallback implements AsyncCallback<Like> {
-
+			
+			Timestamp timestamp = new Timestamp(beitragId);
+			User currentUser = new User();
+			Beitrag currentBeitrag = new Beitrag();
+			
+			
 			@Override
 			public void onFailure(Throwable caught) {
-				Window.alert("Problem with IsLikedCallback");
+				Window.alert(caught.toString());
 			}
 
+			
 			@Override
 			public void onSuccess(Like result) {
-				likeCheck = result;
-				if(likeCheck != null) {
-					pinnwandVerwaltung.deleteLike(likeCheck, new DeleteLikeCallback());
+				if(result != null) {
+					currentUser.setUserId(1);
+					currentBeitrag.setBeitragId(beitragId);
+					GWT.log(result.toString());
+					pinnwandVerwaltung.deleteLike(result, new DeleteLikeCallback());
 				}else {
-					pinnwandVerwaltung.createLike(user, beitrag, timestamp, new CreateLikeCallback());
-
+					currentUser.setUserId(1);
+					currentBeitrag.setBeitragId(beitragId);
+					pinnwandVerwaltung.createLike(currentUser, currentBeitrag, timestamp, new CreateLikeCallback());
 				}
-				parentBB.likeCountText.setText(" auf diesem Beitrag: " + parentBB.likeCount);
-				GWT.log("Like Count is: " + parentBB.likeCount);
+				
+				
+
 				
 			}
 			
-		public class CountLikesCallback implements AsyncCallback<Integer> {
-
-			@Override
-			public void onFailure(Throwable caught) {
-				Window.alert("Problem with CountLikeCallback");
-				
-			}
-
-			@Override
-			public void onSuccess(Integer result) {
-				likeCount = result;
-			
-				}
-				
-			
-			
-		}
-		public class CreateLikeCallback implements AsyncCallback {
+		
+		
+		public class CreateLikeCallback implements AsyncCallback<Like>{
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -311,16 +340,17 @@ public class BeitragBox extends FlowPanel {
 			}
 
 			@Override
-			public void onSuccess(Object result) {
-				Window.alert("Beitrag wurde geliked");
+			public void onSuccess(Like result) {
+				Window.alert("Beitrag wurde geliked");	
+				pinnwandVerwaltung.countLikes(currentBeitrag, new CountLikeCallback());
 				}
 				
 			}
 			
 		}
 			
-		public class DeleteLikeCallback implements AsyncCallback {
-
+		public class DeleteLikeCallback implements AsyncCallback<Boolean> {
+			
 			@Override
 			public void onFailure(Throwable caught) {
 				Window.alert("Problem with DeleteLikeCallback");
@@ -328,9 +358,17 @@ public class BeitragBox extends FlowPanel {
 			}
 
 			@Override
-			public void onSuccess(Object result) {
-				Window.alert("Like wurde entfernt");
-			}
+			public void onSuccess(Boolean result) {
+				if(result == true) {
+					Window.alert("Like wurde entfernt");
+					Beitrag currentBeitrag = new Beitrag();
+					currentBeitrag.setBeitragId(beitragId);
+					pinnwandVerwaltung.countLikes(currentBeitrag, new CountLikeCallback());
+				}else {
+					Window.alert("Like wurde nicht entfernt");
+				}
+				
+		}
 				
 		}
 			
