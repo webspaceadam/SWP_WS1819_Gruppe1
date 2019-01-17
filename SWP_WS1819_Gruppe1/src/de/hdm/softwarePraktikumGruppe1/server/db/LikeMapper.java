@@ -303,32 +303,6 @@ public class LikeMapper {
 				
 		}
 		
-		/*
-		 *  Methode, die den Like eines Users von einem bestimmten Beitrag zurueck gibt
-		 */
-			public boolean isLiked(int userId, int beitragId) {
-				
-				Connection con = DBConnection.connection();
-				
-					try {
-					Statement stmt = con.createStatement();
-						
-					// Statement ausfuellen und als Query an die DB schicken
-					ResultSet rs = stmt.executeQuery("SELECT * FROM `like` WHERE UserFK=" + userId + " AND BeitragFK=" + beitragId);
-						
-					if (rs != null) {		
-						return true;
-					}
-					else {
-						return false;
-					}
-					}
-					catch(SQLException e) {
-						e.printStackTrace();
-						return false;
-					}
-					
-			}	
 	/* Ende:  Foreign Key-Mapper-Methoden
 	 * ================================================================================================
 	 * Beginn: Spezifische Business Object Methoden

@@ -111,14 +111,9 @@ public interface PinnwandverwaltungAsync{
 	public void likeCheck(User u, Beitrag b, AsyncCallback<Like> callback);
 	
 	/**
-	 * Methode zur Ueberpruefung ob der Beitrag bereits geliket ist (boolean)
-	 */
-	public void isLiked(User u, Beitrag b, AsyncCallback<Boolean> callback);
-	
-	/**
 	 * Methode um einen Beitrag zu entliken
 	 */
-	public void deleteLike(Like l, AsyncCallback<Void> callback);
+	public void deleteLike(Like l, AsyncCallback<Boolean> callback);
 	
 	/**
 	 * Methode um alle Likes eines Beitrags zu zaehlen

@@ -323,21 +323,14 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 		}
 	}
 	
-	public boolean isLiked(User u, Beitrag b) {
-		boolean isLiked = this.lMapper.isLiked(u.getUserId(), b.getBeitragId());
-		if(isLiked == true) {
-			return true;
-		}else {
-			return false;
-		}
-	}
+	
 	
 	/**
 	 * Methode um einen Beitrag zu entliken
 	 */
-	public void deleteLike(Like l) {
+	public Boolean deleteLike(Like l) {
 		this.lMapper.deleteLike(l);
-		
+		return true;
 	}
 	
 	/**
