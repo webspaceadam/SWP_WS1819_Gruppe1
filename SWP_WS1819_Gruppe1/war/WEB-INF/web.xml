@@ -18,7 +18,7 @@
 
 	<servlet-mapping>
     	<servlet-name>PinnwandverwaltungImpl</servlet-name>
-    	<url-pattern>PinnwandverwaltungImpl</url-pattern>
+    	<url-pattern>/swp_ws1819_gruppe1/PinnwandverwaltungImpl</url-pattern>
 	</servlet-mapping>
 	
 	
