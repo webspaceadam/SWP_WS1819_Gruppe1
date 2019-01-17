@@ -2,6 +2,7 @@ package de.hdm.softwarePraktikumGruppe1.server;
 
 import java.sql.Timestamp;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Vector;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -416,6 +417,11 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 		hs.addAll(this.getUserByFirstName(s));
 		hs.addAll(this.getUserByLastName(s));
 		hs.addAll(this.getUserByNickname(s));
+		
+		Iterator<User> it = hs.iterator();
+	     while(it.hasNext()){
+	        System.out.println(it.next().getUserId());
+	     }
 		
 		return hs;
 	}

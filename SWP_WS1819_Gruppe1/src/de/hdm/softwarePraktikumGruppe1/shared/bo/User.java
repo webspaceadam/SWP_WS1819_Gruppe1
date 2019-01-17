@@ -121,8 +121,8 @@ public class User implements IsSerializable{
 	public boolean equals(Object obj) {
 		if (obj instanceof User) {
 			User u = (User) obj;
-			if((this.getUserId()== u.getUserId())){				
-				System.out.println("Firstname: "+ u.getFirstName() +" Lastname: "+u.getLastName());
+			if((this.getUserId()== u.getUserId()) && (this.getFirstName().equals(u.getFirstName())) && (this.getLastName().equals(u.getLastName()))&& (this.getNickname().equals(u.getNickname()))){				
+				System.out.println("Firstname: "+ u.getFirstName() +" Lastname: "+u.getLastName() + " Nickname: " + u.getNickname());
 				return true;	
 			}
 			else {
