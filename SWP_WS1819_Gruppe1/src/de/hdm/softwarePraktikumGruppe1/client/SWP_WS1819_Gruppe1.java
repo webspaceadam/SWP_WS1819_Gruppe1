@@ -40,7 +40,7 @@ public class SWP_WS1819_Gruppe1 implements EntryPoint {
 	PinnwandverwaltungAsync pinnwandVerwaltung = ClientsideSettings.getPinnwandverwaltung();
 	User u1 = new User();
 	private LoginInfo loginInfo = null;
-	
+
 	
 	
 	public void onModuleLoad() {
@@ -66,12 +66,13 @@ public class SWP_WS1819_Gruppe1 implements EntryPoint {
 	
 	//Login Panel anzeigen
 	public void loadLogin(){		
-	    RootPanel.get("container").add(new AuthenticationForm(loginInfo.getLoginUrl()));
+	    RootPanel.get().add(new AuthenticationForm(loginInfo.getLoginUrl()));
 	}
 	
 	
 	//wird erst nach Erfolgreichem Login geladen
 	public void loadEditor(LoginInfo loginInfo){
+		Window.alert("Eingeloggt mit der mail " + loginInfo.getEmailAddress());
 		pinnwandVerwaltung.getUserByGmail(loginInfo.getEmailAddress(), new GetUserCallback());
 		//pinnwandVerwaltung.getUserById(1, new GetUserCallback());
 
@@ -96,6 +97,7 @@ public class SWP_WS1819_Gruppe1 implements EntryPoint {
 		
 		// GUI Elements
 		Header h1 = new Header();
+		h1.setLogOutURL(loginInfo.getLogoutUrl());
 		
 		// Creating ProfileBox
 		ProfileBox pB = new ProfileBox();
@@ -133,7 +135,7 @@ public class SWP_WS1819_Gruppe1 implements EntryPoint {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Window.alert("Fail!");
+			Window.alert("Fail!" + caught.getMessage());
 		}
 
 		@Override
