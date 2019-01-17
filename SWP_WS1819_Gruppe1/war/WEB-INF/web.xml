@@ -32,5 +32,16 @@
     <servlet-name>reportGenerator</servlet-name>
     <url-pattern>/ReportGenerator/reportgenerator</url-pattern>
   </servlet-mapping>
+  
+  
+  <servlet>
+    <servlet-name>loginService</servlet-name>
+    <servlet-class>de.hdm.softwarePraktikumGruppe1.server.LoginServiceImpl</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>loginService</servlet-name>
+    <url-pattern>/swp_ws1819_gruppe1/LoginImpl</url-pattern>
+  </servlet-mapping>
 
 </web-app>
