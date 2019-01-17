@@ -302,6 +302,7 @@ public class LikeMapper {
 				}
 				
 		}
+		
 	/* Ende:  Foreign Key-Mapper-Methoden
 	 * ================================================================================================
 	 * Beginn: Spezifische Business Object Methoden
