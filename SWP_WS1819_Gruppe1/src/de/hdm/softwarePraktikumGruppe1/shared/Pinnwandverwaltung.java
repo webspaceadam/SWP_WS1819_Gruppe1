@@ -4,6 +4,7 @@
 package de.hdm.softwarePraktikumGruppe1.shared;
 
 import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.Vector;
 
 import com.google.gwt.user.client.rpc.RemoteService;
@@ -161,6 +162,8 @@ public interface Pinnwandverwaltung extends RemoteService {
 	public Pinnwand getPinnwandOfUser(User u);
 	
 	public void deletePinnwand(Pinnwand p);
+	
+	public Vector<User> searchFunction(String searchQuery);
 	
 
 }

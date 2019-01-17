@@ -411,8 +411,9 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 		
 	}
 	
-	public HashSet<User> searchFunction(String searchQuery){
+	public Vector<User> searchFunction(String searchQuery){
 		HashSet<User> hs = new HashSet<User>();
+		Vector<User> users = new Vector<User>();
 		String s = searchQuery;
 		hs.addAll(this.getUserByFirstName(s));
 		hs.addAll(this.getUserByLastName(s));
@@ -420,10 +421,10 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 		
 		Iterator<User> it = hs.iterator();
 	     while(it.hasNext()){
-	        System.out.println(it.next().getUserId());
+	        users.add(it.next());
 	     }
 		
-		return hs;
+		return users;
 	}
 
 }

@@ -6,15 +6,22 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.*;
 
+import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
+
 /**
  * Die Klasse <code>SearchAboBox</code> zeigt alle möglichen Ergebnisse der Suche 
  * nach einem vom User eingegebenen Keyword.  
  * @author AdamGniady
  */
 public class SearchAboBox extends FlowPanel {
-	private Label accountName = new Label("Gianluca Bernert");
-	private Label nickName = new Label("@derLucker");
-	private Button pinnwandBtn = new Button("Pinnwand");
+	String firstName;
+	String lastName;
+	String fullName = firstName + " " + lastName;
+	String nickName;
+	
+	private Label accountNameLabel = new Label(fullName);
+	private Label nickNameLabel = new Label(nickName);
+	//private Button pinnwandBtn = new Button("Pinnwand");
 	private Button getAboBtn = new Button("Abonnieren");
 	
 	private FlowPanel accountWrapper = new FlowPanel();
@@ -22,7 +29,10 @@ public class SearchAboBox extends FlowPanel {
 	private FlowPanel pinnwandWrapper = new FlowPanel();
 	private FlowPanel aboWrapper = new FlowPanel();
 	
-	public SearchAboBox() {
+	public SearchAboBox(User u) {
+		this.firstName=u.getFirstName();
+		this.lastName=u.getLastName();
+		this.nickName=u.getNickname();
 	}
 	
 	public void onLoad() {
@@ -33,50 +43,50 @@ public class SearchAboBox extends FlowPanel {
 		pinnwandWrapper.addStyleName("box-item-ein-viertel");
 		aboWrapper.addStyleName("box-item-ein-viertel");
 		
-		accountName.addStyleName("title is-size-3");
-		nickName.addStyleName("is-size-4");
-		pinnwandBtn.addStyleName("button bg-primary has-text-white");
+		accountNameLabel.addStyleName("title is-size-3");
+		nickNameLabel.addStyleName("is-size-4");
+		//pinnwandBtn.addStyleName("button bg-primary has-text-white");
 		getAboBtn.addStyleName("button");
 		
-		accountWrapper.add(accountName);
-		nickWrapper.add(nickName);
-		pinnwandWrapper.add(pinnwandBtn);
+		accountWrapper.add(accountNameLabel);
+		nickWrapper.add(nickNameLabel);
+		//pinnwandWrapper.add(pinnwandBtn);
 		aboWrapper.add(getAboBtn);
 		
-		pinnwandBtn.addClickHandler(new ShowPinnwandClickHandler());
+		//pinnwandBtn.addClickHandler(new ShowPinnwandClickHandler());
 		
 		this.add(accountWrapper);
 		this.add(nickWrapper);
-		this.add(pinnwandWrapper);
+//		this.add(pinnwandWrapper);
 		this.add(aboWrapper);
 	}
-	private class ShowPinnwandClickHandler implements ClickHandler {
-		@Override
-		public void onClick(ClickEvent event) {
-			RootPanel rootPanelContainerPanel = RootPanel.get("container");
-			rootPanelContainerPanel.clear();
-			
-			FlowPanel linkeSeite = new FlowPanel();
-			ProfileBox newProfile = new ProfileBox("Adam", "Gniady", "javaGod");
-			
-			// Pinnwand Stuff
-			Vector<BeitragBox> allBeitragBoxesOfPinnwand = new Vector<BeitragBox>();
-			
-			for(int i = 0; i < 10; i++) {
-				BeitragBox tempBB = new BeitragBox();
-				
-				allBeitragBoxesOfPinnwand.add(tempBB);
-			}
-			
-			PinnwandBox newPinnwand = new PinnwandBox(allBeitragBoxesOfPinnwand);
-			
-			linkeSeite.addStyleName("linkeSeite");
-			
-			linkeSeite.add(newProfile);
-			
-			rootPanelContainerPanel.add(linkeSeite);
-			rootPanelContainerPanel.add(newPinnwand);	
-		}	
-	}
+//	private class ShowPinnwandClickHandler implements ClickHandler {
+//		@Override
+//		public void onClick(ClickEvent event) {
+//			RootPanel rootPanelContainerPanel = RootPanel.get("container");
+//			rootPanelContainerPanel.clear();
+//			
+//			FlowPanel linkeSeite = new FlowPanel();
+//			ProfileBox newProfile = new ProfileBox("Adam", "Gniady", "javaGod");
+//			
+//			// Pinnwand Stuff
+//			Vector<BeitragBox> allBeitragBoxesOfPinnwand = new Vector<BeitragBox>();
+//			
+//			for(int i = 0; i < 10; i++) {
+//				BeitragBox tempBB = new BeitragBox();
+//				
+//				allBeitragBoxesOfPinnwand.add(tempBB);
+//			}
+//			
+//			PinnwandBox newPinnwand = new PinnwandBox(allBeitragBoxesOfPinnwand);
+//			
+//			linkeSeite.addStyleName("linkeSeite");
+//			
+//			linkeSeite.add(newProfile);
+//			
+//			rootPanelContainerPanel.add(linkeSeite);
+//			rootPanelContainerPanel.add(newPinnwand);	
+//		}	
+//	}
 
 }

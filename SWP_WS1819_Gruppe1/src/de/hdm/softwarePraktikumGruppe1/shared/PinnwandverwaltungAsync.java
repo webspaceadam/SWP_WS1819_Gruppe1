@@ -4,6 +4,7 @@
 package de.hdm.softwarePraktikumGruppe1.shared;
 
 import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.Vector;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -140,6 +141,8 @@ public interface PinnwandverwaltungAsync{
 	void getUserByLastName(String lName, AsyncCallback<Vector<User>> callback);
 
 	void getPinnwandById(int pinnwandId, AsyncCallback<Pinnwand> callback);
+
+	void searchFunction(String searchQuery, AsyncCallback<Vector<User>> callback);
 	
 		
 
