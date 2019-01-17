@@ -26,6 +26,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
 public class Header extends FlowPanel {
 		PinnwandverwaltungAsync pinnwandVerwaltung = null;
+		String logOutURL;
 		User user = null;
 		
 		Vector<Abonnement> userAbonnements = new Vector<Abonnement>();
@@ -135,11 +136,23 @@ public class Header extends FlowPanel {
 			searchButton.addClickHandler(new SearchUserClickHandler(this));
 			meineAbos.addClickHandler(new ShowAbosClickHandler(this));
 			meinePinnwand.addClickHandler(new ShowMyPinnwandClickHandler());
+			logoutButton.addClickHandler(new LogoutClickHandler());
 			
 			
 			this.add(headerLogo);
 			this.add(headerLinkList);
 			this.add(headerRight);
+		}
+		
+		private class LogoutClickHandler implements ClickHandler {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				
+				//Leite User zum Google LogOut weiter
+				Window.Location.assign(logOutURL);
+			}
+			
 		}
 		
 		private class ShowMyPinnwandClickHandler implements ClickHandler {
@@ -357,5 +370,9 @@ public class Header extends FlowPanel {
 				GWT.log(tempUser.toString());
 				pinnwandOwner.add(tempUser);
 			}
+		}
+		
+		public void setLogOutURL(String logOutURL) {
+			this.logOutURL = logOutURL;
 		}
 }
