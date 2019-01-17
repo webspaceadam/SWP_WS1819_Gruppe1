@@ -66,7 +66,7 @@ public class SWP_WS1819_Gruppe1 implements EntryPoint {
 	
 	//Login Panel anzeigen
 	public void loadLogin(){		
-	    RootPanel.get().add(new AuthenticationForm(loginInfo.getLoginUrl()));
+	    RootPanel.get("container").add(new AuthenticationForm(loginInfo.getLoginUrl()));
 	}
 	
 	
