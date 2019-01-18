@@ -14,42 +14,53 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
  * @author AdamGniady
  */
 public class SearchAboBox extends FlowPanel {
-	String firstName;
-	String lastName;
-	String fullName = firstName + " " + lastName;
-	String nickName;
+//	String firstName;
+//	String lastName;
+	String accountName;
+	String nickname;
 	
-	private Label accountNameLabel = new Label(fullName);
-	private Label nickNameLabel = new Label(nickName);
+	private Label accountNameLabel;
+	private Label nicknameLabel;
 	//private Button pinnwandBtn = new Button("Pinnwand");
-	private Button getAboBtn = new Button("Abonnieren");
+	private Button getAboBtn;
 	
-	private FlowPanel accountWrapper = new FlowPanel();
-	private FlowPanel nickWrapper = new FlowPanel();
-	private FlowPanel pinnwandWrapper = new FlowPanel();
-	private FlowPanel aboWrapper = new FlowPanel();
+	private FlowPanel accountWrapper;
+	private FlowPanel nickWrapper;
+//	private FlowPanel pinnwandWrapper = new FlowPanel();
+	private FlowPanel aboWrapper;
 	
 	public SearchAboBox(User u) {
-		this.firstName=u.getFirstName();
-		this.lastName=u.getLastName();
-		this.nickName=u.getNickname();
+		this.accountName = u.getFirstName() + " " + u.getLastName();
+		this.nickname=u.getNickname();
 	}
 	
 	public void onLoad() {
+		accountNameLabel = new Label();
+		nicknameLabel = new Label();
+		getAboBtn = new Button();
+		accountWrapper = new FlowPanel();
+		nickWrapper = new FlowPanel();
+		aboWrapper = new FlowPanel();
+		
+		accountNameLabel.setText(accountName);
+		nicknameLabel.setText(nickname);
+		getAboBtn.setText("Abonnieren");
+		
+		
 		this.addStyleName("box grid_box radiusless");
 		
 		accountWrapper.addStyleName("box-item-ein-viertel");
 		nickWrapper.addStyleName("box-item-ein-viertel");
-		pinnwandWrapper.addStyleName("box-item-ein-viertel");
+//		pinnwandWrapper.addStyleName("box-item-ein-viertel");
 		aboWrapper.addStyleName("box-item-ein-viertel");
 		
 		accountNameLabel.addStyleName("title is-size-3");
-		nickNameLabel.addStyleName("is-size-4");
+		nicknameLabel.addStyleName("is-size-4");
 		//pinnwandBtn.addStyleName("button bg-primary has-text-white");
 		getAboBtn.addStyleName("button");
 		
 		accountWrapper.add(accountNameLabel);
-		nickWrapper.add(nickNameLabel);
+		nickWrapper.add(nicknameLabel);
 		//pinnwandWrapper.add(pinnwandBtn);
 		aboWrapper.add(getAboBtn);
 		

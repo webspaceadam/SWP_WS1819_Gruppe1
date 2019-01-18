@@ -308,6 +308,7 @@ public class Header extends FlowPanel {
 				if (result.size()>0) {
 					//Window.alert("Deine Suche ergab " + result.size()+ " Treffer");
 					SearchUserDialogBox dlg = new SearchUserDialogBox(result);
+					dlg.center();
 					
 				}else {
 					Window.alert("Deine Suche ergab 0 Treffer");
