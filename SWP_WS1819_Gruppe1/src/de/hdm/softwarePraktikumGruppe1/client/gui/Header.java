@@ -242,7 +242,7 @@ public class Header extends FlowPanel {
 			private ScrollPanel parentScrolling = new ScrollPanel();
 			private FlowPanel aboParentPanel = new FlowPanel();
 			private int ergebnisCounter;
-			private String anzeigeText = "Deine Suche ergab" +ergebnisCounter +" Treffer";
+			
 			
 			
 			private Vector<SearchAboBox> searchResultBoxes = new Vector<SearchAboBox>();
@@ -250,7 +250,7 @@ public class Header extends FlowPanel {
 			public SearchUserDialogBox(Vector<User> searchResults) {
 				this.ergebnisCounter = searchResults.size();
 				
-				setText(anzeigeText);
+				setText("Deine Suche ergab "+ergebnisCounter + " Treffer");
 				//Methode zum auslesen der vectorgröße wird hier ausgeführt.
 				
 				// Vector searchResult befuellen. Es wird die Methode SearchFunction aufgerufen.
@@ -308,6 +308,7 @@ public class Header extends FlowPanel {
 				if (result.size()>0) {
 					//Window.alert("Deine Suche ergab " + result.size()+ " Treffer");
 					SearchUserDialogBox dlg = new SearchUserDialogBox(result);
+					dlg.center();
 					
 				}else {
 					Window.alert("Deine Suche ergab 0 Treffer");
