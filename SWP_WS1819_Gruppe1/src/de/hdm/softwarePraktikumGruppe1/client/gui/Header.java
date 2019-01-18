@@ -1,4 +1,6 @@
 package de.hdm.softwarePraktikumGruppe1.client.gui;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Vector;
 
 
@@ -230,38 +232,41 @@ public class Header extends FlowPanel {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				SearchUserDialogBox dlg = new SearchUserDialogBox(parentHeader.searchUserInput.getValue());
-				dlg.center();
+				pinnwandVerwaltung.searchFunction((parentHeader.searchUserInput.getValue()) , new SearchResultCallback());
 			}
 			
 		}
 		
 		private class SearchUserDialogBox extends DialogBox implements ClickHandler {
+			
 			private ScrollPanel parentScrolling = new ScrollPanel();
 			private FlowPanel aboParentPanel = new FlowPanel();
-			private String keyword;
-			private String anzeigeText = " Treffer";
 			private int ergebnisCounter;
+			private String anzeigeText = "Deine Suche ergab" +ergebnisCounter +" Treffer";
 			
-			private Vector<SearchAboBox> searchResult = new Vector<SearchAboBox>();
 			
-			public SearchUserDialogBox(String keyword) {
-				this.keyword = keyword;
-				setText("Ergebnis deiner Suche nach: " + keyword);
+			private Vector<SearchAboBox> searchResultBoxes = new Vector<SearchAboBox>();
+			
+			public SearchUserDialogBox(Vector<User> searchResults) {
+				this.ergebnisCounter = searchResults.size();
+				
+				setText(anzeigeText);
+				//Methode zum auslesen der vectorgröße wird hier ausgeführt.
 				
 				// Vector searchResult befuellen. Es wird die Methode SearchFunction aufgerufen.
 				// Die Methode SearchFunction gibt ein HashSet mit Usern zurueck. Die HashSet Collection 
 				// wird dann in einen Vector konvertiert.
 				
-				for(int i = 0; i < 5; i++) {
-					SearchAboBox tempSAB = new SearchAboBox();
-					
-					searchResult.add(tempSAB);
+				
+				for(User u: searchResults) {
+					SearchAboBox singleUserBox = new SearchAboBox(u);
+					searchResultBoxes.add(singleUserBox);
 				}
 				
-				for(int i = 0; i < searchResult.size(); i++) {
-					aboParentPanel.add(searchResult.elementAt(i));
+				for(SearchAboBox s: searchResultBoxes) {
+					aboParentPanel.add(s);
 				}
+				
 				
 				parentScrolling.add(aboParentPanel);
 				parentScrolling.setSize("800px", "400px");
@@ -288,6 +293,31 @@ public class Header extends FlowPanel {
 			public void onClick(ClickEvent event) {
 				hide();
 			}
+		}
+		
+		public class SearchResultCallback implements AsyncCallback<Vector<User>>{
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Shit");
+				
+			}
+
+			@Override
+			public void onSuccess(Vector<User> result) {
+				if (result.size()>0) {
+					//Window.alert("Deine Suche ergab " + result.size()+ " Treffer");
+					SearchUserDialogBox dlg = new SearchUserDialogBox(result);
+					
+				}else {
+					Window.alert("Deine Suche ergab 0 Treffer");
+				}
+				
+				
+			}
+
+			
+			
 		}
 		
 		public class GetUserByIdCallback implements AsyncCallback<User> {

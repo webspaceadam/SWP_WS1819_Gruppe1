@@ -2,6 +2,7 @@ package de.hdm.softwarePraktikumGruppe1.server;
 
 import java.sql.Timestamp;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Vector;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -410,14 +411,20 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 		
 	}
 	
-	public HashSet<User> searchFunction(String searchQuery){
+	public Vector<User> searchFunction(String searchQuery){
 		HashSet<User> hs = new HashSet<User>();
+		Vector<User> users = new Vector<User>();
 		String s = searchQuery;
 		hs.addAll(this.getUserByFirstName(s));
 		hs.addAll(this.getUserByLastName(s));
 		hs.addAll(this.getUserByNickname(s));
 		
-		return hs;
+		Iterator<User> it = hs.iterator();
+	     while(it.hasNext()){
+	        users.add(it.next());
+	     }
+		
+		return users;
 	}
 
 }
