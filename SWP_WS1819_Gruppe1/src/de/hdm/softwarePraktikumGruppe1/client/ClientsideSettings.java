@@ -6,8 +6,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import de.hdm.softwarePraktikumGruppe1.shared.CommonSettings;
-import de.hdm.softwarePraktikumGruppe1.shared.LoginService;
-import de.hdm.softwarePraktikumGruppe1.shared.LoginServiceAsync;
 import de.hdm.softwarePraktikumGruppe1.shared.Pinnwandverwaltung;
 import de.hdm.softwarePraktikumGruppe1.shared.PinnwandverwaltungAsync;
 import de.hdm.softwarePraktikumGruppe1.shared.ReportGeneratorServiceAsync;
@@ -73,15 +71,7 @@ public class ClientsideSettings extends CommonSettings {
     return pinnwandverwaltung;
   }
   
-  /**
-	 * Anlegen und Auslesen des Loginservice
-	 */
-	public static LoginServiceAsync getLoginService() {
-		if (loginService == null) {
-			loginService = GWT.create(LoginService.class);
-		}
-		return loginService;
-	}
+
 
 	/**
 	 * Anlegen und Auslesen des ReportGenerators

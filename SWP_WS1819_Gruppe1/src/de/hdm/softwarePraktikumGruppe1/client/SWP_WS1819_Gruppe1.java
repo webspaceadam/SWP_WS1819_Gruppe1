@@ -8,16 +8,22 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.hdm.softwarePraktikumGruppe1.client.gui.AuthenticationForm;
 import de.hdm.softwarePraktikumGruppe1.client.gui.BeitragBox;
 import de.hdm.softwarePraktikumGruppe1.client.gui.CreateBeitragBox;
 import de.hdm.softwarePraktikumGruppe1.client.gui.Header;
 import de.hdm.softwarePraktikumGruppe1.client.gui.KommentarBox;
 import de.hdm.softwarePraktikumGruppe1.client.gui.PinnwandBox;
 import de.hdm.softwarePraktikumGruppe1.client.gui.ProfileBox;
+import de.hdm.softwarePraktikumGruppe1.shared.LoginInfo;
 import de.hdm.softwarePraktikumGruppe1.shared.PinnwandverwaltungAsync;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Pinnwand;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
@@ -33,9 +39,42 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 public class SWP_WS1819_Gruppe1 implements EntryPoint {
 	PinnwandverwaltungAsync pinnwandVerwaltung = ClientsideSettings.getPinnwandverwaltung();
 	User u1 = new User();
+	private LoginInfo loginInfo = null;
+
+	
 	
 	public void onModuleLoad() {
-		pinnwandVerwaltung.getUserById(1, new GetUserCallback());
+		// Check login status using login service.
+	    LoginServiceAsync loginService = GWT.create(LoginService.class);
+	    loginService.login(GWT.getHostPageBaseURL(), new AsyncCallback<LoginInfo>() {
+	      public void onFailure(Throwable error) {
+	    	  RootPanel.get().add(new HTML(error.toString()));
+	      }
+
+	      public void onSuccess(LoginInfo result) {
+	        loginInfo = result;
+	        if(loginInfo.isLoggedIn()) {
+	          loadEditor(result);
+	        } else {
+	          loadLogin();
+	        }
+	      }
+	    });
+	    
+	}
+	
+	
+	//Login Panel anzeigen
+	public void loadLogin(){		
+	    RootPanel.get().add(new AuthenticationForm(loginInfo.getLoginUrl()));
+	}
+	
+	
+	//wird erst nach Erfolgreichem Login geladen
+	public void loadEditor(LoginInfo loginInfo){
+		Window.alert("Eingeloggt mit der mail " + loginInfo.getEmailAddress());
+		pinnwandVerwaltung.getUserByGmail(loginInfo.getEmailAddress(), new GetUserCallback());
+		//pinnwandVerwaltung.getUserById(1, new GetUserCallback());
 
 		// RootPanels
 		RootPanel rootPanelHeader = RootPanel.get("header");
@@ -58,6 +97,7 @@ public class SWP_WS1819_Gruppe1 implements EntryPoint {
 		
 		// GUI Elements
 		Header h1 = new Header();
+		h1.setLogOutURL(loginInfo.getLogoutUrl());
 		
 		// Creating ProfileBox
 		ProfileBox pB = new ProfileBox();
@@ -70,6 +110,8 @@ public class SWP_WS1819_Gruppe1 implements EntryPoint {
 		rootProfilePanel.add(pB);
 		rootPinnwandPanel.add(pinnwandBox);
 	}
+	
+	
 	
 	public class TestClickHandler implements ClickHandler {
 
@@ -93,7 +135,7 @@ public class SWP_WS1819_Gruppe1 implements EntryPoint {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Window.alert("Fail!");
+			Window.alert("Fail!" + caught.getMessage());
 		}
 
 		@Override
