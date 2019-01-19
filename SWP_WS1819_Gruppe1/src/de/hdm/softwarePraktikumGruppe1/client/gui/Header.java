@@ -8,6 +8,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.GwtEvent;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
@@ -30,6 +31,7 @@ public class Header extends FlowPanel {
 		PinnwandverwaltungAsync pinnwandVerwaltung = null;
 		String logOutURL;
 		User user = null;
+		int currentUserId = Integer.parseInt(Cookies.getCookie("userId"));
 		
 		Vector<Abonnement> userAbonnements = new Vector<Abonnement>();
 		Vector<Pinnwand> aboPinnwaende = new Vector<Pinnwand>();
@@ -58,6 +60,7 @@ public class Header extends FlowPanel {
 		// Create Images
 		Image logo = new Image();
 		
+		
 		// Create Anchors / Links
 		private Anchor meinePinnwand = new Anchor("Meine Pinnwand");
 		private Anchor meineAbos = new Anchor("Meine Abos");
@@ -78,7 +81,7 @@ public class Header extends FlowPanel {
 		 */
 		public void onLoad() {
 			pinnwandVerwaltung = ClientsideSettings.getPinnwandverwaltung();
-			pinnwandVerwaltung.getUserById(1, new GetUserByIdCallback());
+			pinnwandVerwaltung.getUserById(currentUserId, new GetUserByIdCallback());
 			
 			// Add Styling to this Element
 			this.addStyleName("header bg-primary");
@@ -165,7 +168,7 @@ public class Header extends FlowPanel {
 				rootPinnwandPanel.clear();
 				
 				// Go to the Pinnwand of the current User
-				PinnwandBox userPinnwand = new PinnwandBox(1);
+				PinnwandBox userPinnwand = new PinnwandBox(currentUserId);
 				rootPinnwandPanel.add(userPinnwand);				
 			}
 			

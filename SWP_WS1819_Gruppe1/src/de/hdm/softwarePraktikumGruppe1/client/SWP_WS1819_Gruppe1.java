@@ -133,8 +133,8 @@ public class SWP_WS1819_Gruppe1 implements EntryPoint {
 		/**
 		 * Instantiierung der notwendigen GUI Objekte
 		 */
-		private Label abfrage = new Label("Sie sind noch nicht registriert."
-				+ "Wenn Sie einen Nutzer anlegen m�chten, f�llen Sie bitte folgendes Formular aus.");
+		private Label abfrage = new Label("Du bist noch nicht registriert!"
+				+ "Fülle dieses Formular aus, um deinen User anzulegen.");
 		private Button yesBtn = new Button("Registrieren");
 		private Button noBtn = new Button("Abbrechen");
 		private VerticalPanel vPanel = new VerticalPanel();

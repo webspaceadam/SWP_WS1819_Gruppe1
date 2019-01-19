@@ -7,6 +7,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
@@ -47,6 +48,7 @@ public class KommentarBox extends FlowPanel {
 	private User owner;
 	private int ownerId;
 	private int kommentarId;
+	private int currentUserId = Integer.parseInt(Cookies.getCookie("userId"));
 	
 	public KommentarBox() {
 		// Adding Author relationship
@@ -66,7 +68,7 @@ public class KommentarBox extends FlowPanel {
 		this.kommentarContent.setText(inhalt);
 		// Adding the Content
 		kommentarContent.setText(inhalt);
-		pinnwandVerwaltung.getUserById(1, new GetCurrentUserCallback());
+		pinnwandVerwaltung.getUserById(currentUserId, new GetCurrentUserCallback());
 		//pinnwandVerwaltung.createKommentar(inhalt, owner.getUserId(), parentBB.getBeitragId(), timestamp, new CreateKommentarCallback());
 	}
 	
@@ -129,7 +131,11 @@ public class KommentarBox extends FlowPanel {
 
 		userInfoWrapper.add(accountName);
 		userInfoWrapper.add(nickName);
-		userInfoWrapper.add(editPenBtn);
+		
+		// 
+		if(this.ownerId == this.currentUserId) {
+			userInfoWrapper.add(editPenBtn);
+		}
 		creationInfoWrapper.add(creationDate);
 		contentWrapper.add(kommentarContent);
 		

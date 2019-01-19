@@ -174,7 +174,7 @@ public class PinnwandBox extends FlowPanel {
 			tempBeitragBox.setAccountName(user.getFirstName(), user.getLastName());
 			tempBeitragBox.setBeitragId(b.getBeitragId());
 			GWT.log(b.getCreationTimeStamp().toString());
-			tempBeitragBox.setCreationDate(b.getCreationTimeStamp().toString());
+			tempBeitragBox.setCreationDate("Erstellzeitpunkt: " + b.getCreationTimeStamp().toString());
 			tempBeitragBox.setBeitragContent(b.getInhalt());
 			this.add(tempBeitragBox);
 		}
