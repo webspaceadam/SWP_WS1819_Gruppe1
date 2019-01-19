@@ -96,14 +96,22 @@ public class BeitragBox extends FlowPanel {
 		this.parentPinnwandBox = pb;
 		this.beitragContent.setText(content);
 		this.user = user;
-		pinnwandVerwaltung.createBeitrag(content, user, timestamp, new CreateBeitragCallback());
+		
+		Window.alert("Content: " + "\n" +
+						this.beitragContent.getText()
+						+ " \n" + " Von User: " + "\n"
+						+ this.user.toString()
+				);
+		pinnwandVerwaltung.createBeitrag(this.beitragContent.getText(), this.user, timestamp, new CreateBeitragCallback());
 	}
 	
 	public class CreateBeitragCallback implements AsyncCallback<Beitrag> {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Window.alert("Problem with CreateBeitragCallback");
+			Window.alert("Problem with CreateBeitragCallback" + "\n"
+					+ caught.toString()
+					);
 		}
 
 		@Override

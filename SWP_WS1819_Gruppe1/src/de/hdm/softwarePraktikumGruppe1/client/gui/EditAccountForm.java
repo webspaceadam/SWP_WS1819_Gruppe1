@@ -3,6 +3,7 @@ package de.hdm.softwarePraktikumGruppe1.client.gui;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
@@ -107,7 +108,8 @@ public class EditAccountForm extends FlowPanel {
 	private class SafeNewNames implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
-			pinnwandVerwaltung.getUserById(1, new GetUserByIdCallback());
+			int currentUserId = Integer.parseInt(Cookies.getCookie("userId"));
+			pinnwandVerwaltung.getUserById(currentUserId, new GetUserByIdCallback());
 			
 			String newNickname = nickInput.getValue();
 			String newVorname = firstInput.getValue();

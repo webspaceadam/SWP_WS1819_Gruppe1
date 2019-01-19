@@ -6,6 +6,7 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
@@ -74,6 +75,7 @@ public class SWP_WS1819_Gruppe1 implements EntryPoint {
 	public void loadEditor(LoginInfo loginInfo){
 		Window.alert("Eingeloggt mit der mail " + loginInfo.getEmailAddress());
 		pinnwandVerwaltung.getUserByGmail(loginInfo.getEmailAddress(), new GetUserCallback());
+		//Window.alert(loginInfo.getEmailAddress());
 		//pinnwandVerwaltung.getUserById(1, new GetUserCallback());
 
 		// RootPanels
@@ -82,7 +84,7 @@ public class SWP_WS1819_Gruppe1 implements EntryPoint {
 		RootPanel rootProfilePanel = RootPanel.get("linkeSeite");
 		RootPanel rootPinnwandPanel = RootPanel.get("rechteSeite");
 		
-		PinnwandBox pinnwandBox = new PinnwandBox(1);
+		PinnwandBox pinnwandBox = new PinnwandBox(Integer.parseInt(Cookies.getCookie("userId")));
 		
 		FlowPanel ganzeSeite = new FlowPanel();
 		FlowPanel mittlereVier = new FlowPanel();
@@ -156,7 +158,13 @@ public class SWP_WS1819_Gruppe1 implements EntryPoint {
 		public void onSuccess(User result) {
 			// TODO Auto-generated method stub
 			u1 = result;
+			Window.alert(u1.toString());
 			//Window.alert("U1 is corrected: " + u1.toString());
+			Cookies.setCookie("gmail", result.getGMail());
+			Cookies.setCookie("userId", result.getUserId() + "");
+			Cookies.setCookie("firstName", result.getFirstName());
+			Cookies.setCookie("lastName", result.getLastName());
+			Cookies.setCookie("nickName", result.getNickname());
 		}
 		
 	}

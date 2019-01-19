@@ -6,6 +6,7 @@ import java.util.Vector;
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
@@ -57,7 +58,10 @@ public class PinnwandBox extends FlowPanel {
 	}
 	
 	public void onLoad() {
+		int currentUserId = Integer.parseInt(Cookies.getCookie("userId"));
+		//setCurrentUser();
 		pinnwandVerwaltung.getUserById(userId, new GetUserByIdCallback());
+		//pinnwandVerwaltung.getUserById(currentUserId, new GetUserByIdCallback());
 
 		getOldBeitraege();
 		this.addStyleName("rechteSeite");
@@ -86,14 +90,24 @@ public class PinnwandBox extends FlowPanel {
 		parentWrapper.add(contentWrapper);
 		parentWrapper.add(btnWrapper);
 		
-		createBeitragBox.add(parentWrapper);
-		
-		// Adding Elements to the Pinnwand
-		this.add(createBeitragBox);
+		if(this.userId == currentUserId) {
+			createBeitragBox.add(parentWrapper);
+			
+			// Adding Elements to the Pinnwand
+			this.add(createBeitragBox);
+		} else {
+			GWT.log("Pinnwand of:  " + userId);
+		}
 	}
 	
 	public BeitragBox createBeitrag(String content) {
-		BeitragBox newBeitragBox = new BeitragBox(content, this, this.user);
+		User currentUser = new User();
+		currentUser.setUserId(Integer.parseInt(Cookies.getCookie("userId")));
+		currentUser.setFirstName(Cookies.getCookie("firstName"));
+		currentUser.setLastName(Cookies.getCookie("lastName"));
+		currentUser.setNickname(Cookies.getCookie("nickName"));
+		
+		BeitragBox newBeitragBox = new BeitragBox(content, this, currentUser);
 		allBeitragBoxesOfPinnwand.add(newBeitragBox);
 		this.add(allBeitragBoxesOfPinnwand.lastElement());
 		
