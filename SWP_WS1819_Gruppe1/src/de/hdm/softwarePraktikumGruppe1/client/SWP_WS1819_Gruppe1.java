@@ -6,14 +6,18 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.softwarePraktikumGruppe1.client.gui.AuthenticationForm;
@@ -40,6 +44,14 @@ public class SWP_WS1819_Gruppe1 implements EntryPoint {
 	PinnwandverwaltungAsync pinnwandVerwaltung = ClientsideSettings.getPinnwandverwaltung();
 	User u1 = new User();
 	private LoginInfo loginInfo = null;
+	
+	private Label nickName = new Label("Nickname");
+	private Label lastName = new Label("Nachname");
+	private Label firstName = new Label("Vorname");
+	
+	private TextBox nickInput = new TextBox();
+	private TextBox lastInput = new TextBox();
+	private TextBox firstInput = new TextBox();
 
 	
 	
@@ -74,15 +86,18 @@ public class SWP_WS1819_Gruppe1 implements EntryPoint {
 	public void loadEditor(LoginInfo loginInfo){
 		Window.alert("Eingeloggt mit der mail " + loginInfo.getEmailAddress());
 		pinnwandVerwaltung.getUserByGmail(loginInfo.getEmailAddress(), new GetUserCallback());
+		//Window.alert(loginInfo.getEmailAddress());
 		//pinnwandVerwaltung.getUserById(1, new GetUserCallback());
-
+	}
+	
+	public void loadPinnwand() {
 		// RootPanels
 		RootPanel rootPanelHeader = RootPanel.get("header");
 		RootPanel rootPanelContainer = RootPanel.get("container");
 		RootPanel rootProfilePanel = RootPanel.get("linkeSeite");
 		RootPanel rootPinnwandPanel = RootPanel.get("rechteSeite");
 		
-		PinnwandBox pinnwandBox = new PinnwandBox(1);
+		PinnwandBox pinnwandBox = new PinnwandBox(Integer.parseInt(Cookies.getCookie("userId")));
 		
 		FlowPanel ganzeSeite = new FlowPanel();
 		FlowPanel mittlereVier = new FlowPanel();
@@ -90,9 +105,6 @@ public class SWP_WS1819_Gruppe1 implements EntryPoint {
 		
 		Button testBtn = new Button("Cool");
 		Button testBtn2 = new Button("Create");
-		
-		testBtn.addClickHandler(new TestClickHandler());
-		testBtn.addClickHandler(new TestZwei());
 		
 		
 		// GUI Elements
@@ -111,40 +123,95 @@ public class SWP_WS1819_Gruppe1 implements EntryPoint {
 		rootPinnwandPanel.add(pinnwandBox);
 	}
 	
+	/**
+	 * <b>Nested Class einer Registrierungsform</b>
+	 * 
+	 * Abfrage ob der User sich registrieren moechte
+	 */
+	class RegistrationFormDialogBox extends DialogBox {
 	
+		/**
+		 * Instantiierung der notwendigen GUI Objekte
+		 */
+		private Label abfrage = new Label("Du bist noch nicht registriert!"
+				+ "Fülle dieses Formular aus, um deinen User anzulegen.");
+		private Button yesBtn = new Button("Registrieren");
+		private Button noBtn = new Button("Abbrechen");
+		private VerticalPanel vPanel = new VerticalPanel();
+		private HorizontalPanel btnPanel = new HorizontalPanel();
 	
-	public class TestClickHandler implements ClickHandler {
-
+		/**
+		 * Ein String der die E-Mail Adresse speichert
+		 */
+		private String googleMail = "";
+		
+		/**
+		 * Aufruf des Konstruktors
+		 * @param mail
+		 */
+		public RegistrationFormDialogBox(String mail) {
+			googleMail = mail;
+			yesBtn.addClickHandler(new CreateUserClickHandler(this));
+			noBtn.addClickHandler(new DontCreateUserClickHandler(this));
+			vPanel.add(abfrage);
+			vPanel.add(nickName);
+			vPanel.add(nickInput);
+			vPanel.add(firstName);
+			vPanel.add(firstInput);
+			vPanel.add(lastName);
+			vPanel.add(lastInput);
+			btnPanel.add(yesBtn);
+			btnPanel.add(noBtn);
+			vPanel.add(btnPanel);
+			this.add(vPanel);
+		}
+	}
+	
+	private class CreateUserClickHandler implements ClickHandler {
+		RegistrationFormDialogBox parentRFDB;
+		
+		public CreateUserClickHandler(RegistrationFormDialogBox rfdb) {
+			this.parentRFDB = rfdb;
+		}
+		
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 		@Override
 		public void onClick(ClickEvent event) {
-			pinnwandVerwaltung.getUserById(1, new GetUserCallback());
+			pinnwandVerwaltung.createUser(firstInput.getText(), lastInput.getText(), nickInput.getText(), loginInfo.getEmailAddress(), timestamp, new CreateUserCallback(parentRFDB));
 		}
 		
 	}
 	
-	public class TestZwei implements ClickHandler {
-
-		@Override
-		public void onClick(ClickEvent event) {
-			pinnwandVerwaltung.createUser("Seb", "Hermi", "derHermi", "hermi@gmail.com", new Timestamp(System.currentTimeMillis()), new CreateUserCallback());
+	private class CreateUserCallback implements AsyncCallback<User> {
+		RegistrationFormDialogBox parentRFDB;
+		
+		public CreateUserCallback(RegistrationFormDialogBox rfdb) {
+			this.parentRFDB = rfdb;
 		}
 		
-	}
-	
-	public class CreateUserCallback implements AsyncCallback<User> {
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Window.alert("Fail!" + caught.getMessage());
 		}
 
 		@Override
 		public void onSuccess(User result) {
-			Window.alert("Worked! Neuer User: " + result.toString());
+			Window.alert("Ihr Nutzer wurde angelegt");
+			Cookies.setCookie("gmail", result.getGMail());
+			Cookies.setCookie("userId", result.getUserId() + "");
+			Cookies.setCookie("firstName", result.getFirstName());
+			Cookies.setCookie("lastName", result.getLastName());
+			Cookies.setCookie("nickName", result.getNickname());
+			// hide(); - funktioniert nicht
+			this.parentRFDB.hide();
+			
+			pinnwandVerwaltung.createPinnwand(result, timestamp, new CreatePinnwandCallback());
 		}
+		
 	}
 	
-	public class GetUserCallback implements AsyncCallback<User> {
+	private class CreatePinnwandCallback implements AsyncCallback<Pinnwand> {
 
 		@Override
 		public void onFailure(Throwable caught) {
@@ -153,10 +220,49 @@ public class SWP_WS1819_Gruppe1 implements EntryPoint {
 		}
 
 		@Override
+		public void onSuccess(Pinnwand result) {
+			//loadEditor();
+			loadPinnwand();
+		}
+		
+	}
+	
+	private class DontCreateUserClickHandler implements ClickHandler {
+		RegistrationFormDialogBox parentRFDB;
+		
+		public DontCreateUserClickHandler(RegistrationFormDialogBox rfdb) {
+			this.parentRFDB = rfdb;
+		}
+
+		@Override
+		public void onClick(ClickEvent event) {
+			this.parentRFDB.hide();
+		}
+		
+	}
+		
+	public class GetUserCallback implements AsyncCallback<User> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			
+		}
+
+		@Override
 		public void onSuccess(User result) {
-			// TODO Auto-generated method stub
-			u1 = result;
-			//Window.alert("U1 is corrected: " + u1.toString());
+			
+			if(result != null) {
+				//Window.alert("U1 is corrected: " + u1.toString());
+				Cookies.setCookie("gmail", result.getGMail());
+				Cookies.setCookie("userId", result.getUserId() + "");
+				Cookies.setCookie("firstName", result.getFirstName());
+				Cookies.setCookie("lastName", result.getLastName());
+				Cookies.setCookie("nickName", result.getNickname());
+				loadPinnwand();
+			} else {
+				RegistrationFormDialogBox dlgBox = new RegistrationFormDialogBox(loginInfo.getEmailAddress());
+				dlgBox.center();
+			}
 		}
 		
 	}

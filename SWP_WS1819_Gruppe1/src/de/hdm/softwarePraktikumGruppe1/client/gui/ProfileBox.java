@@ -4,6 +4,7 @@ import java.util.Vector;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
@@ -73,7 +74,8 @@ public class ProfileBox extends FlowPanel {
 
 		
 		public void onLoad() {
-			pinnwandVerwaltung.getUserById(1, new GetUserByIdCallback());
+			int currentUserId = Integer.parseInt(Cookies.getCookie("userId"));
+			pinnwandVerwaltung.getUserById(currentUserId, new GetUserByIdCallback());
 			
 			
 			// Adding Styling for ProfileBox

@@ -6,6 +6,7 @@ import java.util.Vector;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -88,6 +89,7 @@ public class BeitragBox extends FlowPanel {
 	private User user;
 	private Beitrag beitrag;
 	private Like likeCheck;
+	private int currentUserId = Integer.parseInt(Cookies.getCookie("userId"));
 	
 	
 	// Constructor for the creation of Beitrag
@@ -96,14 +98,22 @@ public class BeitragBox extends FlowPanel {
 		this.parentPinnwandBox = pb;
 		this.beitragContent.setText(content);
 		this.user = user;
-		pinnwandVerwaltung.createBeitrag(content, user, timestamp, new CreateBeitragCallback());
+		
+		Window.alert("Content: " + "\n" +
+						this.beitragContent.getText()
+						+ " \n" + " Von User: " + "\n"
+						+ this.user.toString()
+				);
+		pinnwandVerwaltung.createBeitrag(this.beitragContent.getText(), this.user, timestamp, new CreateBeitragCallback());
 	}
 	
 	public class CreateBeitragCallback implements AsyncCallback<Beitrag> {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Window.alert("Problem with CreateBeitragCallback");
+			Window.alert("Problem with CreateBeitragCallback" + "\n"
+					+ caught.toString()
+					);
 		}
 
 		@Override
@@ -198,7 +208,11 @@ public class BeitragBox extends FlowPanel {
 		// Add Elements to Wrapper
 		userInfoWrapper.add(accountName);
 		userInfoWrapper.add(nickName);
-		userInfoWrapper.add(editPenBtn);
+		
+		if(this.userId == this.currentUserId) {
+			userInfoWrapper.add(editPenBtn);
+		}
+		
 		creationInfoWrapper.add(creationDate);
 		contentWrapper.add(beitragContent);
 		
