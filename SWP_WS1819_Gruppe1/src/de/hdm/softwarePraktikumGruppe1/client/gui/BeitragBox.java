@@ -208,10 +208,8 @@ public class BeitragBox extends FlowPanel {
 		// Add Elements to Wrapper
 		userInfoWrapper.add(accountName);
 		userInfoWrapper.add(nickName);
-		
-		if(this.userId == this.currentUserId) {
-			userInfoWrapper.add(editPenBtn);
-		}
+		userInfoWrapper.add(editPenBtn);
+	
 		
 		creationInfoWrapper.add(creationDate);
 		contentWrapper.add(beitragContent);
