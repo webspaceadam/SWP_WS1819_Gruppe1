@@ -65,13 +65,15 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	/**
 	 * Methode um einen User zu erstellen.
 	 */
-	public User createUser(String firstName, String lastName, String nickName, String gMail, Timestamp timestamp ) throws IllegalArgumentException {
+	public User createUser(String firstName, String lastName, String nickName, String gMail, Timestamp timestamp) throws IllegalArgumentException {
 		User u = new User();
 		u.setFirstName(firstName);
 		u.setLastName(lastName);
 		u.setNickname(nickName);
 		u.setGMail(gMail);
 		u.setCreationTimeStamp(timestamp);
+		this.createPinnwand(u, timestamp);
+		
 		this.uMapper.insert(u);
 		return u;
 	
@@ -239,11 +241,10 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	/**
 	 * Methode um ein neues Abonnement zu erzeugen
 	 */
-	public Abonnement createAbonnement(User u, Pinnwand p, Timestamp timeStamp) {
+	public Abonnement createAbonnement(User u1, User u2, Timestamp timestamp) {
 		Abonnement a = new Abonnement();
-		a.setOwnerId(u.getUserId());
-		a.setPinnwandId(p.getPinnwandId());
-		
+		a.setOwnerId(u1.getUserId());
+		a.setPinnwandId((this.pMapper.findPinnwandByUserId(u2.getUserId())).getPinnwandId());
 		this.aMapper.insert(a);
 		return a;
 		
@@ -255,10 +256,22 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	public void deleteAbonnement(Abonnement a) {
 		this.aMapper.deleteAbonnement(a);
 	}
+	public boolean abonnementCheck(User u, Pinnwand p) {
+		if(this.aMapper.findAbonnementsOfPinnwandAndUser(u.getUserId(), p.getPinnwandId())!=null) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	public Abonnement getAbonnementBetweenUsers(User u1, User u2) {
+		return this.aMapper.findAbonnementsOfPinnwandAndUser(u1.getUserId(), pMapper.findPinnwandByUserId(u2.getUserId()).getPinnwandId());
+	}
 	
 	public Kommentar getKommentarById(int kommentarId) {
 		return this.kMapper.findKommentarById(kommentarId);
 	}
+	
 	/**
 	 * Methode um einen neues Kommentar zu erzeugen
 	 */

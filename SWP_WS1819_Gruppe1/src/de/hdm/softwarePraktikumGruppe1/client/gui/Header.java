@@ -259,7 +259,7 @@ public class Header extends FlowPanel {
 				
 				
 				for(User u: searchResults) {
-					SearchAboBox singleUserBox = new SearchAboBox(u);
+					SearchAboBox singleUserBox = new SearchAboBox(user, u);
 					searchResultBoxes.add(singleUserBox);
 				}
 				
