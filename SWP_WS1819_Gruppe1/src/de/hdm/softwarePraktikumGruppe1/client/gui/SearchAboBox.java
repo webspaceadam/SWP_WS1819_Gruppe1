@@ -137,11 +137,14 @@ public class SearchAboBox extends FlowPanel {
 				//Existiert noch kein Abonnement-Objekt, wird ein SetAbonnementClickHandler erstellt, der das Erstellen eines Abonnement-Objekts ermöglicht.
 				getAboBtn.addClickHandler(new SetAbonnementClickHandler());
 				getAboBtn.setText("Abonnieren");
+//				getAboBtn.addStyleName("abonnementbutton");
 				
 			}else {
 				//Existiert ein Abonnement-Objekt, so wird ein DeleteAbonnementClickHandler erstellt, der das Löschen des Abonnement-Objekts ermöglicht.
+				abonnementbetweenShownUserAndLoggedInUser=result;
 				getAboBtn.addClickHandler(new DeleteAbonnementClickHandler());
 				getAboBtn.setText("Deabonnieren");
+//				getAboBtn.addStyleName("deabonnementbutton");
 			}
 			aboWrapper.add(getAboBtn);
 			
