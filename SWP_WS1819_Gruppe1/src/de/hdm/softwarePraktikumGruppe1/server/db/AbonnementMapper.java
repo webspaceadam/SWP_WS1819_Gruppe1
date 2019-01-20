@@ -9,10 +9,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.Vector;
 
 import de.hdm.softwarePraktikumGruppe1.server.ReportGeneratorServiceImpl;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Abonnement;
+import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
 
 /**
@@ -239,6 +241,32 @@ public class AbonnementMapper {
 			e.printStackTrace();
 			}
 		return null;
+			
+		}
+
+		public Abonnement findAbonnementsOfPinnwandAndUser(int userFk, int pinnwandFk) {
+			// TODO Auto-generated method stub
+			Connection con= DBConnection.connection();
+			Abonnement a = new Abonnement();
+			try {
+			
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM abonnement WHERE UserFK=" + userFk + " AND PinnwandFK=" + pinnwandFk);
+					
+					if(rs.next()) {
+						
+						a.setAbonnementId(rs.getInt("AbonnementID"));
+						a.setPinnwandId(rs.getInt("PinnwandFK"));
+						a.setOwnerId(rs.getInt("UserFK"));
+
+						
+					}
+					return a;
+					
+			} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+			}
 			
 		}
 

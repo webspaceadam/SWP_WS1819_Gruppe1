@@ -71,10 +71,7 @@ public interface PinnwandverwaltungAsync{
 	 */
 	public void showAllAbonnementsByUser(User u, AsyncCallback<Vector<Abonnement>> callback);
 	
-	/**
-	 * Methode um ein neues Abonnement zu erzeugen
-	 */
-	public void createAbonnement(User u, Pinnwand p, Timestamp timestamp, AsyncCallback<Abonnement> callback);
+	void createAbonnement(User u1, User u2, Timestamp timestamp, AsyncCallback<Abonnement> callback);
 	
 	/**
 	 * Methode um ein bestehendes Abonnement zu Loeschen
@@ -143,6 +140,10 @@ public interface PinnwandverwaltungAsync{
 	void getPinnwandById(int pinnwandId, AsyncCallback<Pinnwand> callback);
 
 	void searchFunction(String searchQuery, AsyncCallback<Vector<User>> callback);
+
+	void abonnementCheck(User u, Pinnwand p, AsyncCallback<Boolean> callback);
+
+	void getAbonnementBetweenUsers(User u1, User u2, AsyncCallback<Abonnement> callback);
 	
 		
 

@@ -103,7 +103,7 @@ public interface Pinnwandverwaltung extends RemoteService {
 	/**
 	 * Methode um ein neues Abonnement zu erzeugen
 	 */
-	public Abonnement createAbonnement(User u, Pinnwand p, Timestamp timestamp);
+	public Abonnement createAbonnement(User u1, User u2, Timestamp timestamp);
 	
 	/**
 	 * Methode um ein bestehendes Abonnement zu Loeschen
@@ -165,5 +165,8 @@ public interface Pinnwandverwaltung extends RemoteService {
 	
 	public Vector<User> searchFunction(String searchQuery);
 	
-
+	public boolean abonnementCheck(User u, Pinnwand p);
+	
+	public Abonnement getAbonnementBetweenUsers(User u1, User u2);
+	
 }
