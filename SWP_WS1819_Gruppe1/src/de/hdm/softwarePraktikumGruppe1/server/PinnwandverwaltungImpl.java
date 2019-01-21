@@ -49,8 +49,8 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	}
 	
 
-	/* Initialisierungsmethode, welche alle Mapper initialisiert.
-	 * 
+	/** Initialisierungsmethode, welche alle Mapper initialisiert.
+	 * @throws IllegalArgumentException
 	 */
 	
 	public void init() throws IllegalArgumentException {
