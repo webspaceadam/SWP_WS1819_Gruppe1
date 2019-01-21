@@ -23,6 +23,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
 /**
  * @author SebastianHermann
+ * @author Yesin Soufi
  * Klasse die das Interface Pinnwandverwaltung Implementiert und das RemoteServiceServlet als Superklasse besitzt
  */
 @SuppressWarnings("serial")
