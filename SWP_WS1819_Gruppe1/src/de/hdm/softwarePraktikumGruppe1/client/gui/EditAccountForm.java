@@ -36,6 +36,7 @@ public class EditAccountForm extends FlowPanel {
 	private TextBox lastInput = new TextBox();
 	private TextBox firstInput = new TextBox();
 	private Button safeButton = new Button("Speichern");
+	private Button deleteButton = new Button("Lösche User");
 	
 	private ProfileBox parentPB;
 	private EditProfileBoxDialogBox parentDialogBox;
@@ -90,6 +91,8 @@ public class EditAccountForm extends FlowPanel {
 		firstNameWrapper.add(firstInput);
 		
 		safeButton.addStyleName("button bg-primary");
+		deleteButton.addStyleName("button is-danger");
+		deleteButton.addClickHandler(new DeleteUserClickHandler());
 		safeButton.addClickHandler(new SafeNewNames());
 		
 		// Adding the Elements to the Form
@@ -97,6 +100,84 @@ public class EditAccountForm extends FlowPanel {
 		this.add(firstNameWrapper);
 		this.add(nameWrapper);
 		this.add(safeButton);
+		this.add(deleteButton);
+	}
+	
+	private class DeleteUserClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			DeleteUserDialogBox deleteUserDB = new DeleteUserDialogBox();
+			
+			deleteUserDB.center();
+		}
+		
+	}
+	
+	private class DeleteUserDialogBox extends DialogBox {
+		private VerticalPanel vPanel = new VerticalPanel();
+		private HorizontalPanel btnPanel = new HorizontalPanel();
+		
+		private Label abfrage = new Label("Bist du dir Sicher, dass du deinen User löschen möchtest?");
+		private Button jaBtn = new Button("Ja");
+		private Button neinBtn = new Button("Nein");
+		
+		public DeleteUserDialogBox() {
+			jaBtn.addClickHandler(new YesDeleteClickHandler(this));
+			neinBtn.addClickHandler(new NoClickHandler(this));
+			
+			vPanel.add(abfrage);
+			btnPanel.add(jaBtn);
+			btnPanel.add(neinBtn);
+			vPanel.add(btnPanel);
+			
+			this.add(vPanel);
+		}
+	}
+	
+	private class YesDeleteClickHandler implements ClickHandler {
+		private DeleteUserDialogBox parentDUDB;
+		
+		public YesDeleteClickHandler(DeleteUserDialogBox dudb) {
+			this.parentDUDB = dudb;
+		}
+
+		@Override
+		public void onClick(ClickEvent event) {
+			this.parentDUDB.hide();
+			User deletableUser = new User();
+			deletableUser.setUserId(Integer.parseInt(Cookies.getCookie("userId")));
+			
+			pinnwandVerwaltung.deleteUser(deletableUser, new DeleteUserCallback());
+		}
+	}
+	
+	private class DeleteUserCallback implements AsyncCallback<Void> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert(caught.toString());
+		}
+
+		@Override
+		public void onSuccess(Void result) {
+			Window.alert("Dein User wurde erfolgreich gelöscht!");
+		}
+		
+	}
+	
+	private class NoClickHandler implements ClickHandler {
+		private DeleteUserDialogBox parentDUDB;
+		
+		public NoClickHandler(DeleteUserDialogBox dudb) {
+			this.parentDUDB = dudb;
+		}
+
+		@Override
+		public void onClick(ClickEvent event) {
+			this.parentDUDB.hide();
+		}
+		
 	}
 	
 	/**
