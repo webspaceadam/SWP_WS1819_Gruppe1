@@ -1,5 +1,8 @@
 package de.hdm.softwarePraktikumGruppe1.client.gui;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
 
 /**
@@ -8,15 +11,21 @@ import com.google.gwt.user.client.ui.*;
  * System. 
  * 
  * @author AdamGniady
+ * @author JakobBenkoe
  *
  */
 public class AuthenticationForm extends FlowPanel {
-	private Label welcomeLabel = new Label("Zugang �ber dein Google Konto");
+	private Label welcomeLabel = new Label("Zugang über dein Google Konto");
 	private Button googleBtn = new Button();
 	private Image imgGoogle = new Image("images/googleLogo.png");
 	private Image pinnersLogo = new Image("images/SVG/standard_logo.svg");
+	private String loginURL;
 	
 	public AuthenticationForm() {
+	}
+	
+	public AuthenticationForm(String loginURL) {
+		this.loginURL = loginURL;		
 	}
 	
 	public void onLoad() {
@@ -36,5 +45,21 @@ public class AuthenticationForm extends FlowPanel {
 		this.add(pinnersLogo);
 		this.add(welcomeLabel);
 		this.add(googleBtn);
+		
+		googleBtn.addClickHandler(new loginClickHandler());
 	}
+	
+	
+	//ClickHandler für Login Button
+	private class loginClickHandler implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			
+			//Leite User zum Google Login weiter
+			Window.Location.assign(loginURL);
+		}
+		
+	}
+
 }

@@ -6,6 +6,7 @@ import java.util.Vector;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -22,6 +23,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import de.hdm.softwarePraktikumGruppe1.client.ClientsideSettings;
 import de.hdm.softwarePraktikumGruppe1.shared.PinnwandverwaltungAsync;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Beitrag;
+import de.hdm.softwarePraktikumGruppe1.shared.bo.Kommentar;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Like;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
@@ -36,7 +38,13 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 public class BeitragBox extends FlowPanel {
 	PinnwandverwaltungAsync pinnwandVerwaltung = ClientsideSettings.getPinnwandverwaltung();
 
+
 	private Vector<KommentarBox> kommentarsOfBeitrag = new Vector<KommentarBox>();
+
+	private Vector<KommentarBox> kommentarBoxesOfBeitrag = new Vector<KommentarBox>();
+	private Vector<Like> likes = new Vector<Like>();
+	private Vector<Kommentar> kommentareOfBeitrag = new Vector<Kommentar>();
+
 	
 	// Panels for the Element
 	private VerticalPanel parentVerticalPanel = new VerticalPanel();
@@ -81,6 +89,8 @@ public class BeitragBox extends FlowPanel {
 	private User user;
 	private Beitrag beitrag;
 	private Like likeCheck;
+	private int currentUserId = Integer.parseInt(Cookies.getCookie("userId"));
+	
 	
 	// Constructor for the creation of Beitrag
 	public BeitragBox(String content, PinnwandBox pb, User user) {
@@ -88,18 +98,27 @@ public class BeitragBox extends FlowPanel {
 		this.parentPinnwandBox = pb;
 		this.beitragContent.setText(content);
 		this.user = user;
-		pinnwandVerwaltung.createBeitrag(content, user, timestamp, new CreateBeitragCallback());
+		
+		Window.alert("Content: " + "\n" +
+						this.beitragContent.getText()
+						+ " \n" + " Von User: " + "\n"
+						+ this.user.toString()
+				);
+		pinnwandVerwaltung.createBeitrag(this.beitragContent.getText(), this.user, timestamp, new CreateBeitragCallback());
 	}
 	
 	public class CreateBeitragCallback implements AsyncCallback<Beitrag> {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Window.alert("Problem with CreateBeitragCallback");
+			Window.alert("Problem with CreateBeitragCallback" + "\n"
+					+ caught.toString()
+					);
 		}
 
 		@Override
 		public void onSuccess(Beitrag result) {
+			GWT.log("beitrag Id: " + result.getBeitragId());
 			beitragId = result.getBeitragId();
 			userId = result.getOwnerId();
 			accountName.setText(user.getFirstName() + " " + user.getLastName());
@@ -117,7 +136,9 @@ public class BeitragBox extends FlowPanel {
 	}
 	
 	public void onLoad() {
-		
+		Beitrag thisBeitrag = new Beitrag();
+		thisBeitrag.setBeitragID(beitragId);
+		pinnwandVerwaltung.getAllKommentareOfBeitrag(thisBeitrag, new GetAllKommentareCallback(this));
 		// Date
 //		Date now = new Date();
 //		DateTimeFormat fmt = DateTimeFormat.getFormat("HH:mm:ss, EEEE, dd MMMM, yyyy");
@@ -158,10 +179,12 @@ public class BeitragBox extends FlowPanel {
 //		creationDate.setText("Erstellungszeitpunkt: " + date);
 		
 		// Likecount info
+		pinnwandVerwaltung.countLikes(thisBeitrag, new CountLikeCallback());
 		likeHeart.setWidth("1rem");
 		likeHeart.addStyleName("small-padding-right");
 		likeCountText.addStyleName("is-size-6 is-italic");
 		likeCountText.setText(" auf diesem Beitrag: " + likeCount);
+		
 		
 		// Adding Elements to the Wrapper
 		likeInfoWrapper.add(likeHeart);
@@ -186,6 +209,8 @@ public class BeitragBox extends FlowPanel {
 		userInfoWrapper.add(accountName);
 		userInfoWrapper.add(nickName);
 		userInfoWrapper.add(editPenBtn);
+	
+		
 		creationInfoWrapper.add(creationDate);
 		contentWrapper.add(beitragContent);
 		
@@ -235,6 +260,29 @@ public class BeitragBox extends FlowPanel {
 		
 	}
 	
+	public class CountLikeCallback implements AsyncCallback<Integer> {
+//		Beitrag currentBeitrag = new Beitrag();
+		
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert("Problem with CountLikeCallback");
+			
+		}
+
+		@Override
+		public void onSuccess(Integer result) {
+			//likeCount = result;
+			GWT.log("LikeCount is: " + result);
+//			likeCount = likeCount + result;
+			likeCountText.setText(" auf diesem Beitrag: " + result);
+
+			}
+			
+		
+		
+	}
+	
+	
 	/**
 	 * Die innere Klasse <code>LikeCountClickHandler</code> implementiert das Clickhandler 
 	 * Interface und dessen dazugehörige <code>onClick(ClickEvent event)</code> Methode.
@@ -245,47 +293,103 @@ public class BeitragBox extends FlowPanel {
 	 */
 	private class LikeCountClickHandler implements ClickHandler {
 		private BeitragBox parentBB;
+		private Beitrag parentBeitrag = new Beitrag();
+		private User likingUser = new User();
 		
 		/*
 		 * @param bb
 		 */
 		public LikeCountClickHandler(BeitragBox bb) {
 			parentBB = bb;
+			this.parentBeitrag.setBeitragId(parentBB.beitragId);
+			// COOKIE
+			this.likingUser.setUserId(1);
+			
 		}
 			
 		@Override
-		public void onClick(ClickEvent event) {
-			pinnwandVerwaltung.likeCheck(user, beitrag, new IsLikedCallback());
+		public void onClick(ClickEvent event) {			
+			pinnwandVerwaltung.likeCheck(likingUser, parentBeitrag , new IsLikedCallback());
 			
-			parentBB.likeCount += 1;
-			parentBB.likeCountText.setText(" auf diesem Beitrag: " + parentBB.likeCount);
-			GWT.log("Like Count is: " + parentBB.likeCount);
 		}
 		
 		public class IsLikedCallback implements AsyncCallback<Like> {
+			
+			Timestamp timestamp = new Timestamp(beitragId);
+			User currentUser = new User();
+			Beitrag currentBeitrag = new Beitrag();
+			
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert(caught.toString());
+			}
+
+			
+			@Override
+			public void onSuccess(Like result) {
+				if(result != null) {
+					currentUser.setUserId(1);
+					currentBeitrag.setBeitragId(beitragId);
+					GWT.log(result.toString());
+					pinnwandVerwaltung.deleteLike(result, new DeleteLikeCallback());
+				}else {
+					currentUser.setUserId(1);
+					currentBeitrag.setBeitragId(beitragId);
+					pinnwandVerwaltung.createLike(currentUser, currentBeitrag, timestamp, new CreateLikeCallback());
+				}
+				
+				
+
+				
+			}
+			
+		
+		
+		public class CreateLikeCallback implements AsyncCallback<Like>{
 
 			@Override
 			public void onFailure(Throwable caught) {
-				Window.alert("Problem with IsLikedCallback");
+				Window.alert("Problem with CreateLikeCallback");
 				
 			}
 
 			@Override
 			public void onSuccess(Like result) {
-				if(result != null) {
-					parentBB.likeCount -= 1;
-				}else {
-					parentBB.likeCount += 1;
-
+				Window.alert("Beitrag wurde geliked");	
+				pinnwandVerwaltung.countLikes(currentBeitrag, new CountLikeCallback());
 				}
-				parentBB.likeCountText.setText(" auf diesem Beitrag: " + parentBB.likeCount);
-				GWT.log("Like Count is: " + parentBB.likeCount);
 				
 			}
 			
-			
 		}
+			
+		public class DeleteLikeCallback implements AsyncCallback<Boolean> {
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Problem with DeleteLikeCallback");
+				
+			}
+
+			@Override
+			public void onSuccess(Boolean result) {
+				if(result == true) {
+					Window.alert("Like wurde entfernt");
+					Beitrag currentBeitrag = new Beitrag();
+					currentBeitrag.setBeitragId(beitragId);
+					pinnwandVerwaltung.countLikes(currentBeitrag, new CountLikeCallback());
+				}else {
+					Window.alert("Like wurde nicht entfernt");
+				}
+				
+		}
+				
+		}
+			
 	}
+		
+	
 	
 	/**
 	 * Die innere Klasse <code>EditBeitragBoxClickHandler</code> ist zuständig für die Editierbarkeit
@@ -443,8 +547,8 @@ public class BeitragBox extends FlowPanel {
 		public void onClick(ClickEvent event) {
 			createKommentarWrapper.setVisible(false);
 			String kommentarContent = kommentarTextArea.getValue();
-			createKommentar(kommentarContent);
-			GWT.log(kommentarsOfBeitrag.toString());
+			KommentarBox tempKB = createKommentar(kommentarContent);
+			GWT.log(kommentarBoxesOfBeitrag.toString());
 			kommentarTextArea.setText("");
 		}
 		
@@ -457,10 +561,10 @@ public class BeitragBox extends FlowPanel {
 	 * @param commentarContent
 	 * @return newKommentarBox an der BeitragBox
 	 */
-	public KommentarBox createKommentar(String commentarContent) {
+	private KommentarBox createKommentar(String commentarContent) {
 		KommentarBox newKommentarBox = new KommentarBox(commentarContent, this);
-		kommentarsOfBeitrag.addElement(newKommentarBox);
-		this.add(kommentarsOfBeitrag.lastElement());
+		kommentarBoxesOfBeitrag.addElement(newKommentarBox);
+		this.add(kommentarBoxesOfBeitrag.lastElement());
 		
 		return newKommentarBox; 
 	}
@@ -476,7 +580,7 @@ public class BeitragBox extends FlowPanel {
 	public void deleteKommentar(KommentarBox deletableKB) {
 		deletableKB.removeFromParent();
 		
-		kommentarsOfBeitrag.removeElement(deletableKB);
+		kommentarBoxesOfBeitrag.removeElement(deletableKB);
 	}
 	
 	/**
@@ -610,6 +714,40 @@ public class BeitragBox extends FlowPanel {
 	 */
 	public void setNickName(String nickName) {
 		this.nickName.setText(nickName);
+	}
+	
+	private class GetAllKommentareCallback implements AsyncCallback<Vector<Kommentar>> {
+		private BeitragBox pB;
+		
+		public GetAllKommentareCallback(BeitragBox pB) {
+			this.pB = pB;
+		}
+
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert("Problem with GetAllKommentareCallback");
+		}
+
+		@Override
+		public void onSuccess(Vector<Kommentar> result) {
+			kommentareOfBeitrag = result;
+			GWT.log(kommentareOfBeitrag.toString());
+			showOldKommentare();
+		}
+		
+	}
+	
+	private void showOldKommentare() {
+		for (Kommentar k : this.kommentareOfBeitrag) {
+			KommentarBox tempKommentarBox = new KommentarBox();
+			
+			tempKommentarBox.setKommentarContent(k.getInhalt());
+			tempKommentarBox.setParentBeitragBox(this);
+			tempKommentarBox.setKommentarId(k.getKommentarId());
+			tempKommentarBox.setOwnerId(k.getOwnerId());
+			
+			this.add(tempKommentarBox);
+		}
 	}
 	
 	

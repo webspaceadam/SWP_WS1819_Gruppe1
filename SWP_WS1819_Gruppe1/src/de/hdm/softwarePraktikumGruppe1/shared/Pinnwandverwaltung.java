@@ -4,6 +4,7 @@
 package de.hdm.softwarePraktikumGruppe1.shared;
 
 import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.Vector;
 
 import com.google.gwt.user.client.rpc.RemoteService;
@@ -102,7 +103,7 @@ public interface Pinnwandverwaltung extends RemoteService {
 	/**
 	 * Methode um ein neues Abonnement zu erzeugen
 	 */
-	public Abonnement createAbonnement(User u, Pinnwand p, Timestamp timestamp);
+	public Abonnement createAbonnement(User u1, User u2, Timestamp timestamp);
 	
 	/**
 	 * Methode um ein bestehendes Abonnement zu Loeschen
@@ -135,14 +136,14 @@ public interface Pinnwandverwaltung extends RemoteService {
 	public Like createLike(User u, Beitrag b, Timestamp timestamp);
 	
 	/**
-	 * Methode zur Ueberpruefung ob der Beitrag bereits geliket ist
+	 * Methode zur Ueberpruefung ob der Beitrag bereits geliket ist gibt ein Like zurück
 	 */
 	public Like likeCheck(User u, Beitrag b);
 	
 	/**
 	 * Methode um einen Beitrag zu entliken
 	 */
-	public void deleteLike(Like l);
+	public Boolean deleteLike(Like l);
 	
 	/**
 	 * Methode um alle Likes eines Beitrags zu zaehlen
@@ -162,5 +163,10 @@ public interface Pinnwandverwaltung extends RemoteService {
 	
 	public void deletePinnwand(Pinnwand p);
 	
-
+	public Vector<User> searchFunction(String searchQuery);
+	
+	public boolean abonnementCheck(User u, Pinnwand p);
+	
+	public Abonnement getAbonnementBetweenUsers(User u1, User u2);
+	
 }

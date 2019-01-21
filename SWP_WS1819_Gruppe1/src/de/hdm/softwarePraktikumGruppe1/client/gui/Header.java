@@ -1,4 +1,6 @@
 package de.hdm.softwarePraktikumGruppe1.client.gui;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Vector;
 
 
@@ -6,6 +8,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.GwtEvent;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
@@ -26,7 +29,9 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
 public class Header extends FlowPanel {
 		PinnwandverwaltungAsync pinnwandVerwaltung = null;
+		String logOutURL;
 		User user = null;
+		int currentUserId = Integer.parseInt(Cookies.getCookie("userId"));
 		
 		Vector<Abonnement> userAbonnements = new Vector<Abonnement>();
 		Vector<Pinnwand> aboPinnwaende = new Vector<Pinnwand>();
@@ -55,6 +60,7 @@ public class Header extends FlowPanel {
 		// Create Images
 		Image logo = new Image();
 		
+		
 		// Create Anchors / Links
 		private Anchor meinePinnwand = new Anchor("Meine Pinnwand");
 		private Anchor meineAbos = new Anchor("Meine Abos");
@@ -75,7 +81,7 @@ public class Header extends FlowPanel {
 		 */
 		public void onLoad() {
 			pinnwandVerwaltung = ClientsideSettings.getPinnwandverwaltung();
-			pinnwandVerwaltung.getUserById(1, new GetUserByIdCallback());
+			pinnwandVerwaltung.getUserById(currentUserId, new GetUserByIdCallback());
 			
 			// Add Styling to this Element
 			this.addStyleName("header bg-primary");
@@ -135,11 +141,23 @@ public class Header extends FlowPanel {
 			searchButton.addClickHandler(new SearchUserClickHandler(this));
 			meineAbos.addClickHandler(new ShowAbosClickHandler(this));
 			meinePinnwand.addClickHandler(new ShowMyPinnwandClickHandler());
+			logoutButton.addClickHandler(new LogoutClickHandler());
 			
 			
 			this.add(headerLogo);
 			this.add(headerLinkList);
 			this.add(headerRight);
+		}
+		
+		private class LogoutClickHandler implements ClickHandler {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				
+				//Leite User zum Google LogOut weiter
+				Window.Location.assign(logOutURL);
+			}
+			
 		}
 		
 		private class ShowMyPinnwandClickHandler implements ClickHandler {
@@ -150,7 +168,7 @@ public class Header extends FlowPanel {
 				rootPinnwandPanel.clear();
 				
 				// Go to the Pinnwand of the current User
-				PinnwandBox userPinnwand = new PinnwandBox(1);
+				PinnwandBox userPinnwand = new PinnwandBox(currentUserId);
 				rootPinnwandPanel.add(userPinnwand);				
 			}
 			
@@ -230,38 +248,41 @@ public class Header extends FlowPanel {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				SearchUserDialogBox dlg = new SearchUserDialogBox(parentHeader.searchUserInput.getValue());
-				dlg.center();
+				pinnwandVerwaltung.searchFunction((parentHeader.searchUserInput.getValue()) , new SearchResultCallback());
 			}
 			
 		}
 		
 		private class SearchUserDialogBox extends DialogBox implements ClickHandler {
+			
 			private ScrollPanel parentScrolling = new ScrollPanel();
 			private FlowPanel aboParentPanel = new FlowPanel();
-			private String keyword;
-			private String anzeigeText = " Treffer";
 			private int ergebnisCounter;
 			
-			private Vector<SearchAboBox> searchResult = new Vector<SearchAboBox>();
 			
-			public SearchUserDialogBox(String keyword) {
-				this.keyword = keyword;
-				setText("Ergebnis deiner Suche nach: " + keyword);
+			
+			private Vector<SearchAboBox> searchResultBoxes = new Vector<SearchAboBox>();
+			
+			public SearchUserDialogBox(Vector<User> searchResults) {
+				this.ergebnisCounter = searchResults.size();
+				
+				setText("Deine Suche ergab "+ergebnisCounter + " Treffer");
+				//Methode zum auslesen der vectorgröße wird hier ausgeführt.
 				
 				// Vector searchResult befuellen. Es wird die Methode SearchFunction aufgerufen.
 				// Die Methode SearchFunction gibt ein HashSet mit Usern zurueck. Die HashSet Collection 
 				// wird dann in einen Vector konvertiert.
 				
-				for(int i = 0; i < 5; i++) {
-					SearchAboBox tempSAB = new SearchAboBox();
-					
-					searchResult.add(tempSAB);
+				
+				for(User u: searchResults) {
+					SearchAboBox singleUserBox = new SearchAboBox(user, u);
+					searchResultBoxes.add(singleUserBox);
 				}
 				
-				for(int i = 0; i < searchResult.size(); i++) {
-					aboParentPanel.add(searchResult.elementAt(i));
+				for(SearchAboBox s: searchResultBoxes) {
+					aboParentPanel.add(s);
 				}
+				
 				
 				parentScrolling.add(aboParentPanel);
 				parentScrolling.setSize("800px", "400px");
@@ -288,6 +309,32 @@ public class Header extends FlowPanel {
 			public void onClick(ClickEvent event) {
 				hide();
 			}
+		}
+		
+		public class SearchResultCallback implements AsyncCallback<Vector<User>>{
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Shit");
+				
+			}
+
+			@Override
+			public void onSuccess(Vector<User> result) {
+				if (result.size()>0) {
+					//Window.alert("Deine Suche ergab " + result.size()+ " Treffer");
+					SearchUserDialogBox dlg = new SearchUserDialogBox(result);
+					dlg.center();
+					
+				}else {
+					Window.alert("Deine Suche ergab 0 Treffer");
+				}
+				
+				
+			}
+
+			
+			
 		}
 		
 		public class GetUserByIdCallback implements AsyncCallback<User> {
@@ -357,5 +404,9 @@ public class Header extends FlowPanel {
 				GWT.log(tempUser.toString());
 				pinnwandOwner.add(tempUser);
 			}
+		}
+		
+		public void setLogOutURL(String logOutURL) {
+			this.logOutURL = logOutURL;
 		}
 }

@@ -75,6 +75,8 @@ public class BeitragMapper {
 					b.setBeitragId(rs.getInt("BeitragID"));
 					b.setInhalt(rs.getString("Inhalt"));
 					b.setCreationTimeStamp(rs.getTimestamp("CreationTimeStamp"));
+					b.setOwnerId(rs.getInt("UserFK"));
+					b.setPinnwandId(rs.getInt("PinnwandFK"));
 					
 					return b;
 				}

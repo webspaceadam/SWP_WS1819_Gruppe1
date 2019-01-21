@@ -9,85 +9,51 @@ import java.io.Serializable;
  * @author GianlucaBernert
  *
  */
-public class LoginInfo implements Serializable{
-	
-	private boolean loggedIn;
-	private String loginURL;
-	private String logoutURL;
-	private String eMailAdress;
-	private String nickname;
-	
-	/**
-	 * Methode zum überprüfen ob der User eingeloggt ist
-	 */
-	public boolean isLoggedIn() {
-		return true;
-	}
+public class LoginInfo implements Serializable {
 
-	/**
-	 * Methode zum einloggen eines Users
-	 */
-	public void setLoggedIn(boolean loggedIn) {
-		
-	}
-	
-	/**
-	 * Methode die die Login URL zurück gibt
-	 */
-	public String getLoginURL() {
-		return loginURL;
-	}
+	  private boolean loggedIn = false;
+	  private String loginUrl;
+	  private String logoutUrl;
+	  private String emailAddress;
+	  private String nickname;
 
-	/**
-	 * Methode die die Login URL setzt
-	 */
-	public void setLoginURL(String loginURL) {
-		this.loginURL = loginURL;
-	}
+	  public boolean isLoggedIn() {
+	    return loggedIn;
+	  }
 
-	/**Methode die die Logout URL zurück gibt
-	 */
-	public String getLogoutURL() {
-		return logoutURL;
-	}
+	  public void setLoggedIn(boolean loggedIn) {
+	    this.loggedIn = loggedIn;
+	  }
 
-	/**
-	 * Methode die die Logout URL setzt
-	 */
-	public void setLogoutURL(String logoutURL) {
-		this.logoutURL = logoutURL;
-	}
+	  public String getLoginUrl() {
+	    return loginUrl;
+	  }
 
-	/**
-	 * Methode die die E-Mail Adresse zurück gibt
-	 */
-	public String geteMailAdress() {
-		return eMailAdress;
-	}
+	  public void setLoginUrl(String loginUrl) {
+	    this.loginUrl = loginUrl;
+	  }
 
-	/**
-	 * Methode die die E-Mail Adresse setzt
-	 */
-	public void seteMailAdress(String eMailAdress) {
-		this.eMailAdress = eMailAdress;
-	}
+	  public String getLogoutUrl() {
+	    return logoutUrl;
+	  }
 
-	/**
-	 * Methode die den Nicknamen zurück gibt
-	 */
-	public String getNickname() {
-		return nickname;
-	}
+	  public void setLogoutUrl(String logoutUrl) {
+	    this.logoutUrl = logoutUrl;
+	  }
 
-	/**
-	 * Methode die den Nicknamen setzt
-	 */
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
-	}
-	
-	
-	
-	
+	  public String getEmailAddress() {
+	    return emailAddress;
+	  }
 
-}
+	  public void setEmailAddress(String emailAddress) {
+	    this.emailAddress = emailAddress;
+	  }
+
+	  public String getNickname() {
+	    return nickname;
+	  }
+
+	  public void setNickname(String nickname) {
+	    this.nickname = nickname;
+	  }
+	}

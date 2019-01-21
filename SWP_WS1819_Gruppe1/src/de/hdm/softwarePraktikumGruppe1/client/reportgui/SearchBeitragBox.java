@@ -38,7 +38,7 @@ public class SearchBeitragBox extends FlowPanel {
 	}
 	
 	
-	public String getBeitrag() {
+	public String getEnteredText() {
 		return searchUserInput.getText();
 	}
 

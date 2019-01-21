@@ -4,6 +4,7 @@
 package de.hdm.softwarePraktikumGruppe1.shared;
 
 import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.Vector;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -70,10 +71,7 @@ public interface PinnwandverwaltungAsync{
 	 */
 	public void showAllAbonnementsByUser(User u, AsyncCallback<Vector<Abonnement>> callback);
 	
-	/**
-	 * Methode um ein neues Abonnement zu erzeugen
-	 */
-	public void createAbonnement(User u, Pinnwand p, Timestamp timestamp, AsyncCallback<Abonnement> callback);
+	void createAbonnement(User u1, User u2, Timestamp timestamp, AsyncCallback<Abonnement> callback);
 	
 	/**
 	 * Methode um ein bestehendes Abonnement zu Loeschen
@@ -106,14 +104,14 @@ public interface PinnwandverwaltungAsync{
 	public void createLike(User u, Beitrag b, Timestamp timestamp, AsyncCallback<Like> callback);
 	
 	/**
-	 * Methode zur Ueberpruefung ob der Beitrag bereits geliket ist
+	 * Methode zur Ueberpruefung ob der Beitrag bereits geliket ist (like)
 	 */
 	public void likeCheck(User u, Beitrag b, AsyncCallback<Like> callback);
 	
 	/**
 	 * Methode um einen Beitrag zu entliken
 	 */
-	public void deleteLike(Like l, AsyncCallback<Void> callback);
+	public void deleteLike(Like l, AsyncCallback<Boolean> callback);
 	
 	/**
 	 * Methode um alle Likes eines Beitrags zu zaehlen
@@ -140,6 +138,12 @@ public interface PinnwandverwaltungAsync{
 	void getUserByLastName(String lName, AsyncCallback<Vector<User>> callback);
 
 	void getPinnwandById(int pinnwandId, AsyncCallback<Pinnwand> callback);
+
+	void searchFunction(String searchQuery, AsyncCallback<Vector<User>> callback);
+
+	void abonnementCheck(User u, Pinnwand p, AsyncCallback<Boolean> callback);
+
+	void getAbonnementBetweenUsers(User u1, User u2, AsyncCallback<Abonnement> callback);
 	
 		
 
