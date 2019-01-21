@@ -65,7 +65,15 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	
 	/**
 	 * Methode um einen User zu erstellen.
+	 * @param firstName
+	 * @param lastName
+	 * @param nickName
+	 * @param gMail
+	 * @param timestamp
+	 * @throws IllegalArgumentException
+	 * @return fertiges User Objekt
 	 */
+	
 	public User createUser(String firstName, String lastName, String nickName, String gMail, Timestamp timestamp) throws IllegalArgumentException {
 		User u = new User();
 		u.setFirstName(firstName);
@@ -82,14 +90,18 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	
 	/**
 	 * Methode um einen User zu speichern
+	 * @param u der User
 	 */
+
 	public void editUser(User u) {
 		this.uMapper.update(u);
 	}
 	
 	/**
 	 * Methode um einen User zu Loeschen
+	 * @param u der User
 	 */
+	
 	public void deleteUser(User u) {
 		
 		//Delete AbonnementsTo
@@ -127,14 +139,21 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	
 	/**
 	 * Methode zur Ueberpruefung der Zugangsberechtigung 
+	 * @param nickname
+	 * @param password
+	 * @return null
 	 */
+	
 	public User loginCheck(String nickname, String password) {
 		return null;
 	}
 	
 	/**
 	 * Methode um einen User anhand seiner ID zu suchen
+	 * @param userID
+	 * @return userID der uMapper
 	 */
+	
 	public User getUserById(int userId) {
 		return this.uMapper.findUserById(userId);
 	}
@@ -142,35 +161,52 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 
 	/**
 	 * Methode um einen User anhand seines Nicknamens zu suchen
+	 * @param nickname
+	 * @return nickname des uMapper
 	 */
+	
 	public Vector<User> getUserByNickname(String nickname) {
 		return uMapper.findUserByNickname(nickname);
 	}
 	
 	/**
 	 * Methode um einen User anhand seines Vornamens zu suchen
+	 * @param fname
+	 * @return firstName des uMapper
 	 */
+
 	public Vector<User> getUserByFirstName(String fName) {
 		return uMapper.findUserByFirstName(fName);
 	}
 	
 	/**
 	 * Methode um einen User anhand seines Nachnamens zu suchen
+	 * @param lName
+	 * @return lastName des uMapper
 	 */
+	
 	public Vector<User> getUserByLastName(String lName) {
 		return uMapper.findUserByLastName(lName);
 	}
 	
 	/**
 	 * Methode um einen User anhand seiner Gmail zu suchen
+	 * @param gMail
+	 * @return gMail
 	 */
+	
 	public User getUserByGmail(String gMail) {
 		return uMapper.findUserByGmail(gMail);
 	}
 	
 	/**
 	 * Methode um einen Beitrag zu erzeugen
+	 * @param text 
+	 * @param u
+	 * @timeStamp
+	 * @return b der erstellte Beitrag
 	 */
+	
 	public Beitrag createBeitrag(String text, User u, Timestamp timeStamp) {
 		Beitrag b = new Beitrag();
 		b.setInhalt(text);
@@ -181,19 +217,30 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 		return b;
 	}
 	
+	/**
+	 * 
+	 * @param beitragId
+	 * @return beitragId des bMapper
+	 */
+	
 	public Beitrag getBeitragById(int beitragId) {
 		return this.bMapper.findBeitragById(beitragId);
 	}
 	
 	/**
 	 * Methode um alle Beiträge eines Users auszugeben
+	 * @param u
+	 * @return findet alle Beiträge des Users nach der Id
 	 */
+	 
 	public Vector<Beitrag> getAllBeitraegeOfUser(User u){
 		return this.bMapper.findBeitraegeOfUser(u.getUserId());
 	}
 	
-	/*
+	/**
 	 * Methode die die Anzahl der Beitraege zurück gibt
+	 * @param u
+	 *  @return i findet die Anzahl der Beiträge des Users nach der Id
 	 */
 	
 	public int getBeitragAmountOfUser(User u) {
@@ -203,7 +250,9 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	
 	/**
 	 * Methode um einen Beitrag zu Loeschen
+	 * @param b
 	 */
+	
 	public void deleteBeitrag(Beitrag b) {
 		//Alle Likes löschen
 		Vector<Like> likesOfBeitrag = this.lMapper.findLikesOfBeitrag(b.getBeitragId());
@@ -227,21 +276,32 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	
 	/**
 	 * Methode um einen Beitrag zu Bearbeiten
+	 * @param b
+	 * @return b der editierte Beitrag des Users
 	 */
+	
 	public Beitrag editBeitrag(Beitrag b) {
 		return this.bMapper.updateBeitrag(b);
 	}
 	
 	/**
 	 * Methode um alle Abonnements eines Users anzuzeigen
+	 * @param u
+	 * @return u findet die Abbonements des Users nach Id
 	 */
+	
 	public Vector<Abonnement> showAllAbonnementsByUser(User u){
 		return this.aMapper.findAbonnementsOfUser(u.getUserId());
 	}
 	
 	/**
 	 * Methode um ein neues Abonnement zu erzeugen
+	 * @param u
+	 * @param p
+	 * @param timeStamp
+	 * @return a
 	 */
+	
 	public Abonnement createAbonnement(User u1, User u2, Timestamp timestamp) {
 		Abonnement a = new Abonnement();
 		a.setOwnerId(u1.getUserId());
@@ -253,7 +313,10 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	
 	/**
 	 * Methode um ein bestehendes Abonnement zu Loeschen
+	 * @param a
+	 * @return a löscht das Abbonnement
 	 */
+	
 	public void deleteAbonnement(Abonnement a) {
 		this.aMapper.deleteAbonnement(a);
 	}
@@ -269,13 +332,25 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 		return this.aMapper.findAbonnementsOfPinnwandAndUser(u1.getUserId(), pMapper.findPinnwandByUserId(u2.getUserId()).getPinnwandId());
 	}
 	
+	/**
+	* Methode um ein Kommentar nach der Id zu finden
+	* @param kommentarId
+	* @return kommentarId findet die KommentarId des kMapper
+	*/
+	
 	public Kommentar getKommentarById(int kommentarId) {
 		return this.kMapper.findKommentarById(kommentarId);
 	}
 	
 	/**
-	 * Methode um einen neues Kommentar zu erzeugen
+	 * Methode um einen neuen Kommentar zu erzeugen
+	 * @param inhalt
+	 * @param userId
+	 * @param beitragId
+	 * @param timeStamp
+	 * @return k
 	 */
+	
 	public Kommentar createKommentar(String inhalt, int userId, int beitragId, Timestamp timeStamp) {
 		Kommentar k = new Kommentar();
 		k.setInhalt(inhalt);
@@ -289,14 +364,19 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	
 	/**
 	 * Methode zum Loeschen eines Kommentars
+	 * @param k
 	 */
+	
 	public void deleteKommentar(Kommentar k) {
 		this.kMapper.deleteKommentar(k);
 	}
 	
 	/**
 	 * Methode zum anzeigen aller Kommentare
+	 * @param b
+	 * @return b findet die die Kommentare des Beitrags nach der BeitragId
 	 */
+	
 	public Vector<Kommentar> getAllKommentareOfBeitrag(Beitrag b){
 		return this.kMapper.findKommentareOfBeitrag(b.getBeitragId());
 		
@@ -304,7 +384,9 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	
 	/**
 	 * Methode zum Bearbeiten eines Kommentars
+	 * @param k
 	 */
+	
 	public void editKommentar(Kommentar k) {
 		 this.kMapper.updateKommentar(k);
 	}
@@ -315,7 +397,13 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	
 	/**
 	 * Methode zum erzeugen eines Likes
+	 * @param u
+	 * @param b
+	 * @param timestamp
+	 * @return l  
+	 * @ return null 
 	 */
+	
 	public Like createLike(User u, Beitrag b, Timestamp timestamp) {
 		if(this.likeCheck(u, b)==null) {
 			Like l = new Like();
@@ -329,7 +417,12 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	
 	/**
 	 * Methode zur Ueberpruefung ob der Beitrag bereits geliket ist
+	 * @param u
+	 * @param b
+	 * @return 
+	 * @return null
 	 */
+	
 	public Like likeCheck(User u, Beitrag b) {
 		if (this.lMapper.findLikeOfUserAndBeitrag(u.getUserId(), b.getBeitragId())!=null) {
 			return this.lMapper.findLikeOfUserAndBeitrag(u.getUserId(), b.getBeitragId());
@@ -339,10 +432,12 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	}
 	
 	
-	
 	/**
 	 * Methode um einen Beitrag zu entliken
+	 * @param l
+	 * @return true das bestätigt das der Beitrag entliked wurde
 	 */
+	
 	public Boolean deleteLike(Like l) {
 		this.lMapper.deleteLike(l);
 		return true;
@@ -350,7 +445,10 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	
 	/**
 	 * Methode um alle Likes eines Beitrags zu zaehlen
+	 * @param b
+	 * @return Anzahl der Likes des jeweiligen Beitrag
 	 */
+	
 	public int countLikes(Beitrag b) {
 		Vector <Like> likes = this.lMapper.findLikesOfBeitrag(b.getBeitragId());
 		
@@ -359,7 +457,9 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	
 	/**
 	 * Methode um Likes eines Beitrags zu entfernen
+	 * @param 
 	 */
+	
 	public void deleteLikesOfBeitrag(Beitrag b) {
 		Vector<Like> likesOfBeitrag = this.lMapper.findLikesOfBeitrag(b.getBeitragId());
 		if(likesOfBeitrag!=null) {
@@ -369,13 +469,23 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 		}
 	}
 	
-	/*
-	 * Methode um eine Pinnwand zu erstellen
+	/**
+	 * Methode zum finden einer Pinnwand nach der Id
+	 * @param pinnwandId
+	 * @return gibt die Pinnwand nach der pinnwandId zurück 
 	 */
 	
 	public Pinnwand getPinnwandById(int pinnwandId) {
 		return this.pMapper.findPinnwandById(pinnwandId);
 	}
+	
+	/**
+	 * Methode um eine Pinnwand zu erstellen
+	 * @param u
+	 * @param timestamp
+	 * @return p erstellt eine Pinnwand
+	 * @return null es existiert schon eine Pinnwand des User
+	 */
 	
 	public Pinnwand createPinnwand(User u, Timestamp timestamp) {
 		if (this.pMapper.findPinnwandByUserId(u.getUserId()) == null) {
@@ -391,7 +501,9 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	
 	/**
 	 * Methode um eine Pinnwand auszugeben
-	 * @param User
+	 * @param u
+	 * @return null falls keine Pinnwand nach der UserId gefunden wurde
+	 * @return p gibt die Pinnwand des jeweiligen User zurück
 	 */
 	
 	public Pinnwand getPinnwandOfUser(User u) {
@@ -403,8 +515,9 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 		}
 	}
 	
-	/*
+	/**
 	 * Methode um die Pinnwand eines Users zu löschen
+	 * @param p
 	 */
 	
 	public void deletePinnwand(Pinnwand p) {
@@ -424,6 +537,11 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 		this.pMapper.deletePinnwand(p);
 		
 	}
+	
+	/**Methode um einen User zu suchen
+	 * @param searchQuery
+	 * @return users gibt die User zurück die gefunden wurden.
+	 */
 	
 	public Vector<User> searchFunction(String searchQuery){
 		HashSet<User> hs = new HashSet<User>();
