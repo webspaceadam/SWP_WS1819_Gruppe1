@@ -79,8 +79,8 @@ public class AbonnementBox extends FlowPanel {
 		
 		accountName.addStyleName("title is-size-4");
 		nickName.addStyleName("is-size-5");
-		pinnwandBtn.addStyleName("button bg-primary has-text-white");
-		deaboBtn.addStyleName("button is-danger");
+		pinnwandBtn.addStyleName("button hast-text-primary");
+		deaboBtn.addStyleName("button bg-primary has-text-white");
 		
 		accountWrapper.add(accountName);
 		nickWrapper.add(nickName);

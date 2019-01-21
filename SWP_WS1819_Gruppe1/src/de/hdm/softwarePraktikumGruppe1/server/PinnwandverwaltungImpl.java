@@ -233,8 +233,13 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	 * @return findet alle Beiträge des Users nach der Id
 	 */
 	 
-	public Vector<Beitrag> getAllBeitraegeOfUser(User u){
-		return this.bMapper.findBeitraegeOfUser(u.getUserId());
+	public Vector<Beitrag> getAllBeitraegeOfUser(User u) {
+		if(u != null) {
+			return this.bMapper.findBeitraegeOfUser(u.getUserId());
+		} else {
+			return null;
+		}
+		
 	}
 	
 	/**
@@ -411,8 +416,9 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 			l.setBeitragId(b.getBeitragId());
 			this.lMapper.insertLike(l);
 			return l;
+		} else {
+			return null;
 		}
-		return null;
 	}
 	
 	/**
@@ -424,9 +430,9 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 	 */
 	
 	public Like likeCheck(User u, Beitrag b) {
-		if (this.lMapper.findLikeOfUserAndBeitrag(u.getUserId(), b.getBeitragId())!=null) {
+		if (u != null && b != null && this.lMapper.findLikeOfUserAndBeitrag(u.getUserId(), b.getBeitragId())!=null) {
 			return this.lMapper.findLikeOfUserAndBeitrag(u.getUserId(), b.getBeitragId());
-		}else {
+		} else {
 			return null;
 		}
 	}

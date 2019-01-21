@@ -240,8 +240,12 @@ public class BeitragBox extends FlowPanel {
 
 		@Override
 		public void onSuccess(Like result) {
-			likeCheck = result;
-			GWT.log(likeCheck.toString() + " ist der LikeCheck");
+			if(result != null ) {
+				likeCheck = result;
+				GWT.log(likeCheck.toString() + " ist der LikeCheck");
+			} else {
+				GWT.log("No Likes");
+			}
 			
 		}
 		
