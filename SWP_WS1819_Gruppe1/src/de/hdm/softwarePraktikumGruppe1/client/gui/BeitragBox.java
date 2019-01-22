@@ -600,6 +600,7 @@ public class BeitragBox extends FlowPanel {
 			pinnwandVerwaltung.deleteBeitrag(tempBeitrag, new DeleteBeitragCallback());
 			parentPinnwandBox.deleteBeitrag(thisBeitragBox);
 			parentDialogBox.hideElement();
+			parentDialogBox.hide();
 		}
 		
 	}
@@ -613,7 +614,7 @@ public class BeitragBox extends FlowPanel {
 
 		@Override
 		public void onSuccess(Void result) {
-			Window.alert("Beitrag wurde deleted");
+			//Window.alert("Beitrag wurde deleted");
 		}
 		
 	}

@@ -265,7 +265,6 @@ public class KommentarBox extends FlowPanel {
 		public void onClick(ClickEvent event) {
 			Kommentar tempKommentar = new Kommentar();
 			tempKommentar.setKommentarId(kommentarId);
-			GWT.log("KommentarId: " + kommentarId);
 			pinnwandVerwaltung.deleteKommentar(tempKommentar, new DeleteKommentarCallback());
 			parentBeitragBox.deleteKommentar(thisKommentarBox);
 			parentDialogBox.hide();
