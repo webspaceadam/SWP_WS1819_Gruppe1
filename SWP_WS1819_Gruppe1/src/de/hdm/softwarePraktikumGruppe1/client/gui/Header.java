@@ -194,13 +194,10 @@ public class Header extends FlowPanel {
 									
 			private ScrollPanel parentScrolling = new ScrollPanel();
 			private FlowPanel aboParentPanel = new FlowPanel();
+			private Label noAbosLabel = new Label("Momentan hast du keine Abonnements!");
 			
 			public ShowAbosDialogBox(Header parentHeader) {
 				this.parentHeader = parentHeader;
-				
-//				GWT.log(parentHeader.userAbonnements.toString());
-//				GWT.log(parentHeader.aboPinnwaende.toString());
-//				GWT.log(parentHeader.pinnwandOwner.toString());
 				
 				
 				for(int i = 0; i < parentHeader.userAbonnements.size(); i++) {
@@ -208,8 +205,13 @@ public class Header extends FlowPanel {
 					userAboBoxes.add(tempAboBox);
 				}
 				
-				for(int i = 0; i < userAboBoxes.size(); i++) {
-					aboParentPanel.add(userAboBoxes.elementAt(i));
+				if(userAboBoxes.size() > 0) {
+					for(int i = 0; i < userAboBoxes.size(); i++) {
+						aboParentPanel.add(userAboBoxes.elementAt(i));
+					}
+				} else {
+					noAbosLabel.addStyleName("label has-text-primary content_margin");
+					aboParentPanel.add(noAbosLabel);
 				}
 				
 				parentScrolling.add(aboParentPanel);

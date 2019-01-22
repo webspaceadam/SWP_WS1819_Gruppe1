@@ -123,6 +123,10 @@ public class EditAccountForm extends FlowPanel {
 		private Button neinBtn = new Button("Nein");
 		
 		public DeleteUserDialogBox() {
+			abfrage.addStyleName("label has-text-primary content_margin");
+			jaBtn.addStyleName("button is-danger");
+			neinBtn.addStyleName("button bg-primary has-text-white");
+			
 			jaBtn.addClickHandler(new YesDeleteClickHandler(this));
 			neinBtn.addClickHandler(new NoClickHandler(this));
 			
@@ -132,6 +136,7 @@ public class EditAccountForm extends FlowPanel {
 			vPanel.add(btnPanel);
 			
 			this.add(vPanel);
+			this.setPopupPosition(getAbsoluteLeft(), getAbsoluteTop());
 		}
 	}
 	
