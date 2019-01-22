@@ -21,6 +21,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 public class EditAccountForm extends FlowPanel {
 	// User und Verwaltung des Systems
 	User user = null;
+	String logOutURL;
 	PinnwandverwaltungAsync pinnwandVerwaltung = ClientsideSettings.getPinnwandverwaltung();
 	
 	// Whole Wrappers
@@ -167,6 +168,8 @@ public class EditAccountForm extends FlowPanel {
 		@Override
 		public void onSuccess(Void result) {
 			Window.alert("Dein User wurde erfolgreich gelöscht!");
+			//Leite User zum Google LogOut weiter
+			Window.Location.assign(logOutURL);
 		}
 		
 	}
@@ -267,6 +270,11 @@ public class EditAccountForm extends FlowPanel {
 			GWT.log("User was edited");
 		}
 		
+	}
+	
+	
+	public void setLogoutUrl(String logOutURL) {
+		this.logOutURL = logOutURL;
 	}
 	
 }
