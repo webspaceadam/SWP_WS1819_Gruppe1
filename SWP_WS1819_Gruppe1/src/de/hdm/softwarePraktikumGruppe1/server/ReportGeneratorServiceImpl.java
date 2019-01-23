@@ -331,7 +331,7 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 	 * @return users gibt die User zurück die gefunden wurden.
 	 */
 	
-	@SuppressWarnings("unchecked")
+
 	public Vector<User> searchUserFunction(String searchQuery){
 		HashSet<User> hs = new HashSet<User>();
 		Vector<User> users = new Vector<User>();
@@ -339,7 +339,7 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 		hs.addAll(uMapper.findUserByFirstName(s));
 		hs.addAll(uMapper.findUserByLastName(s));
 		hs.addAll(uMapper.findUserByNickname(s));
-		hs.addAll((Collection<? extends User>) uMapper.findUserByGmail(s));
+		hs.add(uMapper.findUserByGmail(s));
 		
 		Iterator<User> it = hs.iterator();
 	     while(it.hasNext()){
