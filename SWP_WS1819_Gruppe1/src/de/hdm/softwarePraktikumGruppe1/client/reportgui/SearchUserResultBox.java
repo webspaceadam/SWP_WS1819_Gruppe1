@@ -5,9 +5,11 @@ package de.hdm.softwarePraktikumGruppe1.client.reportgui;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
+
 
 import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
@@ -21,7 +23,6 @@ public class SearchUserResultBox extends FlowPanel {
 	private String accountNameOfShownUser;
 	private String nicknameOfShownUser;
 
-	private boolean isSelected = false;
 	
 	private Label accountNameLabel;
 	private Label nicknameLabel;
@@ -29,7 +30,6 @@ public class SearchUserResultBox extends FlowPanel {
 	private FlowPanel accountWrapper;
 	private FlowPanel nickWrapper;
 	private FlowPanel aboWrapper;
-	
 	
 	
 	Button choseUserBtn = new Button("Auswählen");
@@ -41,12 +41,12 @@ public class SearchUserResultBox extends FlowPanel {
 	public SearchUserResultBox(TextBox searchUserInput, User resultUser) {
 		this.searchUserInput = searchUserInput;
 		this.resultUser = resultUser;
-		
+//		
 		this.accountNameOfShownUser = resultUser.getFirstName() + " " + resultUser.getLastName();
 		this.nicknameOfShownUser=resultUser.getNickname();	
 	}
 	
-	
+
 	/*
 	 * (non-Javadoc)
 	 * @see com.google.gwt.user.client.ui.Widget#onLoad()
@@ -65,8 +65,6 @@ public class SearchUserResultBox extends FlowPanel {
 		choseUserBtn.addClickHandler(new ClickHandler() {		
 			@Override
 			public void onClick(ClickEvent event) {
-				//if (isSelected)isSelected = false;
-			    isSelected = true;
 			    searchUserInput.setText(resultUser.getGMail());
 			}
 		});
@@ -96,6 +94,10 @@ public class SearchUserResultBox extends FlowPanel {
 	}
 	
 	
+
+	
+	
+	
 	public Button getChoseUserBtn() {
 		return choseUserBtn;
 	}
@@ -104,8 +106,6 @@ public class SearchUserResultBox extends FlowPanel {
 		return resultUser.getGMail();
 	}
 	
-	public boolean userIsSelected() {
-		return isSelected;
-	}
+
 	
 }

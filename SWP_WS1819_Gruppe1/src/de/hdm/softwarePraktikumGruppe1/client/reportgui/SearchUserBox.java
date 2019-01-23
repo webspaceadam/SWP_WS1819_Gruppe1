@@ -3,8 +3,6 @@ package de.hdm.softwarePraktikumGruppe1.client.reportgui;
 import java.util.Vector;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ChangeEvent;
-import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
@@ -14,12 +12,11 @@ import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
+
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TextBox;
 
-import de.hdm.softwarePraktikumGruppe1.client.ClientsideSettings;
-import de.hdm.softwarePraktikumGruppe1.client.gui.SearchAboBox;
-import de.hdm.softwarePraktikumGruppe1.shared.PinnwandverwaltungAsync;
+
 import de.hdm.softwarePraktikumGruppe1.shared.ReportGeneratorService;
 import de.hdm.softwarePraktikumGruppe1.shared.ReportGeneratorServiceAsync;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
@@ -39,6 +36,8 @@ public class SearchUserBox extends FlowPanel {
 	private TextBox searchUserInput = new TextBox();
 	private Button searchBtn = new Button("Suche!");
 	
+	SearchUserDialogBox dlg;
+	
 	
 	public SearchUserBox() {
 		this.addStyleName("grid_box box radiusless");
@@ -55,7 +54,7 @@ public class SearchUserBox extends FlowPanel {
 			@Override
 			public void onClick(ClickEvent event) {
 				ReportGeneratorServiceAsync proxy = (ReportGeneratorServiceAsync)GWT.create(ReportGeneratorService.class);
-				proxy.searchUserFunction((searchUserInput.getText()) , new SearchResultCallback());				
+				proxy.searchUserFunction((searchUserInput.getText()), new SearchResultCallback());				
 			}
 		});
 		
@@ -74,43 +73,15 @@ public class SearchUserBox extends FlowPanel {
 	
 	
 	
-	public class SearchResultCallback implements AsyncCallback<Vector<User>>{
-
-		@Override
-		public void onFailure(Throwable caught) {
-			Window.alert("Shit" + caught.toString());
-			
-		}
-
-		@Override
-		public void onSuccess(Vector<User> result) {
-			if (result.size()>0) {
-				//Window.alert("Deine Suche ergab " + result.size()+ " Treffer");
-				SearchUserDialogBox dlg = new SearchUserDialogBox(result);
-				dlg.center();
-				
-			}else {
-				Window.alert("Deine Suche ergab 0 Treffer");
-			}
-			
-			
-		}				
-	}
 	
 	
-	
-	
-	
-	/*
-	 * SearchUserDialogBox displays search Results (User)
-	 * One User can be selected.
-	 */
 	private class SearchUserDialogBox extends DialogBox implements ClickHandler {
 		
 		private ScrollPanel parentScrolling = new ScrollPanel();
-		private FlowPanel aboParentPanel = new FlowPanel();
+		private FlowPanel userParentPanel = new FlowPanel();
 		private int ergebnisCounter;
-	
+		
+		
 		
 		private Vector<SearchUserResultBox> searchResultBoxes = new Vector<SearchUserResultBox>();
 		
@@ -118,40 +89,30 @@ public class SearchUserBox extends FlowPanel {
 			this.ergebnisCounter = searchResults.size();
 			
 			setText("Deine Suche ergab "+ergebnisCounter + " Treffer");
-			//Methode zum auslesen der vectorgröße wird hier ausgeführt.
-			
-			// Vector searchResult befuellen. Es wird die Methode SearchFunction aufgerufen.
-			// Die Methode SearchFunction gibt ein HashSet mit Usern zurueck. Die HashSet Collection 
-			// wird dann in einen Vector konvertiert.
-			
+
 			
 			for(User u: searchResults) {
 				SearchUserResultBox singleUserBox = new SearchUserResultBox(searchUserInput, u);
-				searchUserInput.addChangeHandler(new ChangeHandler() {
-					
+				singleUserBox.getChoseUserBtn().addClickHandler(new ClickHandler() {	
 					@Override
-					public void onChange(ChangeEvent event) {
-						hide();
-						
+					public void onClick(ClickEvent event) {
+						hide();		
 					}
 				});
-				
 				searchResultBoxes.add(singleUserBox);
-				
-				
 			}
 			
 			for(SearchUserResultBox s: searchResultBoxes) {
-				aboParentPanel.add(s);
+				userParentPanel.add(s);
 			}
 			
 			
-			parentScrolling.add(aboParentPanel);
+			parentScrolling.add(userParentPanel);
 			parentScrolling.setSize("800px", "400px");
 			
 			
 			Image cancelImage = new Image("images/SVG/timesCircle.png");
-			cancelImage.getElement().setPropertyString("style", "max-width: 25px;");
+  		    cancelImage.getElement().setPropertyString("style", "max-width: 25px;");
 			cancelImage.addClickHandler(this);
 
 			DockPanel dock = new DockPanel();
@@ -171,9 +132,35 @@ public class SearchUserBox extends FlowPanel {
 		public void onClick(ClickEvent event) {
 			hide();
 		}
-		
-		
+	}
+	
+	
+	public class SearchResultCallback implements AsyncCallback<Vector<User>>{
+
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert("Shit");
+			
+		}
+
+		@Override
+		public void onSuccess(Vector<User> result) {
+			if (result.size()>0) {
+				//Window.alert("Deine Suche ergab " + result.size()+ " Treffer");
+			
+				dlg = new SearchUserDialogBox(result);
+				dlg.center();
+				
+			}else {
+				Window.alert("Deine Suche ergab 0 Treffer");
+			}
+			
+			
+		}
 	
 	}
+	
+	
+
 
 }
