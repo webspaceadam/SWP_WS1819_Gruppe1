@@ -115,7 +115,7 @@ public class ReportGenerator  implements EntryPoint {
 				if (userReportForm.getDatePickerBox1().getDate() == null || userReportForm.getDatePickerBox2().getDate() == null)
 				{
 					Window.alert("Bitte ein gültiges Datum angeben");
-				}else if(userReportForm.getSearchBox().getUserString() == null){
+				}else if(userReportForm.getUserMail() == null){
 					Window.alert("Bitte eine gültige User eMail angeben");
 				}else {
 				//Try to make RPC with entered user Data
@@ -149,7 +149,7 @@ public class ReportGenerator  implements EntryPoint {
 								
 							}
 						};
-						proxy.createUserReport(userReportForm.getSearchBox().getUserString(), date1, date2, callback);
+						proxy.createUserReport(userReportForm.getUserMail(), date1, date2, callback);
 					}catch(NullPointerException e) {
 						Window.alert("Bitte ein gültiges Datum eintragen!");
 					}
