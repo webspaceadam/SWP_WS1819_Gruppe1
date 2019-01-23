@@ -29,6 +29,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 public class ProfileBox extends FlowPanel {
 		// Oberer Teil
 		User user = null;
+		String logOutURL = "";
 		PinnwandverwaltungAsync pinnwandVerwaltung = ClientsideSettings.getPinnwandverwaltung();
 
 		// dazugeh�rige Label
@@ -172,6 +173,7 @@ public class ProfileBox extends FlowPanel {
 				
 				// Creating TextArea and filling it with the content of the "Beitrag".
 				EditAccountForm editForm = new EditAccountForm(parentPB, this);
+				editForm.setLogoutUrl(logOutURL);
 
 				DockPanel dock = new DockPanel();
 				dock.setSpacing(6);
@@ -268,5 +270,10 @@ public class ProfileBox extends FlowPanel {
 				aboCount.setText(newAboCount);
 			}
 			
+		}
+		
+		
+		public void setLogOutURL(String logOutURL) {
+			this.logOutURL = logOutURL;
 		}
 }

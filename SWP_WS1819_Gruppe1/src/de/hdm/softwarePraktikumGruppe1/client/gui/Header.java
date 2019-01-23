@@ -142,6 +142,7 @@ public class Header extends FlowPanel {
 			meineAbos.addClickHandler(new ShowAbosClickHandler(this));
 			meinePinnwand.addClickHandler(new ShowMyPinnwandClickHandler());
 			logoutButton.addClickHandler(new LogoutClickHandler());
+			reportButton.addClickHandler(new reportGeneratorClickHandler());
 			
 			
 			this.add(headerLogo);
@@ -185,6 +186,17 @@ public class Header extends FlowPanel {
 				ShowAbosDialogBox dlg = new ShowAbosDialogBox(this.parentHeader);
 				dlg.center();
 			}
+		}
+		
+		
+		private class reportGeneratorClickHandler implements ClickHandler {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				
+				Window.Location.assign(GWT.getHostPageBaseURL() + "/ReportGenerator.html");
+			}
+			
 		}
 		
 		private class ShowAbosDialogBox extends DialogBox implements ClickHandler {

@@ -109,6 +109,7 @@ public class SWP_WS1819_Gruppe1 implements EntryPoint {
 		
 		// Creating ProfileBox
 		ProfileBox pB = new ProfileBox();
+		pB.setLogOutURL(loginInfo.getLogoutUrl());
 
 		//linkeSeite.add(testBtn);
 		//linkeSeite.add(testBtn2);
