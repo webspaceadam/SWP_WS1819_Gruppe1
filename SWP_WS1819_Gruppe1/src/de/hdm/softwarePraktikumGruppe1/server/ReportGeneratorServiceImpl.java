@@ -336,10 +336,10 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 		HashSet<User> hs = new HashSet<User>();
 		Vector<User> users = new Vector<User>();
 		String s = searchQuery;
-		hs.addAll(uMapper.findUserByFirstName(s));
-		hs.addAll(uMapper.findUserByLastName(s));
-		hs.addAll(uMapper.findUserByNickname(s));
-		hs.add(uMapper.findUserByGmail(s));
+		if(uMapper.findUserByFirstName(s) != null)hs.addAll(uMapper.findUserByFirstName(s));
+		if(uMapper.findUserByLastName(s) != null)hs.addAll(uMapper.findUserByLastName(s));
+		if(uMapper.findUserByNickname(s) != null)hs.addAll(uMapper.findUserByNickname(s));
+		if(uMapper.findUserByGmail(s) != null)hs.add(uMapper.findUserByGmail(s));
 		
 		Iterator<User> it = hs.iterator();
 	     while(it.hasNext()){
