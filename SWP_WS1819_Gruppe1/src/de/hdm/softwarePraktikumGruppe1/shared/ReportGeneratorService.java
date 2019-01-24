@@ -4,10 +4,12 @@
 package de.hdm.softwarePraktikumGruppe1.shared;
 
 import java.util.Date;
+import java.util.Vector;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
+import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 import de.hdm.softwarePraktikumGruppe1.shared.report.BeitragReport;
 import de.hdm.softwarePraktikumGruppe1.shared.report.UserReport;
 
@@ -52,5 +54,6 @@ public interface ReportGeneratorService extends RemoteService{
 	  public abstract BeitragReport createBeitragReport(int beitragID, Date date1, Date date2) throws IllegalArgumentException;
 	  
 	  
+	  public Vector<User> searchUserFunction(String searchQuery);
 	}
 

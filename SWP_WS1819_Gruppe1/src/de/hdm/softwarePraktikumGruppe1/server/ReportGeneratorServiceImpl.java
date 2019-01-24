@@ -6,7 +6,10 @@ package de.hdm.softwarePraktikumGruppe1.server;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Vector;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -318,6 +321,32 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 		
 		//return result report
 		return beitragReport;
+	}
+	
+	
+	
+	
+	/**Methode um einen User zu suchen
+	 * @param searchQuery
+	 * @return users gibt die User zurück die gefunden wurden.
+	 */
+	
+
+	public Vector<User> searchUserFunction(String searchQuery){
+		HashSet<User> hs = new HashSet<User>();
+		Vector<User> users = new Vector<User>();
+		String s = searchQuery;
+		if(uMapper.findUserByFirstName(s) != null)hs.addAll(uMapper.findUserByFirstName(s));
+		if(uMapper.findUserByLastName(s) != null)hs.addAll(uMapper.findUserByLastName(s));
+		if(uMapper.findUserByNickname(s) != null)hs.addAll(uMapper.findUserByNickname(s));
+		if(uMapper.findUserByGmail(s) != null)hs.add(uMapper.findUserByGmail(s));
+		
+		Iterator<User> it = hs.iterator();
+	     while(it.hasNext()){
+	        users.add(it.next());
+	     }
+		
+		return users;
 	}
 
 }

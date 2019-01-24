@@ -194,7 +194,7 @@ public class Header extends FlowPanel {
 			@Override
 			public void onClick(ClickEvent event) {
 				
-				Window.Location.assign(GWT.getHostPageBaseURL() + "/ReportGenerator.html");
+				Window.Location.assign(GWT.getHostPageBaseURL() + "ReportGenerator.html");
 			}
 			
 		}

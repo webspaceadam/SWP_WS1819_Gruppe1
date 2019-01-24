@@ -8,7 +8,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.hdm.softwarePraktikumGruppe1.client.gui.SearchBox;
+
 
 
 /**
@@ -31,7 +31,7 @@ public class UserReportForm extends FlowPanel {
 	private FlowPanel wrapper1_el_links = new FlowPanel();
 	private FlowPanel wrapper1_el_rechts = new FlowPanel();
 	//Eingabemöglichkeiten
-	SearchBox searchBox = new SearchBox();
+	SearchUserBox searchUserBox = new SearchUserBox();
 	DatePickerBox datePickerBox1 = new DatePickerBox();
 	DatePickerBox datePickerBox2 = new DatePickerBox();
 	GeneratorBox generatorBox = new GeneratorBox();
@@ -65,7 +65,7 @@ public class UserReportForm extends FlowPanel {
 
 		
 		//Adding User Input Stuff
-		this.add(searchBox);
+		this.add(searchUserBox);
 		this.add(datePickerBox1);
 		this.add(datePickerBox2);
 		this.add(generatorBox);
@@ -86,8 +86,8 @@ public class UserReportForm extends FlowPanel {
 
 
 
-	public SearchBox getSearchBox() {
-		return searchBox;
+	public String getUserMail() {
+		return searchUserBox.getUserString();
 	}
 
 

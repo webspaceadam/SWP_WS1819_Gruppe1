@@ -4,6 +4,7 @@
 package de.hdm.softwarePraktikumGruppe1.shared;
 
 import java.util.Date;
+import java.util.Vector;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -24,6 +25,8 @@ public interface ReportGeneratorServiceAsync {
 		void createUserReport(String gMail, Date start, Date end, AsyncCallback<UserReport> callback);
 
 		void createBeitragReport(int beitragID, Date date1, Date date2, AsyncCallback<BeitragReport> callback);
+		
+		void searchUserFunction(String searchQuery, AsyncCallback<Vector<User>> callback);
 
 		  
 
