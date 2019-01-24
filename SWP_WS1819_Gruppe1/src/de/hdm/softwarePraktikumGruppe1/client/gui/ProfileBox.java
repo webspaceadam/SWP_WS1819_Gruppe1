@@ -46,7 +46,7 @@ public class ProfileBox extends FlowPanel {
 		private FlowPanel accountNameWrapper = new FlowPanel();
 		
 		// unterer Teil
-		private Label aboHeader = new Label("ABBONIERT");
+		private Label aboHeader = new Label("ABONNIERT");
 		private Label beitragHeader = new Label("BEITRÄGE");
 		//private Label likeHeader = new Label("LIKES");
 		
