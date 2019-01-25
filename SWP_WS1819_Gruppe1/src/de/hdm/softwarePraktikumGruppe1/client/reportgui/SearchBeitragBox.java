@@ -6,7 +6,8 @@ import com.google.gwt.user.client.ui.TextBox;
 
 /**
  * 
- * Mit dieser Box kann der User nach Beiträgen suchen
+ * Mit dieser Box kann der User nach Beiträgen suchen.
+ * Der User gibt einen Text ein und drückt dann den Suchen Button, um dazu passende Beiträge zu sehen.
  * @author Jakob Benkö
  *
  */

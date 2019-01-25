@@ -14,7 +14,13 @@ import com.google.gwt.user.client.ui.TextBox;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
 
-
+/*
+ *  Die @code SearchUserResultBox zeigt einzelne User an,
+ *  welche Selektiert werden können.
+ *  @see SearchUserBox
+ *  
+ *  @author JakobBenkoe
+ */
 
 public class SearchUserResultBox extends FlowPanel {
 	TextBox searchUserInput;
@@ -29,7 +35,7 @@ public class SearchUserResultBox extends FlowPanel {
 	
 	private FlowPanel accountWrapper;
 	private FlowPanel nickWrapper;
-	private FlowPanel aboWrapper;
+	private FlowPanel userWrapper;
 	
 	
 	Button choseUserBtn = new Button("Auswählen");
@@ -57,11 +63,11 @@ public class SearchUserResultBox extends FlowPanel {
 		nicknameLabel = new Label();
 		accountWrapper = new FlowPanel();
 		nickWrapper = new FlowPanel();
-		aboWrapper = new FlowPanel();
+		userWrapper = new FlowPanel();
 		accountNameLabel.setText(accountNameOfShownUser);
 		nicknameLabel.setText(nicknameOfShownUser);
 		choseUserBtn.addStyleName("button");
-		aboWrapper.add(choseUserBtn);
+		userWrapper.add(choseUserBtn);
 		choseUserBtn.addClickHandler(new ClickHandler() {		
 			@Override
 			public void onClick(ClickEvent event) {
@@ -75,7 +81,7 @@ public class SearchUserResultBox extends FlowPanel {
 		this.addStyleName("box grid_box radiusless");
 		accountWrapper.addStyleName("box-item-ein-viertel");
 		nickWrapper.addStyleName("box-item-ein-viertel");
-		aboWrapper.addStyleName("box-item-ein-viertel");
+		userWrapper.addStyleName("box-item-ein-viertel");
 		accountNameLabel.addStyleName("title is-size-3");
 		nicknameLabel.addStyleName("is-size-4");
 		
@@ -90,7 +96,7 @@ public class SearchUserResultBox extends FlowPanel {
 		 */
 		this.add(accountWrapper);
 		this.add(nickWrapper);
-		this.add(aboWrapper);
+		this.add(userWrapper);
 	}
 	
 	

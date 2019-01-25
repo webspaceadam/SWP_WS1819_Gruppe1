@@ -22,7 +22,9 @@ import de.hdm.softwarePraktikumGruppe1.shared.ReportGeneratorServiceAsync;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
 /**
- * Die Klasse <code>SearchBox</code> ermöglicht die Suche nach Usern. 
+ * Die Klasse <code>SearchBox</code> ermöglicht die Suche nach Usern.
+ * Der User gibt einen Suchtext ein und kann dann über den Suchen Button die dazu passenden Ergebnisse einsehen.
+ * Unter den Ergebnissen kann der User einen User auswählen. @see SearchUserDialogBox
  * 
  * @author JakobBenkoe
  *
@@ -74,7 +76,10 @@ public class SearchUserBox extends FlowPanel {
 	
 	
 	
-	
+	/*
+	 * DialogBox that displays resultUser that match to search string
+	 * User can select on resultUser.
+	 */
 	private class SearchUserDialogBox extends DialogBox implements ClickHandler {
 		
 		private ScrollPanel parentScrolling = new ScrollPanel();
