@@ -28,7 +28,7 @@ public class AbonnementBox extends FlowPanel {
 	private Label accountName = new Label("Abo Name");
 	private Label nickName = new Label("@aboNickname");
 	private Button pinnwandBtn = new Button("Pinnwand");
-	private Button deaboBtn = new Button("Deabbonieren");
+	private Button deaboBtn = new Button("Deabonnieren");
 	
 	private int pinnwandId;
 	
