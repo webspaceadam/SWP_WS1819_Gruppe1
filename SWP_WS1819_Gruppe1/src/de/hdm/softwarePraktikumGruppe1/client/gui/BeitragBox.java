@@ -300,6 +300,9 @@ public class BeitragBox extends FlowPanel {
 		private Beitrag parentBeitrag = new Beitrag();
 		private User likingUser = new User();
 		
+		/*
+		 * @param bb
+		 */
 		public LikeCountClickHandler(BeitragBox bb) {
 			parentBB = bb;
 			this.parentBeitrag.setBeitragId(parentBB.beitragId);
@@ -401,6 +404,9 @@ public class BeitragBox extends FlowPanel {
 	private class EditBeitragBoxClickHandler implements ClickHandler {
 		private BeitragBox parentBB;
 		
+		/*
+		 * @param bb
+		 */
 		public EditBeitragBoxClickHandler(BeitragBox bb) {
 			parentBB = bb;
 		}
@@ -483,6 +489,10 @@ public class BeitragBox extends FlowPanel {
 			BeitragBox parentBB;
 			TextArea newContent;
 			
+			/*
+			 * @param bb
+			 * @param textArea
+			 */
 			public SafeEditedContentClickHandler(BeitragBox bb, TextArea textArea) {
 				parentBB = bb;
 				newContent = textArea;
@@ -582,12 +592,17 @@ public class BeitragBox extends FlowPanel {
 	 * parent PinnwandBox. 
 	 * 
 	 * @author AdamGniady
-	 *
 	 */
 	private class removeBeitragFromParent implements ClickHandler {
 		BeitragBox thisBeitragBox;
 		EditBeitragDialogBox parentDialogBox;
 		
+		
+		/*
+		 * @param thisBB
+	     * @param beitragDialogBox
+	     * 
+		 */
 		public removeBeitragFromParent(BeitragBox thisBB, EditBeitragDialogBox beitragDialogBox) {
 			thisBeitragBox = thisBB;
 			this.parentDialogBox = beitragDialogBox;
@@ -619,47 +634,89 @@ public class BeitragBox extends FlowPanel {
 		
 	}
 
-
+	/*
+	 * Methode die den User anhand der UserId holt
+	 */
 	public int getUserId() {
 		return userId;
 	}
 
+	/*
+	 * Methode die den User anhand der UserId setzt
+	 * @param userId
+	 */
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
-
+	
+	/*
+	 * Methode die den accountName holt
+	 * @return accountName
+	 */
 	public Label getAccountName() {
 		return accountName;
 	}
-
-	public void setAccountName(String firstName, String lastName) {
+	
+	/*
+	 * Methode die den AccountName setzt
+	 * @param firstName
+	 * @param lastName
+	 * 
+	 */
+	 public void setAccountName(String firstName, String lastName) {
 		this.accountName.setText(firstName + " " + lastName);
 	}
 
+	 /*
+	  * Methode die das Erstellungsdatum holt
+	  * @return creationDate
+	  */
 	public Label getCreationDate() {
 		return creationDate;
 	}
 
+	/*
+	 * Methode die das Erstellungsdatum für den Text setzt
+	 * @param creationDate
+	 */
 	public void setCreationDate(String creationDate) {
 		this.creationDate.setText(creationDate);;
 	}
-
+	/*
+	 * Methode die den Content(Inhalt) des Beitrags holt
+	 * @return beitragContent
+	 */
 	public Label getBeitragContent() {
 		return beitragContent;
 	}
-
+	
+	/*
+	 * Methode die den Content(Inhalt) setzt
+	 * @param beitragContent
+	 */
 	public void setBeitragContent(String beitragContent) {
 		this.beitragContent.setText(beitragContent);
 	}
 
+	/*
+	 * Methode die die Id des Beitrags holt
+	 * @return beitragId
+	 */
 	public int getBeitragId() {
 		return beitragId;
 	}
 
+	/*
+	 * Methode die die Dd des Beitrags setzt
+	 */
 	public void setBeitragId(int beitragId) {
 		this.beitragId = beitragId;
 	}
 	
+	/*
+	 * Methode die den NickNamen setzt
+	 * @param nickName
+	 */
 	public void setNickName(String nickName) {
 		this.nickName.setText(nickName);
 	}
