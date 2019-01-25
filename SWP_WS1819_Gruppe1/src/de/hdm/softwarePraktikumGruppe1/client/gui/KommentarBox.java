@@ -132,7 +132,7 @@ public class KommentarBox extends FlowPanel {
 		userInfoWrapper.add(accountName);
 		userInfoWrapper.add(nickName);
 		
-		// 
+		// Check if Current User is the owner of the Kommentar
 		if(this.ownerId == this.currentUserId) {
 			userInfoWrapper.add(editPenBtn);
 		}
@@ -352,7 +352,7 @@ public class KommentarBox extends FlowPanel {
 		@Override
 		public void onSuccess(User result) {
 			accountName.setText(result.getFirstName() + " " + result.getLastName());
-			nickName.setText(result.getNickname());
+			nickName.setText("@" + result.getNickname());
 		}
 		
 	}
