@@ -15,8 +15,8 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
 
 /*
- *  Die @code SearchUserResultBox zeigt einzelne User an,
- *  welche Selektiert werden können.
+ *  Die @code SearchUserResultBox zeigt einen User an,
+ *  welcher Selektiert werden können.
  *  @see SearchUserBox
  *  
  *  @author JakobBenkoe
