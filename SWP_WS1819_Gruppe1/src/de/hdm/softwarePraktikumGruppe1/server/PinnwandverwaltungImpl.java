@@ -81,9 +81,9 @@ public class PinnwandverwaltungImpl extends RemoteServiceServlet implements Pinn
 		u.setNickname(nickName);
 		u.setGMail(gMail);
 		u.setCreationTimeStamp(timestamp);
-		this.createPinnwand(u, timestamp);
 		
 		this.uMapper.insert(u);
+		u.setUserId(this.uMapper.findUserByGmail(gMail).getUserId());
 		return u;
 	
 	}
