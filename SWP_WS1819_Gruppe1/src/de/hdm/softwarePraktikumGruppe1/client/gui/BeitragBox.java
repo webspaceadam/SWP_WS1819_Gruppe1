@@ -98,12 +98,7 @@ public class BeitragBox extends FlowPanel {
 		this.parentPinnwandBox = pb;
 		this.beitragContent.setText(content);
 		this.user = user;
-		
-		Window.alert("Content: " + "\n" +
-						this.beitragContent.getText()
-						+ " \n" + " Von User: " + "\n"
-						+ this.user.toString()
-				);
+
 		pinnwandVerwaltung.createBeitrag(this.beitragContent.getText(), this.user, timestamp, new CreateBeitragCallback());
 	}
 	
@@ -141,6 +136,10 @@ public class BeitragBox extends FlowPanel {
 			userId = result.getUserId();
 			accountName.setText(result.getFirstName() + " " + result.getLastName());
 			nickName.setText("@" + result.getNickname());
+			
+			if(userId == currentUserId) {
+				userInfoWrapper.add(editPenBtn);
+			}
 		}
 		
 	}
@@ -226,9 +225,6 @@ public class BeitragBox extends FlowPanel {
 		// Add Elements to Wrapper
 		userInfoWrapper.add(accountName);
 		userInfoWrapper.add(nickName);
-		if(this.userId == this.currentUserId) {
-			userInfoWrapper.add(editPenBtn);
-		}
 		
 	
 		
