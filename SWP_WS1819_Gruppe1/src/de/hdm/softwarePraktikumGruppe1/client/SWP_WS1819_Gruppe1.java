@@ -80,7 +80,7 @@ public class SWP_WS1819_Gruppe1 implements EntryPoint {
 	
 	//wird erst nach Erfolgreichem Login geladen
 	public void loadEditor(LoginInfo loginInfo){
-		Window.alert("Eingeloggt mit der mail " + loginInfo.getEmailAddress());
+		//Window.alert("Eingeloggt mit der mail " + loginInfo.getEmailAddress());
 		pinnwandVerwaltung.getUserByGmail(loginInfo.getEmailAddress(), new GetUserCallback());
 		//Window.alert(loginInfo.getEmailAddress());
 		//pinnwandVerwaltung.getUserById(1, new GetUserCallback());
@@ -211,6 +211,7 @@ public class SWP_WS1819_Gruppe1 implements EntryPoint {
 			Window.alert("Ihr Nutzer wurde angelegt");
 			Cookies.setCookie("gmail", result.getGMail());
 			Cookies.setCookie("userId", result.getUserId() + "");
+			GWT.log("UserId created: " + result.getUserId());
 			Cookies.setCookie("firstName", result.getFirstName());
 			Cookies.setCookie("lastName", result.getLastName());
 			Cookies.setCookie("nickName", result.getNickname());

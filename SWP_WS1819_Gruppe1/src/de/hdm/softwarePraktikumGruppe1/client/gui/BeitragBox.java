@@ -89,7 +89,7 @@ public class BeitragBox extends FlowPanel {
 	private User user;
 	private Beitrag beitrag;
 	private Like likeCheck;
-	private int currentUserId = Integer.parseInt(Cookies.getCookie("userId"));
+	private int currentUserId;
 	
 	
 	// Constructor for the creation of Beitrag
@@ -121,10 +121,26 @@ public class BeitragBox extends FlowPanel {
 			GWT.log("beitrag Id: " + result.getBeitragId());
 			beitragId = result.getBeitragId();
 			userId = result.getOwnerId();
-			accountName.setText(user.getFirstName() + " " + user.getLastName());
-			nickName.setText("@" + user.getNickname());
 			//String ts = String.format("%1$TD %1$TT", result.getCreationTimeStamp());
 			creationDate.setText("Erstellzeitpunkt: " + result.getCreationTimeStamp());
+			pinnwandVerwaltung.getUserById(result.getOwnerId(), new SetNamesCallback());
+		}
+		
+	}
+	
+	public class SetNamesCallback implements AsyncCallback<User> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert("Problem with SetNamesCallback");
+		}
+
+		@Override
+		public void onSuccess(User result) {
+			user = result;
+			userId = result.getUserId();
+			accountName.setText(result.getFirstName() + " " + result.getLastName());
+			nickName.setText("@" + result.getNickname());
 		}
 		
 	}
@@ -136,9 +152,11 @@ public class BeitragBox extends FlowPanel {
 	}
 	
 	public void onLoad() {
+		currentUserId = Integer.parseInt(Cookies.getCookie("userId"));
 		Beitrag thisBeitrag = new Beitrag();
 		thisBeitrag.setBeitragID(beitragId);
 		pinnwandVerwaltung.getAllKommentareOfBeitrag(thisBeitrag, new GetAllKommentareCallback(this));
+		pinnwandVerwaltung.getUserById(this.userId, new SetNamesCallback());
 		// Date
 //		Date now = new Date();
 //		DateTimeFormat fmt = DateTimeFormat.getFormat("HH:mm:ss, EEEE, dd MMMM, yyyy");
