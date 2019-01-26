@@ -133,7 +133,6 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 				row.addColumn(new Column("Nickname des Users: " + abonnent.getNickname()));
 				row.addColumn(new Column("eMail des User" + abonnent.getGMail()));
 				row.addColumn(new Column("Abonniert am: " + abonnement.getCreationTimeStamp().toString()));
-				row.addColumn(new Column("Abonnement ID: " + abonnement.getAbonnementId()));
 				//Füge die Reihe dem abonnentenReport
 				abonnentenReport.addRow(row);
 			}
@@ -161,7 +160,6 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 				Row row = new Row();
 				row.addColumn(new Column("Erstelldatum: " + beitrag.getCreationTimeStamp().toString()));
 				row.addColumn(new Column("Inhalt: " + beitrag.getInhalt()));
-				row.addColumn(new Column("Beitrag ID: " + beitrag.getBeitragId()));
 				//Füge die Reihe dem beitraegeReport hinzu
 				beitraegeReport.addRow(row);
 			}
@@ -190,7 +188,6 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 				User gelikterUser = uMapper.findUserById(gelikterBeitrag.getOwnerId());
 				row.addColumn(new Column("Like verteilt am: " + like.getCreationTimeStamp().toString()));
 				if(gelikterBeitrag != null)row.addColumn(new Column("An Beitrag von: " + gelikterUser.getGMail()));
-				row.addColumn(new Column("Like ID: " + like.getLikeId()));
 				//Füge die Reihe dem abonnentenReport
 				likeReport.addRow(row);
 				}
@@ -310,7 +307,6 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 					User likeUser = uMapper.findUserById(like.getOwnerId());
 					row.addColumn(new Column("Like erhalten am: " + like.getCreationTimeStamp().toString()));
 					row.addColumn(new Column("Like erhalten von von: " + likeUser.getNickname()));
-					row.addColumn(new Column("Like ID: " + like.getLikeId()));
 					//Füge die Reihe dem abonnentenReport
 					likeReport.addRow(row);
 					}

@@ -6,7 +6,8 @@ import com.google.gwt.user.client.ui.TextBox;
 
 /**
  * 
- * Mit dieser Box kann der User nach Beiträgen suchen
+ * Mit dieser Box kann der User nach Beiträgen suchen.
+ * Der User gibt einen Text ein und drückt dann den Suchen Button, um dazu passende Beiträge zu sehen.
  * @author Jakob Benkö
  *
  */
@@ -15,15 +16,18 @@ public class SearchBeitragBox extends FlowPanel {
 	private FlowPanel searchWrapper = new FlowPanel();
 	
 	private TextBox searchUserInput = new TextBox();
-	private Button searchBtn = new Button("Suche!");
+	private Button searchBtn = new Button("Suchen!");
 	
+	//Identifier for author
+	SearchUserBox searchUserBox;
 	
 	public SearchBeitragBox() {
 		this.addStyleName("grid_box box radiusless");
 		inputWrapper.addStyleName("grid_box_element");
 		searchWrapper.addStyleName("grid_box_element");
 		searchUserInput.addStyleName("input radiusless");
-		searchUserInput.getElement().setPropertyString("placeholder", "Suche nach Beiträgen!");
+		searchUserInput.setReadOnly(true);
+		searchUserInput.getElement().setPropertyString("placeholder", "Suche nach Beiträge");
 		searchBtn.addStyleName("button bg-primary has-text-white");
 		
 		inputWrapper.add(searchUserInput);
@@ -37,6 +41,10 @@ public class SearchBeitragBox extends FlowPanel {
 		
 	}
 	
+	
+	public void setAuthor(SearchUserBox searchUserBox) {
+		this.searchUserBox = searchUserBox;
+	}
 	
 	public String getEnteredText() {
 		return searchUserInput.getText();

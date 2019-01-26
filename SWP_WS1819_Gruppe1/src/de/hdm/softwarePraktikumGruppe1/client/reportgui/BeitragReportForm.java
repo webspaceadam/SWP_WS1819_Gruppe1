@@ -4,7 +4,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 
-import de.hdm.softwarePraktikumGruppe1.client.gui.SearchBox;
+
 
 /**
  * Die <code>beitragReportForm</code>-Klasse ist eine Custom-Widget-Class die 
@@ -27,6 +27,7 @@ public class BeitragReportForm extends FlowPanel {
 	private FlowPanel wrapper1_el_links = new FlowPanel();
 	private FlowPanel wrapper1_el_rechts = new FlowPanel();
 	//Eingabemöglichkeiten
+	SearchUserBox searchUserBox = new SearchUserBox();
 	SearchBeitragBox searchBeitragBox = new SearchBeitragBox();
 	DatePickerBox datePickerBox1 = new DatePickerBox();
 	DatePickerBox datePickerBox2 = new DatePickerBox();
@@ -61,11 +62,15 @@ public class BeitragReportForm extends FlowPanel {
 		this.add(hrElement);
 
 		
-		
+		this.add(searchUserBox);
 		this.add(searchBeitragBox);
 		this.add(datePickerBox1);
 		this.add(datePickerBox2);
 		this.add(generatorBox);
+		
+		
+		//set Author reference in searchBeitragBox
+		searchBeitragBox.setAuthor(searchUserBox);
 	}
 
 	
