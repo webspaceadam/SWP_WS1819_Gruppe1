@@ -344,5 +344,14 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 		
 		return users;
 	}
+	
+	
+	
+	@Override
+	public Vector<Beitrag> searchBeitragFunction(String gMail) {
 
+		User tempUser = uMapper.findUserByGmail(gMail);
+		if (tempUser != null)return beitragMapper.findBeitraegeOfUser(tempUser.getUserId());
+		return null;
+	}
 }
