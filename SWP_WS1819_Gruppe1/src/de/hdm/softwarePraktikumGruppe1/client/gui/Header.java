@@ -35,8 +35,7 @@ public class Header extends FlowPanel {
 		
 		Vector<Abonnement> userAbonnements = new Vector<Abonnement>();
 		Vector<Pinnwand> aboPinnwaende = new Vector<Pinnwand>();
-		Vector<User> pinnwandOwner = new Vector<User>();
-	
+		User pinnwandOwner;
 		
 		// Create Header Divs 
 		private FlowPanel headerLogo = new FlowPanel();
@@ -55,6 +54,8 @@ public class Header extends FlowPanel {
 		private Button searchButton = new Button("Suche!");
 		private Button logoutButton = new Button("Logout");
 		private Button reportButton = new Button("Report");
+		DockPanel dock;
+		ShowAbosDialogBox dlg;
 		
 		
 		// Create Images
@@ -64,6 +65,13 @@ public class Header extends FlowPanel {
 		// Create Anchors / Links
 		private Anchor meinePinnwand = new Anchor("Meine Pinnwand");
 		private Anchor meineAbos = new Anchor("Meine Abos");
+		
+		
+		public void removeAbonnementBox(AbonnementBox a) {
+			this.clear();
+			pinnwandVerwaltung.showAllAbonnementsByUser(user, new ShowAllAbonnementsByUserCallback());
+			
+		}
 	
 
 		/**
@@ -183,8 +191,9 @@ public class Header extends FlowPanel {
 			Header parentHeader;
 			@Override
 			public void onClick(ClickEvent event) {
-				ShowAbosDialogBox dlg = new ShowAbosDialogBox(this.parentHeader);
+				dlg = new ShowAbosDialogBox();
 				dlg.center();
+				
 			}
 		}
 		
@@ -200,7 +209,7 @@ public class Header extends FlowPanel {
 		}
 		
 		private class ShowAbosDialogBox extends DialogBox implements ClickHandler {
-			Header parentHeader;
+//			Header parentHeader;
 						
 			private Vector<AbonnementBox> userAboBoxes = new Vector<AbonnementBox>();
 									
@@ -208,12 +217,18 @@ public class Header extends FlowPanel {
 			private FlowPanel aboParentPanel = new FlowPanel();
 			private Label noAbosLabel = new Label("Momentan hast du keine Abonnements!");
 			
-			public ShowAbosDialogBox(Header parentHeader) {
-				this.parentHeader = parentHeader;
+//			public ShowAbosDialogBox(Header parentHeader) {
+			public ShowAbosDialogBox() {
 				
 				
-				for(int i = 0; i < parentHeader.userAbonnements.size(); i++) {
-					AbonnementBox tempAboBox = new AbonnementBox(parentHeader.userAbonnements.elementAt(i));
+				
+//				for(int i = 0; i < userAbonnements.size(); i++) {
+//					AbonnementBox tempAboBox = new AbonnementBox(userAbonnements.elementAt(i));
+//					userAboBoxes.add(tempAboBox);
+//				}
+				for(Abonnement a: userAbonnements) {
+					AbonnementBox tempAboBox = new AbonnementBox(this, pinnwandOwner, a);
+					
 					userAboBoxes.add(tempAboBox);
 				}
 				
@@ -226,6 +241,8 @@ public class Header extends FlowPanel {
 					aboParentPanel.add(noAbosLabel);
 				}
 				
+				
+				
 				parentScrolling.add(aboParentPanel);
 				parentScrolling.setSize("800px", "400px");
 				
@@ -234,7 +251,7 @@ public class Header extends FlowPanel {
 				cancelImage.getElement().setPropertyString("style", "max-width: 25px;");
 				cancelImage.addClickHandler(this);
 
-				DockPanel dock = new DockPanel();
+				dock = new DockPanel();
 				dock.setSpacing(6);
 				dock.add(parentScrolling, DockPanel.CENTER);
 				dock.add(cancelImage, DockPanel.EAST);
@@ -246,6 +263,7 @@ public class Header extends FlowPanel {
 				dock.setHeight("400px");
 				setWidget(dock);
 			}
+			//Funktioniert nicht. Kann von Klasse AbonnementBox nicht auf diese Methode zugreifen.
 
 			@Override
 			public void onClick(ClickEvent event) {
@@ -363,6 +381,8 @@ public class Header extends FlowPanel {
 			public void onSuccess(User result) {
 				user = result;
 				GWT.log("ID is: " + user.getUserId());
+				//Clickhandler zu Button zuweisen
+				
 				pinnwandVerwaltung.showAllAbonnementsByUser(user, new ShowAllAbonnementsByUserCallback());
 			}
 			
@@ -381,6 +401,7 @@ public class Header extends FlowPanel {
 				userAbonnements = result;
 				for (Abonnement abonnement : userAbonnements) {
 					GWT.log(abonnement.toString());
+					
 					pinnwandVerwaltung.getPinnwandById(abonnement.getPinnwandId(), new GetPinnwandByIdCallback());
 				}
 			}
@@ -413,10 +434,10 @@ public class Header extends FlowPanel {
 
 			@Override
 			public void onSuccess(User result) {
-				User tempUser = result;
+				pinnwandOwner = result;
 				
-				GWT.log(tempUser.toString());
-				pinnwandOwner.add(tempUser);
+				GWT.log(pinnwandOwner.toString());
+				
 			}
 		}
 		
