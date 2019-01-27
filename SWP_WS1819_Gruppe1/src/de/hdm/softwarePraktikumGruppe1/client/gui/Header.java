@@ -215,13 +215,10 @@ public class Header extends FlowPanel {
 									
 			private ScrollPanel parentScrolling = new ScrollPanel();
 			private FlowPanel aboParentPanel = new FlowPanel();
-			private Label noAbosLabel = new Label("Momentan hast du keine Abonnements!");
-			
+			private Label noAbosLabel = new Label("Momentan hast du keine Abonnements! Reloade ggf. das System!");
+			private Button reloadSiteBtn = new Button("Reload!");
 //			public ShowAbosDialogBox(Header parentHeader) {
-			public ShowAbosDialogBox() {
-				
-				
-				
+			public ShowAbosDialogBox() {				
 //				for(int i = 0; i < userAbonnements.size(); i++) {
 //					AbonnementBox tempAboBox = new AbonnementBox(userAbonnements.elementAt(i));
 //					userAboBoxes.add(tempAboBox);
@@ -238,7 +235,10 @@ public class Header extends FlowPanel {
 					}
 				} else {
 					noAbosLabel.addStyleName("label has-text-primary content_margin");
+					reloadSiteBtn.addClickHandler(new ForceReloadClickHandler());
+					reloadSiteBtn.addStyleName("button bg-primary has-text-white");
 					aboParentPanel.add(noAbosLabel);
+					aboParentPanel.add(reloadSiteBtn);
 				}
 				
 				
@@ -272,6 +272,19 @@ public class Header extends FlowPanel {
 			public void removeAboBoxFromDialogBox(AbonnementBox aboBox) {
 				
 			}
+			
+			private class ForceReloadClickHandler implements ClickHandler {
+
+				@Override
+				public void onClick(ClickEvent event) {
+					forceReload();
+				}
+				
+			}
+			
+			public native void forceReload() /*-{
+    			$wnd.location.reload(true);
+  			}-*/;
 		}
 		
 		private class SearchUserClickHandler implements ClickHandler {
@@ -285,6 +298,7 @@ public class Header extends FlowPanel {
 			public void onClick(ClickEvent event) {
 				pinnwandVerwaltung.searchFunction((parentHeader.searchUserInput.getValue()) , new SearchResultCallback());
 			}
+			
 			
 		}
 		
