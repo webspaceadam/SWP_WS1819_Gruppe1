@@ -143,7 +143,7 @@ public class SearchBeitragBox extends VerticalPanel {
 		public SearchUserDialogBox(Vector<Beitrag> searchResults) {
 			this.ergebnisCounter = searchResults.size();
 			
-			setText("Für den User wurden " + ergebnisCounter + " Beiträge gefunden. Bitte wähle einen aus.");
+			setText("Für den User wurden " + ergebnisCounter + " Beiträge gefunden. Bitte wähle einen davon aus.");
 
 			
 			for(Beitrag b: searchResults) {
