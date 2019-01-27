@@ -33,7 +33,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.report.UserReport;
  * Grundlage der GUI ist hier ein DockLayoutPanel
  * 
  * 
- *@author Jakob Benkö
+ *@author JakobBenkoe
  */
 
 public class ReportGenerator  implements EntryPoint {
