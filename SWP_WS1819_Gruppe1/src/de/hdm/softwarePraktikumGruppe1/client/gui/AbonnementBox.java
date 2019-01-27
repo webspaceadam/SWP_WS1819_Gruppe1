@@ -14,6 +14,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 
 import de.hdm.softwarePraktikumGruppe1.client.ClientsideSettings;
 import de.hdm.softwarePraktikumGruppe1.client.gui.Header.GetUserByIdCallback;
+import de.hdm.softwarePraktikumGruppe1.client.gui.Header.ShowAbosDialogBox;
 import de.hdm.softwarePraktikumGruppe1.client.gui.Header.ShowAllAbonnementsByUserCallback;
 import de.hdm.softwarePraktikumGruppe1.shared.PinnwandverwaltungAsync;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Abonnement;
@@ -28,7 +29,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
  * @author AdamGniady
  * @param <ShowAbosDialogBox>
  */
-public class AbonnementBox<ShowAbosDialogBox> extends FlowPanel {
+public class AbonnementBox extends FlowPanel {
 	private String aboName;
 	private String aboNickname;
 	private Abonnement abo;
@@ -52,10 +53,8 @@ public class AbonnementBox<ShowAbosDialogBox> extends FlowPanel {
 	
 	public AbonnementBox(ShowAbosDialogBox parent, User u, Abonnement abonnement) {
 		this.abo = abonnement;
-		this.shownUser=u;
-		this.parent=parent;
-		
-		
+		this.shownUser = u;
+		this.parent = parent;
 	}
 	
 	
@@ -106,21 +105,29 @@ public class AbonnementBox<ShowAbosDialogBox> extends FlowPanel {
 		this.add(nickWrapper);
 		this.add(pinnwandWrapper);
 		this.add(deaboWrapper);
-		deaboBtn.addClickHandler(new DeleteAboClickHandler());
+		deaboBtn.addClickHandler(new DeleteAboClickHandler(this));
 	}
 	
 	class DeleteAboClickHandler implements ClickHandler{
-
+		AbonnementBox parentAboBox; 
+		
+		public DeleteAboClickHandler(AbonnementBox aboBox) {
+			this.parentAboBox = aboBox;
+		}
 		@Override
 		public void onClick(ClickEvent event) {
-			pinnwandVerwaltung.deleteAbonnement(abo, new DeleteAbonnementCallback());
-			
+			pinnwandVerwaltung.deleteAbonnement(abo, new DeleteAbonnementCallback(parentAboBox));
 		}
 		
 	}
 	
 	class DeleteAbonnementCallback implements AsyncCallback<Void>{
-
+		AbonnementBox parentAboBox;
+		
+		public DeleteAbonnementCallback(AbonnementBox parentAboBox) {
+			this.parentAboBox = parentAboBox;
+		}
+		
 		@Override
 		public void onFailure(Throwable caught) {
 			Window.alert("Delete Abonnement RPC failed");
@@ -132,7 +139,8 @@ public class AbonnementBox<ShowAbosDialogBox> extends FlowPanel {
 //			nickWrapper.removeFromParent();
 //			pinnwandWrapper.removeFromParent();
 //			deaboWrapper.removeFromParent();
-			parent.removeAbonnementBox(this);
+//			parent.removeAbonnementBox(this);
+			parent.removeAboBoxFromDialogBox(this.parentAboBox);
 			
 		}
 		
@@ -144,13 +152,12 @@ public class AbonnementBox<ShowAbosDialogBox> extends FlowPanel {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			// TODO Auto-generated method stub
-			
 		}
 
 		@Override
 		public void onSuccess(User result) {
-			
+			accountName.setText(result.getFirstName() + " " + result.getLastName());
+			nickName.setText(result.getNickname());
 		}
 		
 	}

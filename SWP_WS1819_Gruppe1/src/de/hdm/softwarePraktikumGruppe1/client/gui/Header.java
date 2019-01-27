@@ -208,8 +208,8 @@ public class Header extends FlowPanel {
 			
 		}
 		
-		private class ShowAbosDialogBox extends DialogBox implements ClickHandler {
-//			Header parentHeader;
+		public class ShowAbosDialogBox extends DialogBox implements ClickHandler {
+			//			Header parentHeader;
 						
 			private Vector<AbonnementBox> userAboBoxes = new Vector<AbonnementBox>();
 									
@@ -246,7 +246,6 @@ public class Header extends FlowPanel {
 				parentScrolling.add(aboParentPanel);
 				parentScrolling.setSize("800px", "400px");
 				
-				
 				Image cancelImage = new Image("images/SVG/timesCircle.png");
 				cancelImage.getElement().setPropertyString("style", "max-width: 25px;");
 				cancelImage.addClickHandler(this);
@@ -268,6 +267,10 @@ public class Header extends FlowPanel {
 			@Override
 			public void onClick(ClickEvent event) {
 				hide();
+			}
+			
+			public void removeAboBoxFromDialogBox(AbonnementBox aboBox) {
+				
 			}
 		}
 		
