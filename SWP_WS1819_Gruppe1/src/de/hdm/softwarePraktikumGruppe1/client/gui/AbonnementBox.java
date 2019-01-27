@@ -141,6 +141,7 @@ public class AbonnementBox extends FlowPanel {
 //			deaboWrapper.removeFromParent();
 //			parent.removeAbonnementBox(this);
 			parent.removeAboBoxFromDialogBox(this.parentAboBox);
+			parent.forceReload();
 			
 		}
 		
