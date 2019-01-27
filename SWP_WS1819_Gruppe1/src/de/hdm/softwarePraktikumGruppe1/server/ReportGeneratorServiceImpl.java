@@ -44,12 +44,15 @@ import de.hdm.softwarePraktikumGruppe1.shared.report.UserReport;
 public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements ReportGeneratorService{
 
 	/**
-	 * 
+	 *  
 	 */
 	private static final long serialVersionUID = 1L;
 	public final static  SimpleDateFormat yearMonthDayFormat = new SimpleDateFormat ("yyyy.MM.dd");
 	public final static SimpleDateFormat dayMonthYearFormat = new SimpleDateFormat ("dd.MM.yyyy");
-
+	public final static SimpleDateFormat dayMonthYearTimeFormat = new SimpleDateFormat ("dd.MM.yyyy HH:mm");
+	
+	public final static String trenner = "------------------";
+	
 	Date start = null;
 	Date end = null;
 	
@@ -82,7 +85,7 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 			end = date1;
 		}
 		userReport.setImprint(new SimpleParagraph("Report über den Zeitraum vom " + dayMonthYearFormat.format(start) + 
-				" bis zum " + dayMonthYearFormat.format(end) + " (0 Uhr jeweils)"));
+				" bis zum " + dayMonthYearFormat.format(end)));
 		
 		//user of the userReport
 		User user = null;
@@ -128,11 +131,12 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 			for(int i = 0; i < abonnements.size(); i++) {
 				Abonnement abonnement = abonnements.get(i);
 				//Erzeuge eine Reihe für einen Abonnenten
-				Row row = new Row();
+				Row row = new Row(true);
 				User abonnent = uMapper.findUserById(abonnement.getOwnerId());
+				abonnentenReport.addRow(new Row(new Column("")));
 				row.addColumn(new Column("Nickname des Users: " + abonnent.getNickname()));
-				row.addColumn(new Column("eMail des User" + abonnent.getGMail()));
-				row.addColumn(new Column("Abonniert am: " + abonnement.getCreationTimeStamp().toString()));
+				row.addColumn(new Column("eMail des User: " + abonnent.getGMail()));
+				row.addColumn(new Column("Abonniert am: " + dayMonthYearTimeFormat.format(abonnement.getCreationTimeStamp()).toString()));
 				//Füge die Reihe dem abonnentenReport
 				abonnentenReport.addRow(row);
 			}
@@ -158,8 +162,10 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 			for(int i = 0; i < beitraege.size(); i++) {
 				Beitrag beitrag = beitraege.get(i);
 				Row row = new Row();
-				row.addColumn(new Column("Erstelldatum: " + beitrag.getCreationTimeStamp().toString()));
-				row.addColumn(new Column("Inhalt: " + beitrag.getInhalt()));
+				row.addColumn(new Column(dayMonthYearTimeFormat.format(beitrag.getCreationTimeStamp())));
+				beitraegeReport.addRow(row);
+				row = new Row(true);
+				row.addColumn(new Column(beitrag.getInhalt()));
 				//Füge die Reihe dem beitraegeReport hinzu
 				beitraegeReport.addRow(row);
 			}
@@ -183,10 +189,10 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 			for(int i = 0; i < likes.size(); i++) {
 				Like like = likes.get(i);
 				//Erzeuge eine Reihe für einen Abonnenten
-				Row row = new Row();
+				Row row = new Row(true);
 				Beitrag gelikterBeitrag = beitragMapper.findBeitragById(like.getBeitragId());
 				User gelikterUser = uMapper.findUserById(gelikterBeitrag.getOwnerId());
-				row.addColumn(new Column("Like verteilt am: " + like.getCreationTimeStamp().toString()));
+				row.addColumn(new Column("Like verteilt am: " + dayMonthYearTimeFormat.format(like.getCreationTimeStamp()).toString()));
 				if(gelikterBeitrag != null)row.addColumn(new Column("An Beitrag von: " + gelikterUser.getGMail()));
 				//Füge die Reihe dem abonnentenReport
 				likeReport.addRow(row);
@@ -222,7 +228,7 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 			end = date1;
 		}
 		beitragReport.setImprint(new SimpleParagraph("Report über den Zeitraum vom " + dayMonthYearFormat.format(start) + 
-				" bis zum " + dayMonthYearFormat.format(end)  + " (0 Uhr jeweils)"));
+				" bis zum " + dayMonthYearFormat.format(end)));
 
 		Beitrag beitrag = null;
 		User inhaber = null;
@@ -252,9 +258,10 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 					header.addSubParagraph(new SimpleParagraph("Autor eMail: " + inhaber.getGMail()));					
 				}catch(Exception e) {
 					header.addSubParagraph(new SimpleParagraph("Beitrag erstellt von: Zu diesem Beitrag konnte kein Autor gefunden werden"));
-				}		
-			header.addSubParagraph(new SimpleParagraph("Beitrag erstellt am:  " + beitrag.getCreationTimeStamp().toString()));
-			header.addSubParagraph(new SimpleParagraph("Inhalt des Beitrags:  " + beitrag.getInhalt()));
+				}
+			header.addSubParagraph(new SimpleParagraph(""));
+			header.addSubParagraph(new SimpleParagraph("Beitrag erstellt am:  " + dayMonthYearTimeFormat.format(beitrag.getCreationTimeStamp()).toString()));
+			header.addSubParagraph(new SimpleParagraph(beitrag.getInhalt()));
 			//Add header to result report
 			beitragReport.setHeaderData(header);
 			
@@ -275,10 +282,10 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 				for(int i = 0; i < kommentare.size(); i++) {
 					Kommentar kommentar = kommentare.get(i);
 					//Erzeuge eine Reihe für einen Abonnenten
-					Row row = new Row();
+					Row row = new Row(true);
 					User autor = uMapper.findUserById(kommentar.getOwnerId()); 
 					row.addColumn(new Column("Autor: " + autor.getNickname()));
-					row.addColumn(new Column("Erstellungsdatum: " + kommentar.getCreationTimeStamp()));
+					row.addColumn(new Column("Erstellungsdatum: " + dayMonthYearTimeFormat.format(kommentar.getCreationTimeStamp())));
 					row.addColumn(new Column("Inhalt: " + kommentar.getInhalt()));
 					//Füge die Reihe dem abonnentenReport
 					kommentarReport.addRow(row);
@@ -303,9 +310,9 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 				for(int i = 0; i < likes.size(); i++) {
 					Like like = likes.get(i);
 					//Erzeuge eine Reihe für einen Abonnenten
-					Row row = new Row();
+					Row row = new Row(true);
 					User likeUser = uMapper.findUserById(like.getOwnerId());
-					row.addColumn(new Column("Like erhalten am: " + like.getCreationTimeStamp().toString()));
+					row.addColumn(new Column("Like erhalten am: " + dayMonthYearTimeFormat.format(like.getCreationTimeStamp()).toString()));
 					row.addColumn(new Column("Like erhalten von von: " + likeUser.getNickname()));
 					//Füge die Reihe dem abonnentenReport
 					likeReport.addRow(row);
