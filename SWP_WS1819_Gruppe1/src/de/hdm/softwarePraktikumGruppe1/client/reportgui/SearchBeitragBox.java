@@ -29,15 +29,15 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.Beitrag;
  * @author Jakob Benkö
  *
  */
-public class SearchBeitragBox extends VerticalPanel {
+public class SearchBeitragBox extends FlowPanel {
 	private FlowPanel inputWrapper = new FlowPanel();
 	private FlowPanel searchWrapper = new FlowPanel();
 	
 	private TextBox searchUserInput = new TextBox();
 	private Button searchBtn = new Button("Nach Beiträgen suchen!");
-	private Label beitragLabel;
+	private Label beitragLabel = new Label();
 	
-	private SearchUserDialogBox dlg;
+	private SearchBeitragDialogBox dlg;
 	
 	//Identifier for author
 	SearchUserBox searchUserBox;
@@ -57,7 +57,7 @@ public class SearchBeitragBox extends VerticalPanel {
 		
 		//this.add(inputWrapper);
 		this.add(searchWrapper);
-		//this.add(new Label("sd"));
+		this.add(beitragLabel);
 	}
 	
 	public void onLoad() {
@@ -95,23 +95,24 @@ public class SearchBeitragBox extends VerticalPanel {
 		
 	}
 	
-	
-	
+	/*
+	 * Callback, welcher im Erfolgsfall die erhaltenen Beiträge an die SearchBeitragDialogBox übergibt.
+	 */
 	private class SearchResultCallback implements AsyncCallback<Vector<Beitrag>>{
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Window.alert("sdf");
+			Window.alert("searchBeitragFunction fehlgeschlagen. " + caught.toString());
 			
 		}
 
 		@Override
 		public void onSuccess(Vector<Beitrag> result) {
 
-			if (result.size()>0) {
+			if (result != null) {
 				//Window.alert("Deine Suche ergab " + result.size()+ " Treffer");
 			
-				dlg = new SearchUserDialogBox(result);
+				dlg = new SearchBeitragDialogBox(result);
 				dlg.center();
 				
 			}else {
@@ -130,7 +131,7 @@ public class SearchBeitragBox extends VerticalPanel {
 	 * DialogBox that displays resultUser that match to search string
 	 * User can select on resultUser.
 	 */
-	private class SearchUserDialogBox extends DialogBox implements ClickHandler {
+	private class SearchBeitragDialogBox extends DialogBox implements ClickHandler {
 		
 		private ScrollPanel parentScrolling = new ScrollPanel();
 		private FlowPanel userParentPanel = new FlowPanel();
@@ -140,7 +141,7 @@ public class SearchBeitragBox extends VerticalPanel {
 		
 		private Vector<searchBeitragResultBox> searchResultBoxes = new Vector<searchBeitragResultBox>();
 		
-		public SearchUserDialogBox(Vector<Beitrag> searchResults) {
+		public SearchBeitragDialogBox(Vector<Beitrag> searchResults) {
 			this.ergebnisCounter = searchResults.size();
 			
 			setText("Für den User wurden " + ergebnisCounter + " Beiträge gefunden. Bitte wähle einen davon aus.");
@@ -151,6 +152,7 @@ public class SearchBeitragBox extends VerticalPanel {
 				singleBeitragBox.getChoseUserBtn().addClickHandler(new ClickHandler() {	
 					@Override
 					public void onClick(ClickEvent event) {
+						beitragLabel.setText("Beitrag ausgewählt");
 						hide();		
 					}
 				});
