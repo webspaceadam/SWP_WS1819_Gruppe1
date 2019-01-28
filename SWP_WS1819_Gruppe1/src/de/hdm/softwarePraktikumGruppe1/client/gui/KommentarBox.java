@@ -97,7 +97,7 @@ public class KommentarBox extends FlowPanel {
 		@Override
 		public void onSuccess(Kommentar result) {
 			GWT.log(result.toString());
-			accountName.setText(owner.getFirstName() + owner.getLastName());
+			accountName.setText(owner.getFirstName() + " " + owner.getLastName());
 			nickName.setText("@" + owner.getNickname());
 			ownerId = result.getOwnerId();
 			kommentarId = result.getKommentarId();
