@@ -36,10 +36,10 @@ public class AbonnementBox extends FlowPanel {
 	private User shownUser;
 	private ShowAbosDialogBox parent;
 	
-	private Label accountName = new Label("Abo Name");
-	private Label nickName = new Label("@aboNickname");
+	private Label accountName = new Label();
+	private Label nickName = new Label();
 	private Button pinnwandBtn = new Button("Pinnwand");
-	private Button deaboBtn = new Button("Deabonnieren");
+	//private Button deaboBtn = new Button("Deabonnieren");
 	
 	private int pinnwandId;
 	
@@ -91,12 +91,12 @@ public class AbonnementBox extends FlowPanel {
 		accountName.addStyleName("title is-size-4");
 		nickName.addStyleName("is-size-5");
 		pinnwandBtn.addStyleName("button hast-text-primary");
-		deaboBtn.addStyleName("button bg-primary has-text-white");
+		//deaboBtn.addStyleName("button bg-primary has-text-white");
 		
 		accountWrapper.add(accountName);
 		nickWrapper.add(nickName);
 		pinnwandWrapper.add(pinnwandBtn);
-		deaboWrapper.add(deaboBtn);
+		//deaboWrapper.add(deaboBtn);
 		
 		// Adding ClickHandlers to Buttons
 		pinnwandBtn.addClickHandler(new ShowPinnwandClickHandler());
@@ -105,7 +105,7 @@ public class AbonnementBox extends FlowPanel {
 		this.add(nickWrapper);
 		this.add(pinnwandWrapper);
 		this.add(deaboWrapper);
-		deaboBtn.addClickHandler(new DeleteAboClickHandler(this));
+		//deaboBtn.addClickHandler(new DeleteAboClickHandler(this));
 	}
 	
 	class DeleteAboClickHandler implements ClickHandler{
