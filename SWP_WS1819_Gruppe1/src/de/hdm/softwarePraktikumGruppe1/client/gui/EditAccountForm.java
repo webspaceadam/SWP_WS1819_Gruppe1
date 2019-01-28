@@ -94,7 +94,7 @@ public class EditAccountForm extends FlowPanel {
 		safeButton.addStyleName("button bg-primary");
 		deleteButton.addStyleName("button is-danger");
 		deleteButton.addClickHandler(new DeleteUserClickHandler());
-		safeButton.addClickHandler(new SafeNewNames());
+		safeButton.addClickHandler(new OpenSafeDialog());
 		
 		// Adding the Elements to the Form
 		this.add(nickWrapper);
@@ -188,6 +188,56 @@ public class EditAccountForm extends FlowPanel {
 		
 	}
 	
+	private class OpenSafeDialog implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			SafeWithTheEditDialogBox safeWithEditDB = new SafeWithTheEditDialogBox();
+			safeWithEditDB.center();
+		}
+		
+	}
+	
+	private class SafeWithTheEditDialogBox extends DialogBox {
+		private VerticalPanel vPanel = new VerticalPanel();
+		private HorizontalPanel hPanel = new HorizontalPanel();
+		
+		private Label youSureLabel = new Label("Bist du dir mit deiner Eingabe sicher?");
+		private Button jaBtn = new Button("Ja");
+		private Button neinBtn = new Button("Nein");
+		
+		public SafeWithTheEditDialogBox() {
+			youSureLabel.addStyleName("label has-text-primary content_margin");
+			jaBtn.addStyleName("button bg-primary");
+			neinBtn.addStyleName("button is-danger");
+			
+			jaBtn.addClickHandler(new SafeNewNames(this));
+			neinBtn.addClickHandler(new NoNotSafeClickHandler(this));
+			
+			hPanel.add(jaBtn);
+			hPanel.add(neinBtn);
+			
+			vPanel.add(youSureLabel);
+			vPanel.add(hPanel);
+			this.add(vPanel);
+		}
+		
+	}
+	
+	private class NoNotSafeClickHandler implements ClickHandler {
+		SafeWithTheEditDialogBox parentSWTEDB;
+		
+		public NoNotSafeClickHandler(SafeWithTheEditDialogBox parent) {
+			this.parentSWTEDB = parent;
+		}
+		
+		@Override
+		public void onClick(ClickEvent event) {
+			parentSWTEDB.hide();
+		}
+		
+	}
+	
 	/**
 	 * Die innere Klasse <code>SafeNewNames</code> implementiert das ClickHandler Interface
 	 * um die Speicherung der neu eingegebenen Namen zu speichern. 
@@ -195,6 +245,12 @@ public class EditAccountForm extends FlowPanel {
 	 * @author AdamGniady
 	 */
 	private class SafeNewNames implements ClickHandler {
+		SafeWithTheEditDialogBox parentDialogBox;
+		
+		public SafeNewNames(SafeWithTheEditDialogBox parent) {
+			this.parentDialogBox = parent;
+		}
+		
 		@Override
 		public void onClick(ClickEvent event) {
 			int currentUserId = Integer.parseInt(Cookies.getCookie("userId"));
