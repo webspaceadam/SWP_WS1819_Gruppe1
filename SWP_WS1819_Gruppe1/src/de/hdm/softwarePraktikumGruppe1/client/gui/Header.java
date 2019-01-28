@@ -191,6 +191,8 @@ public class Header extends FlowPanel {
 			Header parentHeader;
 			@Override
 			public void onClick(ClickEvent event) {
+				pinnwandVerwaltung.showAllAbonnementsByUser(user, new ShowAllAbonnementsByUserCallback());
+				
 				dlg = new ShowAbosDialogBox();
 				dlg.center();
 				
