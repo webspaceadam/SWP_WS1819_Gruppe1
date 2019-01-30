@@ -70,6 +70,7 @@ public class BeitragBox extends FlowPanel {
 	private Image likeHeartBtn = new Image("images/SVG/heart.svg");
 	private Image replyBtn = new Image("images/SVG/reply.svg");
 	private Image editPenBtn = new Image("images/SVG/pen.svg");
+	private Image unfilledHeart = new Image("images/SVG/heart_unfilled.svg");
 	
 	// Other Elements for this Widget
 	private FlowPanel heartWrapper = new FlowPanel();
@@ -180,10 +181,10 @@ public class BeitragBox extends FlowPanel {
 		
 		// Likecount info
 		pinnwandVerwaltung.countLikes(thisBeitrag, new CountLikeCallback());
-		likeHeart.setWidth("1rem");
-		likeHeart.addStyleName("small-padding-right");
-		likeCountText.addStyleName("is-size-6 is-italic");
-		likeCountText.setText(" auf diesem Beitrag: " + likeCount);
+//		likeHeart.setWidth("1rem");
+//		likeHeart.addStyleName("small-padding-right");
+//		likeCountText.addStyleName("is-size-6 is-italic");
+//		likeCountText.setText(" auf diesem Beitrag: " + likeCount);
 		
 		
 		// Adding Elements to the Wrapper
@@ -278,11 +279,28 @@ public class BeitragBox extends FlowPanel {
 
 		@Override
 		public void onSuccess(Integer result) {
-			//likeCount = result;
-			GWT.log("LikeCount is: " + result);
-//			likeCount = likeCount + result;
+			likeCount = result;
+			GWT.log("LikeCount is: " + likeCount);
 			likeCountText.setText(" auf diesem Beitrag: " + result);
-
+			if(result == 0) {
+				likeInfoWrapper.remove(likeHeart);
+//				likeHeart.setVisible(true);
+				unfilledHeart.setWidth("1rem");
+				unfilledHeart.addStyleName("small-padding-right");
+				likeCountText.addStyleName("is-size-6 is-italic");
+				likeCountText.setText(" auf diesem Beitrag: " + "0");
+				likeInfoWrapper.add(unfilledHeart);
+				likeInfoWrapper.add(likeCountText);
+			}else{
+				likeInfoWrapper.remove(unfilledHeart);
+//				unfilledHeart.setVisible(true);
+				likeHeart.setWidth("1rem");
+				likeHeart.addStyleName("small-padding-right");
+				likeCountText.addStyleName("is-size-6 is-italic");
+				likeCountText.setText(" auf diesem Beitrag: " + likeCount);
+				likeInfoWrapper.add(likeHeart);
+				likeInfoWrapper.add(likeCountText);
+			}
 			}
 			
 		
@@ -310,7 +328,8 @@ public class BeitragBox extends FlowPanel {
 			parentBB = bb;
 			this.parentBeitrag.setBeitragId(parentBB.beitragId);
 			// COOKIE
-			this.likingUser.setUserId(1);
+			int likingUser = Integer.parseInt(Cookies.getCookie("userId"));
+			this.likingUser.setUserId(likingUser);
 			
 		}
 			
@@ -336,17 +355,17 @@ public class BeitragBox extends FlowPanel {
 			@Override
 			public void onSuccess(Like result) {
 				if(result != null) {
-					currentUser.setUserId(1);
+					currentUser.setUserId(Integer.parseInt(Cookies.getCookie("userId")));
 					currentBeitrag.setBeitragId(beitragId);
 					GWT.log(result.toString());
 					pinnwandVerwaltung.deleteLike(result, new DeleteLikeCallback());
+					
 				}else {
-					currentUser.setUserId(1);
+					currentUser.setUserId(Integer.parseInt(Cookies.getCookie("userId")));
 					currentBeitrag.setBeitragId(beitragId);
 					pinnwandVerwaltung.createLike(currentUser, currentBeitrag, timestamp, new CreateLikeCallback());
-				}
-				
-				
+					
+				}				
 
 				
 			}
