@@ -24,9 +24,11 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.Beitrag;
 
 /**
  * 
- * Mit dieser Box kann der User nach Beiträgen suchen.
+ * Die <code>SearchBeitragBox</code>-Klasse ist eine Custom-Widget-Class die 
+ * dem User die Möglichkeit gibt,  nach Beiträgen suchen.
  * Der User gibt einen Text ein und drückt dann den Suchen Button, um dazu passende Beiträge zu sehen.
- * @author Jakob Benkö
+ * 
+ * @author JakobBenkoe
  *
  */
 public class SearchBeitragBox extends FlowPanel {
