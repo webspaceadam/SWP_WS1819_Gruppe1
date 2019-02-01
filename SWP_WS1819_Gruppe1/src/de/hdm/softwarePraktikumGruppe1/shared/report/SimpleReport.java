@@ -11,6 +11,8 @@ import java.util.Vector;
  * 
  * @see Row
  * @see Column
+ * 
+ * @author Thies
  * @author JakobBenkoe
  */
 public abstract class SimpleReport extends Report {

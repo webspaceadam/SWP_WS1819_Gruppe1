@@ -12,6 +12,7 @@ import java.io.Serializable;
  * sind.
  * 
  * @author Thies
+ * @author JakobBenkoe
  */
 
 public class SimpleParagraph extends Paragraph implements Serializable {

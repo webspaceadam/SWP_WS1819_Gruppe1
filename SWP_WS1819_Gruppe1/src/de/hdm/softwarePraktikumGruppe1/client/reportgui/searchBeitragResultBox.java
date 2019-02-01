@@ -12,7 +12,15 @@ import com.google.gwt.user.client.ui.TextBox;
 
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Beitrag;
 
-
+/**
+ * 
+ * Die <code>searchBeitragResultBox</code>-Klasse ist eine Custom-Widget-Class,
+ * welche einen Beitrag anzeigt. Dieser kann vom User ausgewählt werden.
+ * 
+ * 
+ * @author JakobBenkoe
+ *
+ */
 public class searchBeitragResultBox extends FlowPanel {
 	TextBox searchUserInput;
 
@@ -33,9 +41,8 @@ public class searchBeitragResultBox extends FlowPanel {
 
 	
 	/*
-	 * Konstruktor, der das Übergeben des aktiven Users und des Suchergebnisses ermöglicht.
+	 * Konstruktor, der das Übergeben der Speichermöglichkeit des gewählten Beitrags und den darzustellenden Beitrags ermöglicht.
 	 */
-
 	public searchBeitragResultBox(TextBox searchUserInput, Beitrag resultBeitrag) {
 		this.searchUserInput = searchUserInput;
 		this.resultBeitrag = resultBeitrag;

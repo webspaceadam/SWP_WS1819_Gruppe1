@@ -30,8 +30,10 @@ import de.hdm.softwarePraktikumGruppe1.shared.report.UserReport;
 
 /**
  * Die Klasse <code>ReportGenerator</code> enthält alle Elemente zur 
- * Generierung und Darstellung des Reports
- * Grundlage der GUI ist hier ein DockLayoutPanel
+ * Generierung und Darstellung des Reports.
+ * Von hier werden RPCs des Report-Client angestoßen.
+ * 
+ * Grundlage der GUI ist hier ein DockLayoutPanel.
  * 
  * 
  *@author JakobBenkoe
@@ -104,6 +106,7 @@ public class ReportGenerator  implements EntryPoint {
 			
 	/*
 	 * ClickHandler for generateUserReport
+	 * UserReport will be created.
 	 * @see UserReportForm
 	 * @see GeneratorBox
 	 * 
@@ -166,6 +169,7 @@ public class ReportGenerator  implements EntryPoint {
 		
 		/*
 		 * ClickHandler for generateBeitragReport
+		 * BeitragReport will be created.
 		 * @see BeitragReportForm
 		 * @see GeneratorBox
 		 * 

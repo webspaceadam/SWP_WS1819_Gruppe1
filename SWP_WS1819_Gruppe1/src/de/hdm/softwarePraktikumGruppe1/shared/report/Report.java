@@ -3,7 +3,16 @@ package de.hdm.softwarePraktikumGruppe1.shared.report;
 import java.io.Serializable;
 import java.util.Date;
 
-
+/**
+ * Basisklasse aller Reports.
+ * 
+ * @see BeitragReport
+ * @see UserReport
+ * @see Simplereport
+ * @see GenericReport
+ * 
+ * @author JakobBenkoe
+ */
 public abstract class Report implements Serializable {
 
 	/**
