@@ -48,6 +48,7 @@ public class Header extends FlowPanel {
 		private FlowPanel searchDiv = new FlowPanel();
 		private FlowPanel logoutDiv = new FlowPanel();
 		private FlowPanel inputDiv = new FlowPanel();
+		private FlowPanel reportDiv = new FlowPanel();
 		
 		// Creating Buttons
 		private TextBox searchUserInput = new TextBox();
@@ -124,6 +125,7 @@ public class Header extends FlowPanel {
 			inputDiv.addStyleName("header_element");
 			searchDiv.addStyleName("header_element");
 			logoutDiv.addStyleName("header_element");
+			reportDiv.addStyleName("header_element");
 			
 			searchUserInput.addStyleName("input is-medium");
 			searchUserInput.getElement().setPropertyString("placeholder", "Suche nach Usern!");
@@ -134,12 +136,12 @@ public class Header extends FlowPanel {
 			inputDiv.add(searchUserInput);
 			searchDiv.add(searchButton);
 			logoutDiv.add(logoutButton);
-			logoutDiv.add(reportButton);
+			reportDiv.add(reportButton);
 			
 			headerRight.add(inputDiv);
 			headerRight.add(searchDiv);
 			headerRight.add(logoutDiv);
-			
+			headerRight.add(reportDiv);
 			/*
 			 * Logic to add the ClickHandlers
 			 */

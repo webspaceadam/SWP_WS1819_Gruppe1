@@ -4,9 +4,8 @@
 package de.hdm.softwarePraktikumGruppe1.server;
 
 
-import java.text.ParseException;
+
 import java.text.SimpleDateFormat;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -18,7 +17,6 @@ import de.hdm.softwarePraktikumGruppe1.server.db.AbonnementMapper;
 import de.hdm.softwarePraktikumGruppe1.server.db.BeitragMapper;
 import de.hdm.softwarePraktikumGruppe1.server.db.KommentarMapper;
 import de.hdm.softwarePraktikumGruppe1.server.db.LikeMapper;
-import de.hdm.softwarePraktikumGruppe1.server.db.PinnwandMapper;
 import de.hdm.softwarePraktikumGruppe1.server.db.UserMapper;
 import de.hdm.softwarePraktikumGruppe1.shared.ReportGeneratorService;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Abonnement;
@@ -51,7 +49,6 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 	public final static SimpleDateFormat dayMonthYearFormat = new SimpleDateFormat ("dd.MM.yyyy");
 	public final static SimpleDateFormat dayMonthYearTimeFormat = new SimpleDateFormat ("dd.MM.yyyy HH:mm");
 	
-	public final static String trenner = "------------------";
 	
 	Date start = null;
 	Date end = null;
@@ -333,8 +330,6 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 	 * @param searchQuery
 	 * @return users gibt die User zurück die gefunden wurden.
 	 */
-	
-
 	public Vector<User> searchUserFunction(String searchQuery){
 		HashSet<User> hs = new HashSet<User>();
 		Vector<User> users = new Vector<User>();
