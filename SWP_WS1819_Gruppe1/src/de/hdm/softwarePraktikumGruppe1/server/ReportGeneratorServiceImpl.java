@@ -6,6 +6,7 @@ package de.hdm.softwarePraktikumGruppe1.server;
 
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -72,6 +73,16 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 	@Override
 	public UserReport createUserReport(String gmail, Date date1, Date date2) throws IllegalArgumentException {
 		//create Report
+        Calendar morning = Calendar.getInstance();
+        
+        morning.set(Calendar.HOUR_OF_DAY, 0);
+        morning.set(Calendar.MINUTE, 0);
+
+        
+		
+		
+		System.out.println(date1.toString());
+		System.out.println(date2.toString());
 		UserReport userReport = new UserReport();
 		//make sure start date is before end date
 		if(date1.before(date2)) {
@@ -81,6 +92,18 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 			start = date2;
 			end = date1;
 		}
+
+		
+
+		start.setHours(0);
+		start.setMinutes(0);
+		
+		end.setHours(23);
+		end.setMinutes(59);
+		System.out.println(start);
+		System.out.println(end);
+		
+		
 		userReport.setImprint(new SimpleParagraph("Report über den Zeitraum vom " + dayMonthYearFormat.format(start) + 
 				" bis zum " + dayMonthYearFormat.format(end)));
 		
