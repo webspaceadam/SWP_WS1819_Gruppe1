@@ -48,8 +48,11 @@ public class DatePickerBox extends FlowPanel {
 	}
 	
 	
+
 	public Date getDate() {
-		return dateBox.getValue();
+		Date date = dateBox.getValue();
+		date.setHours(12);
+		return date;
 	}
 
 }

@@ -231,8 +231,8 @@ public class KommentarMapper {
 					Statement stmt = con.createStatement();
 					
 					ResultSet rs = stmt.executeQuery("SELECT * FROM kommentar WHERE BeitragFK=" + beitragId +
-							" AND CreationTimeStamp >= '" + ReportGeneratorServiceImpl.yearMonthDayFormat.format(start).toString() +
-							"' AND CreationTimeStamp <= '" + ReportGeneratorServiceImpl.yearMonthDayFormat.format(end).toString() + "'");
+							" AND CreationTimeStamp >= '" + ReportGeneratorServiceImpl.sqlFormat.format(start).toString() +
+							"' AND CreationTimeStamp <= '" + ReportGeneratorServiceImpl.sqlFormat.format(end).toString() + "'");
 					
 					
 					while (rs.next()) {

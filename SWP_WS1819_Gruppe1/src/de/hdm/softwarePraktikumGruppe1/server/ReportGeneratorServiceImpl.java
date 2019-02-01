@@ -6,6 +6,7 @@ package de.hdm.softwarePraktikumGruppe1.server;
 
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -45,10 +46,10 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 	 *  
 	 */
 	private static final long serialVersionUID = 1L;
-	public final static  SimpleDateFormat yearMonthDayFormat = new SimpleDateFormat ("yyyy.MM.dd");
+	public final static SimpleDateFormat yearMonthDayFormat = new SimpleDateFormat ("yyyy.MM.dd");
 	public final static SimpleDateFormat dayMonthYearFormat = new SimpleDateFormat ("dd.MM.yyyy");
 	public final static SimpleDateFormat dayMonthYearTimeFormat = new SimpleDateFormat ("dd.MM.yyyy HH:mm");
-	
+	public final static SimpleDateFormat sqlFormat = new SimpleDateFormat ("yyyy-MM-dd HH:mm:ss");
 	
 	Date start = null;
 	Date end = null;
@@ -66,28 +67,27 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 	  }
 
 	
+
+
 	/*
 	 * Hier wird der UserReport erstellt
 	 */
 	@Override
 	public UserReport createUserReport(String gmail, Date date1, Date date2) throws IllegalArgumentException {
+		//convert Dates
+		Date[] finalDates = this.convertDates(date1, date2);
+		start = finalDates[0];
+		end = finalDates[1];
+		
 		//create Report
 		UserReport userReport = new UserReport();
-		//make sure start date is before end date
-		if(date1.before(date2)) {
-			start = date1;
-			end = date2;
-		}else {
-			start = date2;
-			end = date1;
-		}
 		userReport.setImprint(new SimpleParagraph("Report über den Zeitraum vom " + dayMonthYearFormat.format(start) + 
 				" bis zum " + dayMonthYearFormat.format(end)));
 		
 		//user of the userReport
 		User user = null;
 		int userID;
-		//Make Sure Beitrag with selected ID exists
+		//Make Sure User with selected ID exists
 		try {
 			user = uMapper.findUserByGmail(gmail);
 			userReport.setTitle("Report Über den User " + user.getNickname());
@@ -213,17 +213,14 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 	 */
 	@Override
 	public BeitragReport createBeitragReport(int beitragID, Date date1, Date date2) throws IllegalArgumentException {
+		//convert Dates
+		Date[] finalDates = this.convertDates(date1, date2);
+		start = finalDates[0];
+		end = finalDates[1];
+				
 		//create result Report
 		BeitragReport beitragReport = new BeitragReport();
-		beitragReport.setTitle("Report Über den Beitrag mit der ID " + beitragID);
-		//make sure start date is before end date
-		if(date1.before(date2)) {
-			start = date1;
-			end = date2;
-		}else {
-			start = date2;
-			end = date1;
-		}
+		beitragReport.setTitle("Report Über den Beitrag mit der ID " + beitragID);	
 		beitragReport.setImprint(new SimpleParagraph("Report über den Zeitraum vom " + dayMonthYearFormat.format(start) + 
 				" bis zum " + dayMonthYearFormat.format(end)));
 
@@ -355,5 +352,50 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 		User tempUser = uMapper.findUserByGmail(gMail);
 		if (tempUser != null)return beitragMapper.findBeitraegeOfUser(tempUser.getUserId());
 		return null;
+	}
+	
+	
+	
+	
+	/*
+	 * Convert two dates to match Period Specifications
+	 * @param two dates
+	 * @return sorted dates with time being set
+	 */
+	public Date[] convertDates(Date d1, Date d2) {
+		//finalDates[0] eqauls start date
+		//finalDates[1] eqauls end date
+		Date[] finalDates = new Date[2];
+		//make sure start date is before end date
+		if(d1.before(d2)) {
+			finalDates[0] = d1;
+			finalDates[1] = d2;
+		}else {
+			finalDates[0] = d2;
+			finalDates[1] = d1;
+		}
+		
+		//Set Time for start date to 00:00:00
+        Calendar mor = Calendar.getInstance();
+        mor.setTime(finalDates[0]);
+        mor.set(Calendar.HOUR_OF_DAY, 0);
+        mor.set(Calendar.MINUTE, 0);
+        mor.set(Calendar.SECOND, 0);  
+        finalDates[0].setTime(mor.getTimeInMillis());
+		
+        
+        //Set Time for end date to 23:59:59
+        Calendar eve = Calendar.getInstance();
+        eve.setTime(finalDates[1]);
+        eve.set(Calendar.HOUR_OF_DAY, 23);
+        eve.set(Calendar.MINUTE, 59);
+        eve.set(Calendar.SECOND, 59);
+        finalDates[1].setTime(eve.getTimeInMillis());
+        
+        System.out.println("0: " + finalDates[0].toString());
+        System.out.println("1: " + finalDates[1].toString());
+        
+        //Return start and end date
+		return finalDates;
 	}
 }
