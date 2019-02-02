@@ -96,7 +96,7 @@ public class ClientsideSettings extends CommonSettings {
 		    }
 		  };
 		  	
-		  reportGenerator.init(initReportGeneratorCallback);
+		  //reportGenerator.init(initReportGeneratorCallback);
 		}
 
 		// So, nun brauchen wir den ReportGenerator nur noch zurückzugeben.

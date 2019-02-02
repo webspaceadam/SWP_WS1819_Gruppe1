@@ -62,11 +62,6 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 	KommentarMapper kommentarMaper = KommentarMapper.kommentarMapper();
 	
 	
-	public void init() throws IllegalArgumentException {
-
-	  }
-
-	
 
 
 	/*

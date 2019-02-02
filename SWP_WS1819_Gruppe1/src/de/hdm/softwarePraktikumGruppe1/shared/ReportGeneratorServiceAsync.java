@@ -21,7 +21,6 @@ import de.hdm.softwarePraktikumGruppe1.shared.report.UserReport;
  */
 public interface ReportGeneratorServiceAsync {
 
-		void init(AsyncCallback<Void> initReportGeneratorCallback);
 
 		void createUserReport(String gMail, Date start, Date end, AsyncCallback<UserReport> callback);
 

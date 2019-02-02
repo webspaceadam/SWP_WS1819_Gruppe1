@@ -25,8 +25,6 @@ import de.hdm.softwarePraktikumGruppe1.shared.report.UserReport;
 public interface ReportGeneratorService extends RemoteService{
 	
 	
-	void init() throws IllegalArgumentException;
-
 	
 	  /**
 	   * Erstellen eines <code>UserReport</code>-Reports. Dieser
