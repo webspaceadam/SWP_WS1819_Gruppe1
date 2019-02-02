@@ -6,7 +6,12 @@ package de.hdm.softwarePraktikumGruppe1.shared;
 import java.io.Serializable;
 
 /**
+ * 
+ * @code LoginInfo contains the login info from the User service.
+ * 
+ * 
  * @author GianlucaBernert
+ * @author JakobBenkoe
  *
  */
 public class LoginInfo implements Serializable {
