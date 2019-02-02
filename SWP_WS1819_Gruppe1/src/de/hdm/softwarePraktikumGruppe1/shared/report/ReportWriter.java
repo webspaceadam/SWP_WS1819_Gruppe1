@@ -1,6 +1,10 @@
 package de.hdm.softwarePraktikumGruppe1.shared.report;
 
-
+/**
+ * 
+ * @author Thies
+ *
+ */
 
 public abstract class ReportWriter {
 

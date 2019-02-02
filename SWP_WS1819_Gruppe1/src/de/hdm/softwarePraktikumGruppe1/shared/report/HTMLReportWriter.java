@@ -14,6 +14,7 @@ import com.google.gwt.i18n.shared.DateTimeFormat;
  * abgelegt und kann nach Aufruf der entsprechenden Prozessierungsmethode mit
  * <code>getReportText()</code> ausgelesen werden.
  * 
+ * @author Thies
  * @author JakobBenkoe
  */
 
