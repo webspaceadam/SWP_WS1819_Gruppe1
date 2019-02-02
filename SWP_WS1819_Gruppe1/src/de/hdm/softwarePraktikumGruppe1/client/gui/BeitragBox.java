@@ -839,6 +839,7 @@ public class BeitragBox extends FlowPanel {
 			tempKommentarBox.setParentBeitragBox(this);
 			tempKommentarBox.setKommentarId(k.getKommentarId());
 			tempKommentarBox.setOwnerId(k.getOwnerId());
+			tempKommentarBox.setCreationDate(k.getCreationTimeStamp());
 			
 			this.add(tempKommentarBox);
 		}
