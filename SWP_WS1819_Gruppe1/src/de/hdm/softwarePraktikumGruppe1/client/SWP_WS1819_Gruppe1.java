@@ -64,6 +64,7 @@ public class SWP_WS1819_Gruppe1 implements EntryPoint {
 	        if(loginInfo.isLoggedIn()) {
 	          loadEditor(result);
 	        } else {
+	          Window.Location.assign(result.getLogoutUrl());
 	          loadLogin();
 	        }
 	      }
