@@ -219,8 +219,7 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 		end = finalDates[1];
 				
 		//create result Report
-		BeitragReport beitragReport = new BeitragReport();
-		beitragReport.setTitle("Report Über den Beitrag mit der ID " + beitragID);	
+		BeitragReport beitragReport = new BeitragReport();		
 		beitragReport.setImprint(new SimpleParagraph("Report über den Zeitraum vom " + dayMonthYearFormat.format(start) + 
 				" bis zum " + dayMonthYearFormat.format(end)));
 
@@ -247,10 +246,12 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 			//Create header
 			CompositeParagraph header = new CompositeParagraph();
 				try {
-					header.addSubParagraph(new SimpleParagraph("Beitrag erstellt von " +  inhaber.getFirstName() + " " + inhaber.getLastName()));
-					header.addSubParagraph(new SimpleParagraph("@" + inhaber.getNickname()));
+					beitragReport.setTitle("Report Über einen Beitrag von @" + inhaber.getNickname());	
+					header.addSubParagraph(new SimpleParagraph(inhaber.getFirstName() + " " + inhaber.getLastName() + " hat diesen Beitrag erstellt."));
+					//header.addSubParagraph(new SimpleParagraph("@" + inhaber.getNickname()));
 					header.addSubParagraph(new SimpleParagraph("Autor eMail: " + inhaber.getGMail()));					
 				}catch(Exception e) {
+					beitragReport.setTitle("Beitragsreport Kein Autor gefunden");	
 					header.addSubParagraph(new SimpleParagraph("Beitrag erstellt von: Zu diesem Beitrag konnte kein Autor gefunden werden"));
 				}
 			header.addSubParagraph(new SimpleParagraph(""));
