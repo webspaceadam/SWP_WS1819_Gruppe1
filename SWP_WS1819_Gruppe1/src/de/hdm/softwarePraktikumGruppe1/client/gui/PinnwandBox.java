@@ -180,12 +180,10 @@ public class PinnwandBox extends FlowPanel {
 	private void addOldBeitraegeToPinnwand() {
 		for(Beitrag b : this.allBeitraegeOfPinnwand) {
 			BeitragBox tempBeitragBox = new BeitragBox();
-			//tempBeitragBox.setAccountName(user.getFirstName(), user.getLastName());
 			tempBeitragBox.setUserId(user.getUserId());
-			//tempBeitragBox.setNickName("@" + user.getNickname());
 			tempBeitragBox.setBeitragId(b.getBeitragId());
 			GWT.log(b.getCreationTimeStamp().toString());
-			tempBeitragBox.setCreationDate("Erstellzeitpunkt: " + b.getCreationTimeStamp().toString());
+			tempBeitragBox.setCreationDate("Erstellzeitpunkt: " + ClientsideSettings.dateFormat.format(b.getCreationTimeStamp()).toString());
 			tempBeitragBox.setBeitragContent(b.getInhalt());
 			this.add(tempBeitragBox);
 		}

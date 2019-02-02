@@ -102,7 +102,7 @@ public class KommentarBox extends FlowPanel {
 			ownerId = result.getOwnerId();
 			kommentarId = result.getKommentarId();
 			GWT.log(result.toString());
-			creationDate.setText("Erstellzeitpunkt: " + result.getCreationTimeStamp().toString());
+			creationDate.setText("Erstellzeitpunkt: " + ClientsideSettings.dateFormat.format(result.getCreationTimeStamp()).toString());
 		}
 		
 	}
@@ -111,10 +111,9 @@ public class KommentarBox extends FlowPanel {
 		currentUserId = Integer.parseInt(Cookies.getCookie("userId"));
 		pinnwandVerwaltung.getUserById(ownerId, new GetUserByIdCallback());
 		// Date Stuff
-		Date now = new Date();
-		DateTimeFormat fmt = DateTimeFormat.getFormat("HH:mm:ss, EEEE, dd MMMM, yyyy");
-		String date = fmt.format(now).toString();
-		creationDate.setText("Erstellungszeitpunkg: " + date);
+		Date now = new Date();		
+		String date = ClientsideSettings.dateFormat.format(now).toString();
+		creationDate.setText("Erstellungszeitpunkt: " + date);
 		
 		this.addStyleName("post_content kommentar_margin");
 		parentVerticalPanel.addStyleName("control");

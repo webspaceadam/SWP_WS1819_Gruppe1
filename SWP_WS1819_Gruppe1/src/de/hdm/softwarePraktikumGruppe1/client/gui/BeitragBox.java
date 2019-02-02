@@ -114,8 +114,7 @@ public class BeitragBox extends FlowPanel {
 			GWT.log("beitrag Id: " + result.getBeitragId());
 			beitragId = result.getBeitragId();
 			userId = result.getOwnerId();
-			//String ts = String.format("%1$TD %1$TT", result.getCreationTimeStamp());
-			creationDate.setText("Erstellzeitpunkt: " + result.getCreationTimeStamp());
+			creationDate.setText("Erstellzeitpunkt: " + ClientsideSettings.dateFormat.format(result.getCreationTimeStamp()).toString());
 			pinnwandVerwaltung.getUserById(result.getOwnerId(), new SetNamesCallback());
 		}
 		
@@ -770,7 +769,7 @@ public class BeitragBox extends FlowPanel {
 	 * @param creationDate
 	 */
 	public void setCreationDate(String creationDate) {
-		this.creationDate.setText(creationDate);;
+		this.creationDate.setText(creationDate);
 	}
 	/*
 	 * Methode die den Content(Inhalt) des Beitrags holt
