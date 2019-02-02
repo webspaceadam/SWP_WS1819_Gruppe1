@@ -36,9 +36,13 @@ import de.hdm.softwarePraktikumGruppe1.shared.report.UserReport;
 
 
 /**
+ * 
+ * Serverseite Implementierung des <code>ReportGeneratorService</code>.
+ * Hier werden die Reports mit Daten befüllt.
+ * 
  * @author GianlucaBernert
  * @author JakobBenkoe
- * Serverseite Implementierung des ReportGeneratorService
+ * 
  */
 public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements ReportGeneratorService{
 
@@ -46,15 +50,25 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 	 *  
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	/*
+	 * Different Date Formats. Can be used globally on server-side
+	 */
 	public final static SimpleDateFormat yearMonthDayFormat = new SimpleDateFormat ("yyyy.MM.dd");
 	public final static SimpleDateFormat dayMonthYearFormat = new SimpleDateFormat ("dd.MM.yyyy");
 	public final static SimpleDateFormat dayMonthYearTimeFormat = new SimpleDateFormat ("dd.MM.yyyy HH:mm");
 	public final static SimpleDateFormat sqlFormat = new SimpleDateFormat ("yyyy-MM-dd HH:mm:ss");
 	
+	
+	/*
+	 * Reports will be created between start and end date
+	 */
 	Date start = null;
 	Date end = null;
 	
-	
+	/*
+	 * Mapper Declaration
+	 */
 	UserMapper uMapper = UserMapper.userMapper();	
 	BeitragMapper beitragMapper = BeitragMapper.beitragMapper();
 	AbonnementMapper abonnementMapper = AbonnementMapper.abonnementMapper();
@@ -354,13 +368,15 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 	
 	
 	/*
-	 * Convert two dates to match Period Specifications
+	 * Method @Code convertDates converts two dates to match Period Specifications
 	 * @param two dates
 	 * @return sorted dates with time being set
 	 */
 	public Date[] convertDates(Date d1, Date d2) {
-		//finalDates[0] eqauls start date
-		//finalDates[1] eqauls end date
+		/*
+		 * finalDates[0] eqauls start date
+		 * finalDates[1] eqauls end date
+		 */
 		Date[] finalDates = new Date[2];
 		//make sure start date is before end date
 		if(d1.before(d2)) {
@@ -386,10 +402,7 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
         eve.set(Calendar.HOUR_OF_DAY, 23);
         eve.set(Calendar.MINUTE, 59);
         eve.set(Calendar.SECOND, 59);
-        finalDates[1].setTime(eve.getTimeInMillis());
-        
-        System.out.println("0: " + finalDates[0].toString());
-        System.out.println("1: " + finalDates[1].toString());
+        finalDates[1].setTime(eve.getTimeInMillis());        
         
         //Return start and end date
 		return finalDates;

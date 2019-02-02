@@ -10,6 +10,7 @@ import java.util.Vector;
  * <code>SimpleParagraph</code>-Objekte) dar. Diese werden als Unterabschnitte
  * in einem <code>Vector</code> abgelegt verwaltet.
  * 
+ * @author Thies
  * @author JakobBenkoe
  */
 

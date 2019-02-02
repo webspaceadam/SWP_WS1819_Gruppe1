@@ -30,7 +30,10 @@ public class Row implements Serializable {
 	  
   }
   
-  
+  /**
+   * Konstruktur zum setzen einer Randzeile
+   * (letzte oder erste Zeile eines Abschnitts)
+   */ 
   public Row(boolean newRecord) {
 	  this.newRecord= newRecord;
   }
