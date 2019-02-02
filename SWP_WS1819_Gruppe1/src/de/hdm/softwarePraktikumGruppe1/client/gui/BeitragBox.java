@@ -39,10 +39,7 @@ public class BeitragBox extends FlowPanel {
 	PinnwandverwaltungAsync pinnwandVerwaltung = ClientsideSettings.getPinnwandverwaltung();
 
 
-	private Vector<KommentarBox> kommentarsOfBeitrag = new Vector<KommentarBox>();
-
 	private Vector<KommentarBox> kommentarBoxesOfBeitrag = new Vector<KommentarBox>();
-	private Vector<Like> likes = new Vector<Like>();
 	private Vector<Kommentar> kommentareOfBeitrag = new Vector<Kommentar>();
 
 	
