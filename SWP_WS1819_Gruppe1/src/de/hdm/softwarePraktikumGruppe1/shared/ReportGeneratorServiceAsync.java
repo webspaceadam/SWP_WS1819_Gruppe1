@@ -16,12 +16,12 @@ import de.hdm.softwarePraktikumGruppe1.shared.report.UserReport;
 
 
 /**
- * @author GianlucaBernert & JakobBenkoe
+ * @author GianlucaBernert
+ * @author JakobBenkoe
  * Interface das von ReportGeneratorServiceProxy Implementiert wird
  */
 public interface ReportGeneratorServiceAsync {
 
-		void init(AsyncCallback<Void> initReportGeneratorCallback);
 
 		void createUserReport(String gMail, Date start, Date end, AsyncCallback<UserReport> callback);
 
