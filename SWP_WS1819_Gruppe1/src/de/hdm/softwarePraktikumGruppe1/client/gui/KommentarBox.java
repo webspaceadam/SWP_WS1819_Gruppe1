@@ -81,7 +81,6 @@ public class KommentarBox extends FlowPanel {
 
 		@Override
 		public void onSuccess(User result) {
-			Window.alert("We have the User");
 			owner = result;
 			pinnwandVerwaltung.createKommentar(kommentarContent.getText(), owner.getUserId(), parentBeitragBox.getBeitragId(), timestamp, new CreateKommentarCallback());
 		}
@@ -98,7 +97,7 @@ public class KommentarBox extends FlowPanel {
 		@Override
 		public void onSuccess(Kommentar result) {
 			GWT.log(result.toString());
-			accountName.setText(owner.getFirstName() + owner.getLastName());
+			accountName.setText(owner.getFirstName() + " " + owner.getLastName());
 			nickName.setText("@" + owner.getNickname());
 			ownerId = result.getOwnerId();
 			kommentarId = result.getKommentarId();
@@ -109,6 +108,7 @@ public class KommentarBox extends FlowPanel {
 	}
 	
 	public void onLoad() {
+		currentUserId = Integer.parseInt(Cookies.getCookie("userId"));
 		pinnwandVerwaltung.getUserById(ownerId, new GetUserByIdCallback());
 		// Date Stuff
 		Date now = new Date();
@@ -132,10 +132,6 @@ public class KommentarBox extends FlowPanel {
 		userInfoWrapper.add(accountName);
 		userInfoWrapper.add(nickName);
 		
-		// 
-		if(this.ownerId == this.currentUserId) {
-			userInfoWrapper.add(editPenBtn);
-		}
 		creationInfoWrapper.add(creationDate);
 		contentWrapper.add(kommentarContent);
 		
@@ -265,7 +261,6 @@ public class KommentarBox extends FlowPanel {
 		public void onClick(ClickEvent event) {
 			Kommentar tempKommentar = new Kommentar();
 			tempKommentar.setKommentarId(kommentarId);
-			GWT.log("KommentarId: " + kommentarId);
 			pinnwandVerwaltung.deleteKommentar(tempKommentar, new DeleteKommentarCallback());
 			parentBeitragBox.deleteKommentar(thisKommentarBox);
 			parentDialogBox.hide();
@@ -353,7 +348,12 @@ public class KommentarBox extends FlowPanel {
 		@Override
 		public void onSuccess(User result) {
 			accountName.setText(result.getFirstName() + " " + result.getLastName());
-			nickName.setText(result.getNickname());
+			nickName.setText("@" + result.getNickname());
+			
+			// Check if Current User is the owner of the Kommentar
+			if(ownerId == currentUserId) {
+				userInfoWrapper.add(editPenBtn);
+			}
 		}
 		
 	}

@@ -9,7 +9,6 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -21,10 +20,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.softwarePraktikumGruppe1.client.gui.AuthenticationForm;
-import de.hdm.softwarePraktikumGruppe1.client.gui.BeitragBox;
-import de.hdm.softwarePraktikumGruppe1.client.gui.CreateBeitragBox;
 import de.hdm.softwarePraktikumGruppe1.client.gui.Header;
-import de.hdm.softwarePraktikumGruppe1.client.gui.KommentarBox;
 import de.hdm.softwarePraktikumGruppe1.client.gui.PinnwandBox;
 import de.hdm.softwarePraktikumGruppe1.client.gui.ProfileBox;
 import de.hdm.softwarePraktikumGruppe1.shared.LoginInfo;
@@ -84,7 +80,7 @@ public class SWP_WS1819_Gruppe1 implements EntryPoint {
 	
 	//wird erst nach Erfolgreichem Login geladen
 	public void loadEditor(LoginInfo loginInfo){
-		Window.alert("Eingeloggt mit der mail " + loginInfo.getEmailAddress());
+		//Window.alert("Eingeloggt mit der mail " + loginInfo.getEmailAddress());
 		pinnwandVerwaltung.getUserByGmail(loginInfo.getEmailAddress(), new GetUserCallback());
 		//Window.alert(loginInfo.getEmailAddress());
 		//pinnwandVerwaltung.getUserById(1, new GetUserCallback());
@@ -113,6 +109,7 @@ public class SWP_WS1819_Gruppe1 implements EntryPoint {
 		
 		// Creating ProfileBox
 		ProfileBox pB = new ProfileBox();
+		pB.setLogOutURL(loginInfo.getLogoutUrl());
 
 		//linkeSeite.add(testBtn);
 		//linkeSeite.add(testBtn2);
@@ -134,7 +131,7 @@ public class SWP_WS1819_Gruppe1 implements EntryPoint {
 		 * Instantiierung der notwendigen GUI Objekte
 		 */
 		private Label abfrage = new Label("Du bist noch nicht registriert!"
-				+ "Fülle dieses Formular aus, um deinen User anzulegen.");
+				+ " Fülle dieses Formular aus, um deinen User anzulegen.");
 		private Button yesBtn = new Button("Registrieren");
 		private Button noBtn = new Button("Abbrechen");
 		private VerticalPanel vPanel = new VerticalPanel();
@@ -150,6 +147,19 @@ public class SWP_WS1819_Gruppe1 implements EntryPoint {
 		 * @param mail
 		 */
 		public RegistrationFormDialogBox(String mail) {
+			// Adding Styles to Interaction Fields
+			nickInput.addStyleName("control input content_margin");
+			firstInput.addStyleName("control input content_margin");
+			lastInput.addStyleName("control input content_margin");
+			
+			yesBtn.addStyleName("button bg-primary has-text-white");
+			noBtn.addStyleName("button");
+			
+			abfrage.addStyleName("label has-text-primary content_margin");
+			nickName.addStyleName("label has-text-primary content_margin");
+			firstName.addStyleName("label has-text-primary content_margin");
+			lastName.addStyleName("label has-text-primary content_margin");
+			
 			googleMail = mail;
 			yesBtn.addClickHandler(new CreateUserClickHandler(this));
 			noBtn.addClickHandler(new DontCreateUserClickHandler(this));
@@ -164,6 +174,7 @@ public class SWP_WS1819_Gruppe1 implements EntryPoint {
 			btnPanel.add(noBtn);
 			vPanel.add(btnPanel);
 			this.add(vPanel);
+			this.setWidth("300px");
 		}
 	}
 	
@@ -200,6 +211,7 @@ public class SWP_WS1819_Gruppe1 implements EntryPoint {
 			Window.alert("Ihr Nutzer wurde angelegt");
 			Cookies.setCookie("gmail", result.getGMail());
 			Cookies.setCookie("userId", result.getUserId() + "");
+			GWT.log("UserId created: " + result.getUserId());
 			Cookies.setCookie("firstName", result.getFirstName());
 			Cookies.setCookie("lastName", result.getLastName());
 			Cookies.setCookie("nickName", result.getNickname());

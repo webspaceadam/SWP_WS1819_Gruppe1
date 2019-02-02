@@ -190,8 +190,8 @@ public class LikeMapper {
 					
 				// Statement ausfuellen und als Query an die DB schicken
 				ResultSet rs = stmt.executeQuery("SELECT * FROM `like` WHERE UserFK = " + userId +
-						" AND CreationTimeStamp >= '" + ReportGeneratorServiceImpl.yearMonthDayFormat.format(start).toString() +
-						"' AND CreationTimeStamp <= '" + ReportGeneratorServiceImpl.yearMonthDayFormat.format(end).toString() + "'");
+						" AND CreationTimeStamp >= '" + ReportGeneratorServiceImpl.sqlFormat.format(start).toString() +
+						"' AND CreationTimeStamp <= '" + ReportGeneratorServiceImpl.sqlFormat.format(end).toString() + "'");
 		
 				while (rs.next()) {
 		
@@ -254,8 +254,8 @@ public class LikeMapper {
 					
 				// Statement ausfuellen und als Query an die DB schicken
 				ResultSet rs = stmt.executeQuery("SELECT * FROM `like` WHERE BeitragFK=" + beitragId +
-						" AND CreationTimeStamp >= '" + ReportGeneratorServiceImpl.yearMonthDayFormat.format(start).toString() +
-						"' AND CreationTimeStamp <= '" + ReportGeneratorServiceImpl.yearMonthDayFormat.format(end).toString() + "'");
+						" AND CreationTimeStamp >= '" + ReportGeneratorServiceImpl.sqlFormat.format(start).toString() +
+						"' AND CreationTimeStamp <= '" + ReportGeneratorServiceImpl.sqlFormat.format(end).toString() + "'");
 				
 				while (rs.next()) {
 		   	        Like l = new Like();

@@ -180,7 +180,8 @@ public class AbonnementMapper {
 
 		
 		/*
-		 * Methode, die alle Abonnements eines Users innerhalb eines Zeitraums zurueck gibt
+		 * Methode, die alle Abonnenten einer Pinnwand
+		 *  innerhalb eines Zeitraums zurueck gibt
 		 */
 			public Vector<Abonnement> findAbonnementsOfUserBetweenDates(int userId, Date start, Date end){
 				
@@ -190,9 +191,9 @@ public class AbonnementMapper {
 			try {
 				
 				Statement stmt = con.createStatement();
-				ResultSet rs = stmt.executeQuery("SELECT * FROM abonnement " + "WHERE UserFK=" + userId +
-						" AND CreationTimeStamp >= '" + ReportGeneratorServiceImpl.yearMonthDayFormat.format(start).toString() +
-						"' AND CreationTimeStamp <= '" + ReportGeneratorServiceImpl.yearMonthDayFormat.format(end).toString() + "'");
+				ResultSet rs = stmt.executeQuery("SELECT * FROM abonnement " + "WHERE PinnwandFK=" + userId +
+						" AND CreationTimeStamp >= '" + ReportGeneratorServiceImpl.sqlFormat.format(start).toString() +
+						"' AND CreationTimeStamp <= '" + ReportGeneratorServiceImpl.sqlFormat.format(end).toString() + "'");
 				
 					while(rs.next()) {
 						

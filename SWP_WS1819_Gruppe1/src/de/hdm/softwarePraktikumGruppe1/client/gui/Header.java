@@ -35,8 +35,7 @@ public class Header extends FlowPanel {
 		
 		Vector<Abonnement> userAbonnements = new Vector<Abonnement>();
 		Vector<Pinnwand> aboPinnwaende = new Vector<Pinnwand>();
-		Vector<User> pinnwandOwner = new Vector<User>();
-	
+		User pinnwandOwner;
 		
 		// Create Header Divs 
 		private FlowPanel headerLogo = new FlowPanel();
@@ -49,12 +48,15 @@ public class Header extends FlowPanel {
 		private FlowPanel searchDiv = new FlowPanel();
 		private FlowPanel logoutDiv = new FlowPanel();
 		private FlowPanel inputDiv = new FlowPanel();
+		private FlowPanel reportDiv = new FlowPanel();
 		
 		// Creating Buttons
 		private TextBox searchUserInput = new TextBox();
 		private Button searchButton = new Button("Suche!");
 		private Button logoutButton = new Button("Logout");
 		private Button reportButton = new Button("Report");
+		DockPanel dock;
+		ShowAbosDialogBox dlg;
 		
 		
 		// Create Images
@@ -64,6 +66,13 @@ public class Header extends FlowPanel {
 		// Create Anchors / Links
 		private Anchor meinePinnwand = new Anchor("Meine Pinnwand");
 		private Anchor meineAbos = new Anchor("Meine Abos");
+		
+		
+		public void removeAbonnementBox(AbonnementBox a) {
+			this.clear();
+			pinnwandVerwaltung.showAllAbonnementsByUser(user, new ShowAllAbonnementsByUserCallback());
+			
+		}
 	
 
 		/**
@@ -116,6 +125,7 @@ public class Header extends FlowPanel {
 			inputDiv.addStyleName("header_element");
 			searchDiv.addStyleName("header_element");
 			logoutDiv.addStyleName("header_element");
+			reportDiv.addStyleName("header_element");
 			
 			searchUserInput.addStyleName("input is-medium");
 			searchUserInput.getElement().setPropertyString("placeholder", "Suche nach Usern!");
@@ -126,12 +136,12 @@ public class Header extends FlowPanel {
 			inputDiv.add(searchUserInput);
 			searchDiv.add(searchButton);
 			logoutDiv.add(logoutButton);
-			logoutDiv.add(reportButton);
+			reportDiv.add(reportButton);
 			
 			headerRight.add(inputDiv);
 			headerRight.add(searchDiv);
 			headerRight.add(logoutDiv);
-			
+			headerRight.add(reportDiv);
 			/*
 			 * Logic to add the ClickHandlers
 			 */
@@ -142,6 +152,7 @@ public class Header extends FlowPanel {
 			meineAbos.addClickHandler(new ShowAbosClickHandler(this));
 			meinePinnwand.addClickHandler(new ShowMyPinnwandClickHandler());
 			logoutButton.addClickHandler(new LogoutClickHandler());
+			reportButton.addClickHandler(new reportGeneratorClickHandler());
 			
 			
 			this.add(headerLogo);
@@ -182,45 +193,68 @@ public class Header extends FlowPanel {
 			Header parentHeader;
 			@Override
 			public void onClick(ClickEvent event) {
-				ShowAbosDialogBox dlg = new ShowAbosDialogBox(this.parentHeader);
+				pinnwandVerwaltung.showAllAbonnementsByUser(user, new ShowAllAbonnementsByUserCallback());
+				
+				dlg = new ShowAbosDialogBox();
 				dlg.center();
+				
 			}
 		}
 		
-		private class ShowAbosDialogBox extends DialogBox implements ClickHandler {
-			Header parentHeader;
+		
+		private class reportGeneratorClickHandler implements ClickHandler {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				
+				Window.Location.assign(GWT.getHostPageBaseURL() + "ReportGenerator.html");
+			}
+			
+		}
+		
+		public class ShowAbosDialogBox extends DialogBox implements ClickHandler {
+			//			Header parentHeader;
 						
 			private Vector<AbonnementBox> userAboBoxes = new Vector<AbonnementBox>();
 									
 			private ScrollPanel parentScrolling = new ScrollPanel();
 			private FlowPanel aboParentPanel = new FlowPanel();
-			
-			public ShowAbosDialogBox(Header parentHeader) {
-				this.parentHeader = parentHeader;
-				
-//				GWT.log(parentHeader.userAbonnements.toString());
-//				GWT.log(parentHeader.aboPinnwaende.toString());
-//				GWT.log(parentHeader.pinnwandOwner.toString());
-				
-				
-				for(int i = 0; i < parentHeader.userAbonnements.size(); i++) {
-					AbonnementBox tempAboBox = new AbonnementBox(parentHeader.userAbonnements.elementAt(i));
+			private Label noAbosLabel = new Label("Momentan hast du keine Abonnements! Reloade ggf. das System!");
+			private Button reloadSiteBtn = new Button("Reload!");
+//			public ShowAbosDialogBox(Header parentHeader) {
+			public ShowAbosDialogBox() {				
+//				for(int i = 0; i < userAbonnements.size(); i++) {
+//					AbonnementBox tempAboBox = new AbonnementBox(userAbonnements.elementAt(i));
+//					userAboBoxes.add(tempAboBox);
+//				}
+				for(Abonnement a: userAbonnements) {
+					AbonnementBox tempAboBox = new AbonnementBox(this, pinnwandOwner, a);
+					
 					userAboBoxes.add(tempAboBox);
 				}
 				
-				for(int i = 0; i < userAboBoxes.size(); i++) {
-					aboParentPanel.add(userAboBoxes.elementAt(i));
+				if(userAboBoxes.size() > 0) {
+					for(int i = 0; i < userAboBoxes.size(); i++) {
+						aboParentPanel.add(userAboBoxes.elementAt(i));
+					}
+				} else {
+					noAbosLabel.addStyleName("label has-text-primary content_margin");
+					reloadSiteBtn.addClickHandler(new ForceReloadClickHandler());
+					reloadSiteBtn.addStyleName("button bg-primary has-text-white");
+					aboParentPanel.add(noAbosLabel);
+					aboParentPanel.add(reloadSiteBtn);
 				}
+				
+				
 				
 				parentScrolling.add(aboParentPanel);
 				parentScrolling.setSize("800px", "400px");
-				
 				
 				Image cancelImage = new Image("images/SVG/timesCircle.png");
 				cancelImage.getElement().setPropertyString("style", "max-width: 25px;");
 				cancelImage.addClickHandler(this);
 
-				DockPanel dock = new DockPanel();
+				dock = new DockPanel();
 				dock.setSpacing(6);
 				dock.add(parentScrolling, DockPanel.CENTER);
 				dock.add(cancelImage, DockPanel.EAST);
@@ -232,11 +266,29 @@ public class Header extends FlowPanel {
 				dock.setHeight("400px");
 				setWidget(dock);
 			}
+			//Funktioniert nicht. Kann von Klasse AbonnementBox nicht auf diese Methode zugreifen.
 
 			@Override
 			public void onClick(ClickEvent event) {
 				hide();
 			}
+			
+			public void removeAboBoxFromDialogBox(AbonnementBox aboBox) {
+				
+			}
+			
+			private class ForceReloadClickHandler implements ClickHandler {
+
+				@Override
+				public void onClick(ClickEvent event) {
+					forceReload();
+				}
+				
+			}
+			
+			public native void forceReload() /*-{
+    			$wnd.location.reload(true);
+  			}-*/;
 		}
 		
 		private class SearchUserClickHandler implements ClickHandler {
@@ -250,6 +302,7 @@ public class Header extends FlowPanel {
 			public void onClick(ClickEvent event) {
 				pinnwandVerwaltung.searchFunction((parentHeader.searchUserInput.getValue()) , new SearchResultCallback());
 			}
+			
 			
 		}
 		
@@ -349,6 +402,8 @@ public class Header extends FlowPanel {
 			public void onSuccess(User result) {
 				user = result;
 				GWT.log("ID is: " + user.getUserId());
+				//Clickhandler zu Button zuweisen
+				
 				pinnwandVerwaltung.showAllAbonnementsByUser(user, new ShowAllAbonnementsByUserCallback());
 			}
 			
@@ -367,6 +422,7 @@ public class Header extends FlowPanel {
 				userAbonnements = result;
 				for (Abonnement abonnement : userAbonnements) {
 					GWT.log(abonnement.toString());
+					
 					pinnwandVerwaltung.getPinnwandById(abonnement.getPinnwandId(), new GetPinnwandByIdCallback());
 				}
 			}
@@ -399,10 +455,10 @@ public class Header extends FlowPanel {
 
 			@Override
 			public void onSuccess(User result) {
-				User tempUser = result;
+				pinnwandOwner = result;
 				
-				GWT.log(tempUser.toString());
-				pinnwandOwner.add(tempUser);
+				GWT.log(pinnwandOwner.toString());
+				
 			}
 		}
 		

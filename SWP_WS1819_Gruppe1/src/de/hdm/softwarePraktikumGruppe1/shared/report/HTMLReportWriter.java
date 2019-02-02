@@ -2,6 +2,10 @@ package de.hdm.softwarePraktikumGruppe1.shared.report;
 
 import java.util.Vector;
 
+import com.google.gwt.i18n.shared.DateTimeFormat;
+
+
+
 
 
 /**
@@ -21,7 +25,7 @@ public class HTMLReportWriter extends ReportWriter{
 	   * <code>process...</code>-Methoden) belegt. Format: HTML-Text
 	   */
 	  private String reportText = "";
-
+	  private final DateTimeFormat d = DateTimeFormat.getFormat("dd.MM.yyyy HH:mm");
 	  /**
 	   * Zurücksetzen der Variable <code>reportText</code>.
 	   */
@@ -56,21 +60,23 @@ public class HTMLReportWriter extends ReportWriter{
 		  StringBuffer result = new StringBuffer();
 		  
 		  result.append("<H2>" + r.getTitle() + "</H2>");
-		  
+		  result.append("</br>");
 		  Vector<Row> rows = r.getRows();;
 		  
 		  for (int i = 0; i < rows.size(); i++) {
 			  Row row = rows.get(i);
+			  
 			  Vector<Column> columns = row.getColumns();
 			  result.append("<p>");
-			  
+			  	
 			  	for (int i2 = 0; i2 < columns.size(); i2++) {
 			  		Column column = columns.get(i2);
-			  		if(i2>0)result.append("   |   ");
+			  		if(i2>0)result.append(" --- ");
 			  		result.append(column.getValue());			  		
 			  	}
 			  
 			  result.append("</p>");
+			  if (row.isNewRecord())result.append("</br>");
 		  }
 		  
 		  
@@ -143,8 +149,8 @@ public class HTMLReportWriter extends ReportWriter{
 		     * unsere Ergebnisse.
 		     */
 		    StringBuffer result = new StringBuffer();
-		    result.append("<H2 class='is-size-4'>" + r.getTitle() + "</H2>");
-		    result.append("<p> Report Erstellt am " + r.getCreated().toString() + "</p>");
+		    result.append("<H2 class='is-size-4'>" + r.getTitle() + "</H2>");		    
+		    result.append("<p> Report erstellt am " + d.format(r.getCreated()) + "</p>");
 		    result.append("<p>" + r.getImprint().toString() + "</p>");
 		    result.append("<hr>");
 		    result.append("<p>" + paragraph2HTML(r.getHeaderData()) + "</p>");
@@ -184,7 +190,7 @@ public class HTMLReportWriter extends ReportWriter{
 		     */
 		    StringBuffer result = new StringBuffer();
 		    result.append("<H2  class='is-size-4'>" + r.getTitle() + "</H2>");
-		    result.append("<p> Report Erstellt am" + r.getCreated().toString() + "</p>");		    
+		    result.append("<p> Report erstellt am " + d.format(r.getCreated()).toString() + "</p>");		    
 		    result.append("<p>" + r.getImprint().toString() + "</p>");
 		    result.append("<hr>");
 		    result.append("<p>" + paragraph2HTML(r.getHeaderData()) + "</p>");

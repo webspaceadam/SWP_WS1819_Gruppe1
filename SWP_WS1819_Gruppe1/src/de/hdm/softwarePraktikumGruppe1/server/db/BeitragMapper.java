@@ -231,8 +231,8 @@ public class BeitragMapper {
 					Statement stmt = con.createStatement();
 					
 					ResultSet rs = stmt.executeQuery("SELECT * FROM beitrag WHERE UserFK = " + userFK +
-							" AND CreationTimeStamp >= '" + ReportGeneratorServiceImpl.yearMonthDayFormat.format(start).toString() +
-							"' AND CreationTimeStamp <= '" + ReportGeneratorServiceImpl.yearMonthDayFormat.format(end).toString() + "'");
+							" AND CreationTimeStamp >= '" + ReportGeneratorServiceImpl.sqlFormat.format(start).toString() +
+							"' AND CreationTimeStamp <= '" + ReportGeneratorServiceImpl.sqlFormat.format(end).toString() + "'");
 					
 					while (rs.next()) {
 						Beitrag b = new Beitrag();

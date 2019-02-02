@@ -70,6 +70,7 @@ public class BeitragBox extends FlowPanel {
 	private Image likeHeartBtn = new Image("images/SVG/heart.svg");
 	private Image replyBtn = new Image("images/SVG/reply.svg");
 	private Image editPenBtn = new Image("images/SVG/pen.svg");
+	private Image unfilledHeart = new Image("images/SVG/heart_unfilled.svg");
 	
 	// Other Elements for this Widget
 	private FlowPanel heartWrapper = new FlowPanel();
@@ -89,7 +90,7 @@ public class BeitragBox extends FlowPanel {
 	private User user;
 	private Beitrag beitrag;
 	private Like likeCheck;
-	private int currentUserId = Integer.parseInt(Cookies.getCookie("userId"));
+	private int currentUserId;
 	
 	
 	// Constructor for the creation of Beitrag
@@ -98,12 +99,7 @@ public class BeitragBox extends FlowPanel {
 		this.parentPinnwandBox = pb;
 		this.beitragContent.setText(content);
 		this.user = user;
-		
-		Window.alert("Content: " + "\n" +
-						this.beitragContent.getText()
-						+ " \n" + " Von User: " + "\n"
-						+ this.user.toString()
-				);
+
 		pinnwandVerwaltung.createBeitrag(this.beitragContent.getText(), this.user, timestamp, new CreateBeitragCallback());
 	}
 	
@@ -121,10 +117,30 @@ public class BeitragBox extends FlowPanel {
 			GWT.log("beitrag Id: " + result.getBeitragId());
 			beitragId = result.getBeitragId();
 			userId = result.getOwnerId();
-			accountName.setText(user.getFirstName() + " " + user.getLastName());
-			nickName.setText("@" + user.getNickname());
 			//String ts = String.format("%1$TD %1$TT", result.getCreationTimeStamp());
 			creationDate.setText("Erstellzeitpunkt: " + result.getCreationTimeStamp());
+			pinnwandVerwaltung.getUserById(result.getOwnerId(), new SetNamesCallback());
+		}
+		
+	}
+	
+	public class SetNamesCallback implements AsyncCallback<User> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert("Problem with SetNamesCallback");
+		}
+
+		@Override
+		public void onSuccess(User result) {
+			user = result;
+			userId = result.getUserId();
+			accountName.setText(result.getFirstName() + " " + result.getLastName());
+			nickName.setText("@" + result.getNickname());
+			
+			if(userId == currentUserId) {
+				userInfoWrapper.add(editPenBtn);
+			}
 		}
 		
 	}
@@ -136,9 +152,11 @@ public class BeitragBox extends FlowPanel {
 	}
 	
 	public void onLoad() {
+		currentUserId = Integer.parseInt(Cookies.getCookie("userId"));
 		Beitrag thisBeitrag = new Beitrag();
 		thisBeitrag.setBeitragID(beitragId);
 		pinnwandVerwaltung.getAllKommentareOfBeitrag(thisBeitrag, new GetAllKommentareCallback(this));
+		pinnwandVerwaltung.getUserById(this.userId, new SetNamesCallback());
 		// Date
 //		Date now = new Date();
 //		DateTimeFormat fmt = DateTimeFormat.getFormat("HH:mm:ss, EEEE, dd MMMM, yyyy");
@@ -180,10 +198,10 @@ public class BeitragBox extends FlowPanel {
 		
 		// Likecount info
 		pinnwandVerwaltung.countLikes(thisBeitrag, new CountLikeCallback());
-		likeHeart.setWidth("1rem");
-		likeHeart.addStyleName("small-padding-right");
-		likeCountText.addStyleName("is-size-6 is-italic");
-		likeCountText.setText(" auf diesem Beitrag: " + likeCount);
+//		likeHeart.setWidth("1rem");
+//		likeHeart.addStyleName("small-padding-right");
+//		likeCountText.addStyleName("is-size-6 is-italic");
+//		likeCountText.setText(" auf diesem Beitrag: " + likeCount);
 		
 		
 		// Adding Elements to the Wrapper
@@ -208,7 +226,7 @@ public class BeitragBox extends FlowPanel {
 		// Add Elements to Wrapper
 		userInfoWrapper.add(accountName);
 		userInfoWrapper.add(nickName);
-		userInfoWrapper.add(editPenBtn);
+		
 	
 		
 		creationInfoWrapper.add(creationDate);
@@ -240,8 +258,23 @@ public class BeitragBox extends FlowPanel {
 
 		@Override
 		public void onSuccess(Like result) {
-			likeCheck = result;
-			GWT.log(likeCheck.toString() + " ist der LikeCheck");
+			Beitrag currentBeitrag = new Beitrag();
+			currentBeitrag.setBeitragId(beitragId);
+			if(result != null ) {
+				likeCheck = result;
+				GWT.log(likeCheck.toString() + " ist der LikeCheck");
+				likeInfoWrapper.remove(unfilledHeart);
+//				unfilledHeart.setVisible(true);
+				likeHeart.setWidth("1rem");
+				likeHeart.addStyleName("small-padding-right");
+				likeCountText.addStyleName("is-size-6 is-italic");
+				likeCountText.setText(" auf diesem Beitrag: " + likeCount);
+				likeInfoWrapper.add(likeHeart);
+				likeInfoWrapper.add(likeCountText);
+			} else {
+				pinnwandVerwaltung.countLikes(currentBeitrag, new CountLikeCallback2());
+			
+			}
 			
 		}
 		
@@ -261,8 +294,9 @@ public class BeitragBox extends FlowPanel {
 	}
 	
 	public class CountLikeCallback implements AsyncCallback<Integer> {
-//		Beitrag currentBeitrag = new Beitrag();
-		
+		Beitrag currentBeitrag = new Beitrag();
+		User currentUser = new User();
+
 		@Override
 		public void onFailure(Throwable caught) {
 			Window.alert("Problem with CountLikeCallback");
@@ -271,11 +305,73 @@ public class BeitragBox extends FlowPanel {
 
 		@Override
 		public void onSuccess(Integer result) {
-			//likeCount = result;
-			GWT.log("LikeCount is: " + result);
-//			likeCount = likeCount + result;
+			likeCount = result;
+			GWT.log("LikeCount is: " + likeCount);
 			likeCountText.setText(" auf diesem Beitrag: " + result);
+			currentUser.setUserId(Integer.parseInt(Cookies.getCookie("userId")));
+			currentBeitrag.setBeitragId(beitragId);
+			if(result == 0) {
+				likeInfoWrapper.remove(likeHeart);
+//				likeHeart.setVisible(true);
+				unfilledHeart.setWidth("1rem");
+				unfilledHeart.addStyleName("small-padding-right");
+				likeCountText.addStyleName("is-size-6 is-italic");
+				likeCountText.setText(" auf diesem Beitrag: " + likeCount);
+				likeInfoWrapper.add(unfilledHeart);
+				likeInfoWrapper.add(likeCountText);
+			}else {
+				likeInfoWrapper.remove(likeHeart);
+//				likeHeart.setVisible(true);
+				unfilledHeart.setWidth("1rem");
+				unfilledHeart.addStyleName("small-padding-right");
+				likeCountText.addStyleName("is-size-6 is-italic");
+				likeCountText.setText(" auf diesem Beitrag: " + likeCount);
+				likeInfoWrapper.add(unfilledHeart);
+				likeInfoWrapper.add(likeCountText);
+				pinnwandVerwaltung.likeCheck(currentUser, currentBeitrag, new LikeCheckCallback());
+			}
+			}
+			
+		
+		
+	}
+	
+	public class CountLikeCallback2 implements AsyncCallback<Integer> {
+		Beitrag currentBeitrag = new Beitrag();
+		User currentUser = new User();
 
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert("Problem with CountLikeCallback");
+			
+		}
+
+		@Override
+		public void onSuccess(Integer result) {
+			likeCount = result;
+			GWT.log("LikeCount is: " + likeCount);
+			likeCountText.setText(" auf diesem Beitrag: " + result);
+			currentUser.setUserId(Integer.parseInt(Cookies.getCookie("userId")));
+			currentBeitrag.setBeitragId(beitragId);
+			if(result == 0) {
+				likeInfoWrapper.remove(likeHeart);
+//				likeHeart.setVisible(true);
+				unfilledHeart.setWidth("1rem");
+				unfilledHeart.addStyleName("small-padding-right");
+				likeCountText.addStyleName("is-size-6 is-italic");
+				likeCountText.setText(" auf diesem Beitrag: " + likeCount);
+				likeInfoWrapper.add(unfilledHeart);
+				likeInfoWrapper.add(likeCountText);
+			}else {
+				likeInfoWrapper.remove(likeHeart);
+//				likeHeart.setVisible(true);
+				unfilledHeart.setWidth("1rem");
+				unfilledHeart.addStyleName("small-padding-right");
+				likeCountText.addStyleName("is-size-6 is-italic");
+				likeCountText.setText(" auf diesem Beitrag: " + likeCount);
+				likeInfoWrapper.add(unfilledHeart);
+				likeInfoWrapper.add(likeCountText);
+			}
 			}
 			
 		
@@ -303,7 +399,8 @@ public class BeitragBox extends FlowPanel {
 			parentBB = bb;
 			this.parentBeitrag.setBeitragId(parentBB.beitragId);
 			// COOKIE
-			this.likingUser.setUserId(1);
+			int likingUser = Integer.parseInt(Cookies.getCookie("userId"));
+			this.likingUser.setUserId(likingUser);
 			
 		}
 			
@@ -329,17 +426,17 @@ public class BeitragBox extends FlowPanel {
 			@Override
 			public void onSuccess(Like result) {
 				if(result != null) {
-					currentUser.setUserId(1);
+					currentUser.setUserId(Integer.parseInt(Cookies.getCookie("userId")));
 					currentBeitrag.setBeitragId(beitragId);
 					GWT.log(result.toString());
 					pinnwandVerwaltung.deleteLike(result, new DeleteLikeCallback());
+					
 				}else {
-					currentUser.setUserId(1);
+					currentUser.setUserId(Integer.parseInt(Cookies.getCookie("userId")));
 					currentBeitrag.setBeitragId(beitragId);
 					pinnwandVerwaltung.createLike(currentUser, currentBeitrag, timestamp, new CreateLikeCallback());
-				}
-				
-				
+					
+				}				
 
 				
 			}
@@ -611,6 +708,7 @@ public class BeitragBox extends FlowPanel {
 			pinnwandVerwaltung.deleteBeitrag(tempBeitrag, new DeleteBeitragCallback());
 			parentPinnwandBox.deleteBeitrag(thisBeitragBox);
 			parentDialogBox.hideElement();
+			parentDialogBox.hide();
 		}
 		
 	}
@@ -624,7 +722,7 @@ public class BeitragBox extends FlowPanel {
 
 		@Override
 		public void onSuccess(Void result) {
-			Window.alert("Beitrag wurde deleted");
+			//Window.alert("Beitrag wurde deleted");
 		}
 		
 	}

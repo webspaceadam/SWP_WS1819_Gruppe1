@@ -7,6 +7,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
@@ -29,11 +30,13 @@ import de.hdm.softwarePraktikumGruppe1.shared.report.UserReport;
 
 /**
  * Die Klasse <code>ReportGenerator</code> enthält alle Elemente zur 
- * Generierung und Darstellung des Reports
- * Grundlage der GUI ist hier ein DockLayoutPanel
+ * Generierung und Darstellung des Reports.
+ * Von hier werden RPCs des Report-Client angestoßen.
+ * 
+ * Grundlage der GUI ist hier ein DockLayoutPanel.
  * 
  * 
- *@author Jakob Benkö
+ *@author JakobBenkoe
  */
 
 public class ReportGenerator  implements EntryPoint {
@@ -103,6 +106,7 @@ public class ReportGenerator  implements EntryPoint {
 			
 	/*
 	 * ClickHandler for generateUserReport
+	 * UserReport will be created.
 	 * @see UserReportForm
 	 * @see GeneratorBox
 	 * 
@@ -115,7 +119,7 @@ public class ReportGenerator  implements EntryPoint {
 				if (userReportForm.getDatePickerBox1().getDate() == null || userReportForm.getDatePickerBox2().getDate() == null)
 				{
 					Window.alert("Bitte ein gültiges Datum angeben");
-				}else if(userReportForm.getSearchBox().getUserString() == null){
+				}else if(userReportForm.getUserMail() == null){
 					Window.alert("Bitte eine gültige User eMail angeben");
 				}else {
 				//Try to make RPC with entered user Data
@@ -149,7 +153,8 @@ public class ReportGenerator  implements EntryPoint {
 								
 							}
 						};
-						proxy.createUserReport(userReportForm.getSearchBox().getUserString(), date1, date2, callback);
+						DateTimeFormat dateFormat = DateTimeFormat.getFormat("dd.MM.yyyy");
+						proxy.createUserReport(userReportForm.getUserMail(), date1, date2, callback);
 					}catch(NullPointerException e) {
 						Window.alert("Bitte ein gültiges Datum eintragen!");
 					}
@@ -164,6 +169,7 @@ public class ReportGenerator  implements EntryPoint {
 		
 		/*
 		 * ClickHandler for generateBeitragReport
+		 * BeitragReport will be created.
 		 * @see BeitragReportForm
 		 * @see GeneratorBox
 		 * 

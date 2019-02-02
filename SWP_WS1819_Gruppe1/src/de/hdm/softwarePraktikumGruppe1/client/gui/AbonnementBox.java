@@ -5,6 +5,7 @@ import java.util.Vector;
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -12,6 +13,9 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 
 import de.hdm.softwarePraktikumGruppe1.client.ClientsideSettings;
+import de.hdm.softwarePraktikumGruppe1.client.gui.Header.GetUserByIdCallback;
+import de.hdm.softwarePraktikumGruppe1.client.gui.Header.ShowAbosDialogBox;
+import de.hdm.softwarePraktikumGruppe1.client.gui.Header.ShowAllAbonnementsByUserCallback;
 import de.hdm.softwarePraktikumGruppe1.shared.PinnwandverwaltungAsync;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Abonnement;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Pinnwand;
@@ -23,24 +27,34 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
  * auf die jeweiligen Pinnwände der Abo's zuzugreifen oder das Abonnement zu kündigen. 
  * 
  * @author AdamGniady
+ * @param <ShowAbosDialogBox>
  */
 public class AbonnementBox extends FlowPanel {
-	private Label accountName = new Label("Abo Name");
-	private Label nickName = new Label("@aboNickname");
+	private String aboName;
+	private String aboNickname;
+	private Abonnement abo;
+	private User shownUser;
+	private ShowAbosDialogBox parent;
+	
+	private Label accountName = new Label();
+	private Label nickName = new Label();
 	private Button pinnwandBtn = new Button("Pinnwand");
-	private Button deaboBtn = new Button("Deabbonieren");
+	//private Button deaboBtn = new Button("Deabonnieren");
 	
 	private int pinnwandId;
 	
-	public Abonnement abo;
+	
 	
 	private FlowPanel accountWrapper = new FlowPanel();
 	private FlowPanel nickWrapper = new FlowPanel();
 	private FlowPanel pinnwandWrapper = new FlowPanel();
 	private FlowPanel deaboWrapper = new FlowPanel();
+	PinnwandverwaltungAsync pinnwandVerwaltung;
 	
-	public AbonnementBox() {
-		
+	public AbonnementBox(ShowAbosDialogBox parent, User u, Abonnement abonnement) {
+		this.abo = abonnement;
+		this.shownUser = u;
+		this.parent = parent;
 	}
 	
 	
@@ -62,12 +76,9 @@ public class AbonnementBox extends FlowPanel {
 		this.pinnwandBtn.setTitle("PinnwandId: " + this.pinnwandId);
 	}
 	
-	public AbonnementBox(Abonnement a) {
-		this.abo = a;
-	}
 	
 	public void onLoad() {
-		PinnwandverwaltungAsync pinnwandVerwaltung = ClientsideSettings.getPinnwandverwaltung();
+		pinnwandVerwaltung = ClientsideSettings.getPinnwandverwaltung();
 		
 		pinnwandVerwaltung.getUserById(this.abo.getPinnwandId(), new GetUserByPinnwandIdCallback());
 		
@@ -79,13 +90,13 @@ public class AbonnementBox extends FlowPanel {
 		
 		accountName.addStyleName("title is-size-4");
 		nickName.addStyleName("is-size-5");
-		pinnwandBtn.addStyleName("button bg-primary has-text-white");
-		deaboBtn.addStyleName("button is-danger");
+		pinnwandBtn.addStyleName("button hast-text-primary");
+		//deaboBtn.addStyleName("button bg-primary has-text-white");
 		
 		accountWrapper.add(accountName);
 		nickWrapper.add(nickName);
 		pinnwandWrapper.add(pinnwandBtn);
-		deaboWrapper.add(deaboBtn);
+		//deaboWrapper.add(deaboBtn);
 		
 		// Adding ClickHandlers to Buttons
 		pinnwandBtn.addClickHandler(new ShowPinnwandClickHandler());
@@ -94,22 +105,60 @@ public class AbonnementBox extends FlowPanel {
 		this.add(nickWrapper);
 		this.add(pinnwandWrapper);
 		this.add(deaboWrapper);
+		//deaboBtn.addClickHandler(new DeleteAboClickHandler(this));
 	}
+	
+	class DeleteAboClickHandler implements ClickHandler{
+		AbonnementBox parentAboBox; 
+		
+		public DeleteAboClickHandler(AbonnementBox aboBox) {
+			this.parentAboBox = aboBox;
+		}
+		@Override
+		public void onClick(ClickEvent event) {
+			pinnwandVerwaltung.deleteAbonnement(abo, new DeleteAbonnementCallback(parentAboBox));
+		}
+		
+	}
+	
+	class DeleteAbonnementCallback implements AsyncCallback<Void>{
+		AbonnementBox parentAboBox;
+		
+		public DeleteAbonnementCallback(AbonnementBox parentAboBox) {
+			this.parentAboBox = parentAboBox;
+		}
+		
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert("Delete Abonnement RPC failed");
+		}
+
+		@Override
+		public void onSuccess(Void result) {
+//			accountWrapper.removeFromParent();
+//			nickWrapper.removeFromParent();
+//			pinnwandWrapper.removeFromParent();
+//			deaboWrapper.removeFromParent();
+//			parent.removeAbonnementBox(this);
+			parent.removeAboBoxFromDialogBox(this.parentAboBox);
+			parent.forceReload();
+			
+		}
+		
+	}
+	
+	
 	
 	public class GetUserByPinnwandIdCallback implements AsyncCallback<User> {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			// TODO Auto-generated method stub
-			
 		}
 
 		@Override
 		public void onSuccess(User result) {
 			accountName.setText(result.getFirstName() + " " + result.getLastName());
 			nickName.setText(result.getNickname());
-			//pinnwandBtn.setText("Pinnwand: " + abo.getPinnwandId());
-			pinnwandBtn.setTitle("Pinnwand: " + abo.getPinnwandId());
 		}
 		
 	}

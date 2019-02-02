@@ -24,7 +24,24 @@ public class Row implements Serializable {
    * Speicherplatz für die Spalten der Zeile.
    */
   private Vector<Column> columns = new Vector<Column>();
-
+  private boolean newRecord = false;
+  
+  public Row() {
+	  
+  }
+  
+  
+  public Row(boolean newRecord) {
+	  this.newRecord= newRecord;
+  }
+  
+  
+  /*
+   * initial constructor add first row
+   */
+  public Row(Column c) {
+	  this.columns.addElement(c);
+  }
   /**
    * Hinzufügen einer Spalte.
    * 
@@ -71,4 +88,15 @@ public class Row implements Serializable {
   public Column getColumnAt(int i) {
     return this.columns.elementAt(i);
   }
+  
+  
+	public boolean isNewRecord() {
+		return newRecord;
+	}
+	public void setNewRecord(boolean newRecord) {
+		this.newRecord = newRecord;
+	}
+  
+  
+  
 }

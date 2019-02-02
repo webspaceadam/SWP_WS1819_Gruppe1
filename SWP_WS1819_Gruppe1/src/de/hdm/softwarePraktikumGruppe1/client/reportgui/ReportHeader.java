@@ -2,11 +2,14 @@
 package de.hdm.softwarePraktikumGruppe1.client.reportgui;
 
 
+
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
 
-import de.hdm.softwarePraktikumGruppe1.client.ReportGenerator;
+
 
 /**
  * Die <code>Header</code>-Klasse ist eine Custom-Widget-Class die 
@@ -29,11 +32,13 @@ public class ReportHeader extends FlowPanel {
 	//Create Buttons for Selection of report type
 	private Button beitraegeButton = new Button("Beiträge");
 	private Button userButton = new Button("User");
+	private Button editorButton = new Button("Zum Editor");
 
 	
 	// Create ParentDivs for Buttons
 	private FlowPanel beitraegeDiv = new FlowPanel();
 	private FlowPanel userDiv = new FlowPanel();
+	private FlowPanel editorDiv = new FlowPanel();
 
 	
 	// Create Images
@@ -70,16 +75,19 @@ public class ReportHeader extends FlowPanel {
 		//Add styling to buttons and add buttons to header
 		beitraegeButton.addStyleName("button bg-primary");
 		userButton.addStyleName("button bg-primary");
+		editorButton.addStyleName("button bg-primary");
 
 		beitraegeDiv.addStyleName("header_element");
 		userDiv.addStyleName("header_element");
+		editorDiv.addStyleName("header_element");
 
 		beitraegeDiv.add(beitraegeButton);
 		userDiv.add(userButton);
+		editorDiv.add(editorButton);
 
 		headerRight.add(beitraegeDiv);
 		headerRight.add(userDiv);
-
+		headerRight.add(editorDiv);
 		
 		//Add elements to header
 		this.add(headerLogo);
@@ -87,6 +95,16 @@ public class ReportHeader extends FlowPanel {
 		this.add(headerRight);
 	
 		
+		//Add ClickHandler
+		editorButton.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				
+				Window.Location.assign(GWT.getHostPageBaseURL() + "SWP_WS1819_Gruppe1.html");
+				
+			}
+		});
 	}
 
 	

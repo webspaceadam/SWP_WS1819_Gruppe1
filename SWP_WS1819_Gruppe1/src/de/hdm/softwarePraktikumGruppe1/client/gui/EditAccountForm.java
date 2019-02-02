@@ -21,6 +21,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 public class EditAccountForm extends FlowPanel {
 	// User und Verwaltung des Systems
 	User user = null;
+	String logOutURL;
 	PinnwandverwaltungAsync pinnwandVerwaltung = ClientsideSettings.getPinnwandverwaltung();
 	
 	// Whole Wrappers
@@ -36,6 +37,7 @@ public class EditAccountForm extends FlowPanel {
 	private TextBox lastInput = new TextBox();
 	private TextBox firstInput = new TextBox();
 	private Button safeButton = new Button("Speichern");
+	private Button deleteButton = new Button("Lösche User");
 	
 	private ProfileBox parentPB;
 	private EditProfileBoxDialogBox parentDialogBox;
@@ -90,13 +92,150 @@ public class EditAccountForm extends FlowPanel {
 		firstNameWrapper.add(firstInput);
 		
 		safeButton.addStyleName("button bg-primary");
-		safeButton.addClickHandler(new SafeNewNames());
+		deleteButton.addStyleName("button is-danger");
+		deleteButton.addClickHandler(new DeleteUserClickHandler());
+		safeButton.addClickHandler(new OpenSafeDialog());
 		
 		// Adding the Elements to the Form
 		this.add(nickWrapper);
 		this.add(firstNameWrapper);
 		this.add(nameWrapper);
 		this.add(safeButton);
+		this.add(deleteButton);
+	}
+	
+	private class DeleteUserClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			DeleteUserDialogBox deleteUserDB = new DeleteUserDialogBox();
+			
+			deleteUserDB.center();
+		}
+		
+	}
+	
+	private class DeleteUserDialogBox extends DialogBox {
+		private VerticalPanel vPanel = new VerticalPanel();
+		private HorizontalPanel btnPanel = new HorizontalPanel();
+		
+		private Label abfrage = new Label("Bist du dir Sicher, dass du deinen User löschen möchtest?");
+		private Button jaBtn = new Button("Ja");
+		private Button neinBtn = new Button("Nein");
+		
+		public DeleteUserDialogBox() {
+			abfrage.addStyleName("label has-text-primary content_margin");
+			jaBtn.addStyleName("button is-danger");
+			neinBtn.addStyleName("button bg-primary has-text-white");
+			
+			jaBtn.addClickHandler(new YesDeleteClickHandler(this));
+			neinBtn.addClickHandler(new NoClickHandler(this));
+			
+			vPanel.add(abfrage);
+			btnPanel.add(jaBtn);
+			btnPanel.add(neinBtn);
+			vPanel.add(btnPanel);
+			
+			this.add(vPanel);
+			this.setPopupPosition(getAbsoluteLeft(), getAbsoluteTop());
+		}
+	}
+	
+	private class YesDeleteClickHandler implements ClickHandler {
+		private DeleteUserDialogBox parentDUDB;
+		
+		public YesDeleteClickHandler(DeleteUserDialogBox dudb) {
+			this.parentDUDB = dudb;
+		}
+
+		@Override
+		public void onClick(ClickEvent event) {
+			this.parentDUDB.hide();
+			User deletableUser = new User();
+			deletableUser.setUserId(Integer.parseInt(Cookies.getCookie("userId")));
+			
+			pinnwandVerwaltung.deleteUser(deletableUser, new DeleteUserCallback());
+		}
+	}
+	
+	private class DeleteUserCallback implements AsyncCallback<Void> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			Window.alert(caught.toString());
+		}
+
+		@Override
+		public void onSuccess(Void result) {
+			Window.alert("Dein User wurde erfolgreich gelöscht!");
+			//Leite User zum Google LogOut weiter
+			Window.Location.assign(logOutURL);
+		}
+		
+	}
+	
+	private class NoClickHandler implements ClickHandler {
+		private DeleteUserDialogBox parentDUDB;
+		
+		public NoClickHandler(DeleteUserDialogBox dudb) {
+			this.parentDUDB = dudb;
+		}
+
+		@Override
+		public void onClick(ClickEvent event) {
+			this.parentDUDB.hide();
+		}
+		
+	}
+	
+	private class OpenSafeDialog implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			SafeWithTheEditDialogBox safeWithEditDB = new SafeWithTheEditDialogBox();
+			safeWithEditDB.center();
+		}
+		
+	}
+	
+	private class SafeWithTheEditDialogBox extends DialogBox {
+		private VerticalPanel vPanel = new VerticalPanel();
+		private HorizontalPanel hPanel = new HorizontalPanel();
+		
+		private Label youSureLabel = new Label("Bist du dir mit deiner Eingabe sicher?");
+		private Button jaBtn = new Button("Ja");
+		private Button neinBtn = new Button("Nein");
+		
+		public SafeWithTheEditDialogBox() {
+			youSureLabel.addStyleName("label has-text-primary content_margin");
+			jaBtn.addStyleName("button bg-primary");
+			neinBtn.addStyleName("button is-danger");
+			
+			jaBtn.addClickHandler(new SafeNewNames(this));
+			neinBtn.addClickHandler(new NoNotSafeClickHandler(this));
+			
+			hPanel.add(jaBtn);
+			hPanel.add(neinBtn);
+			
+			vPanel.add(youSureLabel);
+			vPanel.add(hPanel);
+			this.add(vPanel);
+		}
+		
+	}
+	
+	private class NoNotSafeClickHandler implements ClickHandler {
+		SafeWithTheEditDialogBox parentSWTEDB;
+		
+		public NoNotSafeClickHandler(SafeWithTheEditDialogBox parent) {
+			this.parentSWTEDB = parent;
+		}
+		
+		@Override
+		public void onClick(ClickEvent event) {
+			parentSWTEDB.hide();
+		}
+		
 	}
 	
 	/**
@@ -106,6 +245,12 @@ public class EditAccountForm extends FlowPanel {
 	 * @author AdamGniady
 	 */
 	private class SafeNewNames implements ClickHandler {
+		SafeWithTheEditDialogBox parentDialogBox;
+		
+		public SafeNewNames(SafeWithTheEditDialogBox parent) {
+			this.parentDialogBox = parent;
+		}
+		
 		@Override
 		public void onClick(ClickEvent event) {
 			int currentUserId = Integer.parseInt(Cookies.getCookie("userId"));
@@ -181,6 +326,11 @@ public class EditAccountForm extends FlowPanel {
 			GWT.log("User was edited");
 		}
 		
+	}
+	
+	
+	public void setLogoutUrl(String logOutURL) {
+		this.logOutURL = logOutURL;
 	}
 	
 }

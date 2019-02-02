@@ -18,7 +18,7 @@ import java.io.Serializable;
  * Klasse durch das Netzwerk übertragbar sind.
  * 
  * @see Report
- * @author JakobBenkö
+ * @author JakobBenkoe
  */
 
 public abstract class Paragraph implements Serializable{

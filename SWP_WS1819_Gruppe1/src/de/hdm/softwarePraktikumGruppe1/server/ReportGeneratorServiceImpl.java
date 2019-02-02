@@ -4,9 +4,12 @@
 package de.hdm.softwarePraktikumGruppe1.server;
 
 
-import java.text.ParseException;
+
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Vector;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -15,7 +18,6 @@ import de.hdm.softwarePraktikumGruppe1.server.db.AbonnementMapper;
 import de.hdm.softwarePraktikumGruppe1.server.db.BeitragMapper;
 import de.hdm.softwarePraktikumGruppe1.server.db.KommentarMapper;
 import de.hdm.softwarePraktikumGruppe1.server.db.LikeMapper;
-import de.hdm.softwarePraktikumGruppe1.server.db.PinnwandMapper;
 import de.hdm.softwarePraktikumGruppe1.server.db.UserMapper;
 import de.hdm.softwarePraktikumGruppe1.shared.ReportGeneratorService;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.Abonnement;
@@ -41,12 +43,14 @@ import de.hdm.softwarePraktikumGruppe1.shared.report.UserReport;
 public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements ReportGeneratorService{
 
 	/**
-	 * 
+	 *  
 	 */
 	private static final long serialVersionUID = 1L;
-	public final static  SimpleDateFormat yearMonthDayFormat = new SimpleDateFormat ("yyyy.MM.dd");
+	public final static SimpleDateFormat yearMonthDayFormat = new SimpleDateFormat ("yyyy.MM.dd");
 	public final static SimpleDateFormat dayMonthYearFormat = new SimpleDateFormat ("dd.MM.yyyy");
-
+	public final static SimpleDateFormat dayMonthYearTimeFormat = new SimpleDateFormat ("dd.MM.yyyy HH:mm");
+	public final static SimpleDateFormat sqlFormat = new SimpleDateFormat ("yyyy-MM-dd HH:mm:ss");
+	
 	Date start = null;
 	Date end = null;
 	
@@ -63,28 +67,27 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 	  }
 
 	
+
+
 	/*
 	 * Hier wird der UserReport erstellt
 	 */
 	@Override
 	public UserReport createUserReport(String gmail, Date date1, Date date2) throws IllegalArgumentException {
+		//convert Dates
+		Date[] finalDates = this.convertDates(date1, date2);
+		start = finalDates[0];
+		end = finalDates[1];
+		
 		//create Report
 		UserReport userReport = new UserReport();
-		//make sure start date is before end date
-		if(date1.before(date2)) {
-			start = date1;
-			end = date2;
-		}else {
-			start = date2;
-			end = date1;
-		}
 		userReport.setImprint(new SimpleParagraph("Report über den Zeitraum vom " + dayMonthYearFormat.format(start) + 
-				" bis zum " + dayMonthYearFormat.format(end) + " (0 Uhr jeweils)"));
+				" bis zum " + dayMonthYearFormat.format(end)));
 		
 		//user of the userReport
 		User user = null;
 		int userID;
-		//Make Sure Beitrag with selected ID exists
+		//Make Sure User with selected ID exists
 		try {
 			user = uMapper.findUserByGmail(gmail);
 			userReport.setTitle("Report Über den User " + user.getNickname());
@@ -125,12 +128,12 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 			for(int i = 0; i < abonnements.size(); i++) {
 				Abonnement abonnement = abonnements.get(i);
 				//Erzeuge eine Reihe für einen Abonnenten
-				Row row = new Row();
+				Row row = new Row(true);
 				User abonnent = uMapper.findUserById(abonnement.getOwnerId());
-				row.addColumn(new Column("Nickname des Users: " + abonnent.getNickname()));
-				row.addColumn(new Column("eMail des User" + abonnent.getGMail()));
-				row.addColumn(new Column("Abonniert am: " + abonnement.getCreationTimeStamp().toString()));
-				row.addColumn(new Column("Abonnement ID: " + abonnement.getAbonnementId()));
+				abonnentenReport.addRow(new Row(new Column("")));
+				row.addColumn(new Column("Abonniert von " + abonnent.getNickname()));
+				row.addColumn(new Column("Der Abonnent besitzt die eMail-Adresse " + abonnent.getGMail()));
+				row.addColumn(new Column("Abonnement erhalten am " + dayMonthYearTimeFormat.format(abonnement.getCreationTimeStamp()).toString()));
 				//Füge die Reihe dem abonnentenReport
 				abonnentenReport.addRow(row);
 			}
@@ -156,9 +159,10 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 			for(int i = 0; i < beitraege.size(); i++) {
 				Beitrag beitrag = beitraege.get(i);
 				Row row = new Row();
-				row.addColumn(new Column("Erstelldatum: " + beitrag.getCreationTimeStamp().toString()));
-				row.addColumn(new Column("Inhalt: " + beitrag.getInhalt()));
-				row.addColumn(new Column("Beitrag ID: " + beitrag.getBeitragId()));
+				row.addColumn(new Column(dayMonthYearTimeFormat.format(beitrag.getCreationTimeStamp())));
+				beitraegeReport.addRow(row);
+				row = new Row(true);
+				row.addColumn(new Column(beitrag.getInhalt()));
 				//Füge die Reihe dem beitraegeReport hinzu
 				beitraegeReport.addRow(row);
 			}
@@ -182,12 +186,11 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 			for(int i = 0; i < likes.size(); i++) {
 				Like like = likes.get(i);
 				//Erzeuge eine Reihe für einen Abonnenten
-				Row row = new Row();
+				Row row = new Row(true);
 				Beitrag gelikterBeitrag = beitragMapper.findBeitragById(like.getBeitragId());
 				User gelikterUser = uMapper.findUserById(gelikterBeitrag.getOwnerId());
-				row.addColumn(new Column("Like verteilt am: " + like.getCreationTimeStamp().toString()));
-				if(gelikterBeitrag != null)row.addColumn(new Column("An Beitrag von: " + gelikterUser.getGMail()));
-				row.addColumn(new Column("Like ID: " + like.getLikeId()));
+				row.addColumn(new Column("Ein Like wurde verteilt am " + dayMonthYearTimeFormat.format(like.getCreationTimeStamp()).toString()));
+				if(gelikterBeitrag != null)row.addColumn(new Column("Ein Beitrag von @" + gelikterUser.getNickname() + " wurde gelikt"));
 				//Füge die Reihe dem abonnentenReport
 				likeReport.addRow(row);
 				}
@@ -210,19 +213,16 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 	 */
 	@Override
 	public BeitragReport createBeitragReport(int beitragID, Date date1, Date date2) throws IllegalArgumentException {
+		//convert Dates
+		Date[] finalDates = this.convertDates(date1, date2);
+		start = finalDates[0];
+		end = finalDates[1];
+				
 		//create result Report
 		BeitragReport beitragReport = new BeitragReport();
-		beitragReport.setTitle("Report Über den Beitrag mit der ID " + beitragID);
-		//make sure start date is before end date
-		if(date1.before(date2)) {
-			start = date1;
-			end = date2;
-		}else {
-			start = date2;
-			end = date1;
-		}
+		beitragReport.setTitle("Report Über den Beitrag mit der ID " + beitragID);	
 		beitragReport.setImprint(new SimpleParagraph("Report über den Zeitraum vom " + dayMonthYearFormat.format(start) + 
-				" bis zum " + dayMonthYearFormat.format(end)  + " (0 Uhr jeweils)"));
+				" bis zum " + dayMonthYearFormat.format(end)));
 
 		Beitrag beitrag = null;
 		User inhaber = null;
@@ -247,14 +247,15 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 			//Create header
 			CompositeParagraph header = new CompositeParagraph();
 				try {
-					header.addSubParagraph(new SimpleParagraph("Beitrag erstellt von: " +  inhaber.getFirstName() + " " + inhaber.getLastName()));
-					header.addSubParagraph(new SimpleParagraph("Autor Nickname: " + inhaber.getNickname()));
+					header.addSubParagraph(new SimpleParagraph("Beitrag erstellt von " +  inhaber.getFirstName() + " " + inhaber.getLastName()));
+					header.addSubParagraph(new SimpleParagraph("@" + inhaber.getNickname()));
 					header.addSubParagraph(new SimpleParagraph("Autor eMail: " + inhaber.getGMail()));					
 				}catch(Exception e) {
 					header.addSubParagraph(new SimpleParagraph("Beitrag erstellt von: Zu diesem Beitrag konnte kein Autor gefunden werden"));
-				}		
-			header.addSubParagraph(new SimpleParagraph("Beitrag erstellt am:  " + beitrag.getCreationTimeStamp().toString()));
-			header.addSubParagraph(new SimpleParagraph("Inhalt des Beitrags:  " + beitrag.getInhalt()));
+				}
+			header.addSubParagraph(new SimpleParagraph(""));
+			header.addSubParagraph(new SimpleParagraph("Beitrag erstellt am  " + dayMonthYearTimeFormat.format(beitrag.getCreationTimeStamp()).toString()));
+			header.addSubParagraph(new SimpleParagraph(beitrag.getInhalt()));
 			//Add header to result report
 			beitragReport.setHeaderData(header);
 			
@@ -275,11 +276,11 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 				for(int i = 0; i < kommentare.size(); i++) {
 					Kommentar kommentar = kommentare.get(i);
 					//Erzeuge eine Reihe für einen Abonnenten
-					Row row = new Row();
+					Row row = new Row(true);
 					User autor = uMapper.findUserById(kommentar.getOwnerId()); 
-					row.addColumn(new Column("Autor: " + autor.getNickname()));
-					row.addColumn(new Column("Erstellungsdatum: " + kommentar.getCreationTimeStamp()));
-					row.addColumn(new Column("Inhalt: " + kommentar.getInhalt()));
+					row.addColumn(new Column("Kommentiert von " + autor.getNickname()));
+					row.addColumn(new Column("Kommentar erstellt am " + dayMonthYearTimeFormat.format(kommentar.getCreationTimeStamp())));
+					row.addColumn(new Column(kommentar.getInhalt()));
 					//Füge die Reihe dem abonnentenReport
 					kommentarReport.addRow(row);
 					}
@@ -303,11 +304,10 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 				for(int i = 0; i < likes.size(); i++) {
 					Like like = likes.get(i);
 					//Erzeuge eine Reihe für einen Abonnenten
-					Row row = new Row();
+					Row row = new Row(true);
 					User likeUser = uMapper.findUserById(like.getOwnerId());
-					row.addColumn(new Column("Like erhalten am: " + like.getCreationTimeStamp().toString()));
-					row.addColumn(new Column("Like erhalten von von: " + likeUser.getNickname()));
-					row.addColumn(new Column("Like ID: " + like.getLikeId()));
+					row.addColumn(new Column("Like erhalten am " + dayMonthYearTimeFormat.format(like.getCreationTimeStamp()).toString()));
+					row.addColumn(new Column("Like erhalten von @" + likeUser.getNickname()));
 					//Füge die Reihe dem abonnentenReport
 					likeReport.addRow(row);
 					}
@@ -319,5 +319,83 @@ public class ReportGeneratorServiceImpl extends RemoteServiceServlet implements 
 		//return result report
 		return beitragReport;
 	}
+	
+	
+	
+	
+	/**Methode um einen User zu suchen
+	 * @param searchQuery
+	 * @return users gibt die User zurück die gefunden wurden.
+	 */
+	public Vector<User> searchUserFunction(String searchQuery){
+		HashSet<User> hs = new HashSet<User>();
+		Vector<User> users = new Vector<User>();
+		String s = searchQuery;
+		if(uMapper.findUserByFirstName(s) != null)hs.addAll(uMapper.findUserByFirstName(s));
+		if(uMapper.findUserByLastName(s) != null)hs.addAll(uMapper.findUserByLastName(s));
+		if(uMapper.findUserByNickname(s) != null)hs.addAll(uMapper.findUserByNickname(s));
+		if(uMapper.findUserByGmail(s) != null)hs.add(uMapper.findUserByGmail(s));
+		
+		Iterator<User> it = hs.iterator();
+	     while(it.hasNext()){
+	        users.add(it.next());
+	     }
+		
+		return users;
+	}
+	
+	
+	
+	@Override
+	public Vector<Beitrag> searchBeitragFunction(String gMail) {
 
+		User tempUser = uMapper.findUserByGmail(gMail);
+		if (tempUser != null)return beitragMapper.findBeitraegeOfUser(tempUser.getUserId());
+		return null;
+	}
+	
+	
+	
+	
+	/*
+	 * Convert two dates to match Period Specifications
+	 * @param two dates
+	 * @return sorted dates with time being set
+	 */
+	public Date[] convertDates(Date d1, Date d2) {
+		//finalDates[0] eqauls start date
+		//finalDates[1] eqauls end date
+		Date[] finalDates = new Date[2];
+		//make sure start date is before end date
+		if(d1.before(d2)) {
+			finalDates[0] = d1;
+			finalDates[1] = d2;
+		}else {
+			finalDates[0] = d2;
+			finalDates[1] = d1;
+		}
+		
+		//Set Time for start date to 00:00:00
+        Calendar mor = Calendar.getInstance();
+        mor.setTime(finalDates[0]);
+        mor.set(Calendar.HOUR_OF_DAY, 0);
+        mor.set(Calendar.MINUTE, 0);
+        mor.set(Calendar.SECOND, 0);  
+        finalDates[0].setTime(mor.getTimeInMillis());
+		
+        
+        //Set Time for end date to 23:59:59
+        Calendar eve = Calendar.getInstance();
+        eve.setTime(finalDates[1]);
+        eve.set(Calendar.HOUR_OF_DAY, 23);
+        eve.set(Calendar.MINUTE, 59);
+        eve.set(Calendar.SECOND, 59);
+        finalDates[1].setTime(eve.getTimeInMillis());
+        
+        System.out.println("0: " + finalDates[0].toString());
+        System.out.println("1: " + finalDates[1].toString());
+        
+        //Return start and end date
+		return finalDates;
+	}
 }
