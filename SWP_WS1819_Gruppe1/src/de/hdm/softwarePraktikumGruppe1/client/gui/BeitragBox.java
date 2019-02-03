@@ -28,14 +28,14 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.Like;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
 /**
- * Die <code>Beitrag</code>-Klasse ist eine Custom-Widget-Class die daf�r verwendet wird, 
- * um einen Beitrag im System korrekt anzuzeigen
+ * Die <code>Beitrag</code>-Klasse ist eine Custom-Widget-Class die dafür verwendet wird, 
+ * um einen Beitrag im System korrekt anzuzeigen.
+ * Es erbt vom FlowPanel.
  * 
  * @author AdamGniady
  * @author GianlucaBernert
  * @version 1.0
  */
-
 public class BeitragBox extends FlowPanel {
 	PinnwandverwaltungAsync pinnwandVerwaltung = ClientsideSettings.getPinnwandverwaltung();
 
@@ -90,8 +90,13 @@ public class BeitragBox extends FlowPanel {
 	private Like likeCheck;
 	private int currentUserId;
 	
-	
-	// Constructor for the creation of Beitrag
+	/**
+	 * Der Konstrukt erhält den Inhalt die dazugehörige PinnwandBox und den User.
+	 * 
+	 * @param content
+	 * @param pb
+	 * @param user
+	 */
 	public BeitragBox(String content, PinnwandBox pb, User user) {
 		timestamp = new Timestamp(System.currentTimeMillis());
 		this.parentPinnwandBox = pb;
@@ -101,6 +106,10 @@ public class BeitragBox extends FlowPanel {
 		pinnwandVerwaltung.createBeitrag(this.beitragContent.getText(), this.user, timestamp, new CreateBeitragCallback());
 	}
 	
+	/**
+	 * Die Nested-Class <code>CreateBeitragCallback</code> implementiert einen AsyncCallback.
+	 * Dieser gibt bei einem Erfolgreichen Aufrif einen Beitrag zurück.
+	 */
 	public class CreateBeitragCallback implements AsyncCallback<Beitrag> {
 
 		@Override
@@ -110,6 +119,9 @@ public class BeitragBox extends FlowPanel {
 					);
 		}
 
+		/**
+		 * Bei einem erfolgreichen Aufruf werden die nötigen Attribute richtig gesetzt.
+		 */
 		@Override
 		public void onSuccess(Beitrag result) {
 			GWT.log("beitrag Id: " + result.getBeitragId());
@@ -121,6 +133,10 @@ public class BeitragBox extends FlowPanel {
 		
 	}
 	
+	/**
+	 * Die Nested-Class <code>SetNamesCallback</code> implementiert den AsyncCallback und gibt bei 
+	 * einem erfolgreichen Aufruf einen User zurück.
+	 */
 	public class SetNamesCallback implements AsyncCallback<User> {
 
 		@Override
@@ -128,6 +144,9 @@ public class BeitragBox extends FlowPanel {
 			Window.alert("Problem with SetNamesCallback");
 		}
 
+		/**
+		 * Bei einem erfolgreichen Aufruf werden die nötigen Attribute gesetzt.
+		 */
 		@Override
 		public void onSuccess(User result) {
 			user = result;
@@ -138,26 +157,25 @@ public class BeitragBox extends FlowPanel {
 			if(userId == currentUserId) {
 				userInfoWrapper.add(editPenBtn);
 			}
-		}
-		
+		}	
 	}
 	
-	
-	
+	/**
+	 * Ein leerer Konstruktor.
+	 */
 	public BeitragBox() {
-		
 	}
 	
+	/**
+	 * In der <em>onLoad()</em>-Methode werden alle nötigen Informationen richtig gesetzt und zusätzliche
+	 * Widgets und Panels an die BeitragBox gesetzt.
+	 */
 	public void onLoad() {
 		currentUserId = Integer.parseInt(Cookies.getCookie("userId"));
 		Beitrag thisBeitrag = new Beitrag();
 		thisBeitrag.setBeitragID(beitragId);
 		pinnwandVerwaltung.getAllKommentareOfBeitrag(thisBeitrag, new GetAllKommentareCallback(this));
 		pinnwandVerwaltung.getUserById(this.userId, new SetNamesCallback());
-		// Date
-//		Date now = new Date();
-//		DateTimeFormat fmt = DateTimeFormat.getFormat("HH:mm:ss, EEEE, dd MMMM, yyyy");
-//		String date = fmt.format(now).toString();
 		
 		// Stylingelements for this Widget
 		this.addStyleName("box radiusless");
@@ -224,8 +242,7 @@ public class BeitragBox extends FlowPanel {
 		userInfoWrapper.add(accountName);
 		userInfoWrapper.add(nickName);
 		
-	
-		
+		// Adding CreationDate to Box
 		creationInfoWrapper.add(creationDate);
 		contentWrapper.add(beitragContent);
 		
@@ -246,6 +263,10 @@ public class BeitragBox extends FlowPanel {
 		pinnwandVerwaltung.likeCheck(user, beitrag, new LikeCheckCallback());
 	}
 	
+	/**
+	 * Die Nested-Class LikeCheckCallback implementiert einen AsyncCallback und gibt 
+	 * bei einem erfolgreichen Aufruf einen Like zurück.
+	 */
 	private class LikeCheckCallback implements AsyncCallback<Like> {
 
 		@Override
@@ -253,6 +274,9 @@ public class BeitragBox extends FlowPanel {
 			GWT.log(caught.toString());
 		}
 
+		/**
+		 * Die Informationen werden korrigiert.
+		 */
 		@Override
 		public void onSuccess(Like result) {
 			Beitrag currentBeitrag = new Beitrag();
@@ -270,13 +294,16 @@ public class BeitragBox extends FlowPanel {
 				likeInfoWrapper.add(likeCountText);
 			} else {
 				pinnwandVerwaltung.countLikes(currentBeitrag, new CountLikeCallback2());
-			
 			}
 			
 		}
 		
 	}
 	
+	/**
+	 * Die Nested-Class <code>GetUserByIdCallback</code> implementiert den AsyncCallback und gibt bei 
+	 * einem erfolgreichen Aufruf einen User zurück.
+	 */
 	private class GetUserByIdCallback implements AsyncCallback<User> {
 
 		@Override
@@ -290,6 +317,10 @@ public class BeitragBox extends FlowPanel {
 		
 	}
 	
+	/**
+	 * Die Nested-Class CountLikeCallback implementiert einen AsyncCallback und gibt bei einem
+	 * erfolgreichen Aufruf die Anzahl der Likes des Beitrags zurück.
+	 */
 	public class CountLikeCallback implements AsyncCallback<Integer> {
 		Beitrag currentBeitrag = new Beitrag();
 		User currentUser = new User();
@@ -300,6 +331,9 @@ public class BeitragBox extends FlowPanel {
 			
 		}
 
+		/**
+		 * Der Zustand der BeitragBox wird angepasst. 
+		 */
 		@Override
 		public void onSuccess(Integer result) {
 			likeCount = result;
@@ -316,23 +350,24 @@ public class BeitragBox extends FlowPanel {
 				likeCountText.setText(" " + likeCount);
 				likeInfoWrapper.add(unfilledHeart);
 				likeInfoWrapper.add(likeCountText);
-			}else {
-				likeInfoWrapper.remove(likeHeart);
-//				likeHeart.setVisible(true);
-				unfilledHeart.setWidth("1rem");
-				unfilledHeart.addStyleName("small-padding-right");
-				likeCountText.addStyleName("is-size-6 is-italic");
-				likeCountText.setText(" " + likeCount);
-				likeInfoWrapper.add(unfilledHeart);
-				likeInfoWrapper.add(likeCountText);
-				pinnwandVerwaltung.likeCheck(currentUser, currentBeitrag, new LikeCheckCallback());
+			} else {
+					likeInfoWrapper.remove(likeHeart);
+	//				likeHeart.setVisible(true);
+					unfilledHeart.setWidth("1rem");
+					unfilledHeart.addStyleName("small-padding-right");
+					likeCountText.addStyleName("is-size-6 is-italic");
+					likeCountText.setText(" " + likeCount);
+					likeInfoWrapper.add(unfilledHeart);
+					likeInfoWrapper.add(likeCountText);
+					pinnwandVerwaltung.likeCheck(currentUser, currentBeitrag, new LikeCheckCallback());
 			}
-			}
-			
-		
-		
+		}
 	}
 	
+	/**
+	 * Die Nested-Class CountLikeCallback2 implementiert einen AsyncCallback der bei 
+	 * einem erfolgreichen Aufruf die Anzahl der Likes zurückgibt
+	 */
 	public class CountLikeCallback2 implements AsyncCallback<Integer> {
 		Beitrag currentBeitrag = new Beitrag();
 		User currentUser = new User();
@@ -343,6 +378,9 @@ public class BeitragBox extends FlowPanel {
 			
 		}
 
+		/**
+		 * Der Zustand der BeitragBox wird angepasst. 
+		 */
 		@Override
 		public void onSuccess(Integer result) {
 			likeCount = result;
@@ -359,7 +397,7 @@ public class BeitragBox extends FlowPanel {
 				likeCountText.setText(" " + likeCount);
 				likeInfoWrapper.add(unfilledHeart);
 				likeInfoWrapper.add(likeCountText);
-			}else {
+			} else {
 				likeInfoWrapper.remove(likeHeart);
 //				likeHeart.setVisible(true);
 				unfilledHeart.setWidth("1rem");
@@ -369,10 +407,7 @@ public class BeitragBox extends FlowPanel {
 				likeInfoWrapper.add(unfilledHeart);
 				likeInfoWrapper.add(likeCountText);
 			}
-			}
-			
-		
-		
+		}
 	}
 	
 	
@@ -404,22 +439,26 @@ public class BeitragBox extends FlowPanel {
 		@Override
 		public void onClick(ClickEvent event) {			
 			pinnwandVerwaltung.likeCheck(likingUser, parentBeitrag , new IsLikedCallback());
-			
 		}
 		
+		/**
+		 * Die Nested-Class <code>IsLikedCallback</code> implementiert einen AsyncCallback, der bei 
+		 * einem erfolgreichen Aufruf einen Like zurückgibt.
+		 */
 		public class IsLikedCallback implements AsyncCallback<Like> {
 			
 			Timestamp timestamp = new Timestamp(beitragId);
 			User currentUser = new User();
 			Beitrag currentBeitrag = new Beitrag();
 			
-			
 			@Override
 			public void onFailure(Throwable caught) {
 				Window.alert(caught.toString());
 			}
 
-			
+			/**
+			 * Wenn es funktioniert, wird entweder ein Like gesetzt oder Entfernt.
+			 */
 			@Override
 			public void onSuccess(Like result) {
 				if(result != null) {
@@ -428,54 +467,58 @@ public class BeitragBox extends FlowPanel {
 					GWT.log(result.toString());
 					pinnwandVerwaltung.deleteLike(result, new DeleteLikeCallback());
 					
-				}else {
+				} else {
 					currentUser.setUserId(Integer.parseInt(Cookies.getCookie("userId")));
 					currentBeitrag.setBeitragId(beitragId);
 					pinnwandVerwaltung.createLike(currentUser, currentBeitrag, timestamp, new CreateLikeCallback());
-					
 				}				
-
-				
 			}
 			
 		
-		
+		/**
+		 * Die Nested-Class <code>CreateLikeCallback</code> implementiert einen AsyncCallback,
+		 * der bei erfolgreicher Durchführung einen Like zurückgibt.
+		 */
 		public class CreateLikeCallback implements AsyncCallback<Like>{
 
 			@Override
 			public void onFailure(Throwable caught) {
 				Window.alert("Problem with CreateLikeCallback");
-				
 			}
 
 			@Override
 			public void onSuccess(Like result) {
-				pinnwandVerwaltung.countLikes(currentBeitrag, new CountLikeCallback());
+					pinnwandVerwaltung.countLikes(currentBeitrag, new CountLikeCallback());
 				}
 				
 			}
 			
 		}
-			
+		
+		/**
+		 * Die Nested-Class <code>DeleteLikeCallback</code> implementiert einen AsyncCallback,
+		 * der bei erfolgreicher Durchführung einen Boolean-Wert zurückgibt.
+		 */
 		public class DeleteLikeCallback implements AsyncCallback<Boolean> {
 			
 			@Override
 			public void onFailure(Throwable caught) {
 				Window.alert("Problem with DeleteLikeCallback");
-				
 			}
 
+			/**
+			 * Bei einem Erfolg wird der Like Enfernt
+			 */
 			@Override
 			public void onSuccess(Boolean result) {
 				if(result == true) {
 					Beitrag currentBeitrag = new Beitrag();
 					currentBeitrag.setBeitragId(beitragId);
 					pinnwandVerwaltung.countLikes(currentBeitrag, new CountLikeCallback());
-				}else {
+				} else {
 					Window.alert("Like wurde nicht entfernt");
 				}
-				
-		}
+			}
 				
 		}
 			
@@ -602,7 +645,6 @@ public class BeitragBox extends FlowPanel {
 	 * Private Klasse, die das AsyncCallback-Interface implementiert und so die 
 	 * Möglichkeit bietet die Editierung eines Beitrages zu ermöglichen. 
 	 * @author AdamGniady
-	 *
 	 */
 	private class EditBeitragCallback implements AsyncCallback<Beitrag> {
 
@@ -613,16 +655,13 @@ public class BeitragBox extends FlowPanel {
 
 		@Override
 		public void onSuccess(Beitrag result) {
-			
 		}
 		
 	}
 	
 	/**
-	 * 
-	 * 
-	 * @author AdamGniady
-	 *
+	 * Die Nested-Class <code>CreateLikeCallback</code> implementiert das ClickHandler-Interface
+	 * und setzt das Anzeigen des KommentarWrappers auf true.
 	 */
 	private class showKommentarWrapperClickHandler implements ClickHandler {
 
@@ -633,6 +672,10 @@ public class BeitragBox extends FlowPanel {
 		
 	}
 	
+	/**
+	 * Die Nested-Class <code>CreateLikeCallback</code> implementiert das ClickHandler-Interface
+	 * und startet den Prozess vom Setzen eines Kommentars.
+	 */
 	private class addKommentarClickHandler implements ClickHandler {
 
 		@Override
@@ -662,9 +705,8 @@ public class BeitragBox extends FlowPanel {
 	}
 	
 	/**
-	 * This Method enables the User to delete KommentarBox-Elements from the
-	 * <code>kommentarsOfBeitrag</code> Vector. It gets its parameters from 
-	 * the KommentarBox and its <code>ClickHandler</code> called <code>removeFromParent</code>.
+	 * Diese Methode ermöglicht dem User das Löschen von Kommentaren aus dem <code>kommentarsOfBeitrag</code>-Vektor.
+	 * Es bekommt die Parameter von der KommentarBox und der ClickHandler ruft die Methode <code>removeFromParent</code>.
 	 * 
 	 * @param deletableKB passed by the ClickHandler of the KommentarBox Class.
 	 * @author AdamGniady
@@ -676,8 +718,8 @@ public class BeitragBox extends FlowPanel {
 	}
 	
 	/**
-	 * This Method calls a the <code>deleteBeitrag</code> Method in the 
-	 * parent PinnwandBox. 
+	 * Die Nested-Class <code>removeBeitragFromParent</code> implementiert das ClickHandler-Interface,
+	 * welches es ermöglicht durch einen Klick mit dem System zu interagieren.
 	 * 
 	 * @author AdamGniady
 	 */
@@ -686,7 +728,9 @@ public class BeitragBox extends FlowPanel {
 		EditBeitragDialogBox parentDialogBox;
 		
 		
-		/*
+		/**
+		 * Der Konstruktor erhält eine BeitragBox und die DialogBox die der Parent des Aufrufs sind.
+		 * 
 		 * @param thisBB
 	     * @param beitragDialogBox
 	     * 
@@ -708,6 +752,11 @@ public class BeitragBox extends FlowPanel {
 		
 	}
 	
+	/**
+	 * Die Nested-Class <code>DeleteBeitragCallback</code> implementiert einen AsyncCallback,
+	 * der bei einem Erfolgreichen Aufruf das löschen eines Kommentars innehat. Er gibt in 
+	 * dem Sinne "nichts" zurück.
+	 */
 	private class DeleteBeitragCallback implements AsyncCallback<Void> {
 
 		@Override
@@ -729,7 +778,7 @@ public class BeitragBox extends FlowPanel {
 		return userId;
 	}
 
-	/*
+	/**
 	 * Methode die den User anhand der UserId setzt
 	 * @param userId
 	 */
@@ -737,7 +786,7 @@ public class BeitragBox extends FlowPanel {
 		this.userId = userId;
 	}
 	
-	/*
+	/**
 	 * Methode die den accountName holt
 	 * @return accountName
 	 */
@@ -745,7 +794,7 @@ public class BeitragBox extends FlowPanel {
 		return accountName;
 	}
 	
-	/*
+	/**
 	 * Methode die den AccountName setzt
 	 * @param firstName
 	 * @param lastName
@@ -755,7 +804,7 @@ public class BeitragBox extends FlowPanel {
 		this.accountName.setText(firstName + " " + lastName);
 	}
 
-	 /*
+	 /**
 	  * Methode die das Erstellungsdatum holt
 	  * @return creationDate
 	  */
@@ -763,14 +812,14 @@ public class BeitragBox extends FlowPanel {
 		return creationDate;
 	}
 
-	/*
+	/**
 	 * Methode die das Erstellungsdatum für den Text setzt
 	 * @param creationDate
 	 */
 	public void setCreationDate(String creationDate) {
 		this.creationDate.setText(creationDate);
 	}
-	/*
+	/**
 	 * Methode die den Content(Inhalt) des Beitrags holt
 	 * @return beitragContent
 	 */
@@ -778,7 +827,7 @@ public class BeitragBox extends FlowPanel {
 		return beitragContent;
 	}
 	
-	/*
+	/**
 	 * Methode die den Content(Inhalt) setzt
 	 * @param beitragContent
 	 */
@@ -786,7 +835,7 @@ public class BeitragBox extends FlowPanel {
 		this.beitragContent.setText(beitragContent);
 	}
 
-	/*
+	/**
 	 * Methode die die Id des Beitrags holt
 	 * @return beitragId
 	 */
@@ -794,14 +843,14 @@ public class BeitragBox extends FlowPanel {
 		return beitragId;
 	}
 
-	/*
+	/**
 	 * Methode die die Dd des Beitrags setzt
 	 */
 	public void setBeitragId(int beitragId) {
 		this.beitragId = beitragId;
 	}
 	
-	/*
+	/**
 	 * Methode die den NickNamen setzt
 	 * @param nickName
 	 */
@@ -809,6 +858,10 @@ public class BeitragBox extends FlowPanel {
 		this.nickName.setText(nickName);
 	}
 	
+	/**
+	 * Die Nested-Class <code>GetAllKommentareCallback</code> implementiert einen AsyncCallback,
+	 * der einen Vektor mit Kommentaren bei einem erfolgreichen Aufruf zurückgibt.
+	 */
 	private class GetAllKommentareCallback implements AsyncCallback<Vector<Kommentar>> {
 		private BeitragBox pB;
 		
@@ -830,6 +883,9 @@ public class BeitragBox extends FlowPanel {
 		
 	}
 	
+	/**
+	 * Methode die das Anzeigen von Alten Kommentaren ermöglicht.
+	 */
 	private void showOldKommentare() {
 		for (Kommentar k : this.kommentareOfBeitrag) {
 			KommentarBox tempKommentarBox = new KommentarBox();
@@ -843,7 +899,4 @@ public class BeitragBox extends FlowPanel {
 			this.add(tempKommentarBox);
 		}
 	}
-	
-	
-	
 }

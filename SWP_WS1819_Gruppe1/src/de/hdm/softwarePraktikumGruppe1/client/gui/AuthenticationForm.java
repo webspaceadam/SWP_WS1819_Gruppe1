@@ -12,7 +12,6 @@ import com.google.gwt.user.client.ui.*;
  * 
  * @author AdamGniady
  * @author JakobBenkoe
- *
  */
 public class AuthenticationForm extends FlowPanel {
 	private Label welcomeLabel = new Label("Zugang über dein Google Konto");
@@ -24,10 +23,18 @@ public class AuthenticationForm extends FlowPanel {
 	public AuthenticationForm() {
 	}
 	
+	/**
+	 * Die Login-Url wird im Konstruktor gesetzt
+	 * 
+	 * @param loginURL
+	 */
 	public AuthenticationForm(String loginURL) {
 		this.loginURL = loginURL;		
 	}
 	
+	/**
+	 * Die <code>onLoad()</code>-Methode 
+	 */
 	public void onLoad() {
 		this.addStyleName("box radiusless");
 		this.getElement().setAttribute("style", "width: 500px; height:350px; text-align: center;");
@@ -50,7 +57,10 @@ public class AuthenticationForm extends FlowPanel {
 	}
 	
 	
-	//ClickHandler für Login Button
+	/**
+	 * Die private Klasse loginClickHandler implementiert das ClickHandler-Interface.
+	 * Die ermöglicht das einloggen in das System
+	 */
 	private class loginClickHandler implements ClickHandler{
 
 		@Override

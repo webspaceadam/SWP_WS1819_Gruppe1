@@ -39,18 +39,21 @@ public class AbonnementBox extends FlowPanel {
 	private Label accountName = new Label();
 	private Label nickName = new Label();
 	private Button pinnwandBtn = new Button("Pinnwand");
-	//private Button deaboBtn = new Button("Deabonnieren");
-	
 	private int pinnwandId;
-	
-	
-	
 	private FlowPanel accountWrapper = new FlowPanel();
 	private FlowPanel nickWrapper = new FlowPanel();
 	private FlowPanel pinnwandWrapper = new FlowPanel();
 	private FlowPanel deaboWrapper = new FlowPanel();
 	PinnwandverwaltungAsync pinnwandVerwaltung;
 	
+	/**
+	 * Der Konstruktor der Klasse AbonnementBox braucht einen Parent, den User und das dazugehörige Abonnement
+	 * um voll Funktionsfähig zu sein.
+	 * 
+	 * @param parent
+	 * @param u
+	 * @param abonnement
+	 */
 	public AbonnementBox(ShowAbosDialogBox parent, User u, Abonnement abonnement) {
 		this.abo = abonnement;
 		this.shownUser = u;
@@ -76,7 +79,9 @@ public class AbonnementBox extends FlowPanel {
 		this.pinnwandBtn.setTitle("PinnwandId: " + this.pinnwandId);
 	}
 	
-	
+	/**
+	 * Die <code>onLoad()</code> Methode startet alle Custom-Widget-AbonnementBox gesetzten Systeme.
+	 */
 	public void onLoad() {
 		pinnwandVerwaltung = ClientsideSettings.getPinnwandverwaltung();
 		
@@ -108,6 +113,10 @@ public class AbonnementBox extends FlowPanel {
 		//deaboBtn.addClickHandler(new DeleteAboClickHandler(this));
 	}
 	
+	/**
+	 * Die private Klasse DeleteAboClickHandler implementiert das ClickHandler-Interface und 
+	 * ermöglicht so das Deabonnieren eines Users.
+	 */
 	class DeleteAboClickHandler implements ClickHandler{
 		AbonnementBox parentAboBox; 
 		
@@ -121,6 +130,10 @@ public class AbonnementBox extends FlowPanel {
 		
 	}
 	
+	/**
+	 * Die private Klasse DeleteAbonnementCallback implementiert einen AsyncCallback.
+	 * Bei einem erfolgreichen Aufruf wird das Abonnement gelöscht.
+	 */
 	class DeleteAbonnementCallback implements AsyncCallback<Void>{
 		AbonnementBox parentAboBox;
 		
@@ -140,7 +153,7 @@ public class AbonnementBox extends FlowPanel {
 //			pinnwandWrapper.removeFromParent();
 //			deaboWrapper.removeFromParent();
 //			parent.removeAbonnementBox(this);
-			parent.removeAboBoxFromDialogBox(this.parentAboBox);
+//			parent.removeAboBoxFromDialogBox(this.parentAboBox);
 			parent.forceReload();
 			
 		}
@@ -148,7 +161,10 @@ public class AbonnementBox extends FlowPanel {
 	}
 	
 	
-	
+	/**
+	 * Die Nested Class <code>GetUserByPinnwandIdCallback</code> implementiert einen 
+	 * AsyncCallback. Bei einem erfolgreichen Aufruf, wird ein User zurückgegeben.
+	 */
 	public class GetUserByPinnwandIdCallback implements AsyncCallback<User> {
 
 		@Override
@@ -184,19 +200,6 @@ public class AbonnementBox extends FlowPanel {
 			
 			rootPinnwandPanel.add(pinnwandName);
 			rootPinnwandPanel.add(aboPinnwand);
-			
-			/**
-			 * // Pinnwand Stuff
-			Vector<BeitragBox> allBeitragBoxesOfPinnwand = new Vector<BeitragBox>();
-			
-			for(int i = 0; i < 10; i++) {
-				BeitragBox tempBB = new BeitragBox();
-				
-				allBeitragBoxesOfPinnwand.add(tempBB);
-			}
-			
-			PinnwandBox newPinnwand = new PinnwandBox(allBeitragBoxesOfPinnwand);
-			 */
 		}
 	}
 }

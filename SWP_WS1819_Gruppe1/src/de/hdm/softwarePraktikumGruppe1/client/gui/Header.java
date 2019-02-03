@@ -183,7 +183,6 @@ public class Header extends FlowPanel {
 		 *
 		 */
 		private class ShowMyPinnwandClickHandler implements ClickHandler {
-
 			@Override
 			public void onClick(ClickEvent event) {
 				RootPanel rootPinnwandPanel = RootPanel.get("rechteSeite");
@@ -193,7 +192,6 @@ public class Header extends FlowPanel {
 				PinnwandBox userPinnwand = new PinnwandBox(currentUserId);
 				rootPinnwandPanel.add(userPinnwand);				
 			}
-			
 		}
 		
 		/**
@@ -214,7 +212,6 @@ public class Header extends FlowPanel {
 				
 				dlg = new ShowAbosDialogBox();
 				dlg.center();
-				
 			}
 		}
 		
@@ -225,30 +222,25 @@ public class Header extends FlowPanel {
 		private class reportGeneratorClickHandler implements ClickHandler {
 
 			@Override
-			public void onClick(ClickEvent event) {
-				
+			public void onClick(ClickEvent event) {	
 				Window.Location.assign(GWT.getHostPageBaseURL() + "ReportGenerator.html");
 			}
-			
 		}
 		
 		/**
 		 * Die Klasse ShowAbosDialogBox erbt von der Parentklasse <em>DialogBox</em> welche 
 		 * ihm die nötige Funktionalität liefert und implementiert das ClickHandler Interface,
-		 * um Interaktion zu ermöglichen
-		 * 
-		 * @author AdamGniady
-		 *
+		 * um Interaktion zu ermöglichen.
 		 */
 		public class ShowAbosDialogBox extends DialogBox implements ClickHandler {
-			//			Header parentHeader;
+			//Header parentHeader;
 						
 			private Vector<AbonnementBox> userAboBoxes = new Vector<AbonnementBox>();
 									
 			private ScrollPanel parentScrolling = new ScrollPanel();
 			private FlowPanel aboParentPanel = new FlowPanel();
 			private Label noAbosLabel = new Label("Momentan hast du keine Abonnements! Reloade ggf. das System!");
-			private Label newAbosLabel = new Label("Hast du eben ein neues Abo hinzugefügt und es wird nicht angezeigt? Reloade ggf. das System!");
+			private Label newAbosLabel = new Label("Hast du eben ein neues Abo hinzugefügt oder ein bestehendes Verändert? Es wird nicht angezeigt, oder immernoch angezeigt? Reloade ggf. das System!");
 			private Button reloadSiteBtn = new Button("Reload!");
 			
 			/**
