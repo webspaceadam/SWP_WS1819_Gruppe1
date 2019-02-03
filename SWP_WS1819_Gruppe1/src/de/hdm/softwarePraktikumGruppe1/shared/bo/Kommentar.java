@@ -31,13 +31,15 @@ public class Kommentar implements IsSerializable{
 	
 	/**
 	 * Methode die den Autor eines Kommentars zurück gibt
+	 * @return ownerId
 	 */
 	public int getOwnerId() {
 		return ownerId;
 	}
 	
 	/**
-	 * MEthode die den Autor eines Kommentars setzt
+	 * Methode die den Autor eines Kommentars setzt
+	 *@param ownerId
 	 */
 	public void setOwnerId(int ownerId) {
 		this.ownerId = ownerId;
@@ -45,6 +47,7 @@ public class Kommentar implements IsSerializable{
 	
 	/**
 	 * Methode die den kommentierten Beitrag zurück gitb 
+	 * @return beitragId
 	 */
 	public int getBeitragId() {
 		return beitragId;
@@ -52,6 +55,7 @@ public class Kommentar implements IsSerializable{
 	
 	/**
 	 * Methode die den kommentierten Beitrag sertzt
+	 * @param beitragId
 	 */
 	public void setBeitragId(int beitragId) {
 		this.beitragId = beitragId;
@@ -59,6 +63,7 @@ public class Kommentar implements IsSerializable{
 	
 	/**
 	 * Methode die den Text eines Kommentars zurück gibt
+	 * @return inhalt
 	 */
 	public String getInhalt() {
 		return inhalt;
@@ -66,6 +71,7 @@ public class Kommentar implements IsSerializable{
 	
 	/**
 	 * Methode die den Text eines Kommentars setzt
+	 * @param inhalt
 	 */
 	public void setInhalt(String inhalt) {
 		this.inhalt = inhalt;
@@ -78,23 +84,35 @@ public class Kommentar implements IsSerializable{
 		return "KommentarID #K" + this.getKommentarId() + " von User mit der ID #U" + this.getOwnerId();
 	}
 
-	/*
+	/**
 	 * Methode, die die Id eines Kommentars zurueck gibt
+	 * @return kommentarId
 	 */
 	public int getKommentarId() {
 		return kommentarId;
 	}
 
-	/*
+	/**
 	 * Methode, die das Setzen eines Kommentars ermöglicht
+	 * @param kommentarId
 	 */
 	public void setKommentarId(int kommentarId) {
 		this.kommentarId = kommentarId;
 	}
 	
+	/**
+	 * Methode die das Erstellungsdatum zurückgibt
+	 * @return creationTimeStamp
+	 */
+	
 	public Timestamp getCreationTimeStamp() {
 		return creationTimeStamp;
 	}
+	
+	/**
+	 * Methode die das Erstellungsdatum setzt
+	 * @param creationTimeStamp
+	 */
 
 	public void setCreationTimeStamp(Timestamp creationTimeStamp) {
 		this.creationTimeStamp = creationTimeStamp;
