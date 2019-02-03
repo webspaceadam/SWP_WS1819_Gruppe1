@@ -5,7 +5,8 @@ import java.util.Vector;
 
 /** Ein Report der mehrere Reports enthalten kann.
  * 
- * @author JakobBenkoe
+ * @author Thies
+ * 
 * 
 */
 

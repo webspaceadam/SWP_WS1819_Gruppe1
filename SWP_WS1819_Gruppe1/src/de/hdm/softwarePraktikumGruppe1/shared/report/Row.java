@@ -12,6 +12,8 @@ import java.util.Vector;
  * 
  * @see SimpleReport
  * @see Column
+ * 
+ * @author Thies
  * @author JakobBenkoe
  */
 public class Row implements Serializable {

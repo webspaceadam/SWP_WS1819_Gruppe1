@@ -102,7 +102,7 @@ public class KommentarBox extends FlowPanel {
 			ownerId = result.getOwnerId();
 			kommentarId = result.getKommentarId();
 			GWT.log(result.toString());
-			creationDate.setText("Erstellzeitpunkt: " + result.getCreationTimeStamp().toString());
+			creationDate.setText("Erstellzeitpunkt: " + ClientsideSettings.dateFormat.format(result.getCreationTimeStamp()).toString());
 		}
 		
 	}
@@ -110,11 +110,10 @@ public class KommentarBox extends FlowPanel {
 	public void onLoad() {
 		currentUserId = Integer.parseInt(Cookies.getCookie("userId"));
 		pinnwandVerwaltung.getUserById(ownerId, new GetUserByIdCallback());
-		// Date Stuff
-		Date now = new Date();
-		DateTimeFormat fmt = DateTimeFormat.getFormat("HH:mm:ss, EEEE, dd MMMM, yyyy");
-		String date = fmt.format(now).toString();
-		creationDate.setText("Erstellungszeitpunkg: " + date);
+//		// Date Stuff
+//		Date now = new Date();		
+//		String date = ClientsideSettings.dateFormat.format(now).toString();
+//		creationDate.setText("Erstellungszeitpunkt: " + date);
 		
 		this.addStyleName("post_content kommentar_margin");
 		parentVerticalPanel.addStyleName("control");
@@ -336,6 +335,9 @@ public class KommentarBox extends FlowPanel {
 
 	public void setKommentarId(int kommentarId) {
 		this.kommentarId = kommentarId;
+	}
+	public void setCreationDate(Timestamp cD) {
+		creationDate.setText("Erstellzeitpunkt: " + ClientsideSettings.dateFormat.format(cD).toString());
 	}
 	
 	private class GetUserByIdCallback implements AsyncCallback<User> {

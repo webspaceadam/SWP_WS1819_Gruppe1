@@ -11,6 +11,7 @@ import java.util.Date;
  * @see Simplereport
  * @see GenericReport
  * 
+ * @author Thies
  * @author JakobBenkoe
  */
 public abstract class Report implements Serializable {

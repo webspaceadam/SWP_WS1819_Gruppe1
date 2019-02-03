@@ -3,6 +3,7 @@ package de.hdm.softwarePraktikumGruppe1.client;
 import java.util.logging.Logger;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import de.hdm.softwarePraktikumGruppe1.shared.CommonSettings;
@@ -19,6 +20,15 @@ import de.hdm.softwarePraktikumGruppe1.shared.ReportGeneratorServiceAsync;
  */
 public class ClientsideSettings extends CommonSettings {
 
+	
+	
+	
+	
+  /**
+   * DateTimeFormat for global use (client-side) 
+   */
+   public static final DateTimeFormat dateFormat = DateTimeFormat.getFormat("dd.MM.yyyy HH:mm");
+   public static final DateTimeFormat fmt = DateTimeFormat.getFormat("HH:mm:ss, EEEE, dd MMMM, yyyy");
   /**
    * Remote Service Proxy zur Verbindungsaufnahme mit dem Server-seitgen Dienst
    * <code>Pinnwandverwaltung</code>.
