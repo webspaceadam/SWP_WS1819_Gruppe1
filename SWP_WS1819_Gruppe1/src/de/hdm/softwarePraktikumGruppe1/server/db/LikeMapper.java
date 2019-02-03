@@ -47,8 +47,10 @@ public class LikeMapper {
 	 * in allen Mapper-Klassen existieren.
 	 */	
 	
-	/*
+	/**
 	 * Methode, die einen Like anhand einer Id zurueck gibt
+	 * @param likeId
+	 * @return l
 	 */
 		public Like findLikeById(int likeId) {
 		//Aufbau der DBVerbindung
@@ -80,8 +82,9 @@ public class LikeMapper {
 			return null;
 		} 
 	
-	/*
+	/**
 	 * Methode, die das Anlegen eines Like-Objekts ermöglicht
+	 * @param l
 	 */
 		public void insertLike(Like l) {
 			 Connection con = DBConnection.connection();
@@ -97,8 +100,9 @@ public class LikeMapper {
 			}
 		}
 		
-	/*
+	/**
 	 * Methode, die das Updaten eines Like-Objekts in der Datenbank ermöglicht	
+	 * @param l
 	 */
 		public void updateLike(Like l){
 			//Aufbau der DBVerbindung
@@ -117,8 +121,9 @@ public class LikeMapper {
 			} 
 		}
 	
-	/*
+	/**
 	 * Methode, die das Loeschen eines Like-Objekts aus der Datenbank ermöglicht
+	 * @param l
 	 */
 		public void deleteLike(Like l) {
 			//Aufbau der DBVerbindung
@@ -142,8 +147,10 @@ public class LikeMapper {
 	 * Beginn: Foreign Key-Mapper-Methoden
 	 */
 	
-	/*
+	/**
 	 * Methode, die alle Likes eines Users zurueck gibt
+	 * @param userId
+	 * @return result
 	 */
 		public Vector<Like> findLikesOfUser(int userId){
 			
@@ -176,8 +183,12 @@ public class LikeMapper {
 			return null;
 		 }
 
-	/*
+	/**
 	 * Methode, die alle Likes eines Users innerhalb eines Zeitraums zurueck gibt
+	 * @param userId
+	 * @param start
+	 * @param end
+	 * @return result
 	 */
 		public Vector<Like> findLikesOfUserBetweenDates(int userId, Date start, Date end){
 				
@@ -210,8 +221,10 @@ public class LikeMapper {
 			return result;
 		 }		
 
-	/*
+	/**
 	 * Methode, die alle Likes eines Beitrags zurueck gibt
+	 * @param beitragId
+	 * @return result
 	 */
 		public Vector<Like> findLikesOfBeitrag(int beitragId){
 			Connection con = DBConnection.connection();
@@ -241,8 +254,11 @@ public class LikeMapper {
 		}
 	
 
-	/*
+	/**
 	 * Methode, die alle Likes eines Beitrags innerhalb eines Zeitraums zurueck gibt
+	 * @param beitragId
+	 * @param start
+	 * @param end
 	 */
 		public Vector<Like> findLikesOfBeitragBetweenDates(int beitragId, Date start, Date end){
 			Connection con = DBConnection.connection();
@@ -272,8 +288,11 @@ public class LikeMapper {
 				
 			return result;
 		}		
-	/*
+	/**
 	 *  Methode, die den Like eines Users von einem bestimmten Beitrag zurueck gibt
+	 *  @param userId
+	 *  @param beitragId
+	 *  @return result
 	 */
 		public Like findLikeOfUserAndBeitrag(int userId, int beitragId) {
 			
