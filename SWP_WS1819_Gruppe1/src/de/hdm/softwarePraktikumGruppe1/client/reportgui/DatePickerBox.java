@@ -47,7 +47,10 @@ public class DatePickerBox extends FlowPanel {
 		
 	}
 	
-	
+	/**
+	 * Methode die das Datum zurückgibt
+	 * @return date
+	 */
 
 	public Date getDate() {
 		Date date = dateBox.getValue();

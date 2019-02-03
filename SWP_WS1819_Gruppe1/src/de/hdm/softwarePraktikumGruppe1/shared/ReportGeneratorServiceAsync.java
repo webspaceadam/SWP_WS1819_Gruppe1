@@ -22,13 +22,39 @@ import de.hdm.softwarePraktikumGruppe1.shared.report.UserReport;
  */
 public interface ReportGeneratorServiceAsync {
 
-
+		/**
+		 * Methode um den User Report zu erzeugen
+		 * @param gMail
+		 * @param start
+		 * @param end
+		 * @param callback
+		 */
+	
 		void createUserReport(String gMail, Date start, Date end, AsyncCallback<UserReport> callback);
-
+		
+		/**
+		 * Methode um den BeitragReport zu erzeugen
+		 * @param beitragID
+		 * @param date1
+		 * @param date2
+		 * @param callback
+		 */
+		
 		void createBeitragReport(int beitragID, Date date1, Date date2, AsyncCallback<BeitragReport> callback);
 		
+		/**
+		 * Methode um den User zu suchen
+		 * @param searchQuery
+		 * @param callback
+		 */
 		void searchUserFunction(String searchQuery, AsyncCallback<Vector<User>> callback);
-
+		
+		/**
+		 * Methode um den Beitrag zu suchen
+		 * @param gMail
+		 * @param callback
+		 */
+		
 		void searchBeitragFunction(String gMail, AsyncCallback<Vector<Beitrag>> callback);
 
 }

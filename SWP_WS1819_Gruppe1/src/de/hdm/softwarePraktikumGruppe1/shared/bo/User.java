@@ -23,7 +23,7 @@ public class User implements IsSerializable{
 	private String gMail;
 	private Timestamp creationTimeStamp;
 
-	/*
+	/**
 	 * Leerer Konstruktor. Die Zuweisung der Attribute wird über die Setter-Methoden realisiert.
 	 */
 	
@@ -33,6 +33,7 @@ public class User implements IsSerializable{
 	
 	/**
 	 * Methode die den Nicknamen eines Users zurück gibt
+	 * @return nickname
 	 */
 	public String getNickname() {
 		return nickname;
@@ -40,6 +41,7 @@ public class User implements IsSerializable{
 	
 	/**
 	 * Methode die den Nicknamen eines Users setzt
+	 * @param nickname
 	 */
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
@@ -47,34 +49,43 @@ public class User implements IsSerializable{
 	
 	/**
 	 * Methode die den Vornamen des Users zurück gibt
+	 * @return firstName
 	 */
+	
 	public String getFirstName() {
 		return firstName;
 	}
 	
 	/**
 	 * Methode die den Vornamen eines Users setzt
+	 * @param firstName
 	 */
+	
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
 	
 	/**
 	 * Methode die den Nachnamen eines Users zurück gibt
+	 * @return lastName
 	 */
+	
 	public String getLastName() {
 		return lastName;
 	}
 	
 	/**
 	 * Methode die den Nachnamen eines Users setzt
+	 * @param lastName
 	 */
+	
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
 	
 	/**
 	 * Methode die die E-Mail eines Users zurück gibt
+	 *@return gMail
 	 */
 	public String getGMail() {
 		return gMail;
@@ -82,7 +93,9 @@ public class User implements IsSerializable{
 	
 	/**
 	 * Methode die die E-Mail eines Users setzt
+	 * @param gMail
 	 */
+	
 	public void setGMail(String gMail) {
 		this.gMail = gMail;
 	}
@@ -97,21 +110,34 @@ public class User implements IsSerializable{
 	
 	/**
 	 * Methode die die User ID zurueck gibt
+	 * @return userId
 	 */
+	
 	public int getUserId() {
 		return userId;
 	}
 	
 	/**
 	 * Methode die die User ID setzt
+	 * @param userId
 	 */
 	public void setUserId(int userId) {
 		this.userId= userId;
 	}
+	
+	/**
+	 * Methode die das Erstellungsdatum zurückgibt
+	 * @return creationTimeStamp
+	 */
 
 	public Timestamp getCreationTimeStamp() {
 		return creationTimeStamp;
 	}
+	
+	/**
+	 * Methode die das Erstellungsdatum setzt
+	 * @param creationTimeStamp
+	 */
 
 	public void setCreationTimeStamp(Timestamp creationTimeStamp) {
 		this.creationTimeStamp = creationTimeStamp;

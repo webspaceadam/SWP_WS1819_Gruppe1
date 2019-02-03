@@ -15,6 +15,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.Kommentar;
  * @author Ulus Serhat
  * @author Yesin Soufi
  * @author SebastianHermann
+ * @author Peter Thies
  * 
  *
  */
@@ -50,8 +51,10 @@ public class KommentarMapper {
 	  * in allen Mapper-Klassen existieren.
 	  */
 	 
-	 /*
+	 /**
 	  * Methode, die einen Kommentar ahnand einer Id zurueckgibt
+	  * @param kommentarId
+	  * @return k
 	  */
 	 	public Kommentar findKommentarById(int kommentarId){
 			
@@ -89,8 +92,9 @@ public class KommentarMapper {
 				return null;
 		 } 
 	
-	 /*
+	 /**
 	  * Methode, die das Anlegen eines Kommentarobjekts in der Datenbank ermöglicht.
+	  * @param k
 	  */
 	 	public void insertKommentar(Kommentar k){
 	
@@ -111,8 +115,9 @@ public class KommentarMapper {
 			}
 	 	}
 	 	
-	 /*
+	 /**
 	  * Methode, die das Updaten eines Kommentarobjekts in der Datenbank ermöglicht.
+	  * @param k
 	  */
 	 	 public void updateKommentar(Kommentar k){
 			//Aufbau der DBVerbindung
@@ -130,7 +135,7 @@ public class KommentarMapper {
 				    } 
 			 }
 	 	
-	 /*
+	 /**
 	  * Methode, die das Löschen eines Beitragobjekts aus der Datenbank ermöglicht.
 	  */		 	
 	 	public void deleteKommentar(Kommentar k){
@@ -151,8 +156,10 @@ public class KommentarMapper {
 	 * Beginn: Foreign Key-Mapper-Methoden
 	 */	    
 		 
-	 	/*
+	 	/**
 		 * Methode, die einen Vector mit allen Kommentaren eines Users zurückgibt.
+		 * @param userId
+		 * @return result
 		 */
 		 public Vector<Kommentar> findKommentareOfUser(int userId){
 			//Aufbau der DBVerbindung
@@ -184,8 +191,10 @@ public class KommentarMapper {
 	 
 		 }
 		 
-		 /*
+		 /**
 		  * Methode, die einen Vector mit allen Kommentaren eines Beitrags zurückgibt.
+		  * @param beitragId
+		  * @return result
 		 */ 
 		 public Vector<Kommentar> findKommentareOfBeitrag(int beitragId){
 			//Aufbau der DBVerbindung
@@ -218,8 +227,12 @@ public class KommentarMapper {
 		 }
 
 		 
-		 /*
+		 /**
 		  * Methode, die einen Vector mit Kommentaren in einem Zeitraum eines Beitrags zurückgibt.
+		  * @param beitragId
+		  * @param start
+		  * @param end
+		  * @return result
 		 */ 
 		 public Vector<Kommentar> findKommentareOfBeitrag(int beitragId, Date start, Date end){
 			//Aufbau der DBVerbindung

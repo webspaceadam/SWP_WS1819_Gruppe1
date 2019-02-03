@@ -32,6 +32,10 @@ public class GeneratorBox extends FlowPanel {
 		
 	}
 	
+	/**
+	 * Methode um den Such-Button zurückzugeben
+	 * @return searchBtn
+	 */
 	
 	public Button getButton() {
 		return searchBtn;
