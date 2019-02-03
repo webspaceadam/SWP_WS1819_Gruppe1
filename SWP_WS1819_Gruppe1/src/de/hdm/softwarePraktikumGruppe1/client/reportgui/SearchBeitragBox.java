@@ -130,8 +130,8 @@ public class SearchBeitragBox extends FlowPanel {
 	
 	
 	/*
-	 * DialogBox that displays resultUser that match to search string
-	 * User can select on resultUser.
+	 * DialogBox that displays resultBeitrag that match to search string
+	 * 
 	 */
 	private class SearchBeitragDialogBox extends DialogBox implements ClickHandler {
 		

@@ -69,6 +69,10 @@ public class SearchUserBox extends FlowPanel {
 	}
 	
 	
+	/**
+	 * 
+	 * @return searchUserInput (gMail des Users)
+	 */
 	public String getUserString() {
 		return searchUserInput.getText();
 	}
@@ -76,10 +80,10 @@ public class SearchUserBox extends FlowPanel {
 	
 	
 	
-	/*
+	/**
 	 * DialogBox that displays resultUser that match to search string
 	 * User can select on resultUser.
-	 */
+	 **/
 	private class SearchUserDialogBox extends DialogBox implements ClickHandler {
 		
 		private ScrollPanel parentScrolling = new ScrollPanel();
@@ -90,6 +94,14 @@ public class SearchUserBox extends FlowPanel {
 		
 		private Vector<SearchUserResultBox> searchResultBoxes = new Vector<SearchUserResultBox>();
 		
+		
+		/**
+		 * 
+		 * @param searchResults
+		 * searchResults sind die User die zu der Anfrage gefunden werden.
+		 * Alle User werden in in dieser @see DialogBox mittels @see SearchUserResultBox angezeigt.
+		 * Der User kann einen davon auswählen.
+		 */
 		public SearchUserDialogBox(Vector<User> searchResults) {
 			this.ergebnisCounter = searchResults.size();
 			
@@ -140,6 +152,11 @@ public class SearchUserBox extends FlowPanel {
 	}
 	
 	
+	/**
+	 * 
+	 * Callback, welches im Erfolgsfall die erhaltenen User an die SearchUserDialogBox übergibt
+	 *
+	 */
 	public class SearchResultCallback implements AsyncCallback<Vector<User>>{
 
 		@Override
