@@ -71,8 +71,10 @@ public class UserMapper {
 	 * in allen Mapper-Klassen existieren.
 	 */	
 		
-	/*
+	/**
 	 * Methode, die einen User anhand einer Id zurueck gibt
+	 * @param userId
+	 * @return u
 	 */
 
 	public User findUserById(int userId) {
@@ -102,8 +104,9 @@ public class UserMapper {
 		return null ;	
 	}	
 	
-	/*
+	/**
 	 * Methode, die das Anlegen eines User-Objekts ermöglicht
+	 * @param u
 	 */
 	public void insert(User u) {
 		Connection con = DBConnection.connection();
@@ -129,8 +132,9 @@ public class UserMapper {
 	
 	}
 
-	/*
+	/**
 	 * Methode, die das Updaten eines User-Objekts in der Datenbank ermöglicht	
+	 * @param u
 	 */
 	public void update(User u) {
 		Connection con = DBConnection.connection();
@@ -146,8 +150,9 @@ public class UserMapper {
 
 	}
 	
-	/*
+	/**
 	 * Methode, die das Loeschen eines User-Objekts aus der Datenbank ermöglicht
+	 * @param u
 	 */
 	public void deleteUser(User u) {
 		Connection con = DBConnection.connection();
@@ -171,8 +176,10 @@ public class UserMapper {
 	 * Beginn: Spezifische Business Object Methoden
 	 */	
 	
-	/*
+	/**
 	 * Methode, die einen User anhand des Nachnamen zurueck gibt
+	 * @param lName
+	 * @return result
 	 */		
 		public Vector<User> findUserByLastName(String lName) {
 			Connection con = DBConnection.connection();
@@ -199,8 +206,10 @@ public class UserMapper {
 			}
 			return result;
 		}
-	/*
+	/**
 	 * Methode, die einen User anhand des Nicknames zurueck gibt
+	 * @param nickname
+	 * @return result
 	 */
 		 public Vector<User> findUserByNickname(String nickname) {
 				
@@ -232,8 +241,10 @@ public class UserMapper {
 			return result;  
 		   }
 
-	/*
+	/**
 	 * Methode, die einen User anhand des Vornamens zurueck gibt
+	 * @param fName
+	 * @return result
 	 */
 		public Vector<User> findUserByFirstName(String fName) {
 				
@@ -265,8 +276,10 @@ public class UserMapper {
 				return result;  
 		}
 	
-	/*
-	 * Methode, die einen User anhand der Gmail zurueck gibt	
+	/**
+	 * Methode, die einen User anhand der Gmail zurueck gibt
+	 * @param gMail
+	 * @return u	
 	 */
 
 		public User findUserByGmail(String gMail) {
