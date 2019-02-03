@@ -14,7 +14,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
 
-/*
+/**
  *  Die @code SearchUserResultBox zeigt einen User an,
  *  welcher Selektiert werden können.
  *  @see SearchUserBox
@@ -103,7 +103,11 @@ public class SearchUserResultBox extends FlowPanel {
 
 	
 	
-	
+	/**
+	 * @return choseUserBtn
+	 * choseUserBtn kann an anderer Stelle verwendet werden
+	 * um ClickHandler hinzuzufügen
+	 */
 	public Button getChoseUserBtn() {
 		return choseUserBtn;
 	}

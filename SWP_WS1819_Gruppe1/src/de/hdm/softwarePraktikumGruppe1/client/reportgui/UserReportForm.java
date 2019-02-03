@@ -85,19 +85,28 @@ public class UserReportForm extends FlowPanel {
 	}
 
 
-
+    /**
+     * 
+     * @return die eingebene oder ausgewählte Mail Adresse 
+     */
 	public String getUserMail() {
 		return searchUserBox.getUserString();
 	}
 
 
-
+	/**
+	 * @return DatePickerBox
+	 * Zum Auslesen des eingegebenen Datums
+	 */
 	public DatePickerBox getDatePickerBox1() {
 		return datePickerBox1;
 	}
 
 
-
+	/**
+	 * @return DatePickerBox
+	 * Zum Auslesen des eingegebenen Datums
+	 */
 	public DatePickerBox getDatePickerBox2() {
 		return datePickerBox2;
 	}

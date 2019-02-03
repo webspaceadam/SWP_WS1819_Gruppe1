@@ -3,6 +3,7 @@ package de.hdm.softwarePraktikumGruppe1.client.reportgui;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TextBox;
 
 
 
@@ -79,25 +80,36 @@ public class BeitragReportForm extends FlowPanel {
 	}
 	
 	
-	//getGeneratorBox Method necessary in order to add clickHanlder in @see ReportGenerator
+	/**
+	 * necessary in order to add clickHanlder in @see ReportGenerator
+	 * @return GeneratorBox
+	 */
 	public GeneratorBox getGeneratorBox() {
 		return generatorBox;
 	}
 
 
-
+	/**
+	 * @return SearchBeitragBox
+	 * In der @code TextBox searchUserInput der @code SearchBeitragBox ist
+	 * die ausgewählte Beitrags-ID gespeichert
+	 */
 	public SearchBeitragBox getSearchBeitragBox() {
 		return searchBeitragBox;
 	}
 
 
-
+	/**
+	 * @return DatePickerBox
+	 */
 	public DatePickerBox getDatePickerBox1() {
 		return datePickerBox1;
 	}
 
 
-
+	/**
+	 * @return DatePickerBox
+	 */
 	public DatePickerBox getDatePickerBox2() {
 		return datePickerBox2;
 	}

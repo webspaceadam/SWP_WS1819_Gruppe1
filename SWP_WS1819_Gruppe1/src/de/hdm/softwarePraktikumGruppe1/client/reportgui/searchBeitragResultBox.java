@@ -102,7 +102,10 @@ public class searchBeitragResultBox extends FlowPanel {
 
 	
 	
-	
+	/*
+	 * Methode die den choseUserBtn zurückgibt.
+	 * Hiermit kann an anderer Stelle ein entsprechender ClickHandler hinzugefügt werden.
+	 */
 	public Button getChoseUserBtn() {
 		return choseUserBtn;
 	}
