@@ -86,11 +86,11 @@ public class SearchAboBox extends FlowPanel {
 		this.add(aboWrapper);
 	}
 	
-		/*
-		 * Beginn Initialisierung der ClickHandler. 	
-		 * 
-		 */
-	class SetAbonnementClickHandler implements ClickHandler{
+	/**
+	 * Die Nested-Class <code>SetAbonnementClickHandler</code> implementiert das ClickHandler-Interface,
+	 * welches es ermöglicht auf den Klick auf Create Abo zu reagieren.
+	 */
+	class SetAbonnementClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {	
@@ -99,23 +99,23 @@ public class SearchAboBox extends FlowPanel {
 		}	
 	}
 	
-	class DeleteAbonnementClickHandler implements ClickHandler{
-
+	/** 
+	 * Die Nested-Class <code>DeleteAbonnementClickHandler</code> implementiert das ClickHandler-Interface,
+	 * welches es ermöglicht auf den Klick zum Deabonnieren zu reagieren.
+	 */
+	class DeleteAbonnementClickHandler implements ClickHandler {
 		@Override 
 		public void onClick(ClickEvent event) {
 			pinnwandverwaltung.deleteAbonnement(abonnementbetweenShownUserAndLoggedInUser, new DeleteAbonnementCallBack());
 		}
 	}
 	
-	/*
-	 * Ende: Initalisierung der ClickHandler
-	 */
 	
 	/*
 	 * Beginn: Initialisierung der Nested-Callback-Klassen
 	 */
 	
-	/*
+	/**
 	 * Abonnement-Callback. Überprüft ob ein Abonnement-Objekt zwischen aktivem User und dem User des jeweiligen Suchergebnisses existiert. 
 	 * Existiert ein Abonnement, so wird dieses lokal gespeichert.
 	 */
@@ -139,7 +139,7 @@ public class SearchAboBox extends FlowPanel {
 				getAboBtn.setText("Abonnieren");
 //				getAboBtn.addStyleName("abonnementbutton");
 				
-			}else {
+			} else {
 				//Existiert ein Abonnement-Objekt, so wird ein DeleteAbonnementClickHandler erstellt, der das Löschen des Abonnement-Objekts ermöglicht.
 				abonnementbetweenShownUserAndLoggedInUser=result;
 				getAboBtn.addClickHandler(new DeleteAbonnementClickHandler());
@@ -152,11 +152,11 @@ public class SearchAboBox extends FlowPanel {
 			
 	}
 	
-	/*
+	/**
 	 * SetAbonnement-Callback. Erzeugt ein Abonnement-Objekt zwischen aktivem User und dem User des jeweiligen Suchergebnisses. 
 	 * 
 	 */
-	class SetAbonnementCallback implements AsyncCallback<Abonnement>{
+	class SetAbonnementCallback implements AsyncCallback<Abonnement> {
 
 		@Override
 		public void onFailure(Throwable caught) {
@@ -175,7 +175,7 @@ public class SearchAboBox extends FlowPanel {
 		}
 	}
 	
-	/*
+	/**
 	 * SetAbonnement-Callback. Löscht das Abonnement-Objekt zwischen aktivem User und dem User des jeweiligen Suchergebnisses. 
 	 * 
 	 */

@@ -201,30 +201,57 @@ public class ProfileBox extends FlowPanel {
 			}
 		}
 		
+		/** 
+		 * Setter für Nickname
+		 */
 		public void setNickname(String newNickname) {
 			this.nickName.setText(newNickname);
 		}
 		
+		/**
+		 * Setter für Vorname
+		 * @param newVorname
+		 */
 		public void setVorname(String newVorname) {
 			this.vorName.setText(newVorname);
 		}
 		
+		/**
+		 * Setter für Nachname
+		 * @param newNachname
+		 */
 		public void setNachname(String newNachname) {
 			this.nachName.setText(newNachname);
 		}
 		
+		/**
+		 * Getter für Nickname
+		 * @return
+		 */
 		public String getNickname() {
 			return this.nickName.getText();
 		}
 		
+		/**
+		 * Getter für Vorname
+		 * @return
+		 */
 		public String getVorname() {
 			return this.vorName.getText();
 		}
 		
+		/**
+		 * Getter für Nachname
+		 * @return
+		 */
 		public String getNachname() {
 			return this.nachName.getText();
 		}
 		
+		/**
+		 * Die Nested-Class <code>GetUserByIdCallback</code> implementiert den AsyncCallback und gibt 
+		 * bei einer erfolgreichen Ausführung wird ein User zurückgegeben.
+		 */
 		public class GetUserByIdCallback implements AsyncCallback<User> {
 
 			@Override
@@ -233,6 +260,9 @@ public class ProfileBox extends FlowPanel {
 				
 			}
 
+			/**
+			 * Hier wird der User gesetzt
+			 */
 			@Override
 			public void onSuccess(User result) {
 				user = result;
@@ -244,6 +274,11 @@ public class ProfileBox extends FlowPanel {
 			}
 		}
 		
+		/**
+		 * Die Nested-Class <code>GetAllBeitrageOfUserCallback</code> implementiert einen AsyncCallback, 
+		 * welcher bei erfolgreicher Vollführung einen Vektor an Beiträgen zurückgibt. 
+		 * Sofern dies vollführt wird, wird die Anzahl der Beiträge an die ProfilBox gesetzt.
+		 */
 		private class GetAllBeitraegeOfUserCallback implements AsyncCallback<Vector<Beitrag>> {
 
 			@Override
@@ -258,6 +293,11 @@ public class ProfileBox extends FlowPanel {
 			}
 		}
 		
+		/**
+		 * Die Nested-Class <code>ShowAllAboCallback</code> implementiert einen AsyncCallback,
+		 * welcher bei erfolgreicher Durchführung einen Vektor an Abonnements zurückgibt. 
+		 * Die Anzahl wird danach an die ProfilBox geheftet.
+		 */
 		private class ShowAllAboCallback implements AsyncCallback<Vector<Abonnement>> {
 			@Override
 			public void onFailure(Throwable caught) {
@@ -272,7 +312,10 @@ public class ProfileBox extends FlowPanel {
 			
 		}
 		
-		
+		/**
+		 * Hier wird die logOutUrl gesetzt.
+		 * @param logOutURL
+		 */
 		public void setLogOutURL(String logOutURL) {
 			this.logOutURL = logOutURL;
 		}

@@ -15,7 +15,9 @@ public class SearchBox extends FlowPanel {
 	private TextBox searchUserInput = new TextBox();
 	private Button searchBtn = new Button("Suche!");
 	
-	
+	/**
+	 * Der Konstruktor setzt die SearchBox zusammen.
+	 */
 	public SearchBox() {
 		this.addStyleName("grid_box box radiusless");
 		inputWrapper.addStyleName("grid_box_element");
@@ -31,11 +33,17 @@ public class SearchBox extends FlowPanel {
 		this.add(searchWrapper);
 	}
 	
+	/**
+	 * die <code>onLoad()</code>-Methode ist die "initialisierungs"-Methode der Klasse
+	 */
 	public void onLoad() {
 		
 	}
 	
-	
+	/**
+	 * Die Getter-Methode gibt den UserInput zurück
+	 * @return
+	 */
 	public String getUserString() {
 		return searchUserInput.getText();
 	}

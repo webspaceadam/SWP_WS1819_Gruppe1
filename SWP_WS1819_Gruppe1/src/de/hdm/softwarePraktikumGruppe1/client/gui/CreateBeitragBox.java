@@ -9,19 +9,30 @@ import com.google.gwt.user.client.ui.*;
  */
 
 public class CreateBeitragBox extends FlowPanel {
+	/*
+	 * FlowPanels für die Box
+	 */
 	private FlowPanel parentWrapper = new FlowPanel();
 	private FlowPanel contentWrapper = new FlowPanel();
 	private FlowPanel btnWrapper = new FlowPanel();
 	private FlowPanel btnWrapper2 = new FlowPanel();
 	private FlowPanel btnWrapper3 = new FlowPanel();
 	
+	/**
+	 * Widgets für die Interaktion
+	 */
 	private TextArea textArea = new TextArea();
 	private Button submitBtn = new Button("Beitrag erstellen");
 	
-
+	/**
+	 * Leerer Konstruktor
+	 */
 	public CreateBeitragBox() {
 	}
 	
+	/**
+	 * Innerhalb der <code>onLoad()</code>-Methode werden alle Stylings und die Zusammensetzung vollführt.
+	 */
 	public void onLoad() {
 		this.addStyleName("post radiusless content_margin");
 		parentWrapper.addStyleName("post_content");

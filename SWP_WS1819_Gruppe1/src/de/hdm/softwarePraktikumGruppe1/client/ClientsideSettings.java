@@ -15,15 +15,12 @@ import de.hdm.softwarePraktikumGruppe1.shared.ReportGeneratorServiceAsync;
  * Klasse mit Eigenschaften und Diensten, die für alle Client-seitigen Klassen
  * relevant sind.
  * 
- * @author AdamGniady
+ * @author AdamGniady, Peter Thies
  * @version 1.0 
+ * @see BankProjekt 2.0
  */
 public class ClientsideSettings extends CommonSettings {
 
-	
-	
-	
-	
   /**
    * DateTimeFormat for global use (client-side) 
    */

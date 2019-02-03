@@ -17,11 +17,10 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.Beitrag;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
 /**
- * The <code>PinnwandBox</code> is a class to display the 
- * Pinnwand of a User. It contains every <code>Beitrag</code> of the User. 
- * 
+ * Die <code>PinnwandBox</code> ist eine Klasse, welche die Pinnwand eines Users anzeigt.
+ * Diese enthält alle Beiträge eines Users.
+
  * @author AdamGniady
- *
  */
 public class PinnwandBox extends FlowPanel {
 	// Pinnwandverwaltung
@@ -45,10 +44,19 @@ public class PinnwandBox extends FlowPanel {
 	private User user;
 	private int userId;
 	
+	/**
+	 * Der Konstruktor setzt die UserIds.
+	 * @param userId
+	 */
 	public PinnwandBox(int userId) {
 		this.userId = userId;
 	}
 	
+	/** 
+	 * Der Konstruktor setzt PinnwandBeitragBoxen
+	 * 
+	 * @param pinnwandBeitragBoxes
+	 */
 	public PinnwandBox(Vector<BeitragBox> pinnwandBeitragBoxes) {
 		this.allBeitragBoxesOfPinnwand = pinnwandBeitragBoxes;
 		
@@ -57,6 +65,10 @@ public class PinnwandBox extends FlowPanel {
 		}
 	}
 	
+	/**
+	 * Die <code>onLoad()</code> ist eine Methode, welche die PinnwandBox zusammensetzt
+	 * und diese styled.
+	 */
 	public void onLoad() {
 		int currentUserId = Integer.parseInt(Cookies.getCookie("userId"));
 		//setCurrentUser();
@@ -100,6 +112,13 @@ public class PinnwandBox extends FlowPanel {
 		}
 	}
 	
+	/**
+	 * Die Methode <code>createBeitrag()</code> ermöglicht das Ausführen einer
+	 * Erstellungskaskade für Kommentare.
+	 * 
+	 * @param content
+	 * @return
+	 */
 	public BeitragBox createBeitrag(String content) {
 		User currentUser = new User();
 		currentUser.setUserId(Integer.parseInt(Cookies.getCookie("userId")));
@@ -119,26 +138,40 @@ public class PinnwandBox extends FlowPanel {
 		return newBeitragBox;
 	}
 	
+	/**
+	 * Eine ForceReload Methode die das Fenster neu lädt. 
+	 */
 	public native void forceReload() /*-{
     	$wnd.location.reload(true);
   	}-*/;
 	
+	/**
+	 * Die Nested-Class <code>addBeitragToPinnwand</code> implementiert das ClickHandler-Interface
+	 * welches es ermöglicht auf den Klick zu reagieren. 
+	 */
 	private class addBeitragToPinnwand implements ClickHandler {
-
 		@Override
 		public void onClick(ClickEvent event) {
 			String beitragContent = textArea.getValue();
 			createBeitrag(beitragContent);
 			textArea.setText("");
 		}
-		
 	}
 	
+	/**
+	 * Die Methode ermöglicht das Löschen eines Beitrags
+	 * 
+	 * @param deletableBB
+	 */
 	public void deleteBeitrag(BeitragBox deletableBB) {
 		deletableBB.removeFromParent();
 		allBeitragBoxesOfPinnwand.removeElement(deletableBB);
 	}
 	
+	/**
+	 * Die Nested-Class <code>GetUserByIdCallback</code> implementiert den AsyncCallback und gibt 
+	 * bei einer erfolgreichen Ausführung wird ein User zurückgegeben.
+	 */
 	public class GetUserByIdCallback implements AsyncCallback<User> {
 
 		@Override
@@ -155,10 +188,17 @@ public class PinnwandBox extends FlowPanel {
 		
 	}
 	
+	/**
+	 * Die Methode getOldBeitraege() startet eine Kaskade, welche Beiträge des Users holen.
+	 */
 	private void getOldBeitraege() {
 		pinnwandVerwaltung.getAllBeitraegeOfUser(this.user, new GetAllBeitraegeOfUser());
 	}
 	
+	/**
+	 * Die Nested-Class <code>GetAllBeitraegeOfUser</code> welche einen AsyncCallback implementiert, 
+	 * welche bei erfolgreicher Durchführung einen Vektor von Beiträgen zurückgibt.
+	 */
 	private class GetAllBeitraegeOfUser implements AsyncCallback<Vector<Beitrag>> {
 
 		@Override

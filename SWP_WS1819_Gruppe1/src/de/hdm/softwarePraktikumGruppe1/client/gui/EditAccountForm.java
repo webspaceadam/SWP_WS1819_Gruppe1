@@ -16,6 +16,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 /**
  * Die Klasse <code>EditAccountForm</code> wird für die Änderung der Account-Daten
  * eines eingeloggten Users genutzt. 
+ * 
  * @author AdamGniady
  */
 public class EditAccountForm extends FlowPanel {
@@ -42,6 +43,9 @@ public class EditAccountForm extends FlowPanel {
 	private ProfileBox parentPB;
 	private EditProfileBoxDialogBox parentDialogBox;
 	
+	/**
+	 * Leerer Konstruktor
+	 */
 	public EditAccountForm() {
 	}
 	
@@ -57,6 +61,10 @@ public class EditAccountForm extends FlowPanel {
 		this.parentDialogBox = parentDB;	
 	}
 	
+	/**
+	 * Die <code>onLoad()</code>-Methode setzt die Stylings und die Widgets zusammen.
+	 * Des Weiteren wird hier die Funktionalität an die einzelnen Widgets gehängt.
+	 */
 	public void onLoad() {
 		// Nickname
 		nickWrapper.addStyleName("content_margin");
@@ -104,17 +112,23 @@ public class EditAccountForm extends FlowPanel {
 		this.add(deleteButton);
 	}
 	
+	/**
+	 * Die Nested-Class <code>DeleteUserClickHandler</code> implementiert das ClickHandler-Interface,
+	 * welches eine Interaktion ermöglicht. Hier wird das Erscheinen der DeleteUserDialogBox ermöglicht.
+	 */
 	private class DeleteUserClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
 			DeleteUserDialogBox deleteUserDB = new DeleteUserDialogBox();
-			
 			deleteUserDB.center();
 		}
-		
 	}
 	
+	/**
+	 * Die Nested-Class <code>DeleteUserDialogBox</code> erstellt eine DialogBox die den User die Möglichkeit gibt,
+	 * das Löschen des Users nocheinmal zu überdenken.
+	 */
 	private class DeleteUserDialogBox extends DialogBox {
 		private VerticalPanel vPanel = new VerticalPanel();
 		private HorizontalPanel btnPanel = new HorizontalPanel();
@@ -123,6 +137,9 @@ public class EditAccountForm extends FlowPanel {
 		private Button jaBtn = new Button("Ja");
 		private Button neinBtn = new Button("Nein");
 		
+		/**
+		 * Der Konstruktor setzt die Stylings und die Gesamtzusammensetzung der DialogBox
+		 */
 		public DeleteUserDialogBox() {
 			abfrage.addStyleName("label has-text-primary content_margin");
 			jaBtn.addStyleName("button is-danger");
@@ -141,6 +158,11 @@ public class EditAccountForm extends FlowPanel {
 		}
 	}
 	
+	
+	/**
+	 * Die Nested-Class <code>YesDeleteClickHandler</code> implementiert das ClickHandler-Interface
+	 * und startet so die Lösch-Kaskade des Users.
+	 */
 	private class YesDeleteClickHandler implements ClickHandler {
 		private DeleteUserDialogBox parentDUDB;
 		
@@ -158,6 +180,10 @@ public class EditAccountForm extends FlowPanel {
 		}
 	}
 	
+	/**
+	 * Die Nested-Class <code>DeleteUserCallbac</code> implementiert einen AsyncCallback und ermöglicht
+	 * das Löschen des Users in der DB.
+	 */
 	private class DeleteUserCallback implements AsyncCallback<Void> {
 
 		@Override
@@ -174,6 +200,10 @@ public class EditAccountForm extends FlowPanel {
 		
 	}
 	
+	/**
+	 * Die Nested-Class <code>NoClickHandler</code> implementiert das ClickHandler-Interface, 
+	 * welches das Abbrechen des Speicherns des Users ermöglicht.
+	 */
 	private class NoClickHandler implements ClickHandler {
 		private DeleteUserDialogBox parentDUDB;
 		
@@ -188,6 +218,10 @@ public class EditAccountForm extends FlowPanel {
 		
 	}
 	
+	/**
+	 * Die Nested-Class <code>OpenSafeDialog</code> implementiert das ClickHandler-Interface,
+	 * welches es ermöglicht die SafeWithEditDialogBox aufzurufen und zu öffnen.
+	 */
 	private class OpenSafeDialog implements ClickHandler {
 
 		@Override
@@ -198,6 +232,10 @@ public class EditAccountForm extends FlowPanel {
 		
 	}
 	
+	/**
+	 * Die Nested-Class <code>SafeWithEditDialogBox</code> erstellt durch das Erben der DialogBox die Möglichkeit
+	 * eine DialogBox zu erstellen, welche dem User Interaktion ermöglichen.
+	 */
 	private class SafeWithTheEditDialogBox extends DialogBox {
 		private VerticalPanel vPanel = new VerticalPanel();
 		private HorizontalPanel hPanel = new HorizontalPanel();
@@ -224,6 +262,10 @@ public class EditAccountForm extends FlowPanel {
 		
 	}
 	
+	/**
+	 * Die Nested-Class <code>NoNotSafeClickHandler</code> implementiert das ClickHandler-Interface,
+	 * welches es ermöglicht, den Abbruch des Dialoges zu vollführen.
+	 */
 	private class NoNotSafeClickHandler implements ClickHandler {
 		SafeWithTheEditDialogBox parentSWTEDB;
 		
@@ -314,6 +356,10 @@ public class EditAccountForm extends FlowPanel {
 		
 	}
 	
+	/**
+	 * Die Nested-Class <code>EditUserCallback</code> implementiert den AsyncCallback,
+	 * welcher es ermöglicht den User zu editieren.
+	 */
 	private class EditUserCallback implements AsyncCallback<Void> {
 
 		@Override
@@ -328,7 +374,10 @@ public class EditAccountForm extends FlowPanel {
 		
 	}
 	
-	
+	/**
+	 * Die LogOut Url wird durch diese Methode gesetzt.
+	 * @param logOutURL
+	 */
 	public void setLogoutUrl(String logOutURL) {
 		this.logOutURL = logOutURL;
 	}

@@ -5,7 +5,8 @@ package de.hdm.softwarePraktikumGruppe1.shared;
  * werden. Superklasse von <code>ClientsideSettings</code> und
  * <code>ServersideSettings</code>.
  * 
- * @author AdamGniady
+ * @author Peter Thies
+ * @see BankProjekt 2.0
  */
 public class CommonSettings {
 

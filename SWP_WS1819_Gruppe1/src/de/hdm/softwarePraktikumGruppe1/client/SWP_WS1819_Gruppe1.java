@@ -50,7 +50,9 @@ public class SWP_WS1819_Gruppe1 implements EntryPoint {
 	private TextBox firstInput = new TextBox();
 
 	
-	
+	/**
+	 * Die <code>onModuleLoad()</code> implementiert die "Main"-Methode des Systems.
+	 */
 	public void onModuleLoad() {
 		// Check login status using login service.
 	    LoginServiceAsync loginService = GWT.create(LoginService.class);
@@ -68,7 +70,6 @@ public class SWP_WS1819_Gruppe1 implements EntryPoint {
 	        }
 	      }
 	    });
-	    
 	}
 	
 	
@@ -86,6 +87,9 @@ public class SWP_WS1819_Gruppe1 implements EntryPoint {
 		//pinnwandVerwaltung.getUserById(1, new GetUserCallback());
 	}
 	
+	/**
+	 * Die Methode <code>loadPinnwand()</code> setzt die Pinnwand korret zusammen.
+	 */
 	public void loadPinnwand() {
 		// RootPanels
 		RootPanel rootPanelHeader = RootPanel.get("header");
@@ -178,6 +182,10 @@ public class SWP_WS1819_Gruppe1 implements EntryPoint {
 		}
 	}
 	
+	/**
+	 * Die Nested-Class <code>CreateUserClickHandler</code> implementiert das ClickHandler-Interface
+	 * welches es ermöglicht auf den Wunsch des Users zu reagieren, dass er einen User anlegen möchte.
+	 */
 	private class CreateUserClickHandler implements ClickHandler {
 		RegistrationFormDialogBox parentRFDB;
 		
@@ -193,6 +201,10 @@ public class SWP_WS1819_Gruppe1 implements EntryPoint {
 		
 	}
 	
+	/**
+	 * Die Nested-Class <code>CreateUserCallback</code> implementiert den AsyncCallback, 
+	 * welcher bei erfolgreicher Vollführung einen User zurückgibt.
+	 */
 	private class CreateUserCallback implements AsyncCallback<User> {
 		RegistrationFormDialogBox parentRFDB;
 		
@@ -206,6 +218,9 @@ public class SWP_WS1819_Gruppe1 implements EntryPoint {
 		public void onFailure(Throwable caught) {
 		}
 
+		/**
+		 * Cookie Setzung für das gesamte System
+		 */
 		@Override
 		public void onSuccess(User result) {
 			Window.alert("Ihr Nutzer wurde angelegt");
@@ -223,12 +238,14 @@ public class SWP_WS1819_Gruppe1 implements EntryPoint {
 		
 	}
 	
+	/**
+	 * Die Nested Class <code>CreatePinnwandCallback</code> implementiert den AsyncCallback, 
+	 * welcher bei einem erfolgreichen durchführen eine Pinnwand zurückgibt.
+	 */
 	private class CreatePinnwandCallback implements AsyncCallback<Pinnwand> {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			// TODO Auto-generated method stub
-			
 		}
 
 		@Override
@@ -239,6 +256,10 @@ public class SWP_WS1819_Gruppe1 implements EntryPoint {
 		
 	}
 	
+	/**
+	 * Die Nested-Class <code>DontCreateUserClickHandler</code> implementiert das ClickHandler-Interface
+	 * welches es ermöglicht das anlegen eines Users abbricht.
+	 */
 	private class DontCreateUserClickHandler implements ClickHandler {
 		RegistrationFormDialogBox parentRFDB;
 		
@@ -253,6 +274,10 @@ public class SWP_WS1819_Gruppe1 implements EntryPoint {
 		
 	}
 		
+	/**
+	 * Die Nested-Class implementiert einen AsyncCallback, welcher bei einem erfolgreichen
+	 * durchführen einen User zurückgibt.
+	 */
 	public class GetUserCallback implements AsyncCallback<User> {
 
 		@Override
@@ -279,17 +304,19 @@ public class SWP_WS1819_Gruppe1 implements EntryPoint {
 		
 	}
 	
+	/**
+	 * Die Nested-Class <code>GetPinnwandCallback</code> implementiert einen AsyncCallback,
+	 * welcher bei erfolgreicher durchführung eine Pinnwand zurückgibt.
+	 */
 	public class GetPinnwandCallback implements AsyncCallback<Pinnwand> {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			// TODO Auto-generated method stub
 			Window.alert(caught.toString());
 		}
 
 		@Override
 		public void onSuccess(Pinnwand result) {
-			// TODO Auto-generated method stub
 			Window.alert("funnzt");
 		}
 		

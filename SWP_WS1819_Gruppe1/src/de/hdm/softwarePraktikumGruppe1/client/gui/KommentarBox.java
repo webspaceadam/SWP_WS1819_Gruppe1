@@ -72,6 +72,10 @@ public class KommentarBox extends FlowPanel {
 		//pinnwandVerwaltung.createKommentar(inhalt, owner.getUserId(), parentBB.getBeitragId(), timestamp, new CreateKommentarCallback());
 	}
 	
+	/**
+	 * Die Nested-Class <code>GetCurrentUserCallback</code> implementiert einen AsyncCallback und liefert
+	 * bei einem erfolgreichen Aufruf den aktuellen User.
+	 */
 	private class GetCurrentUserCallback implements AsyncCallback<User> {
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 		@Override
@@ -87,6 +91,10 @@ public class KommentarBox extends FlowPanel {
 		
 	}
 	
+	/**
+	 * Die Nested-Class <code>CreateKommentarCallback</code> implementiert einen AsyncCallback, der
+	 * bei erfolgreichem Aufruf einen Kommentar zurückgibt. 
+	 */
 	private class CreateKommentarCallback implements AsyncCallback<Kommentar> {
 
 		@Override
@@ -107,6 +115,9 @@ public class KommentarBox extends FlowPanel {
 		
 	}
 	
+	/**
+	 * Die <code>onLoad()</code>-Methode setzt die KommentarBox zusammen und vergibt wichtige Stylings.
+	 */
 	public void onLoad() {
 		currentUserId = Integer.parseInt(Cookies.getCookie("userId"));
 		pinnwandVerwaltung.getUserById(ownerId, new GetUserByIdCallback());
@@ -143,6 +154,10 @@ public class KommentarBox extends FlowPanel {
 		this.add(parentVerticalPanel);		
 	}
 	
+	/**
+	 * Die Nested-Class <code>EditKommentarBoxClickHandler</code> implementiert das ClickHandler-Interface. 
+	 * Bei der Auslösung eines Klicks wird die EditierungsDialogBox geöffnet. 
+	 */
 	private class EditKommentarBoxClickHandler implements ClickHandler {
 		KommentarBox parentKB;
 		
@@ -159,6 +174,10 @@ public class KommentarBox extends FlowPanel {
 		
 	}
 	
+	/**
+	 * Die Nested-Class <code>EditKommentarDialogBox</code> implementiert das ClickHandler-Interface
+	 * und erbt von der DialogBox. Diese Klasse ermöglicht das Editieren und Lösches des Kommentars.
+	 */
 	private class EditKommentarDialogBox extends DialogBox implements ClickHandler {
 		KommentarBox parentKB;
 
@@ -198,11 +217,18 @@ public class KommentarBox extends FlowPanel {
 			setWidget(dock);
 		}
 		
+		/**
+		 * Bei Ausführung dieser Methode wird die DialogBox geschlossen.
+		 */
 		@Override
 		public void onClick(ClickEvent event) {
 			hide();
 		}
 		
+		/**
+		 * Die Nested-Class <code>SafeEditedKommentarContentClickHandler</code> implementiert das ClickHandler-Interface
+		 * welches beim Auslösen den neu editierten Content zusammensetzen.
+		 */
 		private class SafeEditedKommentarContentClickHandler implements ClickHandler {
 			KommentarBox parentKB;
 			TextArea newContent;
@@ -226,6 +252,10 @@ public class KommentarBox extends FlowPanel {
 		
 	}
 	
+	/**
+	 * Die Nested-Class <code>EditKommentarCallback</code> implementiert den AsyncCallback welcher bei einem
+	 * erfolgreichen Ausführen "nichts" zurück gibt.
+	 */
 	private class EditKommentarCallback implements AsyncCallback<Void> {
 
 		@Override
@@ -267,6 +297,10 @@ public class KommentarBox extends FlowPanel {
 		
 	}
 	
+	/**
+	 * Die Nested-Class <code>DeleteKommentarCallback</code> implementiert den AsyncCallback,
+	 * welcher bei erfolgreichem Ausführen "nichts" zurückgibt. 
+	 */
 	private class DeleteKommentarCallback implements AsyncCallback<Void> {
 
 		@Override
@@ -281,6 +315,10 @@ public class KommentarBox extends FlowPanel {
 		
 	}
 
+	/**
+	 * Getter und Setter der Klasse
+	 * @return
+	 */
 	public Label getAccountName() {
 		return accountName;
 	}
@@ -340,6 +378,10 @@ public class KommentarBox extends FlowPanel {
 		creationDate.setText("Erstellzeitpunkt: " + ClientsideSettings.dateFormat.format(cD).toString());
 	}
 	
+	/**
+	 * Die Nested-Class <code>GetUserByIdCallback</code> implementiert den AsyncCallback und gibt 
+	 * bei einer erfolgreichen Ausführung wird ein User zurückgegeben.
+	 */
 	private class GetUserByIdCallback implements AsyncCallback<User> {
 
 		@Override
@@ -356,10 +398,6 @@ public class KommentarBox extends FlowPanel {
 			if(ownerId == currentUserId) {
 				userInfoWrapper.add(editPenBtn);
 			}
-		}
-		
+		}	
 	}
-	
-	
-	
 }
