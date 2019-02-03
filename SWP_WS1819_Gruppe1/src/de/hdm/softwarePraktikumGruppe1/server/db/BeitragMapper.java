@@ -58,8 +58,10 @@ public class BeitragMapper {
 	 * in allen Mapper-Klassen existieren.
 	 */
 	
-	/*
+	/**
 	 * Methode, die einen Beitrag ahnand einer Id zurueckgibt
+	 * @param beitragId
+	 * @return b
 	 */
 	
 		public Beitrag findBeitragById(int beitragId) {
@@ -92,8 +94,9 @@ public class BeitragMapper {
 			}
 	
 	
-	/*
+	/**
 	 * Methode, die das Anlegen eines Beitragsobjekts in der Datenbank ermöglicht.
+	 * @param b
 	 */
 	
 		public void insertBeitrag(Beitrag b) {
@@ -118,8 +121,10 @@ public class BeitragMapper {
 				e.printStackTrace();
 			}
 		}
-	/*
+	/**
 	 * Methode, die das Update eines Beitragobjekts in der Datenbank ermöglicht.
+	 * @param b
+	 * @return b
 	 */
 		public Beitrag updateBeitrag(Beitrag b) {
 			
@@ -137,8 +142,9 @@ public class BeitragMapper {
 		}
 	
 
-	/*
+	/**
 	 * Methode, die das Löschen eines Beitragobjekts aus der Datenbank ermöglicht.
+	 * @param b
 	 */		
 		public void deleteBeitrag(Beitrag b) {
 		
@@ -158,8 +164,10 @@ public class BeitragMapper {
 	 * Beginn: Foreign Key-Mapper-Methoden
 	 */
 	
-	/*
-	 * Methode, die alle Beitraege einer Pinnwand anhand der Pinnwand FKs aus der Datenbank ausliest und zurueck gibt	
+	/**
+	 * Methode, die alle Beitraege einer Pinnwand anhand der Pinnwand FKs aus der Datenbank ausliest und zurueck gibt
+	 * @param pinnwandFk
+	 * @return result
 	 */
 	
 		public Vector <Beitrag> findBeitraegeOfPinnwand(int pinnwandFK){
@@ -188,9 +196,10 @@ public class BeitragMapper {
 			return result;
 		}
 
-	/*
-	 * Methode, die alle Beitraege eines Users anhand des User-FKs aus der Datenbank ausliest und zurueck gibt	
-	 */		
+	/**
+	 *Methode, die alle Beitraege eines Users anhand des User-FKs aus der Datenbank ausliest und zurueck gibt	
+	 *@return result
+	 */	
 		public Vector <Beitrag> findBeitraegeOfUser(int userFK){
 			Connection con = DBConnection.connection();
 			Vector<Beitrag> result = new Vector<Beitrag>();
@@ -219,9 +228,12 @@ public class BeitragMapper {
 		
 
 		
-		/*
+		/**
 		 * Methode, die alle Beitraege eines Users innerhalb eines Datums
-		 * anhand des User-FKs aus der Datenbank ausliest und zurueck gibt	
+		 * anhand des User-FKs aus der Datenbank ausliest und zurueck gibt
+		 * @param userFK
+		 * @param start
+		 * @param end	
 		 */		
 			public Vector <Beitrag> findBeitraegeOfUserBetweenDates(int userFK, Date start, Date end){
 				Connection con = DBConnection.connection();
