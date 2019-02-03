@@ -16,7 +16,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.report.UserReport;
 
 
 /**
- * @author GianlucaBernert
+ * 
  * @author JakobBenkoe
  * Interface das von ReportGeneratorServiceProxy Implementiert wird
  */

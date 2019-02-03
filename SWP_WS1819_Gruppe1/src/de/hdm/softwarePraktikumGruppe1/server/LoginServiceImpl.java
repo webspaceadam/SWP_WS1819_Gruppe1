@@ -13,7 +13,6 @@ import de.hdm.softwarePraktikumGruppe1.shared.LoginInfo;
 
 
 /**
- * @author GianlucaBernert
  * @author Yesin Soufi
  * @author Jakob Benkoe
  * Klasse die LoginService Implementiert und RemoteServiceServlet als Superklasse besitzt

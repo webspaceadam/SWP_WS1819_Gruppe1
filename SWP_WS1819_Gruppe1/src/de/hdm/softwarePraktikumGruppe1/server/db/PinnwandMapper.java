@@ -6,7 +6,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.Pinnwand;
 
 
 /**
- * @author GianlucaBernert 
+ *
  * @author Ulus Serhat
  * @author Yesin Soufi
  * @author SebastianHermann

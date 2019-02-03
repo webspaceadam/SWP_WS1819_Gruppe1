@@ -32,6 +32,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
  * um einen Beitrag im System korrekt anzuzeigen
  * 
  * @author AdamGniady
+ * @author GianlucaBernert
  * @version 1.0
  */
 
@@ -198,7 +199,7 @@ public class BeitragBox extends FlowPanel {
 //		likeHeart.setWidth("1rem");
 //		likeHeart.addStyleName("small-padding-right");
 //		likeCountText.addStyleName("is-size-6 is-italic");
-//		likeCountText.setText(" auf diesem Beitrag: " + likeCount);
+//		likeCountText.setText(" " + likeCount);
 		
 		
 		// Adding Elements to the Wrapper
@@ -265,7 +266,7 @@ public class BeitragBox extends FlowPanel {
 				likeHeart.setWidth("1rem");
 				likeHeart.addStyleName("small-padding-right");
 				likeCountText.addStyleName("is-size-6 is-italic");
-				likeCountText.setText(" auf diesem Beitrag: " + likeCount);
+				likeCountText.setText(" " + likeCount);
 				likeInfoWrapper.add(likeHeart);
 				likeInfoWrapper.add(likeCountText);
 			} else {
@@ -304,7 +305,7 @@ public class BeitragBox extends FlowPanel {
 		public void onSuccess(Integer result) {
 			likeCount = result;
 			GWT.log("LikeCount is: " + likeCount);
-			likeCountText.setText(" auf diesem Beitrag: " + result);
+			likeCountText.setText(" " + result);
 			currentUser.setUserId(Integer.parseInt(Cookies.getCookie("userId")));
 			currentBeitrag.setBeitragId(beitragId);
 			if(result == 0) {
@@ -313,7 +314,7 @@ public class BeitragBox extends FlowPanel {
 				unfilledHeart.setWidth("1rem");
 				unfilledHeart.addStyleName("small-padding-right");
 				likeCountText.addStyleName("is-size-6 is-italic");
-				likeCountText.setText(" auf diesem Beitrag: " + likeCount);
+				likeCountText.setText(" " + likeCount);
 				likeInfoWrapper.add(unfilledHeart);
 				likeInfoWrapper.add(likeCountText);
 			}else {
@@ -322,7 +323,7 @@ public class BeitragBox extends FlowPanel {
 				unfilledHeart.setWidth("1rem");
 				unfilledHeart.addStyleName("small-padding-right");
 				likeCountText.addStyleName("is-size-6 is-italic");
-				likeCountText.setText(" auf diesem Beitrag: " + likeCount);
+				likeCountText.setText(" " + likeCount);
 				likeInfoWrapper.add(unfilledHeart);
 				likeInfoWrapper.add(likeCountText);
 				pinnwandVerwaltung.likeCheck(currentUser, currentBeitrag, new LikeCheckCallback());
@@ -347,7 +348,7 @@ public class BeitragBox extends FlowPanel {
 		public void onSuccess(Integer result) {
 			likeCount = result;
 			GWT.log("LikeCount is: " + likeCount);
-			likeCountText.setText(" auf diesem Beitrag: " + result);
+			likeCountText.setText(" " + result);
 			currentUser.setUserId(Integer.parseInt(Cookies.getCookie("userId")));
 			currentBeitrag.setBeitragId(beitragId);
 			if(result == 0) {
@@ -356,7 +357,7 @@ public class BeitragBox extends FlowPanel {
 				unfilledHeart.setWidth("1rem");
 				unfilledHeart.addStyleName("small-padding-right");
 				likeCountText.addStyleName("is-size-6 is-italic");
-				likeCountText.setText(" auf diesem Beitrag: " + likeCount);
+				likeCountText.setText(" " + likeCount);
 				likeInfoWrapper.add(unfilledHeart);
 				likeInfoWrapper.add(likeCountText);
 			}else {
@@ -365,7 +366,7 @@ public class BeitragBox extends FlowPanel {
 				unfilledHeart.setWidth("1rem");
 				unfilledHeart.addStyleName("small-padding-right");
 				likeCountText.addStyleName("is-size-6 is-italic");
-				likeCountText.setText(" auf diesem Beitrag: " + likeCount);
+				likeCountText.setText(" " + likeCount);
 				likeInfoWrapper.add(unfilledHeart);
 				likeInfoWrapper.add(likeCountText);
 			}
@@ -450,7 +451,6 @@ public class BeitragBox extends FlowPanel {
 
 			@Override
 			public void onSuccess(Like result) {
-				Window.alert("Beitrag wurde geliked");	
 				pinnwandVerwaltung.countLikes(currentBeitrag, new CountLikeCallback());
 				}
 				
@@ -469,7 +469,6 @@ public class BeitragBox extends FlowPanel {
 			@Override
 			public void onSuccess(Boolean result) {
 				if(result == true) {
-					Window.alert("Like wurde entfernt");
 					Beitrag currentBeitrag = new Beitrag();
 					currentBeitrag.setBeitragId(beitragId);
 					pinnwandVerwaltung.countLikes(currentBeitrag, new CountLikeCallback());

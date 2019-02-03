@@ -19,7 +19,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
 /**
  * @author GianlucaBernert
- * @autor SebastianHermann
+ * @author SebastianHermann
  * @author Yesin Soufi
  *
  */

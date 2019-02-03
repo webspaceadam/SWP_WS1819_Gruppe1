@@ -10,7 +10,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 /**
  * @author GianlucaBernert
  * @author Yesin Soufi
- * @autor SebastianHermann
+ * @author SebastianHermann
  * Klasse eines User Objekts das BusinessObject als Superklasse besitzt
  */
 public class User implements IsSerializable{

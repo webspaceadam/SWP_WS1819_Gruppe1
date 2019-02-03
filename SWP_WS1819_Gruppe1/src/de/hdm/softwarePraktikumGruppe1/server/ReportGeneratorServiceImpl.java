@@ -39,8 +39,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.report.UserReport;
  * 
  * Serverseite Implementierung des <code>ReportGeneratorService</code>.
  * Hier werden die Reports mit Daten befüllt.
- * 
- * @author GianlucaBernert
+ *
  * @author JakobBenkoe
  * 
  */
