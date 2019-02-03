@@ -18,10 +18,21 @@ public class Pinnwand implements IsSerializable{
 	private int pinnwandId;
 	private int ownerId;
 	private Timestamp creationTimeStamp;
-
+	
+	/**
+	 * Methode die die OwnerId zurückgibt
+	 * @return ownerId
+	 */
+	
 	public int getOwnerId() {
 		return ownerId;
 	}
+	
+	/**
+	 * Methode die die OwnerId setzt
+	 * @param ownerId
+	 */
+	
 	public void setOwnerId(int ownerId) {
 		this.ownerId = ownerId;
 	}
@@ -29,17 +40,38 @@ public class Pinnwand implements IsSerializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	
+	/**
+	 * Methode die die PinnwandId zurückgibt
+	 * @return pinnwandId
+	 */
 
 	public int getPinnwandId() {
 		return pinnwandId;
 	}
+	
+	/**
+	 * Methode die die PinnwandId setzt
+	 * @param pinnwandId
+	 */
 
 	public void setPinnwandId(int pinnwandId) {
 		this.pinnwandId = pinnwandId;
 	}
 	
+	/**
+	 * Methode die das Erstellungsdatum zurückgibt
+	 * @return creationTimeStamp
+	 */
+	
 	public Timestamp getCreationTimeStamp() {
 		return creationTimeStamp;
+		
+	/**
+	 * Methode die das Erstellungsdatum setzt
+	 * @param creationTimeStamp
+	 */
+		
 	}
 	public void setCreationTimeStamp(Timestamp creationTimeStamp) {
 		this.creationTimeStamp = creationTimeStamp;
