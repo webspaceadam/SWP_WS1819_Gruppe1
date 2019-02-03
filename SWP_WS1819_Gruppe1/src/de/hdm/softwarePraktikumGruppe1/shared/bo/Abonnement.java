@@ -10,6 +10,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 /**
  * @author GianlucaBernert
  * @author AdamGniady
+ * @author Yesin Soufi
  * Klasse eines Abonnement Objekts das BusinessObject als Superklasse besitzt
  */
 public class Abonnement implements IsSerializable{
@@ -27,15 +28,18 @@ public class Abonnement implements IsSerializable{
 	public Abonnement() {
 	}
 	
-	/*
+	/**
 	 * Methode, die die AbonnementId zurueck gibt
+	 * @return abonnementId
 	 */
 	public int getAbonnementId() {
 		return abonnementId;
 	}
 
-	/*
+	/**
 	 * Methode, die das Setzen einer vorläufigen Id ermöglicht
+	 * @param abonnementId
+	 * @return abonnementId
 	 */
 	public void setAbonnementId(int abonnementId) {
 		this.abonnementId = abonnementId;
@@ -43,6 +47,7 @@ public class Abonnement implements IsSerializable{
 	
 	/**
 	 * Methode die den Besitzer des Abonnements zurueck gibt
+	 * @return ownerId
 	 */
 	public int getOwnerId() {
 		return ownerId;
@@ -50,6 +55,8 @@ public class Abonnement implements IsSerializable{
 	
 	/**
 	 * Methode doe den Besitzer des Abonnements setzt
+	 * @param ownerId
+	 * @return ownerId
 	 */
 	public void setOwnerId(int ownerId) {
 		this.ownerId = ownerId;
@@ -57,6 +64,7 @@ public class Abonnement implements IsSerializable{
 	
 	/**
 	 * Methode die die abonnierte Pinnwand zurueck gibt
+	 * @return pinnwandId
 	 */
 	public int getPinnwandId() {
 		return pinnwandId;
@@ -64,14 +72,27 @@ public class Abonnement implements IsSerializable{
 	
 	/**
 	 * Methode die die zu abonierende Pinnwand setzt
+	 * @param pinnwandId
+	 * @return pinnwandId
 	 */
 	public void setPinnwandId(int pinnwandId) {
 		this.pinnwandId = pinnwandId;
 	}
 	
+	/**
+	 * Methode die das Datum zurückgibt
+	 * @return creationTimeStamp
+	 */
+	
 	public Timestamp getCreationTimeStamp() {
 		return creationTimeStamp;
 	}
+	
+	/**
+	 * Methode die das Datum setzt
+	 * @param creationTimeStamp
+	 * @return creationTimeStamp
+	 */
 
 	public void setCreationTimeStamp(Timestamp creationTimeStamp) {
 		this.creationTimeStamp = creationTimeStamp;
@@ -79,6 +100,7 @@ public class Abonnement implements IsSerializable{
 	
 	/**
 	 * Methode um eine textuelle Dastellung der jeweiligen Instanz zu erzeugen
+	 * @return super.toString
 	 */
 	public String toString() {
 		return super.toString() + " AbonnementID #A" + this.getAbonnementId();
