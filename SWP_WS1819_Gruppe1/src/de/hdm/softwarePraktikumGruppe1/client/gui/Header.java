@@ -20,13 +20,13 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.Pinnwand;
 import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
 
 /**
- * Die <code>Header</code>-Klasse ist eine Custom-Widget-Class die daf�r verwendet wird, 
- * alle wichtigen Bereiche des Systems zu erreichen. 
+ * Die <code>Header</code>-Klasse ist eine Custom-Widget-Class die dafür verwendet wird, 
+ * alle wichtigen Bereiche des Systems zu erreichen. Es dient quasi als Navigationspfad
+ * für das System.
  * 
  * @author AdamGniady
  * @version 1.0
  */
-
 public class Header extends FlowPanel {
 		PinnwandverwaltungAsync pinnwandVerwaltung = null;
 		String logOutURL;
@@ -67,7 +67,11 @@ public class Header extends FlowPanel {
 		private Anchor meinePinnwand = new Anchor("Meine Pinnwand");
 		private Anchor meineAbos = new Anchor("Meine Abos");
 		
-		
+		/**
+		 * 
+		 * 
+		 * @param a
+		 */
 		public void removeAbonnementBox(AbonnementBox a) {
 			this.clear();
 			pinnwandVerwaltung.showAllAbonnementsByUser(user, new ShowAllAbonnementsByUserCallback());
@@ -76,51 +80,50 @@ public class Header extends FlowPanel {
 	
 
 		/**
-		 * Im Konstruktor dieser Klasse werden die Buttons in die Panels
-		 * und zu den Buttons die ClickHandler hinzugef�gt.
+		 * Konstruktor der Klasse
 		 */
 		public Header() {
 		}
 
 		
 		/**
-		 * In dieser Methode werden die Desings der Buttons festgelegt. Auch
-		 * die Kontakt-Editor und ReportGenerator-Buttons werden zum Kopfbereich
-		 * des Kontaktverwaltungstools hinzugef�gt. 
+		 * Die Methode <code>onLoad()</code> wird beim Aufrufen der Klasse Header ausgeführt. 
+		 * Hier werden die Widgets erst an die Klasse hinzugefügt.
 		 */
 		public void onLoad() {
 			pinnwandVerwaltung = ClientsideSettings.getPinnwandverwaltung();
 			pinnwandVerwaltung.getUserById(currentUserId, new GetUserByIdCallback());
 			
-			// Add Styling to this Element
+			// Styling hinzufügen
 			this.addStyleName("header bg-primary");
-			// Adding Stylenames to divs
+			
+			// Styling an die Divs hinzufügen
 			headerLogo.addStyleName("header_logo");
 			headerLinkList.addStyleName("header_link_list");
 			headerRight.addStyleName("header_right");
 			headerLeft.addStyleName("header_left");
 			
-			//header element
+			// Styling hinzufügen
 			headerLogoDiv.addStyleName("header_element");
 			
 			logo.setUrl("/images/pinners_with_primary_white.png");
 			
-			// Adding Logo to header logo div
+			// Logo angepasst
 			headerLogoDiv.add(logo);
 			headerLogo.add(headerLogoDiv);
 			
-			// Adding style to anchors
+			// Styling der Anchors
 			meinePinnwand.addStyleName("header_element has-text-white");
 			meineAbos.addStyleName("header_element has-text-white");
 			
-			// Adding Elements to parent divs
+			// Div zusammensetzung
 			headerLeft.add(meinePinnwand);
 			headerLeft.add(meineAbos);
 			headerLinkList.add(headerLeft);
 			
 			
 			/*
-			 * Buttons
+			 * Zuordnung an die Divs
 			 */
 			inputDiv.addStyleName("header_element");
 			searchDiv.addStyleName("header_element");
@@ -142,12 +145,10 @@ public class Header extends FlowPanel {
 			headerRight.add(searchDiv);
 			headerRight.add(logoutDiv);
 			headerRight.add(reportDiv);
-			/*
-			 * Logic to add the ClickHandlers
+			
+			/**
+			 * ClickHandler werden an die Button hinzugefügt
 			 */
-			
-			
-			
 			searchButton.addClickHandler(new SearchUserClickHandler(this));
 			meineAbos.addClickHandler(new ShowAbosClickHandler(this));
 			meinePinnwand.addClickHandler(new ShowMyPinnwandClickHandler());
@@ -160,6 +161,11 @@ public class Header extends FlowPanel {
 			this.add(headerRight);
 		}
 		
+		/**
+		 * Die private Klasse LogoutClickHandler implementiert das ClickHandler-Interface und ermöglicht
+		 * so bei der Interaktion des Users das ausloggen aus dem System.
+		 * 
+		 */
 		private class LogoutClickHandler implements ClickHandler {
 
 			@Override
@@ -171,6 +177,11 @@ public class Header extends FlowPanel {
 			
 		}
 		
+		/**
+		 * Private Klasse die das ClickHandler-Interface implementiert und die beim Auslösen den 
+		 * Wechsel zur Pinnwand des eingeloggten Users ermöglicht.
+		 *
+		 */
 		private class ShowMyPinnwandClickHandler implements ClickHandler {
 
 			@Override
@@ -178,13 +189,19 @@ public class Header extends FlowPanel {
 				RootPanel rootPinnwandPanel = RootPanel.get("rechteSeite");
 				rootPinnwandPanel.clear();
 				
-				// Go to the Pinnwand of the current User
+				// Hier wird man zur Pinnwand des eingeloggten Users weitergeleitet
 				PinnwandBox userPinnwand = new PinnwandBox(currentUserId);
 				rootPinnwandPanel.add(userPinnwand);				
 			}
 			
 		}
 		
+		/**
+		 * Private Klasse die das ClickHandler-Interface implementiert und die beim Auslösen alle
+		 * Abonnements des Users anzeigt. 
+		 * Fortführend öffnet der Klick auch die DialogBox <code>ShowAbosDialogBox</code>
+		 * 
+		 */
 		private class ShowAbosClickHandler implements ClickHandler {
 			public ShowAbosClickHandler(Header pH) {
 				this.parentHeader = pH;
@@ -201,7 +218,10 @@ public class Header extends FlowPanel {
 			}
 		}
 		
-		
+		/**
+		 * Die private Klasse <em>reportGeneratorClickHandler</em> ermöglicht das Aufrufen 
+		 * des ReportGenerators über den Header.
+		 */
 		private class reportGeneratorClickHandler implements ClickHandler {
 
 			@Override
@@ -212,6 +232,14 @@ public class Header extends FlowPanel {
 			
 		}
 		
+		/**
+		 * Die Klasse ShowAbosDialogBox erbt von der Parentklasse <em>DialogBox</em> welche 
+		 * ihm die nötige Funktionalität liefert und implementiert das ClickHandler Interface,
+		 * um Interaktion zu ermöglichen
+		 * 
+		 * @author AdamGniady
+		 *
+		 */
 		public class ShowAbosDialogBox extends DialogBox implements ClickHandler {
 			//			Header parentHeader;
 						
@@ -220,13 +248,16 @@ public class Header extends FlowPanel {
 			private ScrollPanel parentScrolling = new ScrollPanel();
 			private FlowPanel aboParentPanel = new FlowPanel();
 			private Label noAbosLabel = new Label("Momentan hast du keine Abonnements! Reloade ggf. das System!");
+			private Label newAbosLabel = new Label("Hast du eben ein neues Abo hinzugefügt und es wird nicht angezeigt? Reloade ggf. das System!");
 			private Button reloadSiteBtn = new Button("Reload!");
-//			public ShowAbosDialogBox(Header parentHeader) {
+			
+			/**
+			 * Der Konstruktor der DialogBox-Klasse <em>ShowAbosDialogBox</em> 
+			 * wird immer dann ausgeführt, wenn die DialogBox aufgerufen wird. 
+			 * Sie sucht alle aktuellen Abonnements und baut daraus die AbonnementBoxen,
+			 * welche das Aufrufen der Pinnwand des Abonnements ermöglichen.
+			 */
 			public ShowAbosDialogBox() {				
-//				for(int i = 0; i < userAbonnements.size(); i++) {
-//					AbonnementBox tempAboBox = new AbonnementBox(userAbonnements.elementAt(i));
-//					userAboBoxes.add(tempAboBox);
-//				}
 				for(Abonnement a: userAbonnements) {
 					AbonnementBox tempAboBox = new AbonnementBox(this, pinnwandOwner, a);
 					
@@ -237,6 +268,13 @@ public class Header extends FlowPanel {
 					for(int i = 0; i < userAboBoxes.size(); i++) {
 						aboParentPanel.add(userAboBoxes.elementAt(i));
 					}
+					newAbosLabel.addStyleName("label has-text-primary content_margin");
+					reloadSiteBtn.addStyleName("button bg-primary has-text-white");
+					reloadSiteBtn.addClickHandler(new ForceReloadClickHandler());
+					
+					aboParentPanel.add(newAbosLabel);
+					aboParentPanel.add(reloadSiteBtn);
+					
 				} else {
 					noAbosLabel.addStyleName("label has-text-primary content_margin");
 					reloadSiteBtn.addClickHandler(new ForceReloadClickHandler());
@@ -244,9 +282,7 @@ public class Header extends FlowPanel {
 					aboParentPanel.add(noAbosLabel);
 					aboParentPanel.add(reloadSiteBtn);
 				}
-				
-				
-				
+								
 				parentScrolling.add(aboParentPanel);
 				parentScrolling.setSize("800px", "400px");
 				
@@ -260,23 +296,25 @@ public class Header extends FlowPanel {
 				dock.add(cancelImage, DockPanel.EAST);
 				
 				//safeButton.addClickHandler();
-
 				//dock.setCellHorizontalAlignment(safeButton, DockPanel.ALIGN_CENTER);
 				dock.setWidth("900px");
 				dock.setHeight("400px");
 				setWidget(dock);
 			}
-			//Funktioniert nicht. Kann von Klasse AbonnementBox nicht auf diese Methode zugreifen.
 
+			/**
+			 * Methode die das Schließen ermöglicht, da onClick vom User die Anfrage dafür kommt.
+			 */
 			@Override
 			public void onClick(ClickEvent event) {
 				hide();
 			}
 			
-			public void removeAboBoxFromDialogBox(AbonnementBox aboBox) {
-				
-			}
-			
+			/**
+			 * Die private Klasse <em>ForceReloadClickHandler</em> ermöglicht das Reloaden des Systems,
+			 * sofern der User dies möchte. Dies passiert vor Allem dann, wenn ein neu angelegtes Abonnement
+			 * nicht richtig angezeigt wird. 
+			 */
 			private class ForceReloadClickHandler implements ClickHandler {
 
 				@Override
@@ -286,18 +324,33 @@ public class Header extends FlowPanel {
 				
 			}
 			
+			/**
+			 * Die Methode forceReload ermöglicht erst die wirkliche Funktionalität der <code>ForceReloadClickHandler</code>-Klasse.
+			 */
 			public native void forceReload() /*-{
     			$wnd.location.reload(true);
   			}-*/;
 		}
 		
+		/**
+		 * Die private Klasse <em>SearchUserClickHandler</em> implementiert das ClickHandler-Interface
+		 * und ermöglicht so den Start der Suchfunktion des Systems.
+		 */
 		private class SearchUserClickHandler implements ClickHandler {
 			private Header parentHeader;			
 			
+			/**
+			 * Konstruktor der den ParentHeader speichert, damit man auf dessen Werte zugreifen kann.
+			 * @param parentHeader
+			 */
 			public SearchUserClickHandler(Header parentHeader) {
 				this.parentHeader = parentHeader;
 			}
 
+			/**
+			 * Das Event löst die Funktion searchFunction aus, die den Suchbegriff aus dem Input-Feld 
+			 * des <code>Header</code> entnimmt.
+			 */
 			@Override
 			public void onClick(ClickEvent event) {
 				pinnwandVerwaltung.searchFunction((parentHeader.searchUserInput.getValue()) , new SearchResultCallback());
@@ -306,13 +359,16 @@ public class Header extends FlowPanel {
 			
 		}
 		
+		/**
+		 * Die private Klasse <em>SearchUserDialogBox</em> erbt von der <code>DialogBox</code> und 
+		 * implementiert das ClickHandler-Interface. Diese DialogBox ermöglicht das Anzeigen von Suchanfragen
+		 * des Users. 
+		 */
 		private class SearchUserDialogBox extends DialogBox implements ClickHandler {
 			
 			private ScrollPanel parentScrolling = new ScrollPanel();
 			private FlowPanel aboParentPanel = new FlowPanel();
 			private int ergebnisCounter;
-			
-			
 			
 			private Vector<SearchAboBox> searchResultBoxes = new Vector<SearchAboBox>();
 			
@@ -320,13 +376,13 @@ public class Header extends FlowPanel {
 				this.ergebnisCounter = searchResults.size();
 				
 				setText("Deine Suche ergab "+ergebnisCounter + " Treffer");
-				//Methode zum auslesen der vectorgröße wird hier ausgeführt.
+				/**
+				 * Methode zum auslesen der vectorgröße wird hier ausgeführt.
 				
-				// Vector searchResult befuellen. Es wird die Methode SearchFunction aufgerufen.
-				// Die Methode SearchFunction gibt ein HashSet mit Usern zurueck. Die HashSet Collection 
-				// wird dann in einen Vector konvertiert.
-				
-				
+					Vector searchResult befuellen. Es wird die Methode SearchFunction aufgerufen.
+					Die Methode SearchFunction gibt ein HashSet mit Usern zurueck. Die HashSet Collection 
+					wird dann in einen Vector konvertiert.
+				 */				
 				for(User u: searchResults) {
 					SearchAboBox singleUserBox = new SearchAboBox(user, u);
 					searchResultBoxes.add(singleUserBox);
@@ -358,18 +414,25 @@ public class Header extends FlowPanel {
 				setWidget(dock);
 			}
 
+			/**
+			 * Beim Klick wird die DialogBox durch diese Methode geschlossen.
+			 */
 			@Override
 			public void onClick(ClickEvent event) {
 				hide();
 			}
 		}
 		
+		/**
+		 * Die private Klasse SearchResultCallback implementiert einen AsyncCallback, 
+		 * der die Kommunikation mit der Applikationslogik ermöglicht. Bei einem erfolgreichen
+		 * Aufruf erhält man einen Vektor mit Usern die der Suche entsprechen.
+		 */
 		public class SearchResultCallback implements AsyncCallback<Vector<User>>{
 
 			@Override
 			public void onFailure(Throwable caught) {
-				Window.alert("Shit");
-				
+				Window.alert("Fehler beim SearchResultCallback");
 			}
 
 			@Override
@@ -378,18 +441,17 @@ public class Header extends FlowPanel {
 					//Window.alert("Deine Suche ergab " + result.size()+ " Treffer");
 					SearchUserDialogBox dlg = new SearchUserDialogBox(result);
 					dlg.center();
-					
-				}else {
+				} else {
 					Window.alert("Deine Suche ergab 0 Treffer");
-				}
-				
-				
+				}	
 			}
-
-			
-			
 		}
 		
+		/**
+		 * Die private Klasse GetUserByIdCallback implementiert einen AsyncCallback, 
+		 * der die Kommunikation mit der Applikationslogik ermöglicht. Bei einem Erfolgreichen Aufruf
+		 * erhält der Client den User.
+		 */
 		public class GetUserByIdCallback implements AsyncCallback<User> {
 
 			@Override
@@ -409,6 +471,11 @@ public class Header extends FlowPanel {
 			
 		}
 		
+		/**
+		 * Die private Klasse ShowAllAbonnementsByUserCallback implementiert einen AsyncCallback, 
+		 * der die Kommunikation mit der Applikationslogik ermöglicht. Bei einem Erfolgreichen Aufruf
+		 * wird ein Vektor mit Abonnements geschickt. 
+		 */
 		public class ShowAllAbonnementsByUserCallback implements AsyncCallback<Vector<Abonnement>> {
 
 			@Override
@@ -429,11 +496,15 @@ public class Header extends FlowPanel {
 			
 		}
 		
+		/**
+		 * Die private Klasse GetPinnwandByIdCallback implementiert einen AsyncCallback, 
+		 * der die Kommunikation mit der Applikationslogik ermöglicht. Bei einem Erfolgreichen Aufruf
+		 * wird die gesucht Pinnwand zurückgegeben. 
+		 */
 		public class GetPinnwandByIdCallback implements AsyncCallback<Pinnwand> {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
 				Window.alert("Problem with Pinnwand");
 			}
 
@@ -447,6 +518,11 @@ public class Header extends FlowPanel {
 			
 		}
 		
+		/**
+		 * Die private Klasse GetOwnerOfAbonniertePinnwand implementiert einen AsyncCallback, 
+		 * der die Kommunikation mit der Applikationslogik ermöglicht. Bei einem Erfolgreichen Aufruf
+		 * wird der Owner der Pinnwand zurückgegeben.
+		 */
 		public class GetOwnerOfAbonniertePinnwand implements AsyncCallback<User> {
 			@Override
 			public void onFailure(Throwable caught) {
@@ -462,6 +538,11 @@ public class Header extends FlowPanel {
 			}
 		}
 		
+		/**
+		 * Die Methode setzt die Url für den Logout.
+		 * 
+		 * @param logOutURL
+		 */
 		public void setLogOutURL(String logOutURL) {
 			this.logOutURL = logOutURL;
 		}
