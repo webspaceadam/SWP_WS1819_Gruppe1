@@ -17,19 +17,12 @@ public class testDB {
 		PinnwandverwaltungImpl impl = new  PinnwandverwaltungImpl();
 		impl.init();
 		
-		Beitrag b1 = new Beitrag();
+		User u = impl.getUserById(26);
 		
-		b1.setBeitragID(3);
+		Kommentar k1 = new Kommentar();
+		k1.setKommentarId(32);
 		
-		
-		Like l1 = new Like();
-		l1.setLikeID(2);
-		l1.setBeitragId(3);
-		l1.setOwnerId(2);
-		
-		System.out.println(l1.toString());
-		
-		impl.deleteLike(l1);
+		impl.deleteKommentar(k1);
 	}
 
 }
