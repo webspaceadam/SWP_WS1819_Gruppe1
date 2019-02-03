@@ -8,7 +8,8 @@ import java.sql.Timestamp;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 /**
- * @author GianlucaBernert, AdamGniady
+ * @author GianlucaBernert
+ * @author AdamGniady
  * Klasse eines Abonnement Objekts das BusinessObject als Superklasse besitzt
  */
 public class Abonnement implements IsSerializable{

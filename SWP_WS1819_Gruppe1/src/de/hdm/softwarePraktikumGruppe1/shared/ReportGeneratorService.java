@@ -17,7 +17,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.report.UserReport;
 
 
 /**
- * @author GianlucaBernert  & JakobBenkoe
+ * @author JakobBenkoe
  * Interface das RemoteService als Superklasse hat und von ReportGeneratorImpl Implementiert wird
  */
 

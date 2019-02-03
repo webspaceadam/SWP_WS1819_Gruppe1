@@ -10,7 +10,9 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 /**
- * @author SebastianHermann, GianlucaBernert, AdamGniady
+ * @author SebastianHermann
+ * @author GianlucaBernert
+ * @author AdamGniady
  * Klasse eines Beitrag Objekts das Textbeitrag als Superklasse besitzt
  */
  

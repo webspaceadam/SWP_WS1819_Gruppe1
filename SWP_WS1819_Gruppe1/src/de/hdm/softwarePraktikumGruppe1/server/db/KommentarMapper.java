@@ -11,7 +11,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.Kommentar;
 
 
 /**
- * @author GianlucaBernert, 
+ * 
  * @author Ulus Serhat
  * @author Yesin Soufi
  * @author SebastianHermann
