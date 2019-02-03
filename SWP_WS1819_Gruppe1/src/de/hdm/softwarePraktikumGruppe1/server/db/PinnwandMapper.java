@@ -10,6 +10,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.Pinnwand;
  * @author Ulus Serhat
  * @author Yesin Soufi
  * @author SebastianHermann
+ * @author Peter Thies
  */
 	public class PinnwandMapper {
 		

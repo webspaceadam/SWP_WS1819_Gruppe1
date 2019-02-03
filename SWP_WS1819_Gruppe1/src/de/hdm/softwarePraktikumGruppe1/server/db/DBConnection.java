@@ -6,7 +6,8 @@ import java.sql.*;
 
 
 /**
- * @author GianlucaBernert
+ * @author Sebastian Hermann
+ * @author Yesin Soufi
  * @author Ulus Serhat
  * @author Peter Thies
  * 

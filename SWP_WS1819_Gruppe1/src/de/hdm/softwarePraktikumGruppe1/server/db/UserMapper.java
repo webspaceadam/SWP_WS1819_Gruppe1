@@ -16,6 +16,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
  *
  * @author Yesin Soufi
  * @author SebastianHermann
+ * @author Peter Thies
  * 
  */
 

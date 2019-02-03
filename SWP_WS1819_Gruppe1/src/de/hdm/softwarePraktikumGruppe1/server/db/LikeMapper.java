@@ -16,6 +16,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.Like;
  * @autor Ulus Serhat
  * @author Yesin Soufi
  * @autor SebastianHermann
+ * @author Peter Thies
  */
 public class LikeMapper {
 	
