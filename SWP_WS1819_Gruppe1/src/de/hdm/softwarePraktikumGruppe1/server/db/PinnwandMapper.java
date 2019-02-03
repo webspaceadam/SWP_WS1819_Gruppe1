@@ -42,8 +42,10 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.Pinnwand;
 		  */
 		 
 		 
-		 /*
+		 /**
 		  * Methode, die eine Pinnwand anhand einer ID zurueckgibt
+		  * @param pinnwandId
+		  * @return p
 		  */
 		 
 		 public Pinnwand findPinnwandById(int pinnwandId) {
@@ -79,8 +81,9 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.Pinnwand;
 				return null;
 		 }
 		 
-		 /*
+		 /**
 		  * Methode, die ein Pinnwand-Objekt in die Datenbank lädt.
+		  * @param p
 		  */
 		 public void insertPinnwand (Pinnwand p) {
 			 
@@ -100,8 +103,9 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.Pinnwand;
 		    } 
 		 }
 		 
-		 /*
+		 /**
 		  * Methode, die ein bestehendes Pinnwand-Objekt in der Datenbank updated.
+		  * @param p
 		  */
 		 public void updatePinnwand (Pinnwand p) {
 			 
@@ -124,8 +128,9 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.Pinnwand;
 
 		 }
 		 
-		 /*
+		 /**
 		  * Methode, die ein bestehendes Pinnwand-Objekt in der Datenbank löscht.
+		  * @param p
 		  */
 
 		 public void deletePinnwand(Pinnwand p) {
@@ -151,8 +156,10 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.Pinnwand;
 		 * Beginn: Foreign Key-Mapper-Methoden
 		 */
 		 
-		 /*
+		 /**
 		  * Methode, die die Pinnwand eines Users anhand der UserId zurückgibt.
+		  * @param userId
+		  * @return p
 		  */
 		 public Pinnwand findPinnwandByUserId(int userId) {
 				
