@@ -116,11 +116,20 @@ public class ReportHeader extends FlowPanel {
 	}
 	
 
-		
+		/**
+		 * Methode die den Beitragsbutton zurückgibt
+		 * @return beitraegeButton
+		 */
+	
 		public Button getBeitraegeButton() {
 			return beitraegeButton;
 		}
-
+		
+		/**
+		 * Methode die den UserButton zurückgibt
+		 * @return userButton
+		 */
+		
 		public Button getUserButton() {
 			return userButton;
 		}

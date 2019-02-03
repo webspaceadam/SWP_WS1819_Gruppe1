@@ -21,6 +21,7 @@ import de.hdm.softwarePraktikumGruppe1.shared.bo.User;
  *
  * @author Yesin Soufi
  * @author SebastianHermann
+ * @author Peter Thies
  * 
  */
 public class AbonnementMapper {
@@ -52,8 +53,10 @@ public class AbonnementMapper {
 	 * in allen Mapper-Klassen existieren.
 	 */	
 		
-	/*
+	/**
 	 * Methode, die einen Abonnement anhand einer Id zurueck gibt
+	 * @param abonnementId
+	 * @return a
 	 */
 		public Abonnement findById(int abonnementId) {
 		
@@ -81,8 +84,10 @@ public class AbonnementMapper {
 		}
 	
 	
-	/*
+	/**
 	 * Methode, die das Anlegen eines Abonnement-Objekts ermöglicht
+	 * @param a
+	 * @return a
 	 */
 		
 	public Abonnement insert(Abonnement a) {
@@ -107,8 +112,10 @@ public class AbonnementMapper {
 		return null;
 	}
 
-	/*
-	 * Methode, die das Updaten eines Abonnement-Objekts in der Datenbank ermöglicht	
+	/**
+	 * Methode, die das Updaten eines Abonnement-Objekts in der Datenbank ermöglicht
+	 * @param a
+	 * @return a	
 	 */
 		public Abonnement update(Abonnement a) {
 			Connection con = DBConnection.connection();
@@ -125,8 +132,9 @@ public class AbonnementMapper {
 			
 			return a; 
 		}
-	/*
+	/**
 	 * Methode, die das Loeschen eines Abonnement-Objekts aus der Datenbank ermöglicht
+	 * @param a
 	 */
 		public void deleteAbonnement(Abonnement a) {
 			Connection con = DBConnection.connection();
@@ -145,8 +153,10 @@ public class AbonnementMapper {
 	 * Beginn: Foreign Key-Mapper-Methoden
 	 */
 		
-	/*
+	/**
 	 * Methode, die alle Abonnements eines Users zurueck gibt
+	 * @param userId
+	 * @return result
 	 */
 		public Vector<Abonnement> findAbonnementsOfUser(int userId){
 			
@@ -179,9 +189,13 @@ public class AbonnementMapper {
 		}
 
 		
-		/*
+		/**
 		 * Methode, die alle Abonnenten einer Pinnwand
 		 *  innerhalb eines Zeitraums zurueck gibt
+		 *  @param userId
+		 *  @param start
+		 *  @param end
+		 *  @return result
 		 */
 			public Vector<Abonnement> findAbonnementsOfUserBetweenDates(int userId, Date start, Date end){
 				
@@ -214,8 +228,10 @@ public class AbonnementMapper {
 			return result;
 				
 			}		
-	/*
+	/**
 	 * Methode, die alle Abonnements einer Pinnwand zurueck gibt
+	 * @param pinnwandId
+	 * @return result
 	 */
 	
 		public Vector<Abonnement> findAbonnementsOfPinnwand(int pinnwandId){
@@ -244,6 +260,13 @@ public class AbonnementMapper {
 		return null;
 			
 		}
+		
+		/**
+		 * Methode um das Abonnement von Pinnwand und User zu finden
+		 * @param userFk
+		 * @param pinnwandFk
+		 * @return a
+		 */
 
 		public Abonnement findAbonnementsOfPinnwandAndUser(int userFk, int pinnwandFk) {
 			// TODO Auto-generated method stub
