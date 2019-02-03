@@ -8,6 +8,7 @@ import java.sql.*;
 /**
  * @author GianlucaBernert
  * @author Ulus Serhat
+ * @author Peter Thies
  * 
  * Wird von allen Mappern benutzt um die
  *         Verbindung zur Datenbank zu erstellen
